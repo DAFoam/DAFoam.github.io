@@ -13,8 +13,8 @@ The DAFoam package can be compiled with various dependency versions. Here we ela
 
 
 Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython
-| :----------------------------------------------------------------------------------------------- | 
-18.04  | gcc/7.5  | 1.10.7  | 3.0.2  | 3.11.4 | 3.11.0   | 3.3.0 | 3.6.5  | 1.14.3 | 1.1.0 | 0.28.2
+| :------------------------------------------------------------------------------------------------ | 
+18.04  | gcc/7.5  | 1.10.7  | 3.0.2  | 3.11.4 | 3.11.0   | 3.3.0 | 3.6.5  | 1.14.3 | 1.1.0 | 0.29.21
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. 
 
@@ -246,7 +246,13 @@ It should see some basic information of OpenFOAM
 
 ## **pyOFM**
 
-Compile pyOFM by running:
+First install Cython:
+
+<pre>
+pip install cython==0.29.21
+</pre>
+
+Then, compile pyOFM by running:
 
 <pre>
 cd $HOME/repos && \
