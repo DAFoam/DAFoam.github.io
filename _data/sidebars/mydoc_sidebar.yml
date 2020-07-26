@@ -1,0 +1,124 @@
+# This is your sidebar TOC. The sidebar code loops through sections here and provides the appropriate formatting.
+
+entries:
+- title: sidebar
+  product: Documentation v2.0.0
+  version: 
+  folders:
+
+  - title:
+    output: pdf
+    type: frontmatter
+    folderitems:
+    - title:
+      url: /titlepage.html
+      output: pdf
+      type: frontmatter
+    - title:
+      url: /tocpage.html
+      output: pdf
+      type: frontmatter
+
+  - title: Get started
+    output: web, pdf
+    folderitems:
+
+    - title: Overview
+      url: /index.html
+      output: web, pdf
+      type: homepage
+
+    - title: Download docker image 
+      url: /mydoc_get_started_download_docker.html
+      output: web, pdf
+    
+    - title: Run optimization
+      url: /mydoc_get_started_run.html
+      output: web, pdf
+    
+    - title: Post-processing
+      url: /mydoc_get_started_post_processing.html
+      output: web, pdf
+    
+    - title: Details of run scripts
+      url: /mydoc_get_started_runscript.html
+      output: web, pdf
+    
+    - title: Common modifications
+      url: /mydoc_get_started_common_modifications.html
+      output: web, pdf
+
+  - title: Download
+    output: web, pdf
+    folderitems:
+  
+    - title: DAFoam-v2.0
+      url: /mydoc_download_v2.0.html
+      output: web, pdf
+    
+    - title: DAFoam-v1.1
+      url: /mydoc_download_v1.1.html
+      output: web, pdf
+    
+    - title: DAFoam-v1.0
+      url: /mydoc_download_v1.0.html
+      output: web, pdf
+
+  - title: Installation
+    output: web, pdf
+    folderitems:
+  
+    - title: Compile from source
+      url: /mydoc_installation_source.html
+      output: web, pdf
+    
+    - title: Build Docker image
+      url: /mydoc_installation_docker.html
+      output: web, pdf
+  
+  - title: Tutorials
+    output: web, pdf
+    folderitems:
+
+      - title: NACA0012 airfoil (low speed)
+        url: /mydoc_tutorials_naca0012_incompressible.html
+        output: web, pdf
+      
+      - title: NACA0012 airfoil (subsonic)
+        url: /mydoc_tutorials_naca0012_subsonic.html
+        output: web, pdf
+      
+      - title: NACA0012 airfoil (transonic)
+        url: /mydoc_tutorials_naca0012_transonic.html
+        output: web, pdf
+      
+      - title: NACA0012 airfoil (multipoint)
+        url: /mydoc_tutorials_naca0012_multipoint.html
+        output: web, pdf
+      
+      - title: Onera M6 wing
+        url: /mydoc_tutorials_m6.html
+        output: web, pdf
+  
+  - title: Doxygen
+    output: web, pdf
+    folderitems:
+  
+    - title: DAFoam doxygen
+      url: /mydoc_doxygen.html
+      output: web, pdf
+    
+    - title: DAFoam input parameters
+      url: /mydoc_doxygen_daoption.html
+      output: web, pdf
+  
+  - title: Publications
+    output: web, pdf
+    folderitems:
+  
+    - title: Publications
+      url: /mydoc_publications.html
+      output: web, pdf
+
+
+
