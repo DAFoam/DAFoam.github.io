@@ -40,7 +40,7 @@ You should be able to see your installed Docker version.
 Once the Docker is installed and verified, run this command from the terminal to download the DAFoam image:
 
 <pre>
-docker pull dafoam/opt-packages:v2.0.0
+docker pull dafoam/opt-packages:v2.0.1
 </pre>
 
 Now you are ready to [run DAFoam optimization](mydoc_get_started_run.html).
