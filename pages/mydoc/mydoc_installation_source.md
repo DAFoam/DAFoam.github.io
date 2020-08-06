@@ -7,7 +7,7 @@ permalink: mydoc_installation_source.html
 folder: mydoc
 ---
 
-This section assumes you want to compile the DAFoam optimization package (v2.0) from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section.
+{% include note.html content="This section assumes you want to compile the DAFoam optimization package (v2.0) from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section." %}
 
 The DAFoam package can be compiled with various dependency versions. Here we elaborate on how to compile it on Ubuntu 18.04 using the dependencies shown in the following table. 
 
