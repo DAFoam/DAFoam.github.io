@@ -157,11 +157,11 @@ make all install
 
 ## **MACH-Aero framework**
 
-The supported repo versions in the MACH-Aero framework for DAFoam-v2.0.1 is as follows
+The supported repo versions in the MACH-Aero framework for DAFoam-v2.0.2 is as follows
 
 baseclasses | pySpline | pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.2.0      | v1.2.0   | v1.2.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.0  | v2.1.3      | v1.2.0 | v2.0.1
+v1.2.0      | v1.2.0   | v1.2.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.0  | v2.1.3      | v1.2.0 | v2.0.2
 
 To install all the repos in MACH-Aero, first create a `repos` folder in the $HOME directory:
 
@@ -268,8 +268,8 @@ Compile DAFoam by running:
 
 <pre>
 cd $HOME/repos && \
-wget https://github.com/mdolab/dafoam/archive/v2.0.1.tar.gz -O dafoam.tar.gz && \
-tar -xvf dafoam.tar.gz && cd dafoam-2.0.1 && \
+wget https://github.com/mdolab/dafoam/archive/v2.0.2.tar.gz -O dafoam.tar.gz && \
+tar -xvf dafoam.tar.gz && cd dafoam-2.0.2 && \
 . $HOME/OpenFOAM/OpenFOAM-v1812/etc/bashrc && \
 ./Allmake && pip install .
 </pre>

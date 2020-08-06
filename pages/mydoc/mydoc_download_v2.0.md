@@ -9,7 +9,7 @@ folder: mydoc
 
 DAFoam v2.0 is a major update that introduces multiple features for a more efficient interface, better performance, and more modulated code structures. 
 
-The latest bug-fixed version is [DAFoam v2.0.1](https://github.com/mdolab/dafoam/archive/v2.0.1.tar.gz).
+The latest bug-fixed version is [DAFoam v2.0.2](https://github.com/mdolab/dafoam/archive/v2.0.2.tar.gz).
 
 Release notes of DAFoam-v2.0:
 
