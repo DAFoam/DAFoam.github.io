@@ -30,7 +30,7 @@ Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
 |
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/v1.0.0.tar.gz) and untar it. Then go to `tutorials/NACA0012_Airfoil/incompressible`. If you use **Linux** or **MacOS**, open a `Terminal` and run this command to start the DAFoam docker container.
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to `tutorials/NACA0012_Airfoil/incompressible`. If you use **Linux** or **MacOS**, open a `Terminal` and run this command to start the DAFoam docker container.
 
 <pre>
 docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:v2.0.2 bash

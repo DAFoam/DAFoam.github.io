@@ -25,11 +25,11 @@ Here we give examples for Ubuntu, MacOS, and Windows.
   
   After this, you need to **logout and re-login your account** to make the usermod command effective. 
 
-- If you use **MacOS**, click **Get Stable** to download the installer (`Docker.dmg`) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-mac). Double click `Docker.dmg` and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep the Docker Hub app open when runing Docker commands.
+- If you use **MacOS**, click **Get Stable** to download the installer (`Docker.dmg`) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-mac). Double click `Docker.dmg` and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep it open when runing Docker commands.
 
-- If you use **Windows**, click **Get Stable** to download the installer (`Docker Desktop Installer.exe`) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). Double click `Docker Desktop Installer.exe` and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep the Docker Hub app open when runing Docker commands.
+- If you use **Windows**, click **Get Stable** to download the installer (`Docker Desktop Installer.exe`) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). Double click `Docker Desktop Installer.exe` and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep it open when runing Docker commands.
 
-Once the above installation is done, open a terminal and verify the docker installation by:
+Once the above installation is done, open a `Terminal` (Linux and MacOS) or `Command Prompt` (Windows) and verify the docker installation by running:
 
 <pre>
 docker --version
