@@ -244,7 +244,7 @@ daOptions["designVar"]["shapey"] = {"designVarType": "FFD"}
 def alpha(val, geo):
     aoa = val[0] * np.pi / 180.0
     inletU = [float(U0 * np.cos(aoa)), float(U0 * np.sin(aoa)), 0]
-    DASolver.setOption("primalBC", {"UIn": {"variable": "U", "patch": "inout", "value": inletU}})
+    DASolver.setOption("primalBC", {"U0": {"variable": "U", "patch": "inout", "value": inletU}})
     DASolver.updateDAOption()
 DVGeo.addGeoDVGlobal("alpha", value=[alpha0], func=alpha, lower=0.0, upper=10.0, scale=1.0)
 daOptions["designVar"]["alpha"] = {"designVarType": "AOA", "patch": "inout", "flowAxis": "x", "normalAxis": "y"}

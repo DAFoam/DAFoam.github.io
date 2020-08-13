@@ -71,7 +71,7 @@ The `runScript.py` is based on the one used in the NACA0012 [low speed case](myd
   def setMultiPointCondition(xDV, index):
       aoa = xDV["mp%d_alpha" % index].real * np.pi / 180.0
       inletU = [float(U0[index] * np.cos(aoa)), float(U0[index] * np.sin(aoa)), 0]
-      DASolver.setOption("primalBC", {"UIn": {"variable": "U", "patch": "inout", "value": inletU}})
+      DASolver.setOption("primalBC", {"U0": {"variable": "U", "patch": "inout", "value": inletU}})
       DASolver.updateDAOption()
       return
   ```
