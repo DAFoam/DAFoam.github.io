@@ -2,7 +2,7 @@
 
 entries:
 - title: sidebar
-  product: Documentation {{ site.latest_version }}
+  product: Documentation v2.0.3
   version: 
   folders:
 
