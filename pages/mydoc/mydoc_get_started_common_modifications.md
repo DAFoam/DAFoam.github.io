@@ -19,7 +19,7 @@ To increase the number of FFD points, one needs to increase `nx` (number of FFD 
 
 ## How to use more CPU cores?
 
-To run the optimization using 8 cores, first change `numberOfSubdomains 4;` to `numberOfSubdomains 8;` in `system/decomposeParDict`, then run:
+To run the optimization using 8 cores, first delete all the `processor*` folders, then run:
 
 <pre>
 ./preProcessing.sh && mpirun -np 8 python runScript.py 2>&1 | tee optLog.txt`
@@ -56,7 +56,7 @@ Refer to the tutorial `tutorials/Onera_M6_Wing`.
 **NOTE:** Once the above modifications are done, go to the tutorial folder and load the DAFoam image:
 
 <pre>
-docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:v2.0.2 bash
+docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
 </pre>
 
 Then clean up the previous optimization results.

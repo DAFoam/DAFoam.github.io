@@ -9,22 +9,17 @@ folder: mydoc
 
 DAFoam v2.0 is a major update that introduces multiple features for a more efficient interface, better performance, and more modulated code structures. 
 
-The latest bug-fixed version is [DAFoam v2.0.2](https://github.com/mdolab/dafoam/archive/v2.0.2.tar.gz).
+The latest bug-fixed version is [DAFoam {{ site.latest_version }}](https://github.com/mdolab/dafoam/archive/{{ site.latest_version }}.tar.gz).
 
-Release notes of DAFoam-v2.0:
+Release notes:
 
-- Rewrite the classes and member functions. Now each partial derivative is implemented in a child class of DAPartDeriv. Similarly, each objective function is implemented in DAObjFunc. The C++ classes now receive parameters directly from the Python layer through DAOption class. The primal and adjoint calls use Petsc vectors as input and output.
+- [DAFoam v2.0.3](https://github.com/mdolab/dafoam/releases/tag/v2.0.3)
 
-- All the primal and adjoint solvers are now compiled as libraries, and Cython is used to wrap all libraries such that everything happens in memory; there is no file IO interaction between the C++ and Python layers. 
+- [DAFoam v2.0.2](https://github.com/mdolab/dafoam/releases/tag/v2.0.2)
 
-- Optimize the screen output for primal and adjoint solutions. Now all the optimization process will be printed to screen, instead of separate files. Users can set `printInterval` to specify how frequently the primal and adjoint solution progress is printed. 
+- [DAFoam v2.0.1](https://github.com/mdolab/dafoam/releases/tag/v2.0.1)
 
-- Improve the performance of the file output of intermediate shapes. Facilitate the visualization of optimization results by renaming the intermediate shape and flow fields into different time folders.
+- [DAFoam v2.0.0](https://github.com/mdolab/dafoam/releases/tag/v2.0.0)
 
-- Use setup.py to enable `pip install .`.
-
-- The `pyDAFoam.py` will no longer write configuration files for OpenFOAM. Users need to provide a working OpenFOAM configuration to start the optimization.
-
-- Multipoint optimization no longer needs multiple folders.
 
 {% include links.html %}

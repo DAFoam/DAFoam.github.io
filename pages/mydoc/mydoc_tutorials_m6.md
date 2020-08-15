@@ -69,7 +69,7 @@ The `runScript.py` is based on the one used in the NACA0012 [transonic case](myd
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/v1.0.0.tar.gz) and untar it. Then go to `tutorials/Onera_M6_Wing` and run this command to start the DAFoam docker container.
 
 <pre>
-docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:v2.0.2 bash
+docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
 </pre>
 
 **Now you are on the DAFoam Docker container**, run the `preProcessing_pyHyp.sh` script to generate the mesh:

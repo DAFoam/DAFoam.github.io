@@ -51,6 +51,12 @@ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/packages/anaconda3/lib' >> $
 . $HOME/.bashrc
 </pre>
 
+Then upgrade the pip utility:
+
+<pre>
+pip install --upgrade pip
+</pre>
+
 ## **OpenMPI**
 
 First append relevant environmental variables by running:
@@ -85,12 +91,7 @@ You should see the version of the compiled OpenMPI.
 Finally, install mpi4py-3.0.2:
 
 <pre>
-cd $HOME/packages && \
-wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-3.0.2.tar.gz  && \
-tar -xvf mpi4py-3.0.2.tar.gz && \
-cd mpi4py-3.0.2 && \
-rm -rf build && \
-python setup.py install --user
+pip install mpi4py==3.0.2
 </pre>
 
 ## **Petsc**
@@ -122,12 +123,7 @@ make PETSC_DIR=$HOME/packages/petsc-3.11.4 PETSC_ARCH=real-opt all
 Finally, install petsc4py-3.11.0:
 
 <pre>
-cd $HOME/packages && \
-wget https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-3.11.0.tar.gz  && \
-tar -xvf petsc4py-3.11.0.tar.gz && \
-cd petsc4py-3.11.0 && \
-rm -rf build && \
-python setup.py install --user
+pip install petsc4py==3.11.0
 </pre>
 
 ## **CGNS**
@@ -157,11 +153,11 @@ make all install
 
 ## **MACH-Aero framework**
 
-The supported repo versions in the MACH-Aero framework for DAFoam-v2.0.2 is as follows
+The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest_version }} is as follows
 
 baseclasses | pySpline | pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.2.0      | v1.2.0   | v1.2.0 | v1.2.0     | v2.2.0 | v2.2.0        | 9ac06ee | v2.1.3      | v1.2.0 | v2.0.2
+v1.2.0      | v1.2.0   | v1.2.0 | v1.2.0     | v2.2.0 | v2.2.0        | 9ac06ee | v2.1.3      | v1.2.0 | {{ site.latest_version }}
 
 
 
@@ -169,12 +165,6 @@ To install all the repos in MACH-Aero, first create a `repos` folder in the $HOM
 
 <pre>
 mkdir -p $HOME/repos
-</pre>
-
-Then upgrade the pip utility:
-
-<pre>
-pip install --upgrade pip
 </pre>
 
 Now run this command to install all the repos for MACH-Aero:
@@ -270,7 +260,7 @@ Compile DAFoam by running:
 
 <pre>
 cd $HOME/repos && \
-wget https://github.com/mdolab/dafoam/archive/v2.0.2.tar.gz -O dafoam.tar.gz && \
+wget https://github.com/mdolab/dafoam/archive/{{ site.latest_version }}.tar.gz -O dafoam.tar.gz && \
 tar -xvf dafoam.tar.gz && cd dafoam-2.0.2 && \
 . $HOME/OpenFOAM/OpenFOAM-v1812/etc/bashrc && \
 ./Allmake && pip install .

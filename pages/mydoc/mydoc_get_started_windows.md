@@ -10,7 +10,7 @@ folder: mydoc
 Use the following command to start the DAFoam Docker image on Windows. All the other commands are same as Linux and MacOS.
 
 <pre>
-docker run -it --rm -u dafoamuser --mount "type=bind,src=%cd%,target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:v2.0.2 bash
+docker run -it --rm -u dafoamuser --mount "type=bind,src=%cd%,target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
 </pre>
 
 {% include links.html %}

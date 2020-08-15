@@ -123,7 +123,7 @@ The `turbulenceModel` parameter should use a turbulence model that is consistant
 
 The `primalMinResTol` parameter is the residual convergence tolerance for the primal solver (DASimpleFoam). 
 
-The `primalBC` dictionary defines the boundary conditions for primal solution. Note that if primalBC is defined, it will overwrite the values defined in the `0` folder. Here we need to provie the variable name, patch name, and value to set for each variable. If `primalBC` is left blank, we will use the BCs defined in the `0` folder. 
+The `primalBC` dictionary defines the boundary conditions for primal solution. Note that if primalBC is defined, it will overwrite the values defined in the `0` folder. Here we need to provie the variable name, patch names, and value to set for each variable. If `primalBC` is left blank, we will use the BCs defined in the `0` folder. 
 
 The `objFunc` dictionary defines the objective functions. Taking `CD` as an example, we need to give a name to the objective function, e.g., `CD` or any other prefered name, and the information for each part of the objective function. Most of the time, the objective has only one part (in this case `part1`), but one can also combine two parts of objectives, e.g., we can define a new objective that is the sum of force and moment. For each part, we need to define the type of obejective (e.g., `force`, `moment`; we need to use the reserved type names), how to select the discrete mesh faces to compute the objective (e.g., we select them from the name of a patch `patchToFace`), and the name of the patch (wing) for `patchToFace`. Since it is a force objective, we need to project the force vector to a specific direction. Here we defines that `CD` is the force that is parallel to the flow direction (`parallelToFlow`). Alternative, we can also use `fixedDirection` and provide a `direction` key for force, i.e., `"directionMode": "fixedDirection", "direction": [1.0, 0.0, 0.0]`. Since we select `parallelToFlow`, we need to prescribe the name of angle of attack design variable to determine the flow direction. Here `alpha` will be defined later in: `DVGeo.addGeoDVGlobal("alpha", [alpha0], alpha, lower=-10.0, upper=10.0, scale=1.0)`.  NOTE: if no alpha is added in DVGeo.addGeoDVGlobal, we can NOT use `parallelToFlow`. For this case, we have to use `"directionMode": "fixedDirection"` instead. The `scale` parameter is scaling factor for this obejctive `CD`, i.e., CD = force / (0.5 * U0 * U0 * A0). Finally, if `addToAdjoint` is `True`, the adjoint solver will compute the derivative for this objective. Otherwise, it will only calculate the objective value and print it to screen when solving the primal, no adjoint will be computed for this objective. The definition of `CL` is similar to `CD` except that we use `normalToFlow` for `directionMode`.
 
@@ -143,9 +143,9 @@ daOptions = {
     "turbulenceModel": "SpalartAllmaras",
     "primalMinResTol": 1.0e-8,
     "primalBC": {
-        "U0": {"variable": "U", "patch": "inout", "value": [U0, 0.0, 0.0]},
-        "p0": {"variable": "p", "patch": "inout", "value": [p0]},
-        "nuTilda0": {"variable": "nuTilda", "patch": "inout", "value": [nuTilda0]},
+        "U0": {"variable": "U", "patches": ["inout"], "value": [U0, 0.0, 0.0]},
+        "p0": {"variable": "p", "patches": ["inout"], "value": [p0]},
+        "nuTilda0": {"variable": "nuTilda", "patches": ["inout"], "value": [nuTilda0]},
         "useWallFunction":True
     },
     "objFunc": {
@@ -222,7 +222,7 @@ Once the FFD file is loaded and the reference axis is created, we select FFD poi
 
 Next, we call `DVGeo.addGeoDVLocal` to add a local shape variable `shapey` that moves in `y` direction with displacement bounds [-1.0:1.0]. The points we select to move are `PS = geo_utils.PointSelect("list", indexList)` (all points; see above) and provided into `DVGeo.addGeoDVLocal`. After this, we set the design variable type for `shapey` in the daOptions dictionary. `FFD` is a type for shape design variable (e.g., `shape`, `twist`).
 
-In addition to the shape variable, we add the angle of attack as the design variable. This is done by first defining `def alpha` function for angle of attack. This function takes `val` as input (i.e., angle of attack; `val` can also be an array) and changes the `geo` object (output). Here `geo` is a class object to change the displacement of FFD points. For the `alpha` function, we do not change the geometry or FFD so the `geo` object is not used. Instead, we compute the velocity components based on `U0` (global parameter defined previously) and update the `primalBC` key in daOptions. Then we call `DVGeo.addGeoDVGloal` to add angle of attack variable `alpha` with [0.0:10.0] degrees. The initial angle of attack is `[alpha0]`, and the the function to change angle of attack is provided as `func=alpha`. Again, we need to set the design variable type for `alpha`, which is `AOA` (a reserved name). Here we also need to set at what patch the angle of attack is applied to (typically the name of far field patch) and the `flowAxis` and `normalAxis` for computing angle of attack: alpha = atan(U_normal/U_flow).
+In addition to the shape variable, we add the angle of attack as the design variable. This is done by first defining `def alpha` function for angle of attack. This function takes `val` as input (i.e., angle of attack; `val` can also be an array) and changes the `geo` object (output). Here `geo` is a class object to change the displacement of FFD points. For the `alpha` function, we do not change the geometry or FFD so the `geo` object is not used. Instead, we compute the velocity components based on `U0` (global parameter defined previously) and update the `primalBC` key in daOptions. Then we call `DVGeo.addGeoDVGloal` to add angle of attack variable `alpha` with [0.0:10.0] degrees. The initial angle of attack is `[alpha0]`, and the the function to change angle of attack is provided as `func=alpha`. Again, we need to set the design variable type for `alpha`, which is `AOA` (a reserved name). Here we also need to set at what patches the angle of attack is applied to (typically the names of far field patches) and the `flowAxis` and `normalAxis` for computing angle of attack: alpha = atan(U_normal/U_flow).
 
 For more detailed explanation of design variable setup, refer to [MACH-Aero-Tutorials](https://mdolab-mach-aero-tutorial.readthedocs-hosted.com/en/latest/opt_ffd.html).
 
@@ -244,10 +244,10 @@ daOptions["designVar"]["shapey"] = {"designVarType": "FFD"}
 def alpha(val, geo):
     aoa = val[0] * np.pi / 180.0
     inletU = [float(U0 * np.cos(aoa)), float(U0 * np.sin(aoa)), 0]
-    DASolver.setOption("primalBC", {"U0": {"variable": "U", "patch": "inout", "value": inletU}})
+    DASolver.setOption("primalBC", {"U0": {"variable": "U", "patches": ["inout"], "value": inletU}})
     DASolver.updateDAOption()
 DVGeo.addGeoDVGlobal("alpha", value=[alpha0], func=alpha, lower=0.0, upper=10.0, scale=1.0)
-daOptions["designVar"]["alpha"] = {"designVarType": "AOA", "patch": "inout", "flowAxis": "x", "normalAxis": "y"}
+daOptions["designVar"]["alpha"] = {"designVarType": "AOA", "patches": ["inout"], "flowAxis": "x", "normalAxis": "y"}
 ```
 
 |

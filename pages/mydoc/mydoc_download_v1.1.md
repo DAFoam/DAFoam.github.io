@@ -13,12 +13,14 @@ The latest bug-fixed version is [DAFoam v1.1.3](https://github.com/mdolab/dafoam
 
 Refer to [DAFoam documentation v1.x](https://dafoam.rtfd.io) for more details.
 
-Release notes of DAFoam v1.1:
+Release notes:
 
-- Added support for Python 3
-- Upgraded dependency version to Petsc 3.11, mpi4py-3.0.2, and CGNG-3.3.0
-- Updated regression tests with Python 3
-- Improved adjoint convergence for transonic solvers
-- Changed the Makefile to run make to compile DAFoam
+- [DAFoam v1.1.3](https://github.com/mdolab/dafoam/releases/tag/v1.1.3)
+
+- [DAFoam v1.1.2](https://github.com/mdolab/dafoam/releases/tag/v1.1.2)
+
+- [DAFoam v1.1.1](https://github.com/mdolab/dafoam/releases/tag/v1.1.1)
+
+- [DAFoam v1.1.0](https://github.com/mdolab/dafoam/releases/tag/v1.1.0)
 
 {% include links.html %}
