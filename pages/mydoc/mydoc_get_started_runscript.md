@@ -9,7 +9,7 @@ folder: mydoc
 
 ## OpenFOAM configurations
 
-As mentioned in [Overview](index.html), DAFoam uses OpenFOAM for multiphysics analysis. So before running DAFoam optimizations, one needs to set up an OpenFOAM run case for NACA0012 airfoil. `tutorials/NACA0012_Airfoil/incompressible` has the following folder structure:
+As mentioned in [Overview](index.html), DAFoam uses OpenFOAM for multiphysics analysis. So before running DAFoam optimizations, one needs to set up an OpenFOAM run case for NACA0012 airfoil. tutorials-master/NACA0012_Airfoil/incompressible has the following folder structure:
 
 ```bash
 NACA0012_Airfoil/incompressible
@@ -34,7 +34,7 @@ Then it uses the OpenFOAM's built-in utility `plot3dToFoam` to convert the plot3
 
 Since the plot3D mesh does not have boundary information, the converted OpenFOAM mesh has only one boundary patch, so we need to use the `autoPatch` utility to split boundaries (`autoPatch 30 -overwrite`). Here 30 is the feature angle between two surface mesh faces. The utility will split patches if the feature angle is larger than 30 degree.
 
-The above splited patches will have names such as auto0, auto1, auto2, we need to rename them to wing, sym, inout, etc. This is done by running `createPatch -overwrite`. The definiation of boundary name is in `system/createPatchDict`. 
+The above splited patches will have names such as auto0, auto1, auto2, we need to rename them to wing, sym, inout, etc. This is done by running `createPatch -overwrite`. The definiation of boundary name is in system/createPatchDict. 
 
 Next we call `renumberMesh -overwrite` to renumber the mesh points to reduce the bandwith of Jacobians and reduce the memory usage. Finally, we copy the boundary condition files `0.orig` to `0`.
 
@@ -115,11 +115,11 @@ A0 = 0.1
 
 Next, the `daOptions` dictionary contains all the DAFoam parameters for primal and adjoint solvers. For a full list of input parameters in daOptions, refer to [here](https://dafoam.github.io/doxygen/html/classdafoam_1_1pyDAFoam_1_1DAOPTION.html).
 
-`designSurfaces` is a list of patch names for the design surface to change during optimization. Here `wing` is a patch in `constant/polyMesh/boundary` and it needs to be of `wall` type. 
+`designSurfaces` is a list of patch names for the design surface to change during optimization. Here `wing` is a patch in constant/polyMesh/boundary and it needs to be of `wall` type. 
 
 `DASimpleFoam` is an incompressible solver that uses the SIMPLE algorithm, and it is derived from the OpenFOAM's built-in solver `simpleFoam` with modification to compute adjoint derivatives. 
 
-The `turbulenceModel` parameter should use a turbulence model that is consistant with the one defined in `constant/turbulenceProperties`. 
+The `turbulenceModel` parameter should use a turbulence model that is consistant with the one defined in constant/turbulenceProperties. 
 
 The `primalMinResTol` parameter is the residual convergence tolerance for the primal solver (DASimpleFoam). 
 

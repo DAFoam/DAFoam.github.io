@@ -31,7 +31,7 @@ To run optimization for a different airfoil, one needs to create two new files i
 
 Once the new airfoil data are ready, modify the file names to load for `airfoilProfilePS` and `airfoilProfileSS` in `genAirFoilMesh.py`. 
 
-In addition, one may need to change the parameters for `corners` in `FFD/genFFD.py` to make sure the FFD points fully contains the new airfoil. Once done, in the `FFD` folder, run `python genFFD.py` to generate a new FFD file `wingFFD.xyz`.
+In addition, one may need to change the parameters for `corners` in FFD/genFFD.py to make sure the FFD points fully contains the new airfoil. Once done, in the `FFD` folder, run `python genFFD.py` to generate a new FFD file `wingFFD.xyz`.
 
 ## How to change the flow conditions?
 
@@ -39,16 +39,16 @@ To run optimization at different flow conditions, one needs to modify the bounda
 
 To run at a different lift coefficient, modify `CL_target`, then run `mpirun -np 4 python runScript.py --task=solveCL`. Once the solveCL is done, note down the `alpha0` value that is printed to the screen, and replace the value in `runScript.py`. 
 
-This tutorial uses an incompressible flow solver DASimpleFoam, so the Mach number should be less than 0.1. For subsonic flow conditions (e.g., ~0.1 < M < ~0.6), refer to the settings in `tutorials/NACA0012_Airfoil/subsonic`. For the transonic flow conditions, refer to `tutorials/NACA0012_Airfoil/transonic`. Note that both runScript.py and the OpenFOAM configuration files (e.g., fvSchemes, fvSolution) are modified for these flow conditions.
+This tutorial uses an incompressible flow solver DASimpleFoam, so the Mach number should be less than 0.1. For subsonic flow conditions (e.g., ~0.1 < M < ~0.6), refer to the settings in tutorials-master/NACA0012_Airfoil/subsonic. For the transonic flow conditions, refer to tutorials-master/NACA0012_Airfoil/transonic. Note that both runScript.py and the OpenFOAM configuration files (e.g., fvSchemes, fvSolution) are modified for these flow conditions.
 
 ## How to run a multipoint optimization?
 
-Refer to the tutorial `tutorials/NACA0012_Airfoil/multipoint`.
+Refer to the tutorial tutorials-master/NACA0012_Airfoil/multipoint.
 
 
 ## How to run an optomization for 3D wings?
 
-Refer to the tutorial `tutorials/Onera_M6_Wing`.
+Refer to the tutorial tutorials-master/Onera_M6_Wing.
 
 |
 
