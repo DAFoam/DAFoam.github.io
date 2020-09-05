@@ -12,7 +12,7 @@ site_title: DAFoam
 company_name: DAFoam
 # this appears in the footer
 
-latest_version: v2.0.3
+latest_version: v2.0.4
 # define the latest version of DAFoam
 
 github_editme_path: DAFoam/DAFoam.github.io/blob/master/
