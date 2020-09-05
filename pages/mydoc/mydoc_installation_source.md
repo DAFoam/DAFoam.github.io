@@ -261,7 +261,7 @@ Compile DAFoam by running:
 <pre>
 cd $HOME/repos && \
 wget https://github.com/mdolab/dafoam/archive/{{ site.latest_version }}.tar.gz -O dafoam.tar.gz && \
-tar -xvf dafoam.tar.gz && cd dafoam-2.0.2 && \
+tar -xvf dafoam.tar.gz && cd dafoam-{{ site.latest_version }} && \
 . $HOME/OpenFOAM/OpenFOAM-v1812/etc/bashrc && \
 ./Allmake && pip install .
 </pre>
