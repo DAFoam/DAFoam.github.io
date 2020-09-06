@@ -196,7 +196,7 @@ The `runScript.py` is based on the one used in the NACA0012 [low speed case](myd
       optProb.addCon("mp%d_CL" % i, lower=CL_target[i], upper=CL_target[i], scale=1)
   ```
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/v1.0.0.tar.gz) and untar it. Then go to tutorials-master/NACA0012_Airfoil/multipoint and run this command to start the DAFoam docker container.
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/NACA0012_Airfoil/multipoint and run this command to start the DAFoam docker container.
 
 <pre>
 docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
