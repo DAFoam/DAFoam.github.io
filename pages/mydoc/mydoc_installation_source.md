@@ -157,7 +157,7 @@ The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest
 
 baseclasses | pySpline | pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.2.0      | v1.2.0   | v1.2.0 | v1.2.0     | v2.2.0 | v2.2.0        | 9ac06ee | v2.1.3      | v1.2.0 | {{ site.latest_version }}
+v1.2.0      | v1.2.0   | v1.2.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.1  | v2.1.3      | v1.2.0 | {{ site.latest_version }}
 
 
 
@@ -195,8 +195,8 @@ tar -xvf cgnsutilities.tar.gz && cd cgnsutilities-2.2.0 && \
 cp config.mk.info config.mk && \
 make && pip install . && \
 cd $HOME/repos && \
-wget https://github.com/mdolab/idwarp/archive/9ac06ee.tar.gz -O idwarp.tar.gz && \
-tar -xvf idwarp.tar.gz && cd idwarp-* && \
+wget https://github.com/mdolab/idwarp/archive/v2.2.1.tar.gz -O idwarp.tar.gz && \
+tar -xvf idwarp.tar.gz && cd idwarp-2.2.1 && \
 cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/repos && \
