@@ -9,7 +9,7 @@ folder: mydoc
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Movie.gif" width="640" />
 
-Fig. 1. Pressure and shape evoluation during the optimization process
+Fig. 1. Pressure and shape evaluation during the optimization process
 
 ## Check optimization output file opt_SLSQP.out
 

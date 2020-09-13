@@ -36,7 +36,7 @@ The evoluation of pressure and shape during the optimization is as follows. Refe
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Movie.gif" width="640" />
 
-Fig. 2. Pressure and shape evoluation during the optimization process
+Fig. 2. Pressure and shape evolution during the optimization process
 
 
 {% include links.html %}

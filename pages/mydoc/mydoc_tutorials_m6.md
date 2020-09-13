@@ -30,11 +30,11 @@ Fig. 1. Mesh and FFD points for the Onera M6 wing.
 
 |
 
-The `runScript.py` is based on the one used in the NACA0012 [transonic case](mydoc_tutorials_naca0012_transonic.html) with the following modifications:
+The "runScript.py" is based on the one used in the NACA0012 [transonic case](mydoc_tutorials_naca0012_transonic.html) with the following modifications:
 
-- In `meshOptions`, we set only one symmetry plane, instead of two symmetry planes used in the 2D airfoil case.
+- In "meshOptions", we set only one symmetry plane, instead of two symmetry planes used in the 2D airfoil case.
 
-- We compute the number of spanwise FFD points and set it to `nTwist` by calling `nTwists = DVGeo.addRefAxis("bodyAxis", xFraction=0.25, alignIndex="k")`.
+- We compute the number of spanwise FFD points and set it to "nTwist" by calling "nTwists = DVGeo.addRefAxis("bodyAxis", xFraction=0.25, alignIndex="k")".
 
 - We define a function to change the twist at these spanwise FFD sections. Note that we do NOT change the root twist (we already had angle of attack as design variable), so the first element in the twist design variable is the twist at the 2nd spanwise location.
 
@@ -72,7 +72,7 @@ To run this case, first download [tutorials](https://github.com/DAFoam/tutorials
 docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
 </pre>
 
-**Now you are on the DAFoam Docker container**, run the `preProcessing_pyHyp.sh` script to generate the mesh:
+**Now you are on the DAFoam Docker container**, run the "preProcessing_pyHyp.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing_pyHyp.sh
@@ -90,7 +90,7 @@ Then, use the following command to run the optimization with 4 CPU cores:
 mpirun -np 8 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-For the structured hex mesh, the case ran for 50 steps and took about 3 hours using Intel 2.6 GHz CPU with 8 cores on one Skylake node of [Stampede 2](https://portal.xsede.org/tacc-stampede2). According to `logOpt.txt` and `opt_SLSQP.out`, the initial drag is 0.016597241 and the optimized drag is 0.013540159 with a drag reduction of **18.4%**.
+For the structured hex mesh, the case ran for 50 steps and took about 3 hours using Intel 2.6 GHz CPU with 8 cores on one Skylake node of [Stampede 2](https://portal.xsede.org/tacc-stampede2). According to "logOpt.txt" and "opt_SLSQP.out", the initial drag is 0.016597241 and the optimized drag is 0.013540159 with a drag reduction of **18.4%**.
 
 The evolution of pressure and shape during the optimization is as follows.
 

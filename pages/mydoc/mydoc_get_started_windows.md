@@ -7,7 +7,7 @@ permalink: mydoc_get_started_windows.html
 folder: mydoc
 ---
 
-First open the `Prompt Command` terminal, then go to a tutorial folder. For example, if you download and extract the tutorial files to the `Downloads` foler and want to run the NACA0012 airfoil case with incompressible flow conditions, use this command:
+First open the **Prompt Command** terminal, then go to a tutorial folder. For example, if you download and extract the tutorial files to the Downloads folder and want to run the NACA0012 airfoil case with incompressible flow conditions, use this command:
 
 <pre>
 cd Downloads/tutorials-master/NACA0012_Airfoil/incompressible

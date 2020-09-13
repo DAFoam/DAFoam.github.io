@@ -30,7 +30,7 @@ sudo apt-get update && \
 sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev qt5-default libqt5x11extras5-dev libqt5help5 qtdeclarative5-dev qttools5-dev libqtwebkit-dev freeglut3-dev libqt5opengl5-dev texinfo  libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev --no-install-recommends
 </pre>
 
-After this, create a `packages` in your home directory:
+After this, create a "packages" in your home directory:
 
 <pre>
 mkdir -p $HOME/packages
@@ -161,7 +161,7 @@ v1.2.0      | v1.2.0   | v1.2.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.1  
 
 
 
-To install all the repos in MACH-Aero, first create a `repos` folder in the $HOME directory:
+To install all the repos in MACH-Aero, first create a "repos" folder in the $HOME directory:
 
 <pre>
 mkdir -p $HOME/repos
@@ -226,7 +226,7 @@ export WM_NCOMPPROCS=4 && \
 
 {% include note.html content="In the above command, we replaced the OpenFOAM-v1812's built-in UPstream.C file with a customized one because we need to prevent OpenFOAM from calling the MPI_Finialize function when wrapping OpenFOAM functions using Cython." %}
 
-{% include note.html content="NOTE: The above command will compile OpenFOAM using 4 CPU cores. If you want to compile OpenFOAM using more cores, change the ``WM_NCOMPPROCS`` parameter before running ``./Allwmake``" %}
+{% include note.html content="NOTE: The above command will compile OpenFOAM using 4 CPU cores. If you want to compile OpenFOAM using more cores, change the "WM_NCOMPPROCS" parameter before running `./Allwmake` %}
 
 Finally, verify the installation by running:
 

@@ -30,13 +30,13 @@ Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
 |
 
-The `runScript.py` is similar to the one used in the NACA0012 [subsonic case](mydoc_tutorials_naca0012_subsonic.html) with the following exceptions:
+The "runScript.py" is similar to the one used in the NACA0012 [subsonic case](mydoc_tutorials_naca0012_subsonic.html) with the following exceptions:
 
-- We use `DARhoSimpleCFoam`, which is an OpenFOAM built-in compressible flow solver with the `SIMPLEC` algorithm that is suitable for transonic conditions.
+- We use "DARhoSimpleCFoam", which is an OpenFOAM built-in compressible flow solver with the "SIMPLEC" algorithm that is suitable for transonic conditions.
 
 - The far field velocity is 238 m/s with Mach number of 0.7.
 
-- We use special treatment for the preconditioner matrix to improve the convergene of adjoint linear equation by setting `"transonicPCOption": 1`. This option is only needed for transonic conditions.
+- We use special treatment for the preconditioner matrix to improve the convergence of adjoint linear equation by setting "transonicPCOption": 1. This option is only needed for transonic conditions.
 
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/NACA0012_Airfoil/transonic and run this command to start the DAFoam docker container.
 
@@ -44,7 +44,7 @@ To run this case, first download [tutorials](https://github.com/DAFoam/tutorials
 docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
 </pre>
 
-**Now you are on the DAFoam Docker container**, run the `preProcessing.sh` script to generate the mesh:
+**Now you are on the DAFoam Docker container**, run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh
@@ -56,7 +56,7 @@ Then, use the following command to run the optimization with 4 CPU cores:
 mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-The case ran for 50 steps and took about 25 minutes using Intel 3.0 GHz CPU with 4 cores. According to `logOpt.txt` and `opt_SLSQP.out`, the initial drag is 0.029768872 and the optimized drag is 0.023071713 with a drag reduction of **22.5%**.
+The case ran for 50 steps and took about 25 minutes using Intel 3.0 GHz CPU with 4 cores. According to "logOpt.txt" and "opt_SLSQP.out", the initial drag is 0.029768872 and the optimized drag is 0.023071713 with a drag reduction of **22.5%**.
 
 The evolution of pressure and shape during the optimization is as follows.
 
@@ -64,6 +64,6 @@ The evolution of pressure and shape during the optimization is as follows.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_Transonic_Movie.gif" width="640" />
 
-Fig. 2. Pressure and shape evoluation during the optimization process
+Fig. 2. Pressure and shape evolution during the optimization process
 
 {% include links.html %}
