@@ -30,7 +30,7 @@ Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
 |
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar/extract it. If you use **Linux** or **MacOS**, open a `Terminal`, and go to the tutorial folder of NACA0012 airfoil with incompressible conditions. For example, if you extract the tutorial files to `Downloads`, run this command:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar/extract it. If you use **Linux** or **MacOS**, open a Terminal, and go to the tutorial folder of NACA0012 airfoil with incompressible conditions. For example, if you extract the tutorial files to the Downloads folder, run this command:
 
 <pre>
 cd Downloads/tutorials-master/NACA0012_Airfoil/incompressible
@@ -50,9 +50,9 @@ docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/daf
 
 If you use **Windows**, use the commands on [this page](mydoc_get_started_windows.html) instead.
 
-The above command will start a light-weight virtual machine (container), mount the current directory on your local OS (`tutorials-master/NACA0012_Airfoil/incompressible`) to the container's `mount` directory, login to the container's `mount` directory as dafoamuser, and set the relevant DAFoam environmental variables. You may see something like this on your terminal: `dafoamuser@00fb6ceac4da:~/mount$`. 
+The above command will start a light-weight virtual machine (container), mount the current directory on your local OS (`tutorials-master/NACA0012_Airfoil/incompressible`) to the container's **mount** directory, login to the container's mount directory as dafoamuser, and set the relevant DAFoam environmental variables. You may see something like this on your terminal: `dafoamuser@00fb6ceac4da:~/mount$`. 
 
-**Now you are on the DAFoam Docker container**, run the `preProcessing.sh` script to generate the mesh:
+**Now you are on the DAFoam Docker container**, run the preProcessing.sh script to generate the mesh:
 
 <pre>
 ./preProcessing.sh
@@ -64,7 +64,7 @@ Then, use the following command to run the optimization with 4 CPU cores:
 mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-The optimization progress will be printed to the screen and also written to `logOpt.txt` (we will elaborate on `logOpt.txt` later on [this page](mydoc_get_started_runscript.html)). This case ran for 50 optimization iterations and took about 15 minutes with Intel 3.0 GHz CPU.
+The optimization progress will be printed to the screen and also written to logOpt.txt (we will elaborate on logOpt.txt later on [this page](mydoc_get_started_runscript.html)). This case ran for 50 optimization iterations and took about 15 minutes with Intel 3.0 GHz CPU.
 
 {% include note.html content="For MacOS and Windows, make sure you open the Docker Desktop app before running Docker commands." %}
 
