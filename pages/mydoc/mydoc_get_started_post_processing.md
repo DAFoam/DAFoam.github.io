@@ -85,7 +85,7 @@ Fig. 2. Open the paraview.foam file
 
 Then at the left panel, select "**Decomposed Case**" for "Case Type". 
 
-{% include note.html content="The "Decomposed Case" type tells Paraview to load data from processor* folders since we ran this case in parallel using 4 CPU cores. If one runs a serial run with one CPU core, select "**Reconstructed Case**" for "Case Type" instead." %}
+{% include note.html content="The **Decomposed Case** type tells Paraview to load data from processor* folders since we ran this case in parallel using 4 CPU cores. If one runs a serial run with one CPU core, select **Reconstructed Case** for **Case Type** instead." %}
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Decomposed_Case.png" width="300" />
 
@@ -97,7 +97,7 @@ Fig. 3. Select Case Type
 
 Next, scroll down at the left panel and check "Camera Parallel Projection".
 
-{% include note.html content="The "Camera Parallel Projection" option is preferable for zoom-in visualization." %}
+{% include note.html content="The **Camera Parallel Projection** option is preferable for zoom-in visualization." %}
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Parallel_Projection.png" width="300" />
 

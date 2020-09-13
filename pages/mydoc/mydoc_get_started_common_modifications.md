@@ -22,7 +22,7 @@ To increase the number of FFD points, one needs to increase "nx" (number of FFD 
 To run the optimization using 8 cores, first clean up previous results `./Allclean`, then run:
 
 <pre>
-./preProcessing.sh && mpirun -np 8 python runScript.py 2>&1 | tee optLog.txt`
+./preProcessing.sh && mpirun -np 8 python runScript.py 2>&1 | tee optLog.txt
 </pre>
 
 ## How to optimize a different airfoil?
