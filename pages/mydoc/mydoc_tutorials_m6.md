@@ -34,7 +34,7 @@ The "runScript.py" is based on the one used in the NACA0012 [transonic case](myd
 
 - In "meshOptions", we set only one symmetry plane, instead of two symmetry planes used in the 2D airfoil case.
 
-- We compute the number of spanwise FFD points and set it to "nTwist" by calling "nTwists = DVGeo.addRefAxis("bodyAxis", xFraction=0.25, alignIndex="k")".
+- We compute the number of spanwise FFD points and set it to "nTwist" by calling nTwists = DVGeo.addRefAxis("bodyAxis", xFraction=0.25, alignIndex="k").
 
 - We define a function to change the twist at these spanwise FFD sections. Note that we do NOT change the root twist (we already had angle of attack as design variable), so the first element in the twist design variable is the twist at the 2nd spanwise location.
 
