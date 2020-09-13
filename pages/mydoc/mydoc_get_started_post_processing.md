@@ -13,7 +13,7 @@ Fig. 1. Pressure and shape evaluation during the optimization process
 
 ## Check optimization output file opt_SLSQP.out
 
-Once optimization is done, first check opt_SLSQP.out in tutorials-master/NACA0012_Airfoil/incompressible. opt_SLSQP.out contains the variation of objective function with respect to the optimization iteration:
+Once optimization is done, first check "opt_SLSQP.out" in tutorials-master/NACA0012_Airfoil/incompressible. "opt_SLSQP.out" contains the variation of objective function with respect to the optimization iteration:
 
 ```c++
        ---------------------------------------------------------------------------
@@ -44,7 +44,7 @@ Once optimization is done, first check opt_SLSQP.out in tutorials-master/NACA001
             NUMBER OF GRAD-CALLS:  NGRAD =  51
 ```
 
-In this case, we use the SLSQP optimizer that prints objective function value from the 1st iteration. To find the objective for the 0th iteration (baseline design), you need to go back to logOpt.txt (see more detailed explanation of this file from [this page](mydoc_get_started_runscript.html)):
+In this case, we use the SLSQP optimizer that prints objective function value from the 1st iteration. To find the objective for the 0th iteration (baseline design), you need to go back to "logOpt.txt" (see more detailed explanation of this file from [this page](mydoc_get_started_runscript.html)):
 
 ```python
 +--------------------------------------------------------------------------+
@@ -73,7 +73,7 @@ The objective (CD) is 0.020820258 for the baseline design and drops to 0.0173768
 
 ## Visualize the flow fields using Paraview
 
-Next, we can use [Paraview](https://www.paraview.org) to visualize the flow fields. Download the Paraview binaries [from here](https://www.paraview.org/download). They are ready to use for Windows, Linux, and MacOS. Once installed, open the Paraview app and click [File->Open...] from the top menu. In the pop-up window, navigate to tutorials-master/NACA0012_Airfoil/incompressible, select the paraview.foam file, and click [OK].
+Next, we can use [Paraview](https://www.paraview.org) to visualize the flow fields. Download the Paraview binaries [from here](https://www.paraview.org/download). They are ready to use for Windows, Linux, and MacOS. Once installed, open the Paraview app and click "File->Open..." from the top menu. In the pop-up window, navigate to tutorials-master/NACA0012_Airfoil/incompressible, select the paraview.foam file, and click "OK".
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Open.png" width="300" />
 
@@ -83,9 +83,9 @@ Fig. 2. Open the paraview.foam file
 
 |
 
-Then at the left panel, select [**Decomposed Case**] for [Case Type]. 
+Then at the left panel, select "**Decomposed Case**" for "Case Type". 
 
-{% include note.html content="The [Decomposed Case] type tells Paraview to load data from processor* folders since we ran this case in parallel using 4 CPU cores. If one runs a serial run with one CPU core, select [**Reconstructed Case**] for [Case Type] instead." %}
+{% include note.html content="The "Decomposed Case" type tells Paraview to load data from processor* folders since we ran this case in parallel using 4 CPU cores. If one runs a serial run with one CPU core, select "**Reconstructed Case**" for "Case Type" instead." %}
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Decomposed_Case.png" width="300" />
 
@@ -95,9 +95,9 @@ Fig. 3. Select Case Type
 
 |
 
-Next, scroll down at the left panel and check [Camera Parallel Projection].
+Next, scroll down at the left panel and check "Camera Parallel Projection".
 
-{% include note.html content="The [Camera Parallel Projection] option is preferable for zoom-in visualization." %}
+{% include note.html content="The "Camera Parallel Projection" option is preferable for zoom-in visualization." %}
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Parallel_Projection.png" width="300" />
 
@@ -107,7 +107,7 @@ Fig. 4. Check Camera Parallel Projection
 
 |
 
-Now, click [Apply] at the left panel to load the flow fields. By default, the pressure field (p) will be load, but you can choose other flow variables to load at the top panel. Also, the [Surface] representation will be used by default, you can change it to [Surface With Edges] to visualize the mesh.
+Now, click "Apply" at the left panel to load the flow fields. By default, the pressure field (p) will be load, but you can choose other flow variables to load at the top panel. Also, the "Surface" representation will be used by default, you can change it to "Surface With Edges" to visualize the mesh.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_P_Surface.png" width="300" />
 
