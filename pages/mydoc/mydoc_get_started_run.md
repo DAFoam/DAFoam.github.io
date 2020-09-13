@@ -50,7 +50,7 @@ docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/daf
 
 If you use **Windows**, use the commands on [this page](mydoc_get_started_windows.html) instead.
 
-The above command will start a light-weight virtual machine (container), mount the current directory on your local OS (`tutorials-master/NACA0012_Airfoil/incompressible`) to the container's **mount** directory, login to the container's mount directory as dafoamuser, and set the relevant DAFoam environmental variables. You may see something like this on your terminal: `dafoamuser@00fb6ceac4da:~/mount$`. 
+The above command will start a light-weight virtual machine (container), mount the current directory on your local OS (tutorials-master/NACA0012_Airfoil/incompressible) to the container's **mount** directory, login to the container's mount directory as dafoamuser, and set the relevant DAFoam environmental variables. You may see something like this on your terminal: `dafoamuser@00fb6ceac4da:~/mount$`. 
 
 **Now you are on the DAFoam Docker container**, run the preProcessing.sh script to generate the mesh:
 
