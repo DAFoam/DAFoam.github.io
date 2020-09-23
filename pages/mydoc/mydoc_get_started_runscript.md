@@ -119,8 +119,6 @@ Next, the "daOptions" dictionary contains all the DAFoam parameters for primal a
 
 "DASimpleFoam" is an incompressible solver that uses the SIMPLE algorithm, and it is derived from the OpenFOAM's built-in solver simpleFoam with modification to compute adjoint derivatives. 
 
-The "turbulenceModel" parameter should use a turbulence model that is consistent with the one defined in constant/turbulenceProperties. 
-
 The "primalMinResTol" parameter is the residual convergence tolerance for the primal solver (DASimpleFoam). 
 
 The "primalBC" dictionary defines the boundary conditions for primal solution. Note that if primalBC is defined, it will overwrite the values defined in the 0 folder. Here we need to provide the variable name, patch names, and value to set for each variable. If "primalBC" is left blank, we will use the BCs defined in the 0 folder. 
@@ -139,8 +137,6 @@ Finally, we reserve an empty "designVar" dictionary and will add values for it l
 daOptions = {
     "designSurfaces": ["wing"],
     "solverName": "DASimpleFoam",
-    "flowCondition": "Incompressible",
-    "turbulenceModel": "SpalartAllmaras",
     "primalMinResTol": 1.0e-8,
     "primalBC": {
         "U0": {"variable": "U", "patches": ["inout"], "value": [U0, 0.0, 0.0]},
@@ -505,13 +501,13 @@ After the primal solution is done, we call the adjoint solver to compute derivat
 dRdWT: 0 of 380, ExecutionTime: 9 s
 dRdWT: 100 of 380, ExecutionTime: 10 s
 ...
-Solving Linear Euqation... 17 s
+Solving Linear Equation... 17 s
 Main iteration 0 KSP Residual norm 3.216462436656e-02 17 s
 Main iteration 100 KSP Residual norm 5.825540354005e-05 18 s
 Main iteration 167 KSP Residual norm 2.962925212261e-08 19 s 
 ...
 Computing total derivatives....
-Caclculating the dXvdFFD matrix with epsFFD: 0.001
+Calculating the dXvdFFD matrix with epsFFD: 0.001
 Computing total derivatives for shapey
 Partial deriative matrix created. 21 s
 dRdFFD: 0 of 20, ExecutionTime: 21 s
