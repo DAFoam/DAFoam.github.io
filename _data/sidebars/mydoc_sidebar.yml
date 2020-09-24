@@ -84,8 +84,8 @@ entries:
     output: web, pdf
     folderitems:
 
-    - title: Aerodynamics
-      url: /mydoc_tutorials_aero.html
+    - title: Overview
+      url: /mydoc_tutorials_overview.html
       output: web, pdf
 
       subfolders:
