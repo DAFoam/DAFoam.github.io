@@ -82,7 +82,8 @@ entries:
   
   - title: Tutorials
     output: web, pdf
-
+    folderitems:
+    
     subfolders:
     - title: Aerodynamics
       output: web, pdf
