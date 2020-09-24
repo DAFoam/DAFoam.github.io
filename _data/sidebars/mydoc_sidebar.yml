@@ -112,7 +112,35 @@ entries:
         - title: Onera M6 wing
           url: /mydoc_tutorials_aero_m6.html
           output: web, pdf
+
+      subfolders:
+      - title: Heat transfer
+        output: web, pdf
+        subfolderitems:
   
+        - title: U bend channel
+          url: /mydoc_tutorials_heat_ubend.html
+          output: web, pdf
+      
+      subfolders:
+      - title: Structure
+        output: web, pdf
+        subfolderitems:
+  
+        - title: Plate hole
+          url: /mydoc_tutorials_struct_platehole.html
+          output: web, pdf
+      
+      subfolders:
+      - title: Hydrodynamics
+        output: web, pdf
+        subfolderitems:
+  
+        - title: JBC hull
+          url: /mydoc_tutorials_hydro_jbc.html
+          output: web, pdf
+        
+
   - title: Doxygen
     output: web, pdf
     folderitems:
