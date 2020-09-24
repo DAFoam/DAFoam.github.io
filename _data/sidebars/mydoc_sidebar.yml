@@ -89,7 +89,7 @@ entries:
       output: web, pdf
 
       subfolders:
-      - title: Cases
+      - title: Aerodynamics
         output: web, pdf
         subfolderitems:
   
@@ -112,13 +112,8 @@ entries:
         - title: Onera M6 wing
           url: /mydoc_tutorials_aero_m6.html
           output: web, pdf
-
-    - title: Heat transfer
-      url: /mydoc_tutorials_heat.html
-      output: web, pdf
-
-      subfolders:
-      - title: Cases
+      
+      - title: Heat transfer
         output: web, pdf
         subfolderitems:
 
@@ -126,12 +121,7 @@ entries:
           url: /mydoc_tutorials_heat_ubend.html
           output: web, pdf
 
-    - title: Structure
-      url: /mydoc_tutorials_struct.html
-      output: web, pdf
-
-      subfolders:
-      - title: Cases
+      - title: Structure
         output: web, pdf
         subfolderitems:
   
@@ -139,12 +129,7 @@ entries:
           url: /mydoc_tutorials_struct_platehole.html
           output: web, pdf
 
-    - title: Hydrodynamics
-      url: /mydoc_tutorials_hydro.html
-      output: web, pdf
-
-      subfolders:
-      - title: Cases
+      - title: Hydrodynamics
         output: web, pdf
         subfolderitems:
   
