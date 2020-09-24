@@ -84,24 +84,34 @@ entries:
     output: web, pdf
     folderitems:
 
-      - title: NACA0012 airfoil (low speed)
-        url: /mydoc_tutorials_naca0012_incompressible.html
+    subfolders:
+    - title: Aerodynamics
+      output: web, pdf
+      subfolderitems:
+
+      subfolders:
+      - title: NACA0012 airfoil
         output: web, pdf
-      
-      - title: NACA0012 airfoil (subsonic)
-        url: /mydoc_tutorials_naca0012_subsonic.html
-        output: web, pdf
-      
-      - title: NACA0012 airfoil (transonic)
-        url: /mydoc_tutorials_naca0012_transonic.html
-        output: web, pdf
-      
-      - title: NACA0012 airfoil (multipoint)
-        url: /mydoc_tutorials_naca0012_multipoint.html
-        output: web, pdf
+        subfolderitems:
+
+        - title: Incompressible
+          url: /mydoc_tutorials_aero_naca0012_incompressible.html
+          output: web, pdf
+        
+        - title: Subsonic
+          url: /mydoc_tutorials_aero_naca0012_subsonic.html
+          output: web, pdf
+        
+        - title: Transonic
+          url: /mydoc_tutorials_aero_naca0012_transonic.html
+          output: web, pdf
+        
+        - title: Multipoint
+          url: /mydoc_tutorials_aero_naca0012_multipoint.html
+          output: web, pdf
       
       - title: Onera M6 wing
-        url: /mydoc_tutorials_m6.html
+        url: /mydoc_tutorials_aero_m6.html
         output: web, pdf
   
   - title: Doxygen

@@ -3,7 +3,7 @@ title: NACA0012 airfoil multipoint
 keywords: tutorial, multipoint
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_naca0012_multipoint.html
+permalink: mydoc_tutorials_aero_naca0012_multipoint.html
 folder: mydoc
 ---
 

@@ -3,7 +3,7 @@ title: NACA0012 airfoil (transonic)
 keywords: tutorial, NACA0012
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_naca0012_transonic.html
+permalink: mydoc_tutorials_aero_naca0012_transonic.html
 folder: mydoc
 ---
 

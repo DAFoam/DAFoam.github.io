@@ -3,7 +3,7 @@ title: Onera M6 wing
 keywords: tutorial, m6
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_m6.html
+permalink: mydoc_tutorials_aero_m6.html
 folder: mydoc
 ---
 

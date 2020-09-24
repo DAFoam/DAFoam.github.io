@@ -3,7 +3,7 @@ title: NACA0012 airfoil (incompressible)
 keywords: tutorial, NACA0012
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_naca0012_incompressible.html
+permalink: mydoc_tutorials_aero_naca0012_incompressible.html
 folder: mydoc
 ---
 
