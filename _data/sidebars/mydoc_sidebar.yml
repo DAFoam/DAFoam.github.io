@@ -85,7 +85,7 @@ entries:
     folderitems:
 
     - title: Aerodynamics
-      url: /mydoc_installation_aero.html
+      url: /mydoc_tutorials_aero.html
       output: web, pdf
 
       subfolders:
@@ -114,7 +114,7 @@ entries:
           output: web, pdf
 
     - title: Heat transfer
-      url: /mydoc_installation_heat.html
+      url: /mydoc_tutorials_heat.html
       output: web, pdf
 
       subfolders:
@@ -127,7 +127,7 @@ entries:
           output: web, pdf
 
     - title: Structure
-      url: /mydoc_installation_struct.html
+      url: /mydoc_tutorials_struct.html
       output: web, pdf
 
       subfolders:
@@ -140,7 +140,7 @@ entries:
           output: web, pdf
 
     - title: Hydrodynamics
-      url: /mydoc_installation_hydro.html
+      url: /mydoc_tutorials_hydro.html
       output: web, pdf
 
       subfolders:
