@@ -83,60 +83,75 @@ entries:
   - title: Tutorials
     output: web, pdf
     folderitems:
-    
-    subfolders:
+
     - title: Aerodynamics
+      url: /mydoc_installation_aero.html
       output: web, pdf
-      subfolderitems:
 
-      - title: NACA0012 airfoil (low speed)
-        url: /mydoc_tutorials_aero_naca0012_incompressible.html
+      subfolders:
+      - title: Cases
         output: web, pdf
-      
-      - title: NACA0012 airfoil (subsonic)
-        url: /mydoc_tutorials_aero_naca0012_subsonic.html
-        output: web, pdf
-      
-      - title: NACA0012 airfoil (transonic)
-        url: /mydoc_tutorials_aero_naca0012_transonic.html
-        output: web, pdf
-      
-      - title: NACA0012 airfoil (multipoint)
-        url: /mydoc_tutorials_aero_naca0012_multipoint.html
-        output: web, pdf
-      
-      - title: Onera M6 wing
-        url: /mydoc_tutorials_aero_m6.html
-        output: web, pdf
-
-    subfolders:
-    - title: Heat transfer
-      output: web, pdf
-      subfolderitems:
-
-      - title: U bend channel
-        url: /mydoc_tutorials_heat_ubend.html
-        output: web, pdf
-    
-    subfolders:
-    - title: Structure
-      output: web, pdf
-      subfolderitems:
-
-      - title: Plate hole
-        url: /mydoc_tutorials_struct_platehole.html
-        output: web, pdf
-    
-    subfolders:
-    - title: Hydrodynamics
-      output: web, pdf
-      subfolderitems:
-
-      - title: JBC hull
-        url: /mydoc_tutorials_hydro_jbc.html
-        output: web, pdf
+        subfolderitems:
+  
+        - title: NACA0012 airfoil (low speed)
+          url: /mydoc_tutorials_aero_naca0012_incompressible.html
+          output: web, pdf
         
+        - title: NACA0012 airfoil (subsonic)
+          url: /mydoc_tutorials_aero_naca0012_subsonic.html
+          output: web, pdf
+        
+        - title: NACA0012 airfoil (transonic)
+          url: /mydoc_tutorials_aero_naca0012_transonic.html
+          output: web, pdf
+        
+        - title: NACA0012 airfoil (multipoint)
+          url: /mydoc_tutorials_aero_naca0012_multipoint.html
+          output: web, pdf
+        
+        - title: Onera M6 wing
+          url: /mydoc_tutorials_aero_m6.html
+          output: web, pdf
 
+    - title: Heat transfer
+      url: /mydoc_installation_heat.html
+      output: web, pdf
+
+      subfolders:
+      - title: Cases
+        output: web, pdf
+        subfolderitems:
+
+        - title: U bend channel
+          url: /mydoc_tutorials_heat_ubend.html
+          output: web, pdf
+
+    - title: Structure
+      url: /mydoc_installation_struct.html
+      output: web, pdf
+
+      subfolders:
+      - title: Cases
+        output: web, pdf
+        subfolderitems:
+  
+        - title: Plate hole
+          url: /mydoc_tutorials_struct_platehole.html
+          output: web, pdf
+
+    - title: Hydrodynamics
+      url: /mydoc_installation_hydro.html
+      output: web, pdf
+
+      subfolders:
+      - title: Cases
+        output: web, pdf
+        subfolderitems:
+  
+        - title: JBC hull
+          url: /mydoc_tutorials_hydro_jbc.html
+          output: web, pdf
+        
   - title: Doxygen
     output: web, pdf
     folderitems:
