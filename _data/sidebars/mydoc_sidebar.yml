@@ -112,6 +112,18 @@ entries:
         - title: Onera M6 wing
           url: /mydoc_tutorials_aero_m6.html
           output: web, pdf
+        
+        - title: DPW4 aircraft
+          url: /mydoc_tutorials_aero_dpw4.html
+          output: web, pdf
+        
+        - title: Rotor37 compressor
+          url: /mydoc_tutorials_aero_rotor37.html
+          output: web, pdf
+        
+        - title: NREL6 wind turbine
+          url: /mydoc_tutorials_aero_nrel6.html
+          output: web, pdf
       
       - title: Heat transfer
         output: web, pdf
