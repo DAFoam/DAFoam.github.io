@@ -84,7 +84,7 @@ The above script will generate a structured hex mesh using pyHyp. Alternatively,
 ./preProcessing_snappHexMesh.sh
 </pre>
 
-Then, use the following command to run the optimization with 4 CPU cores:
+Then, use the following command to run the optimization with 8 CPU cores:
 
 <pre>
 mpirun -np 8 python runScript.py 2>&1 | tee logOpt.txt
