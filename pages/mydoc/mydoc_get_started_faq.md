@@ -1,13 +1,13 @@
 ---
-title: Common modifications
-keywords: new case, modification
+title: FAQ
+keywords: new case, faq
 summary:
 sidebar: mydoc_sidebar
-permalink: mydoc_get_started_common_modifications.html
+permalink: mydoc_get_started_faq.html
 folder: mydoc
 ---
 
-Here are a few common modifications for the NACA0012 airfoil tutorial. 
+The following are the frequently asked questions (FAQ) for the NACA0012 airfoil tutorial. 
 
 ## How to use a finer mesh?
 
@@ -45,6 +45,21 @@ This tutorial uses an incompressible flow solver DASimpleFoam, so the Mach numbe
 
 Refer to the tutorial tutorials-master/NACA0012_Airfoil/multipoint.
 
+## How to extract the optimized geometry?
+
+If you run the optimization in serial, load the OpenFOAM environment and run this:
+
+<pre>
+surfaceMeshTriangulate -patches '(wing)' -latestTime optShape.stl
+</pre>
+
+If you run the optimization in parallel using 4 cores, run this:
+
+<pre>
+mpirun -np 4 surfaceMeshTriangulate -patches '(wing)' -latestTime -parallel optShape.stl
+</pre>
+
+The above command will extract the patch "wing" to a stl file called "optShape.stl". If you have multiple patches to extract, modify the "-patches" flag, e.g., -patches '(wing body)'. Also, the "-lastTime" flag extracts stl files for the last optimization step. If you don't add the "-lastTime" flag, it will extract stl files for all optimization steps.
 
 ## How to run an optimization for 3D wings?
 

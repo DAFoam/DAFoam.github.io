@@ -44,8 +44,8 @@ entries:
       url: /mydoc_get_started_runscript.html
       output: web, pdf
     
-    - title: Common modifications
-      url: /mydoc_get_started_common_modifications.html
+    - title: FAQ
+      url: /mydoc_get_started_faq.html
       output: web, pdf
 
   - title: Download
