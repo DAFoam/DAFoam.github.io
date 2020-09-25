@@ -41,10 +41,6 @@ To run at a different lift coefficient, modify "CL_target", then run `mpirun -np
 
 This tutorial uses an incompressible flow solver DASimpleFoam, so the Mach number should be less than 0.1. For subsonic flow conditions (e.g., ~0.1 < M < ~0.6), refer to the settings in tutorials-master/NACA0012_Airfoil/subsonic. For the transonic flow conditions, refer to tutorials-master/NACA0012_Airfoil/transonic. Note that both runScript.py and the OpenFOAM configuration files (e.g., fvSchemes, fvSolution) are modified for these flow conditions.
 
-## How to run a multipoint optimization?
-
-Refer to the tutorial tutorials-master/NACA0012_Airfoil/multipoint.
-
 ## How to extract the optimized geometry?
 
 If you run the optimization in serial, load the OpenFOAM environment and run this:
@@ -60,6 +56,10 @@ mpirun -np 4 surfaceMeshTriangulate -patches '(wing)' -latestTime -parallel optS
 </pre>
 
 The above command will extract the patch "wing" to a stl file called "optShape.stl". If you have multiple patches to extract, modify the "-patches" flag, e.g., -patches '(wing body)'. Also, the "-lastTime" flag extracts stl files for the last optimization step. If you don't add the "-lastTime" flag, it will extract stl files for all optimization steps.
+
+## How to run a multipoint optimization?
+
+Refer to the tutorial tutorials-master/NACA0012_Airfoil/multipoint.
 
 ## How to run an optimization for 3D wings?
 
