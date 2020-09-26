@@ -72,16 +72,16 @@ To run this case, first download [tutorials](https://github.com/DAFoam/tutorials
 docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
 </pre>
 
-**Now you are on the DAFoam Docker container**, run the "preProcessing_pyHyp.sh" script to generate the mesh:
+**Now you are on the DAFoam Docker container**, run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
-./preProcessing_pyHyp.sh
+./preProcessing.sh
 </pre>
 
 The above script will generate a structured hex mesh using pyHyp. Alternatively, you can generate an unstructured snappy hex mesh by calling:
 
 <pre>
-./preProcessing_snappHexMesh.sh
+./preProcessing_snappyHexMesh.sh
 </pre>
 
 Then, use the following command to run the optimization with 8 CPU cores:
