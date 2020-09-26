@@ -41,6 +41,10 @@ To run at a different lift coefficient, modify "CL_target", then run `mpirun -np
 
 This tutorial uses an incompressible flow solver DASimpleFoam, so the Mach number should be less than 0.1. For subsonic flow conditions (e.g., ~0.1 < M < ~0.6), refer to the settings in tutorials-master/NACA0012_Airfoil/subsonic. For the transonic flow conditions, refer to tutorials-master/NACA0012_Airfoil/transonic. Note that both runScript.py and the OpenFOAM configuration files (e.g., fvSchemes, fvSolution) are modified for these flow conditions.
 
+## How to use a different turbulence model?
+
+To use the kOmegaSST or kEpsilon model, change the `RASModel` parameter to `kOmegaSST` or `kEpsilon` in constant/turbulenceProperties.
+
 ## How to extract the optimized geometry?
 
 If you run the optimization in serial, load the OpenFOAM environment and run this:
