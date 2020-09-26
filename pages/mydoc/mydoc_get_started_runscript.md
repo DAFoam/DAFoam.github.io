@@ -87,7 +87,7 @@ import numpy as np
 
 In the next section, we define the optimizer to use in "--opt". We use [pyOptSparse](https://github.com/mdolab/pyoptsparse) to set optimization problems. pyOptSparse supports multiple open-source and commercial optimizers. However, in runScript.py, we only provide optimizer setup for [slsqp](http://www.pyopt.org/reference/optimizers.slsqp.html) (default) and [snopt](https://ccom.ucsd.edu/~optimizers/solvers/snopt). Refer to [pyOptSparse documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com/en/latest/) for all supported optimizers.
 
-The "--task" argument defines the task to run, which includes "opt": run optimization, "run": run primal and adjoint solver once, "solveCL": solve for alpha0 for a given CL_target, and "testSensShape": verify the adjoint sensitivity.
+The "--task" argument defines the task to run, which includes "opt": run optimization, "runPrimal": run the primal analysis, "runAdjoint": run the adjoint derivative computation, "solveCL": solve the angle of attack (alpha0) for a given CL_target. "verifySens": verify the adjoint accuracy, "testAPI": test the API of tutorials using Travis.
 
 We then define some global parameters such at "U0": the far field velocity, "p0": the far field pressure, "nuTilda0", "k0", "epsilon0", "omega0": the far field turbulence variables, "CL_target": the target lift coefficient, "alpha0": the initial angle of attack, "A0": the reference area to normalize drag and lift coefficients.
 
@@ -353,7 +353,7 @@ optFuncs.gcomm = gcomm
 
 In the final section, we set up the tasks. For "opt", we create an optimization problem ("optProb = Optimization") through the [pyOptSparse](https://github.com/mdolab/pyoptsparse) module and provide a function to compute objective ("objFun=..."). Here optFuncs.calcObjFuncValues is defined in "optFuncs.py". Then we add the objective function (drag) and physical constraint (lift). The names in "optProb.addObj" and "optProb.addCon" need to be consistent with the names defined in "objFunc" in daOption. Before running the optimization, we call "DASolver.runColoring()" to calculate the graph coloring for the dRdW matrix. Then we call "opt = OPT" to create the optimization and call "sol = opt" to solve the optimization. Here we provide a function to compute derivatives (sens=..). Again, optFuncs.calcObjFuncSens is defined in "optFuncs.py". 
 
-Other tasks include "run": run the primal and adjoint solver once, "solveCL": solve the angle of attack (alpha0) for a given CL_target. "testSensShape": verify the adjoint accuracy.
+Other tasks include "runPrimal": run the primal analysis, "runAdjoint": run the adjoint derivative computation, "solveCL": solve the angle of attack (alpha0) for a given CL_target. "verifySens": verify the adjoint accuracy, "testAPI": test the API of tutorials using Travis.
     
 
 ```python
@@ -380,17 +380,27 @@ if args.task == "opt":
     if gcomm.rank == 0:
         print(sol)
 
-elif args.task == "run":
+elif args.task == "runPrimal":
 
-    optFuncs.run()
+    optFuncs.runPrimal()
+
+elif args.task == "runAdjoint":
+
+    optFuncs.runAdjoint()
 
 elif args.task == "solveCL":
 
     optFuncs.solveCL(CL_target, "alpha", "CL")
 
-elif args.task == "testSensShape":
+elif args.task == "verifySens":
 
-    optFuncs.testSensShape()
+    optFuncs.verifySens()
+
+elif args.task == "testAPI":
+
+    DASolver.setOption("primalMinResTol", 1e-2)
+    DASolver.updateDAOption()
+    optFuncs.runPrimal()
 
 else:
     print("task arg not found!")
