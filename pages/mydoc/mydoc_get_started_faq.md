@@ -45,7 +45,7 @@ This tutorial uses an incompressible flow solver DASimpleFoam, so the Mach numbe
 
 To use the kOmegaSST or kEpsilon model, change the `RASModel` parameter to `kOmegaSST` or `kEpsilon` in constant/turbulenceProperties.
 
-## How to determine the number of CPU cores to use and how much memory does a job need?
+## How many CPU cores to use and how much memory does it need?
 
 We recommend using one CPU core and reserve 2 GB memory per 10,000 cells. That being said, for a one million cell case, we recommend using 100 CPU cores and reserve 200 GB memory.
 
