@@ -7,7 +7,7 @@ permalink: mydoc_tutorials_overview.html
 folder: mydoc
 ---
 
-DAFoam supports high-fidelity design optimization for a wide range of disciplines, e.g., aerodynamics, heat transfer, structure, and hydrodynamics. 
+DAFoam supports high-fidelity design optimization for a wide range of disciplines, e.g., aerodynamics, heat transfer, solid mechanics, and hydrodynamics. 
 
 The optimization configurations for the DAFoam tutorials are available from [here](http://github.com/dafoam/tutorials). For most of the tutorials, run this command for pre-processing:
 

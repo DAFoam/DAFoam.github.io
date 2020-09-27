@@ -137,7 +137,7 @@ entries:
           url: /mydoc_tutorials_heat_ubend.html
           output: web, pdf
 
-      - title: Structure
+      - title: Solid mechanics
         output: web, pdf
         subfolderitems:
   
