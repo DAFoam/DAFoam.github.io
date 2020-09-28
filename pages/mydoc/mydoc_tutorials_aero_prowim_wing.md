@@ -19,9 +19,15 @@ Design variables: 120 FFD points moving in the y direction
 Constraints: Volume, thickness, and lift
 Propeller model: Actuator disk
 Mach number: 0.3
-Mesh cells: 40K
+Mesh cells: 190 K
 Adjoint solver: DARhoSimpleFoam
 </pre>
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Prowim_FFD.png" width="500" />
+
+Fig. 1. Mesh and FFD points for the Prowim wing-propeller case
+
+|
 
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/Prowim_Wing_Propeller and run this command to start the DAFoam docker container.
 
@@ -35,10 +41,10 @@ docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/daf
 ./preProcessing.sh
 </pre>
 
-Then, use the following command to run the optimization with 8 CPU cores:
+We recommend running this case on an HPC system with 20 CPU cores:
 
 <pre>
-mpirun -np 8 python runScript.py 2>&1 | tee logOpt.txt
+mpirun -np 20 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
 {% include links.html %}
