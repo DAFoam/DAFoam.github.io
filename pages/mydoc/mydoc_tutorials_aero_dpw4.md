@@ -19,9 +19,15 @@ Design variables: 216 FFD points moving in the z direction, 9 wing twists, one t
 Constraints: Volume, thickness, LE/TE, and lift constraints (total number: 771)
 Mach number: 0.85
 Reynolds number: 5 million
-Mesh cells: 100K
+Mesh cells: 860 K
 Solver: DARhoSimpleCFoam
 </pre>
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_FFD.png" width="500" />
+
+Fig. 1. Mesh and FFD points for the DPW4 wing-body-tail configuration
+
+|
 
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/DPW4_Aircraft and run this command to start the DAFoam docker container.
 
