@@ -17,9 +17,15 @@ Geometry: Plate hole
 Objective function: Weight
 Design variables: 24 FFD points moving in the x and y directions
 Constraints: Symmetry constraint (total number: 18), max stress constraint
-Mesh cells: 4K
+Mesh cells: 4 K
 Solver: DASolidDisplacementFoam
 </pre>
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Plate_FFD.png" width="500" />
+
+Fig. 1. Mesh and FFD points for the plate hole case
+
+|
 
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/PlateHole_Structure and run this command to start the DAFoam docker container.
 

@@ -19,9 +19,15 @@ Design variables: 114 FFD points moving in the x, y, and z directions
 Constraints: Symmetry constraint (total number: 38)
 Mach number: 0.02
 Reynolds number: 4.2e4
-Mesh cells: 4.8K
+Mesh cells: 4.8 K
 Solver: DASimpleTFoam
 </pre>
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/UBend_FFD.png" width="500" />
+
+Fig. 1. Mesh and FFD points for the U bend channel case
+
+|
 
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/UBend_Channel and run this command to start the DAFoam docker container.
 
