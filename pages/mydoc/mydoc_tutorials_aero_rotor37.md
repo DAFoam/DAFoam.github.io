@@ -17,10 +17,16 @@ Geometry: Rotor37
 Objective function: Torque
 Design variables: 50 FFD points moving in the y and z directions
 Constraints: Constant mass flow rate and total pressure ratio
-Rotation speed: -1800 rad/s
-Mesh cells: 40K
+Rotation speed: 1800 rad/s
+Mesh cells: 40 K
 Adjoint solver: DATurboFoam
 </pre>
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Rotor37_FFD.png" width="500" />
+
+Fig. 1. Mesh and FFD points for the Rotor37 case
+
+|
 
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/Rotor37_Compressor and run this command to start the DAFoam docker container.
 
@@ -34,10 +40,10 @@ docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/daf
 ./preProcessing.sh
 </pre>
 
-Then, use the following command to run the optimization with 8 CPU cores:
+Then, use the following command to run the optimization with 4 CPU cores:
 
 <pre>
-mpirun -np 8 python runScript.py 2>&1 | tee logOpt.txt
+mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
 {% include links.html %}
