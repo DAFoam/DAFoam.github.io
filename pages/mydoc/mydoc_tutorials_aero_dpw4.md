@@ -41,10 +41,10 @@ docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/daf
 ./preProcessing.sh
 </pre>
 
-Then, use the following command to run the optimization with 16 CPU cores:
+We recommend running this case on an HPC system with 100 CPU cores:
 
 <pre>
-mpirun -np 16 python runScript.py 2>&1 | tee logOpt.txt
+mpirun -np 100 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
 
