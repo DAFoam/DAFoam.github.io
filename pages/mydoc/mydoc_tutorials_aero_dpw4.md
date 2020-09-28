@@ -23,7 +23,7 @@ Mesh cells: 860 K
 Solver: DARhoSimpleCFoam
 </pre>
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_FFD.png" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_FFD.svg" width="500" />
 
 Fig. 1. Mesh and FFD points for the DPW4 wing-body-tail configuration
 
