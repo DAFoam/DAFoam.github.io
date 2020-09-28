@@ -19,9 +19,15 @@ Design variables: 32 FFD points moving in the y direction
 Constraints: Volume, thickness, symmetry, and curvature constraints (total number: 83)
 Mach number: less than 0.01
 Reynolds number: 7.5 million
-Mesh cells: 40K
+Mesh cells: 265 K
 Solver: DASimpleFoam
 </pre>
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/JBC_FFD.png" width="500" />
+
+Fig. 1. Mesh and FFD points for the JBC hull
+
+|
 
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/JBC_Hull and run this command to start the DAFoam docker container.
 
@@ -35,10 +41,10 @@ docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/daf
 ./preProcessing.sh
 </pre>
 
-Then, use the following command to run the optimization with 8 CPU cores:
+Then, use the following command to run the optimization with 24 CPU cores:
 
 <pre>
-mpirun -np 8 python runScript.py 2>&1 | tee logOpt.txt
+mpirun -np 24 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
 {% include links.html %}
