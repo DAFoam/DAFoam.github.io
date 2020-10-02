@@ -13,6 +13,8 @@ The latest bug-fixed version is [DAFoam {{ site.latest_version }}](https://githu
 
 Release notes:
 
+- [DAFoam v2.1.2](https://github.com/mdolab/dafoam/releases/tag/v2.1.2)
+
 - [DAFoam v2.1.1](https://github.com/mdolab/dafoam/releases/tag/v2.1.1)
 
 - [DAFoam v2.1.0](https://github.com/mdolab/dafoam/releases/tag/v2.1.0)
