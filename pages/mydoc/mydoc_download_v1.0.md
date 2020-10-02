@@ -9,7 +9,7 @@ folder: mydoc
 
 DAFoam v1.0 is the initial release of DAFoam. 
 
-The latest bug-fixed version is [DAFoam v1.0.0](https://github.com/mdolab/dafoam/archive/v1.0.0.tar.gz).
+The latest version is [DAFoam v1.0.0](https://github.com/mdolab/dafoam/archive/v1.0.0.tar.gz).
 
 DAFoam v1.0 is based on Python 2 and Petsc 3.6.4.
 

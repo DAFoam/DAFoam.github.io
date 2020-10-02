@@ -9,7 +9,7 @@ folder: mydoc
 
 DAFoam v1.1 introduces function and performance improvement and upgrades the version of dependencies.
 
-The latest bug-fixed version is [DAFoam v1.1.3](https://github.com/mdolab/dafoam/archive/v1.1.3.tar.gz).
+The latest version is [DAFoam v1.1.3](https://github.com/mdolab/dafoam/archive/v1.1.3.tar.gz).
 
 Refer to [DAFoam documentation v1.x](https://dafoam.rtfd.io) for more details.
 
