@@ -280,7 +280,7 @@ The regression tests should take less than 30 minutes. The test progress will be
 ************************************************************
 </pre>
 
-{% include note.html content="Load the OpenFOAM environments `. $HOME/OpenFOAM/OpenFOAM-v1812/etc/bashrc` before running any jobs!" %}
+{% include note.html content="Load the OpenFOAM environments: `source $HOME/OpenFOAM/OpenFOAM-v1812/etc/bashrc` before running any jobs!" %}
 
 |
 
