@@ -280,6 +280,8 @@ The regression tests should take less than 30 minutes. The test progress will be
 ************************************************************
 </pre>
 
+{% include note.html content="If you compile DAFoam from source, remember to load the OpenFOAM environmental variabes `. $HOME/OpenFOAM/OpenFOAM-v1812/etc/bashrc` before running any jobs." %}
+
 |
 
 In summary, here is the folder structures for all the installed packages:
