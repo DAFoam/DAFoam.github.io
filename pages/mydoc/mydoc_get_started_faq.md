@@ -65,6 +65,18 @@ mpirun -np 4 surfaceMeshTriangulate -patches '(wing)' -latestTime -parallel optS
 
 The above command will extract the patch "wing" to a stl file called "optShape.stl". If you have multiple patches to extract, modify the "-patches" flag, e.g., -patches '(wing body)'. Also, the "-lastTime" flag extracts stl files for the last optimization step. If you don't add the "-lastTime" flag, it will extract stl files for all optimization steps.
 
+## How to reduce the size of parallel optimization results?
+
+When running in parallel, OpenFOAM will generate folders for each decomposed domain, e.g., processor0, processor1. This feature takes a lot of space and is slow to transfer and post-process. To fix this issue, wait until the parallel optimization is done, then go to the optimization folder, load the OpenFOAM environment, and run this command `reconstructPar` to combine all the decomposed flow fields that are stored in processor0, processor1, etc. You will see a bunch of new folders called 0.00000001, 0.00000002, etc. These are the combined flow solutions for each optimization step. So once the reconstructPar command is done, one can delete all the processor0, processor1, etc. folders. When visualizing the flow fields in Paraview, there is no need to choose "Decomposed Case" for "Case Type" because the cases have been reconstructed. This will increase the speed for visualization.  
+
+## Does DAFoam support optimization for pure 2D problems?
+
+No, DAFoam does **NOT** support pure 2D optimization. In OpenFOAM, there is an option to do pure 2D simulation, which is setting a patch type to **empty** in constant/polyMesh/boundary. This feature is **NOT** supported in DAFoam. So, one need to change the **empty** patch type to **symmetry** instead, and use one cell in the symmetry direction to mimic a 2D simulation. Refer to the case setup in the [NACA0012 case](https://github.com/DAFoam/tutorials/tree/master/NACA0012_Airfoil/incompressible).
+
+## What are the commands to start the DAFoam Docker image again?
+
+For your convenient, here are the commands for [Linux](mydoc_get_started_start_docker_linux.html), [MacOS](mydoc_get_started_start_docker_mac.html), and [Windows](mydoc_get_started_start_docker_windows.html).
+
 ## How to run a multipoint optimization?
 
 Refer to the tutorial tutorials-master/NACA0012_Airfoil/multipoint.
