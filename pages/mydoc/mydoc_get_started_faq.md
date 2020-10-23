@@ -76,13 +76,7 @@ Refer to the tutorial tutorials-master/Onera_M6_Wing.
 |
 
 
-**NOTE:** Once the above modifications are done, go to the tutorial folder and load the DAFoam image:
-
-<pre>
-docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
-</pre>
-
-Then clean up the previous optimization results.
+**NOTE:** Once the above modifications are done, go to the tutorial folder and clean up the previous optimization results.
 
 <pre>
 ./Allclean

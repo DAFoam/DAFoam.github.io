@@ -7,7 +7,9 @@ permalink: mydoc_get_started_download_docker.html
 folder: mydoc
 ---
 
-The easiest way to run DAFoam optimizations is to use the **the pre-compiled package** through Docker Hub. Before downloading the pre-compiled package, you need to install **Docker**. Follow the installation instructions for [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu), [Fedora](https://docs.docker.com/install/linux/docker-ce/fedora), [CentOS](https://docs.docker.com/install/linux/docker-ce/centos), [MacOS](https://hub.docker.com/editions/community/docker-ce-desktop-mac/), and  [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). 
+The easiest way to run DAFoam optimizations is to use the **the pre-compiled package** through Docker Hub. For advanced users, refer to [this page](mydoc_installation_source.html) on how to compile everything from scratch. The Get Started section assumes you use the pre-compiled package.
+
+Before downloading the pre-compiled package, you need to install **Docker**. Follow the installation instructions for [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu), [Fedora](https://docs.docker.com/install/linux/docker-ce/fedora), [CentOS](https://docs.docker.com/install/linux/docker-ce/centos), [MacOS](https://hub.docker.com/editions/community/docker-ce-desktop-mac/), and  [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). 
 
 Here we give examples for Ubuntu, MacOS, and Windows.
  
@@ -27,7 +29,7 @@ Here we give examples for Ubuntu, MacOS, and Windows.
 
 - If you use **MacOS**, click "Get Stable" to download the installer (Docker.dmg) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-mac). Double click Docker.dmg and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep it open when running Docker commands.
 
-- If you use **Windows 10 Pro**, click "Get Stable" to download the installer (Docker Desktop Installer.exe) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). Double click Docker Desktop Installer.exe and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep it open when running Docker commands. If you use **Windows 10 Home**, follow the [instructions](https://docs.docker.com/docker-for-windows/install-windows-home) to enable Windows Subsystem for Linux (WSL) 2, before installing Docker.
+- If you use **Windows 10 Pro**, click "Get Stable" to download the installer (Docker Desktop Installer.exe) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). Double click Docker Desktop Installer.exe and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep it open when running Docker commands. If asked, update to the latest WSL2 Linux kernel following the instructions. If you use **Windows 10 Home**, follow the [instructions](https://docs.docker.com/docker-for-windows/install-windows-home) to enable Windows Subsystem for Linux (WSL) 2, before installing Docker.
 
 Once the above installation is done, open a **Terminal** (Linux and MacOS) or **Command Prompt** (Windows) and verify the docker installation by running:
 

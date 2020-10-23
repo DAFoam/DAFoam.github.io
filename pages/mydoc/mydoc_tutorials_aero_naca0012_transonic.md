@@ -38,13 +38,7 @@ The "runScript.py" is similar to the one used in the NACA0012 [subsonic case](my
 
 - We use special treatment for the preconditioner matrix to improve the convergence of adjoint linear equation by setting "transonicPCOption": 1. This option is only needed for transonic conditions.
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/NACA0012_Airfoil/transonic and run this command to start the DAFoam docker container.
-
-<pre>
-docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
-</pre>
-
-**Now you are on the DAFoam Docker container**, run the "preProcessing.sh" script to generate the mesh:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/NACA0012_Airfoil/transonic and run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh

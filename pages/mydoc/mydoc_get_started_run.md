@@ -30,27 +30,9 @@ Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
 |
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar/extract it. If you use **Linux** or **MacOS**, open a Terminal, and go to the tutorial folder of NACA0012 airfoil with incompressible conditions. For example, if you extract the tutorial files to the Downloads folder, run this command:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar/extract it. Since we use the pre-compiled DAFoam Docker image, we need to first start the Docker container (a light-weight virtual machine). If you use **Linux**, use the commands on [this page](mydoc_get_started_start_docker_linux.html). If you use **MacOS**, use the commands on [this page](mydoc_get_started_start_docker_mac.html). If you use **Windows**, use the commands on [this page](mydoc_get_started_start_docker_windows.html).
 
-<pre>
-cd Downloads/tutorials-master/NACA0012_Airfoil/incompressible
-</pre>
-
-Now run the following command in the terminal and check the output to make sure you are in the right directory:
-
-<pre>
-pwd
-</pre>
-
-Once you are in the tutorial folder, use the following command to start the DAFoam Docker image:
-
-<pre>
-docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
-</pre>
-
-If you use **Windows**, use the commands on [this page](mydoc_get_started_windows.html) instead.
-
-The above command will start a light-weight virtual machine (container), mount the current directory on your local OS (tutorials-master/NACA0012_Airfoil/incompressible) to the container's **mount** directory, login to the container's mount directory as dafoamuser, and set the relevant DAFoam environmental variables. You may see something like this on your terminal: `dafoamuser@00fb6ceac4da:~/mount$`. 
+The above command will start a docker container, mount the **current directory** on your local OS (tutorials-master/NACA0012_Airfoil/incompressible) to the container's **mount** directory, login to the container's mount directory as dafoamuser, and set the relevant DAFoam environmental variables. You may see something like this on your terminal: `dafoamuser@00fb6ceac4da:~/mount$`. 
 
 **Now you are on the DAFoam Docker container**, run the preProcessing.sh script to generate the mesh:
 

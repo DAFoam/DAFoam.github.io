@@ -29,13 +29,7 @@ Fig. 1. Mesh and FFD points for the U bend channel case
 
 |
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/UBend_Channel and run this command to start the DAFoam docker container.
-
-<pre>
-docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
-</pre>
-
-**Now you are on the DAFoam Docker container**, run the "preProcessing.sh" script to generate the mesh:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/UBend_Channel and run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh
