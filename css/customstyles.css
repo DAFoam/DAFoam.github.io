@@ -244,13 +244,13 @@ div#toc ul li {
     margin: 8px 0px 8px 22px;
     font-size: 90%;
     list-style: square;
+    width:300px;
 }
 div#toc ul {
     background-color: whitesmoke;
     padding: 5px;
     border-radius: 5px;
     max-width: 300px;
-    width: 300px;
     color: gray;
 }
 
@@ -270,7 +270,7 @@ div#toc >ul::before {
     text-align:center;
     margin-left:auto;
     margin-right:auto;
-    width: 300px;
+    width:70px;
     padding-top:20px;
     padding-bottom:20px;
     padding-left:10px;
