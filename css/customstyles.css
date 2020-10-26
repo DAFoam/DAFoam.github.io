@@ -244,25 +244,25 @@ div#toc ul li {
     margin: 8px 0px 8px 22px;
     font-size: 90%;
     list-style: square;
-    width:800px;
+    width:100%;
 }
 div#toc ul {
     background-color: whitesmoke;
     padding: 5px;
     border-radius: 5px;
-    max-width: 800px;
+    width:100%;
     color: gray;
-    width:800px;
+    width:100%;
 }
 
 div#toc ul li ul {
     padding-left:8px;
-    width:800px;
+    width:100%;
 }
 
 div#toc ul li ul li::before {
     content: "–  ";
-    width:800px;
+    width:100%;
 }
 
 div#toc >ul::before {
@@ -272,7 +272,7 @@ div#toc >ul::before {
     text-align:center;
     margin-left:auto;
     margin-right:auto;
-    width:800px;
+    width:100%;
     padding-top:20px;
     padding-bottom:20px;
     padding-left:10px;
