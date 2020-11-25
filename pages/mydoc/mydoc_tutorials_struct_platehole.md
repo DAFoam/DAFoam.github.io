@@ -43,50 +43,50 @@ python runScript.py 2>&1 | tee logOpt.txt
 
 After conducting the optimization, use ParaView to ensure the simulation has been completed successfully. There should be 10 geometry iterations which minimize mass while preserving the original maximum stress.
 
-![Stress Results at Original Case](https://user-images.githubusercontent.com/59976472/98586637-9aa2e800-228e-11eb-8304-08567d892c6e.png)
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/ParaView_Equivalent_Stress.png" width="500" />
 
 Fig. 2. Stress results and distribution before optimization
 
-|
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Optim_Visual_PlateHole.gif" width="500" />
 
-![Stress Results after Optimization](https://user-images.githubusercontent.com/59976472/98587972-8fe95280-2290-11eb-8fad-ba6200757ff0.png)
+Fig. 3. Optimization results and animation
 
-Fig. 3. Stress results and distribution after optimization
-
-|
 
 As you can see, the optimization eliminates material to reduce component weight while preserving the maximum stress. The mass is reduced from 11950 to 10701, or a reduction of mass by 10.5 percent. This can be seen in the logOpt.txt output file.
 
 We have gone further to compare the simulation results from OpenFoam to the results from a numerical solution for a plate hole case and the same simulation executed in an established software ANSYS. The results are shown below in the figures below.
 
-![Stress Equation Plate Hole](https://user-images.githubusercontent.com/59976472/98589909-a2b15680-2293-11eb-8cc9-bbacf0c1f426.png)
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Numerical_Solution_Equation_PlateHole.png" width="500" />
 
 Fig. 4. Stress equation for a plate hole
 
-|
-
 This equation assumes the plate has infinite width, which causes some discrepancy near the edge of the plate. The maximum case for this equation occurs at +90 deg and -90 deg.
 
-![ANSYS Stress Results at Original Case](https://user-images.githubusercontent.com/59976472/98591511-f58c0d80-2295-11eb-9a2d-3d0cd8253413.png)
-
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/ANSYS_Equivalent_Stress.png" width="500" />
 Fig. 5. ANSYS stress results and distribution before optimization with mesh
 
-|
+It was not possible to use the exact constraints as ANSYS would display an error that it was under constrained, so the setup is shown in figure 6. Also, an automated mesh was used which differs from the mesh in OpenFoam. This will result in varying results, but will sufficiently correlate results between OpenFoam and ANSYS solutions.
 
-It was not possible to use the exact constraints as ANSYS would display an error that it was under constrained, so the setup is shown in figure 6.
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/ANSYS_Simulation_Setup.png" width="500" />
 
-![ANSYS Setup](https://user-images.githubusercontent.com/59976472/98592486-697ae580-2297-11eb-83ff-6c9b788de3e0.png)
-
-Fig. 6. ANSYS setup
-
-|
+Fig. 6. ANSYS simulation setup
 
 Next, by exporting the stress along the +90 deg and -90 deg boundary, the three methods for stress evaluation can be compared.
 
-![ParaView Slice](https://user-images.githubusercontent.com/59976472/98592650-a515af80-2297-11eb-9daf-26a74d3bfa3a.png)
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/ParaView_Slice.png" width="500" />
 
 Fig. 7. ParaView maximum stress boundary
 
-|
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Image_Pressure_Solve.png" width="500" />
 
+Fig. 8. ANSYS maximum stress boundary
 
+Visually, it is clear to see a direct correlation in results between the ParaView visual and the ANSYS visual. Additionally, by plotting both OpenFoam and ANSYS results against the numerical solution, a comparison can be made between the various methods and tools for stress analysis.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Plate_Hole_Comparison_Graph.png" width="500" />
+
+Fig. 9. Plate hole case comparison graph
+
+Both ANSYS and OpenFoam show good relation with the numerical case. OpenFoam shows very good relation to an established tool for finite element structural analysis. Very near the hole, the analysis tools show a higher stress value than the numerical solution. This creates a conservative case for design purposes. On the extremity, the numerical solution has a higher stress than the analysis tools. This is due to the presence of the plate edge. 
+
+The validation of OpenFoam's analysis supports the optimization results. The 10.5% decrease in mass is significant and the plate hole case is common in aerospace with an abundance of fastener holes in many structures.
