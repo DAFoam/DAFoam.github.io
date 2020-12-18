@@ -172,6 +172,9 @@ entries:
     - title: Publications
       url: /mydoc_publications.html
       output: web, pdf
-
+  
+  - title: Discussions
+    url: /mydoc_discussions.html
+    output: web, pdf
 
 
