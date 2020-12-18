@@ -7,7 +7,7 @@ permalink: mydoc_get_started_faq.html
 folder: mydoc
 ---
 
-The following are some frequently asked questions (FAQ) for the NACA0012 airfoil and other tutorials. 
+The following are some frequently asked questions (FAQ) for the NACA0012 airfoil and other tutorials. If you have more questions, please post them to [DAFoam Github Discussions](https://github.com/mdolab/dafoam/discussions).
 
 ## Where can I find all supported parameters and their default values for the daOption dictionary in runScript.py?
 
