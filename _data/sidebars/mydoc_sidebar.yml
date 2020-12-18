@@ -174,7 +174,11 @@ entries:
       output: web, pdf
   
   - title: Discussions
-    url: /mydoc_discussions.html
     output: web, pdf
+    folderitems:
+  
+    - title: Discussions
+      url: /mydoc_discussions.html
+      output: web, pdf
 
 
