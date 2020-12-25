@@ -9,9 +9,11 @@ folder: mydoc
 
 DAFoam v2.1 is a major update that adds unsteady optimization capability as well as new interfaces and code structures.
 
-The latest version is [DAFoam {{ site.latest_version }}](https://github.com/mdolab/dafoam/archive/{{ site.latest_version }}.tar.gz).
+The latest version is [DAFoam v2.1.4](https://github.com/mdolab/dafoam/archive/v2.1.4.tar.gz).
 
 Release notes:
+
+- [DAFoam v2.1.4](https://github.com/mdolab/dafoam/releases/tag/v2.1.4)
 
 - [DAFoam v2.1.3](https://github.com/mdolab/dafoam/releases/tag/v2.1.3)
 

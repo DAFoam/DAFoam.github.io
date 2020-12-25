@@ -2,7 +2,7 @@
 
 entries:
 - title: sidebar
-  product: Documentation v2.1.3
+  product: Documentation v2.2.0
   version: 
   folders:
 
@@ -52,6 +52,10 @@ entries:
     output: web, pdf
     folderitems:
   
+    - title: DAFoam-v2.2
+      url: /mydoc_download_v2.2.html
+      output: web, pdf
+
     - title: DAFoam-v2.1
       url: /mydoc_download_v2.1.html
       output: web, pdf
