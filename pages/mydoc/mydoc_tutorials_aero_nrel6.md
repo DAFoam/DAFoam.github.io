@@ -34,10 +34,10 @@ To run this case, first download [tutorials](https://github.com/DAFoam/tutorials
 ./preProcessing.sh
 </pre>
 
-We recommend running this case on an HPC system with 40 CPU cores:
+We recommend running this case on an HPC system with 80 CPU cores:
 
 <pre>
-mpirun -np 40 python runScript.py 2>&1 | tee logOpt.txt
+mpirun -np 80 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
 
