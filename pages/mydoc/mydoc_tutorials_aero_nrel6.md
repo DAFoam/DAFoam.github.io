@@ -18,7 +18,7 @@ Design variables: 100 FFD points moving in the x and y directions
 Constraints: None
 Inlet velocity: 7 m/s
 Rotation speed: 7.5 rad/s
-Mesh cells: 400 K
+Mesh cells: 800 K
 Solver: DATurboFoam
 </pre>
 
