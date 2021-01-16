@@ -7,9 +7,9 @@ permalink: mydoc_installation_source.html
 folder: mydoc
 ---
 
-{% include note.html content="This section assumes you want to compile the DAFoam optimization package (v2.0) from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section." %}
+{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v2.2.0-](mydoc_installation_source_220.html) and [v1.0.0](mydoc_installation_source_100.html)." %}
 
-{% include note.html content="This installation guide applies to the latest version of DAFoam. For older versions, refer to [v2.2.0-](mydoc_installation_source_220.html) and [v1.0.0](mydoc_installation_source_100.html)." %}
+{% include note.html content="If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM." %}
 
 The DAFoam package can be compiled with various dependency versions. Here we elaborate on how to compile it on Ubuntu 18.04 using the dependencies shown in the following table. 
 
@@ -19,9 +19,6 @@ Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Nump
 18.04  | gcc/7.5  | 1.10.7  | 3.0.2  | 3.11.4 | 3.11.0   | 3.3.0 | 3.6.5  | 1.14.3 | 1.1.0 | 0.29.21
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. 
-
-{% include note.html content="If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM." %}
-
 
 ## **Prerequisites**
 
@@ -34,7 +31,7 @@ sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-sys
 
 ## **Root folder**
 
-First create a "dafoam" folder in your home directory. Then create a "loadDAFoam.sh" bash script and set up the root path $DAFOAM_ROOT_PATH for DAFoam. Finally, we will create the "packages", "OpenFOAM", and "repos" folders. We will compile and install everything in $DAFOAM_ROOT_PATH.
+First create a "dafoam" folder in your home directory. Then create a "loadDAFoam.sh" bash script and set up the root path $DAFOAM_ROOT_PATH. Finally, we will create the "packages", "OpenFOAM", and "repos" folders. We will compile and install everything in $DAFOAM_ROOT_PATH.
 
 <pre>
 mkdir -p $HOME/dafoam && \
@@ -140,7 +137,7 @@ pip install petsc4py==3.11.0
 
 First append relevant environmental variables by running:
 
-<pre>  
+<pre>
 echo '# CGNS-3.3.0' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-3.3.0/opt-gfortran' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export PATH=$PATH:$CGNS_HOME/bin' >> $HOME/dafoam/loadDAFoam.sh && \
@@ -229,9 +226,9 @@ export WM_NCOMPPROCS=4 && \
 ./Allwmake
 </pre>
 
-{% include note.html content="In the above command, we replaced the OpenFOAM-v1812's built-in UPstream.C file with a customized one because we need to prevent OpenFOAM from calling the MPI_Finialize function when wrapping OpenFOAM functions using Cython." %}
+{% include note.html content="In the above command, we replaced the OpenFOAM-v1812's built-in UPstream.C file with a customized one because we need to prevent OpenFOAM from calling the MPI_Finialize function when wrapping OpenFOAM functions using Cython. We also need to replace $HOME to $DAFOAM_ROOT_PATH in etc/bashrc" %}
 
-{% include note.html content="NOTE: The above command will compile OpenFOAM using 4 CPU cores. If you want to compile OpenFOAM using more cores, change the ``WM_NCOMPPROCS`` parameter before running ``./Allwmake``" %}
+{% include note.html content="The above command will compile OpenFOAM using 4 CPU cores. If you want to compile OpenFOAM using more cores, change the ``WM_NCOMPPROCS`` parameter before running ``./Allwmake``" %}
 
 Finally, verify the installation by running:
 
@@ -348,7 +345,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs
 
 This step is only needed if you want to change the root path of your installation, e.g., copy your compiled DAFoam packages to another directory.
 
-The only thing you need to do is to modify the interpreter lines "#!" for files in $HOME/dafoam/packages/miniconda3/. This is because Miniconda hard code the Python path for the files in $HOME/dafoam/packages/miniconda3/bin. We need to chagne it to "#!/bin/bash/env python"
+The only thing you need to do is to modify the interpreter lines "#!" for files in $HOME/dafoam/packages/miniconda3/. This is because Miniconda hard codes the Python path, so we need to chagne it to "#!/bin/bash/env python"
 
 First find an example of the hard-coded interpreter line from $HOME/dafoam/packages/miniconda3/bin/conda. Run this command
 
@@ -362,13 +359,13 @@ You may see an output like this:
 #!/home/replace_this_to_your_username/dafoam/packages/miniconda3/bin/python
 </pre>
 
-Then run this command to replace all the hard-coded interpreter line:
+Then run this command to replace all the hard-coded interpreter lines:
 
 <pre>
 sed -i 's,^#\!/home/replace_this_to_your_username/dafoam/packages/miniconda3/bin/python,#!/bin/bash/env python,g' $HOME/dafoam/packages/miniconda3/*/*
 </pre>
 
-Finally, you can change the DAFOAM_ROOT_PATH value to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
+Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
 
 ## **Compile DAFoam with automatic differentiation (optional)**
 
@@ -414,7 +411,7 @@ cd $HOME/dafoam/repos/dafoam && \
 ./Allclean && ./Allmake && pip install .
 </pre>
 
-Finally, reset the AD environment
+Finally, reset the AD environment, and re-source the original OpenFOAM-v1812.
 
 <pre>
 unset WM_CODI_AD_MODE && \
