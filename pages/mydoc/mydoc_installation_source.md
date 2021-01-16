@@ -394,9 +394,11 @@ Then, verify the installation by running:
 DASimpleFoamReverseAD -help
 </pre>
 
-It should see some basic information of DASimpleFoamReverseAD
+It should see some basic information of DASimpleFoamReverseAD.
 
-After this, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder.
+{% include note.html content="We use CodiPack to differentiate the OpenFOAM libraries. During the compliation, it will generate excessive warning messages, which are saved to the warningLog.txt file. After the compilation is done, remember to delete this warning file, which can be larger than 1 GB." %}
+
+After OpenFOAM-v1812-AD is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder.
 
 <pre>
 ln -s $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD/platforms/*/lib/*.so $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/ && \
