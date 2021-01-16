@@ -286,7 +286,7 @@ The regression tests should take less than 30 minutes. The test progress will be
 ************************************************************
 </pre>
 
-{% include note.html content="Load the OpenFOAM environments: ". loadDAFoam.sh" before running any jobs!" %}
+{% include note.html content="Before running any jobs, source the loadDAFoam.sh file to load DAFoam environment!" %}
 
 |
 
