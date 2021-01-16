@@ -343,7 +343,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs
 
 This step is only needed if you want to change the root path of your installation, e.g., copy your compiled DAFoam packages to another directory.
 
-The only thing you need to do is to modify the interpreter lines "#!" for files in $HOME/dafoam/packages/miniconda3/. This is because Miniconda hard codes the Python path, so we need to chagne it to "#!/bin/bash/env python"
+The only thing you need to do is to modify the interpreter lines "#!" for files in $HOME/dafoam/packages/miniconda3/. This is because Miniconda hard codes the Python path, so we need to chagne it to "#!/usr/bin/env python"
 
 First find an example of the hard-coded interpreter line from $HOME/dafoam/packages/miniconda3/bin/conda. Run this command
 
@@ -360,7 +360,7 @@ You may see an output like this:
 Then run this command to replace all the hard-coded interpreter lines:
 
 <pre>
-sed -i 's,^#\!/home/replace_this_to_your_username/dafoam/packages/miniconda3/bin/python,#!/bin/bash/env python,g' $HOME/dafoam/packages/miniconda3/*/*
+sed -i 's,^#\!/home/replace_this_to_your_username/dafoam/packages/miniconda3/bin/python,#!/usr/bin/env python,g' $HOME/dafoam/packages/miniconda3/*/*
 </pre>
 
 Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
