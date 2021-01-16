@@ -9,7 +9,7 @@ folder: mydoc
 
 {% include note.html content="This section assumes you want to compile the DAFoam optimization package (v2.0) from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section." %}
 
-{% include note.html content="This installation guide applies to the latest version of DAFoam. For older versions refer to [v2.2.0-](mydoc_installation_source_220.html) and [v1.0.0](mydoc_installation_source_100.html)." %}
+{% include note.html content="This installation guide applies to the latest version of DAFoam. For older versions, refer to [v2.2.0-](mydoc_installation_source_220.html) and [v1.0.0](mydoc_installation_source_100.html)." %}
 
 The DAFoam package can be compiled with various dependency versions. Here we elaborate on how to compile it on Ubuntu 18.04 using the dependencies shown in the following table. 
 
@@ -32,7 +32,7 @@ sudo apt-get update && \
 sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev qt5-default libqt5x11extras5-dev libqt5help5 qtdeclarative5-dev qttools5-dev libqtwebkit-dev freeglut3-dev libqt5opengl5-dev texinfo  libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev --no-install-recommends
 </pre>
 
-## **Master folder**
+## **Root folder**
 
 First create a "dafoam" folder in your home directory. Then create a "loadDAFoam.sh" bash script and set up the root path $DAFOAM_ROOT_PATH for DAFoam. Finally, we will create the "packages", "OpenFOAM", and "repos" folders. We will compile and install everything in $DAFOAM_ROOT_PATH.
 
@@ -108,7 +108,7 @@ pip install mpi4py==3.0.2
 
 First append relevant environmental variables by running:
 
-<pre>   
+<pre>
 echo '# Petsc-3.11.4' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.11.4' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export PETSC_ARCH=real-opt' >> $HOME/dafoam/loadDAFoam.sh && \
