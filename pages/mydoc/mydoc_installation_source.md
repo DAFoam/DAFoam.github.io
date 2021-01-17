@@ -367,7 +367,7 @@ Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your ne
 
 ## **Compile DAFoam with automatic differentiation (optional)**
 
-This step is only needed if you want to use the automatic differentiation feature (adjJacobianOption=JacobianFree) in DAFoam. If you skip this step, you have to use the default finite-difference Jacobian adjoint, i.e., adjJacobianOption=JacobianFree. Check the detail of the adjJacobianOption key on [this page](https://dafoam.github.io/doxygen/html/classdafoam_1_1pyDAFoam_1_1DAOPTION.html). Note that some derivatives, e.g., the betaSA and alphaPorosity, are only avaiable with adjJacobianOption=JacobianFree.
+This step is only needed if you want to use the automatic differentiation feature (adjJacobianOption=JacobianFree) in DAFoam. If you skip this step, you have to use the default finite-difference Jacobian adjoint, i.e., adjJacobianOption=JacobianFD. Check the detail of the adjJacobianOption key on [this page](https://dafoam.github.io/doxygen/html/classdafoam_1_1pyDAFoam_1_1DAOPTION.html). Note that some derivatives, e.g., the betaSA and alphaPorosity, are only avaiable with adjJacobianOption=JacobianFree.
 
 We need to first compile an AD version of OpenFOAM:
 
