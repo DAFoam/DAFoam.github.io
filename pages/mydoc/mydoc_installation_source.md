@@ -406,7 +406,7 @@ Now, compile the AD version of DAFoam:
 
 <pre>
 cd $HOME/dafoam/repos/dafoam && \
-./Allclean && ./Allmake && pip install .
+./Allclean && ./Allmake 2> warningLog.txt && pip install .
 </pre>
 
 Finally, reset the AD environment, and re-source the original OpenFOAM-v1812.
