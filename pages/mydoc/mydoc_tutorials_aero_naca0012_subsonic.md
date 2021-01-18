@@ -52,7 +52,7 @@ Then, use the following command to run the optimization with 4 CPU cores:
 mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-The case ran for 50 steps and took about 25 minutes using Intel 3.0 GHz CPU with 4 cores. According to "logOpt.txt" and "opt_SLSQP.out", the initial drag is 0.015226161 and the optimized drag is 0.013617362 with a drag reduction of **10.6%**.
+The case ran for 50 steps and took about 25 minutes using Intel 3.0 GHz CPU with 4 cores. According to "logOpt.txt" and "opt_SLSQP.txt", the initial drag is 0.015226161 and the optimized drag is 0.013617362 with a drag reduction of **10.6%**.
 
 The evolution of pressure and shape during the optimization is as follows.
 

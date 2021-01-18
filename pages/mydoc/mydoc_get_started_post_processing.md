@@ -1,7 +1,7 @@
 ---
 title: Post-processing
 keywords: post-processing
-summary: "Check opt_SLSQP.out for optimization progress and use Paraview to visualize flow fields."
+summary: "Check opt_SLSQP.txt for optimization progress and use Paraview to visualize flow fields."
 sidebar: mydoc_sidebar
 permalink: mydoc_get_started_post_processing.html
 folder: mydoc
@@ -11,9 +11,9 @@ folder: mydoc
 
 Fig. 1. Pressure and shape evaluation during the optimization process
 
-## Check optimization output file opt_SLSQP.out
+## Check optimization output file opt_SLSQP.txt
 
-Once optimization is done, first check "opt_SLSQP.out" in tutorials-master/NACA0012_Airfoil/incompressible. "opt_SLSQP.out" contains the variation of objective function with respect to the optimization iteration:
+Once optimization is done, first check "opt_SLSQP.txt" in tutorials-master/NACA0012_Airfoil/incompressible. "opt_SLSQP.txt" contains the variation of objective function with respect to the optimization iteration:
 
 ```c++
        ---------------------------------------------------------------------------
@@ -69,7 +69,7 @@ Flow Runtime: 2.62659
 
 The objective (CD) is 0.020820258 for the baseline design and drops to 0.017376808 for the 50th optimization iteration with a drag reduction of **16.5%**.
 
-{% include note.html content="For other optimizers such as snopt, the opt_SNOPT_summary.out file contains the objective for the 0th iteration so there is no need to check the logOpt.txt file." %}
+{% include note.html content="For other optimizers such as snopt, the opt_SNOPT_summary.txt file contains the objective for the 0th iteration so there is no need to check the logOpt.txt file." %}
 
 ## Visualize the flow fields using Paraview
 

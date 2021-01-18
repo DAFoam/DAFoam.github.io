@@ -440,6 +440,7 @@ make install && \
 cd lib && ln -s libcoinblas.so libblas.so && ln -s libcoinlapack.so liblapack.so && \
 cd ../include && ln -s coin coin-or && cd .. && \
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/repos/pyoptsparse-2.4.0/pyoptsparse/pyIPOPT/Ipopt/lib && \
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/repos/pyoptsparse-2.4.0/pyoptsparse/pyIPOPT/Ipopt/lib' >> $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/repos/pyoptsparse-2.4.0 && pip install .
 </pre>
 
