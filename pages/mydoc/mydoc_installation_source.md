@@ -391,7 +391,7 @@ DASimpleFoamReverseAD -help
 
 It should see some basic information of DASimpleFoamReverseAD.
 
-{% include note.html content="We use CodiPack to differentiate the OpenFOAM libraries. During the compliation, it will generate excessive warning messages, which are saved to the warningLog.txt file. After the compilation is done, remember to delete this warning file, which can be larger than 1 GB." %}
+{% include note.html content="We use CodiPack to differentiate the OpenFOAM libraries. During the compliation, it will generate a lot of warning messages, which are saved to the warningLog.txt file. After the compilation is done, remember to delete this warning file, which can be larger than 1 GB." %}
 
 After OpenFOAM-v1812-AD is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder.
 
@@ -420,7 +420,7 @@ You are ready to use the adjJacobianOption=JacobianFree option in DAFoam.
 
 ## **Compile SNOPT and IPOPT for pyOptSparse (optional)**
 
-This step is needed if want to use SNOPT and IPOPT optimizers. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com/en/v2.1.0/optimizers.html).
+This step is needed if you want to use SNOPT and IPOPT optimizers. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com/en/v2.1.0/optimizers.html).
 
 **IPOPT**
 
