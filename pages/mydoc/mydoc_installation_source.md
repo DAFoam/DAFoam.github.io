@@ -162,7 +162,7 @@ The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest
 
 baseclasses | pySpline | pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.2.0      | v1.2.0   | v1.2.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.1  | v2.1.7      | v1.2.1 | {{ site.latest_version }}
+v1.2.0      | v1.2.0   | v1.2.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.1  | v2.4.0      | v1.2.1 | {{ site.latest_version }}
 
 Now run this command to install all the repos for MACH-Aero:
 
@@ -197,8 +197,8 @@ tar -xvf idwarp.tar.gz && cd idwarp-2.2.1 && \
 cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/pyoptsparse/archive/v2.1.7.tar.gz -O pyoptsparse.tar.gz && \
-tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.1.7 && \
+wget https://github.com/mdolab/pyoptsparse/archive/v2.4.0.tar.gz -O pyoptsparse.tar.gz && \
+tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.4.0 && \
 pip install .
 </pre>
 
@@ -417,5 +417,39 @@ unset WM_CODI_AD_MODE && \
 </pre>
 
 You are ready to use the adjJacobianOption=JacobianFree option in DAFoam.
+
+## **Compile SNOPT and IPOPT for pyOptSparse (optional)**
+
+This step is needed if want to use SNOPT and IPOPT optimizers. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com/en/v2.1.0/optimizers.html).
+
+**IPOPT**
+
+Run the following commands to compile IPOPT-3.12.13 with pyOptSparse.
+
+<pre>
+cd $HOME/dafoam/repos/pyoptsparse-2.4.0/pyoptsparse/pyIPOPT && \
+wget https://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.13.tgz && \
+tar -xvf Ipopt-3.12.13.tgz && \
+mv Ipopt-3.12.13 Ipopt && \
+cd Ipopt/ThirdParty/Blas && ./get.Blas && \
+cd ../Lapack && ./get.Lapack && \
+cd ../Mumps && ./get.Mumps && \
+cd ../Metis && ./get.Metis && \
+cd ../../ && ./configure --disable-linear-solver-loader && \
+make install && \
+cd lib && ln -s libcoinblas.so libblas.so && ln -s libcoinlapack.so liblapack.so && \
+cd ../include && ln -s coin coin-or && cd .. && \
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/repos/pyoptsparse-2.4.0/pyoptsparse/pyIPOPT/Ipopt/lib && \
+cd $HOME/dafoam/repos/pyoptsparse-2.4.0 && pip install .
+</pre>
+
+**SNOPT**
+
+SNOPT is a commercial package, and you can purchase it from [here](http://www.sbsi-sol-optimize.com/asp/sol_snopt.htm). Once you obtain the SNOPT source code, copy all the source files to the "$HOME/dafoam/repos/pyoptsparse-2.4.0/pyoptsparse/pySNOPT/source" folder. Then, run this command to compile pyOptSparse with SNOPT.
+
+<pre>
+cd $HOME/dafoam/repos/pyoptsparse-2.4.0 && \
+pip install .
+</pre>
 
 {% include links.html %}
