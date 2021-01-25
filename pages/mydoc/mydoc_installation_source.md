@@ -456,10 +456,7 @@ cd $IPOPT_DIR && \
 git clone https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
 cd ThirdParty-Mumps && \
 ./get.Mumps && \
-./configure --with-metis --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
-     --with-metis-cflags="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" \
-     --prefix=$IPOPT_DIR CFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" \
-     FCFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" && \
+./configure --with-metis --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" --with-metis-cflags="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" --prefix=$IPOPT_DIR CFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" FCFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" && \
 make && \
 make install
 </pre>
@@ -470,8 +467,7 @@ Finally, compile Ipopt and pyoptsparse by running:
 cd $IPOPT_DIR && \
 mkdir build && \
 cd build && \
-../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" \
-     --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" && \
+../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" && \
 make && \
 make install && \
 cd $HOME/dafoam/repos/pyoptsparse-2.3.0 && pip install .
