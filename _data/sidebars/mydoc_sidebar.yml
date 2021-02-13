@@ -156,6 +156,14 @@ entries:
         - title: JBC hull
           url: /mydoc_tutorials_hydro_jbc.html
           output: web, pdf
+      
+      - title: Topology optimization
+        output: web, pdf
+        subfolderitems:
+  
+        - title: pitzDaily
+          url: /mydoc_tutorials_topo_pitzdaily.html
+          output: web, pdf
         
   - title: Doxygen
     output: web, pdf
