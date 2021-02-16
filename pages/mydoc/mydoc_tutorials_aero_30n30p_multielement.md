@@ -108,7 +108,9 @@ NOTE: the above command will just download the mesh. If you want to re-generate 
 mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-The case ran for 50 steps. The initial lift coefficient is 3.416 and the optimized lift coefficient is 3.5xx with an increase of **xxx%**. 
+The case ran for 50 steps. The initial lift coefficient is 3.416 and the optimized lift coefficient is 3.515 with an increase of **2.9%**. 
+
+NOTE: By default, this case uses the Jacobian free option in daOptions: "adjJacobianOption": "JacobianFree". This means that you need to compile the AD version of OpenFOAM and DAFoam (see [here](https://dafoam.github.io/mydoc_installation_source.html#compile-dafoam-with-automatic-differentiation-optional)). If you use the Docker image, they have been compiled so no additional action is needed. If you haven't compiled the AD version, set this: "adjJacobianOption": "JacobianFD". 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/30N30P_movie.gif" width="640" />
 
