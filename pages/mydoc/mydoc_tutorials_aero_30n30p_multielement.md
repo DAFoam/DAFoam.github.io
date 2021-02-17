@@ -68,7 +68,7 @@ def translateflap(val, geo):
     geo.restoreCoef(C, "flapAxis")
 </pre>
 
-The rotation and translation are achieved by rotating the reference axis, e.g., `geo.rot_z["slatAxis"].coef[i]`, or translating the coordinates of the reference axis, e.g., `C[i, 0] = C[i, 0] + dx`.
+The rotation and translation are achieved by rotating the reference axis, e.g., geo.rot_z["slatAxis"].coef[i], or translating the coordinates of the reference axis, e.g., C[i, 0] = C[i, 0] + dx.
 
 To use the above functions, we need to first define the reference axis for slat and flap. The reference axis for the slat is defined near its trailing edge while the reference axis for the flap is define near its leading edge.
 
@@ -108,7 +108,7 @@ NOTE: the above command will just download the mesh. If you want to re-generate 
 mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-The case ran for 50 steps. The initial lift coefficient is 3.416 and the optimized lift coefficient is 3.515 with an increase of **2.9%**. 
+The case ran for 43 iterations. The initial lift coefficient is 3.416 and the optimized lift coefficient is 3.509 with an increase of **2.7%**. 
 
 NOTE: By default, this case uses the Jacobian free option in daOptions: "adjJacobianOption": "JacobianFree". This means that you need to compile the AD version of OpenFOAM and DAFoam (see [here](https://dafoam.github.io/mydoc_installation_source.html#compile-dafoam-with-automatic-differentiation-optional)). If you use the Docker image, they have been compiled so no additional action is needed. If you haven't compiled the AD version, set this: "adjJacobianOption": "JacobianFD". 
 
