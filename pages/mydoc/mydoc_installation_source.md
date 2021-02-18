@@ -96,6 +96,7 @@ You should see the version of the compiled OpenMPI.
 Finally, install mpi4py-3.0.2:
 
 <pre>
+cd $HOME/dafoam/packages && \
 wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-3.0.2.tar.gz && \
 tar -xvf mpi4py-3.0.2.tar.gz && cd mpi4py-3.0.2 && \
 python setup.py install
@@ -130,6 +131,7 @@ make PETSC_DIR=$HOME/dafoam/packages/petsc-3.11.4 PETSC_ARCH=real-opt all
 Finally, install petsc4py-3.11.0:
 
 <pre>
+cd $HOME/dafoam/packages && \
 wget https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-3.11.0.tar.gz && \
 tar -xvf petsc4py-3.11.0.tar.gz && cd petsc4py-3.11.0 && \
 python setup.py install
@@ -431,7 +433,7 @@ This step is needed if you want to use SNOPT and IPOPT optimizers. Detailed inst
 First install the pre-requisites by running:
 
 <pre>
-sudo apt-get install gcc g++ gfortran git patch wget pkg-config liblapack-dev libmetis-dev
+sudo apt-get install gcc g++ gfortran git patch wget pkg-config
 </pre>
 
 Then, download Ipopt-3.13.2 and set up the relevant environmental variables to loadDAFoam.sh by runing:
