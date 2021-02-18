@@ -96,7 +96,9 @@ You should see the version of the compiled OpenMPI.
 Finally, install mpi4py-3.0.2:
 
 <pre>
-pip install mpi4py==3.0.2
+wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-3.0.2.tar.gz && \
+tar -xvf mpi4py-3.0.2.tar.gz && cd mpi4py-3.0.2 && \
+python setup.py install
 </pre>
 
 ## **Petsc**
@@ -128,7 +130,9 @@ make PETSC_DIR=$HOME/dafoam/packages/petsc-3.11.4 PETSC_ARCH=real-opt all
 Finally, install petsc4py-3.11.0:
 
 <pre>
-pip install petsc4py==3.11.0
+wget https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-3.11.0.tar.gz && \
+tar -xvf petsc4py-3.11.0.tar.gz && cd petsc4py-3.11.0 && \
+python setup.py install
 </pre>
 
 ## **CGNS**
@@ -453,10 +457,24 @@ cd ThirdParty-Metis && \
 make && \
 make install && \
 cd $IPOPT_DIR && \
+git clone https://github.com/coin-or-tools/ThirdParty-Blas.git && \
+cd ThirdParty-Blas && \
+./get.Blas && \
+./configure --prefix=$IPOPT_DIR && \
+make && \
+make install && \
+cd $IPOPT_DIR && \
+git clone https://github.com/coin-or-tools/ThirdParty-Lapack.git && \
+cd ThirdParty-Lapack && \
+./get.Lapack && \
+./configure --prefix=$IPOPT_DIR && \
+make && \
+make install && \
+cd $IPOPT_DIR && \
 git clone https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
 cd ThirdParty-Mumps && \
 ./get.Mumps && \
-./configure --with-metis --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" --with-metis-cflags="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" --prefix=$IPOPT_DIR CFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" FCFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" && \
+./configure --with-metis --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" --with-metis-cflags="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" --prefix=$IPOPT_DIR CFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" FCFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
 make && \
 make install
 </pre>
@@ -467,9 +485,12 @@ Finally, compile Ipopt and pyoptsparse by running:
 cd $IPOPT_DIR && \
 mkdir build && \
 cd build && \
-../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" && \
+../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
 make && \
 make install && \
+cd $IPOPT_DIR/lib && \
+ln -s libcoinlapack.so liblapack && \
+ln -s libcoinblas.so libblas && \
 cd $HOME/dafoam/repos/pyoptsparse-2.3.0 && pip install .
 </pre>
 
