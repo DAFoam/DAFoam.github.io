@@ -1,12 +1,13 @@
 ---
-title: Publications
-keywords: publications
+title: Papers
+keywords: Papers
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_publications.html
+permalink: mydoc_docs_publications.html
 folder: mydoc
 ---
 
+- Ping He, Joaquim R. R. A. Martins. A hybrid time-spectral approach for aerodynamic optimization with unsteady flow. In: AIAA Scitech Forum, 2021. https://doi.org/10.2514/6.2021-0278
 
 - Ping He, Charles A. Mader, Joaquim R.R.A. Martins, Kevin J. Maki. DAFoam: An open-source adjoint framework for multidisciplinary design optimization with OpenFOAM. AIAA Journal, 2020. https://doi.org/10.2514/1.J058853
 

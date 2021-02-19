@@ -181,12 +181,16 @@ entries:
       url: /mydoc_doxygen_daoption.html
       output: web, pdf
   
-  - title: Publications
+  - title: Documents
     output: web, pdf
     folderitems:
   
-    - title: Publications
-      url: /mydoc_publications.html
+    - title: Papers
+      url: /mydoc_docs_publications.html
+      output: web, pdf
+    
+    - title: User guides
+      url: /mydoc_docs_user_guides.html
       output: web, pdf
   
   - title: Discussions

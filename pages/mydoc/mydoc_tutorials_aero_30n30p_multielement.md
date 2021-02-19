@@ -114,6 +114,6 @@ NOTE: By default, this case uses the Jacobian free option in daOptions: "adjJaco
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/30N30P_movie.gif" width="640" />
 
-Fig. 1. Evolution of airfoil shape and velocity distribution
+Fig. 2. Evolution of airfoil shape and velocity distribution
 
 {% include links.html %}
