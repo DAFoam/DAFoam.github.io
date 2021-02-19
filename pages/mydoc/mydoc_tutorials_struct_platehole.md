@@ -43,11 +43,11 @@ python runScript.py 2>&1 | tee logOpt.txt
 
 After conducting the optimization, use ParaView to ensure the simulation has been completed successfully. There should be 10 geometry iterations which minimize mass while preserving the original maximum stress.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/ParaView_Equivalent_Stress.PNG" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Plate_ParaView_Equivalent_Stress.PNG" width="500" />
 
 Fig. 2. Stress results and distribution before optimization
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Optim_Visual_PlateHole.gif" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Plate_Optim_Visual_PlateHole.gif" width="500" />
 
 Fig. 3. Optimization results and animation
 
@@ -56,19 +56,19 @@ As you can see, the optimization eliminates material to reduce component weight 
 
 We have gone further to compare the simulation results from OpenFoam to the results from a numerical solution for a plate hole case and the same simulation executed in an established software ANSYS, version 2019 R2. The results are shown below in figure 7 below.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Numerical_Solution_Equation_PlateHole.png" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Plate_Numerical_Solution_Equation_PlateHole.png" width="500" />
 
 Fig. 4. Stress equation for a plate hole
 
 This equation in Fig 4 assumes the plate has infinite width, which causes some discrepancy near the edge of the plate. The maximum case for this equation occurs at +90 deg and -90 deg.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/ANSYS_Equivalent_Stress.png" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Plate_ANSYS_Equivalent_Stress.png" width="500" />
 
 Fig. 5. ANSYS stress results and distribution before optimization with mesh
 
 It was not possible to use the exact constraints as ANSYS would display an error that it was under constrained, so the setup is shown in figure 6. Also, an automated mesh was used which differs from the mesh in OpenFoam. This will result in varying results, but will sufficiently correlate results between OpenFoam and ANSYS solutions.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/ANSYS_Simulation_Setup.png" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Plate_ANSYS_Simulation_Setup.png" width="500" />
 
 Fig. 6. ANSYS simulation setup
  
