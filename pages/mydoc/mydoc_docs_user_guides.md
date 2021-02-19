@@ -7,9 +7,9 @@ permalink: mydoc_docs_user_guides.html
 folder: mydoc
 ---
 
-This page contains user guides for specific topics:
+This page contains user guides for theoretical background and basic usage of DAFoam in the MACH-Aero framework.
 
-- A guide to set up FFD points. [pdf]("{{ site.url }}{{ site.baseurl }}/docs/FFD/main.pdf")
+- A guide to set up FFD points. [pdf]({{ site.url }}/docs/FFD/main.pdf)
 
 
 {% include links.html %}
