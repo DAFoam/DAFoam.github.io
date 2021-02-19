@@ -36,12 +36,11 @@ To avoid wave shapes, this case impose a curvature constraint to the hull shape.
 DVCon.addCurvatureConstraint(
     "./FFD/hullCurv.xyz", curvatureType="KSmean", lower=0.0, upper=1.21, addToPyOpt=True, scaled=True
 )
+</pre>
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/JBC_curvature.png" width="640" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/JBC_curvature.png" width="500" />
 
 Fig. 2. Example of adding curvature constraint. The red mesh is the 2D surface mesh defined hullCurv.xyz.
-
-</pre>
 
 This case requires the IPOPT optimizer and the AD version of DAFoam. To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/JBC_Hull and run the "preProcessing.sh" script to generate the mesh:
 
