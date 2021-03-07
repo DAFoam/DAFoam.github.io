@@ -59,7 +59,10 @@ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/minicon
 Then upgrade the pip utility:
 
 <pre>
-pip install --upgrade pip
+pip install --upgrade pip && \
+pip install numpy==1.14.3 && \
+pip install scipy==1.1.0 && \
+pip install cython==0.29.21
 </pre>
 
 ## **OpenMPI**
@@ -245,13 +248,7 @@ It should see some basic information of OpenFOAM
 
 ## **pyOFM**
 
-First install Cython:
-
-<pre>
-pip install cython==0.29.21
-</pre>
-
-Then, compile pyOFM by running:
+Compile pyOFM by running:
 
 <pre>
 cd $HOME/dafoam/repos && \
