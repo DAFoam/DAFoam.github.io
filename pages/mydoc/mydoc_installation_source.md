@@ -477,7 +477,7 @@ wget https://github.com/coin-or-tools/ThirdParty-Mumps/archive/releases/1.6.2.ta
 tar -xvf 1.6.2.tar.gz && mv ThirdParty-Mumps* ThirdParty-Mumps && \
 cd ThirdParty-Mumps && \
 ./get.Mumps && \
-./configure --with-metis --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" --with-metis-cflags="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" --prefix=$IPOPT_DIR CFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" FCFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+./configure --prefix=$IPOPT_DIR --with-metis --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" --with-metis-cflags="-I${IPOPT_DIR}/include/coin-or/metis"  --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
 make && \
 make install
 </pre>
