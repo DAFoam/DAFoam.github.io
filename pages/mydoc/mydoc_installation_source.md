@@ -24,7 +24,7 @@ Run this on terminal to install prerequisites:
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev qt5-default libqt5x11extras5-dev libqt5help5 qtdeclarative5-dev qttools5-dev libqtwebkit-dev freeglut3-dev libqt5opengl5-dev texinfo  libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates --no-install-recommends
+sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev qt5-default libqt5x11extras5-dev libqt5help5 qtdeclarative5-dev qttools5-dev libqtwebkit-dev freeglut3-dev libqt5opengl5-dev texinfo  libscotch-dev libcgal-dev gfortran swig wget vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates --no-install-recommends
 </pre>
 
 ## **Root folder**
@@ -430,7 +430,7 @@ This step is needed if you want to use SNOPT and IPOPT optimizers. Detailed inst
 First install the pre-requisites by running:
 
 <pre>
-sudo apt-get install gcc g++ gfortran git patch wget pkg-config
+sudo apt-get install gcc g++ gfortran patch wget pkg-config
 </pre>
 
 Then, download Ipopt-3.13.2 and set up the relevant environmental variables to loadDAFoam.sh by runing:
@@ -488,7 +488,7 @@ Finally, compile Ipopt and pyoptsparse by running:
 cd $IPOPT_DIR && \
 mkdir build && \
 cd build && \
-../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+../configure --prefix=${IPOPT_DIR} --disable-java CPPFLAGS=-I${MPI_ARCH_PATH}/include --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
 make && \
 make install && \
 cd $IPOPT_DIR/lib && \
