@@ -24,7 +24,7 @@ Run this on terminal to install prerequisites:
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev qt5-default libqt5x11extras5-dev libqt5help5 qtdeclarative5-dev qttools5-dev libqtwebkit-dev freeglut3-dev libqt5opengl5-dev texinfo  libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev --no-install-recommends
+sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev qt5-default libqt5x11extras5-dev libqt5help5 qtdeclarative5-dev qttools5-dev libqtwebkit-dev freeglut3-dev libqt5opengl5-dev texinfo  libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates --no-install-recommends
 </pre>
 
 ## **Root folder**
@@ -449,28 +449,32 @@ Next, compiles the ThirdParty dependencies Metis and Mumps by running:
 
 <pre>
 cd $IPOPT_DIR && \
-git clone https://github.com/coin-or-tools/ThirdParty-Metis.git && \
+wget https://github.com/coin-or-tools/ThirdParty-Metis/archive/releases/1.3.9.tar.gz && \
+tar -xvf 1.3.9.tar.gz && mv ThirdParty-Metis* ThirdParty-Metis && \
 cd ThirdParty-Metis && \
 ./get.Metis && \
 ./configure --prefix=$IPOPT_DIR && \
 make && \
 make install && \
 cd $IPOPT_DIR && \
-git clone https://github.com/coin-or-tools/ThirdParty-Blas.git && \
+wget https://github.com/coin-or-tools/ThirdParty-Blas/archive/releases/1.4.8.tar.gz && \
+tar -xvf 1.4.8.tar.gz && mv ThirdParty-Blas* ThirdParty-Blas && \
 cd ThirdParty-Blas && \
 ./get.Blas && \
 ./configure --prefix=$IPOPT_DIR && \
 make && \
 make install && \
 cd $IPOPT_DIR && \
-git clone https://github.com/coin-or-tools/ThirdParty-Lapack.git && \
+wget https://github.com/coin-or-tools/ThirdParty-Lapack/archive/releases/1.6.1.tar.gz && \
+tar -xvf 1.6.1.tar.gz && mv ThirdParty-Lapack* ThirdParty-Lapack && \
 cd ThirdParty-Lapack && \
 ./get.Lapack && \
 ./configure --prefix=$IPOPT_DIR && \
 make && \
 make install && \
 cd $IPOPT_DIR && \
-git clone https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
+wget https://github.com/coin-or-tools/ThirdParty-Mumps/archive/releases/1.6.2.tar.gz && \
+tar -xvf 1.6.2.tar.gz && mv ThirdParty-Mumps* ThirdParty-Mumps && \
 cd ThirdParty-Mumps && \
 ./get.Mumps && \
 ./configure --with-metis --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" --with-metis-cflags="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" --prefix=$IPOPT_DIR CFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" FCFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
