@@ -299,32 +299,6 @@ source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc
 export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
 </pre>
 
-## **Make the DAFoam package portable (optional)**
-
-This step is only needed if you want to change the root path of your installation, e.g., copy your compiled DAFoam packages to another directory.
-
-The only thing you need to do is to modify the interpreter lines "#!" for files in $HOME/dafoam/packages/miniconda3/. This is because Miniconda hard codes the Python path, so we need to chagne it to "#!/usr/bin/env python"
-
-First find an example of the hard-coded interpreter line from $HOME/dafoam/packages/miniconda3/bin/conda. Run this command
-
-<pre>
-head -1 $HOME/dafoam/packages/miniconda3/bin/conda
-</pre>
-
-You may see an output like this:
-
-<pre>
-#!/home/replace_this_to_your_username/dafoam/packages/miniconda3/bin/python
-</pre>
-
-Then run this command to replace all the hard-coded interpreter lines:
-
-<pre>
-sed -i 's,^#\!/home/replace_this_to_your_username/dafoam/packages/miniconda3/bin/python,#!/usr/bin/env python,g' $HOME/dafoam/packages/miniconda3/*/*
-</pre>
-
-Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
-
 ## **Compile DAFoam with automatic differentiation (optional)**
 
 This step is only needed if you want to use the automatic differentiation feature (adjJacobianOption=JacobianFree) in DAFoam. If you skip this step, you have to use the default finite-difference Jacobian adjoint, i.e., adjJacobianOption=JacobianFD. Check the detail of the adjJacobianOption key on [this page](https://dafoam.github.io/doxygen/html/classdafoam_1_1pyDAFoam_1_1DAOPTION.html). Note that some derivatives, e.g., the betaSA and alphaPorosity, are only avaiable with adjJacobianOption=JacobianFree.
@@ -457,5 +431,31 @@ SNOPT is a commercial package, and you can purchase it from [here](http://www.sb
 cd $HOME/dafoam/repos/pyoptsparse-2.3.0 && \
 pip install .
 </pre>
+
+## **Make the DAFoam package portable (optional)**
+
+This step is only needed if you want to change the root path of your installation, e.g., copy your compiled DAFoam packages to another directory.
+
+The only thing you need to do is to modify the interpreter lines "#!" for files in $HOME/dafoam/packages/miniconda3/. This is because Miniconda hard codes the Python path, so we need to chagne it to "#!/usr/bin/env python"
+
+First find an example of the hard-coded interpreter line from $HOME/dafoam/packages/miniconda3/bin/conda. Run this command
+
+<pre>
+head -1 $HOME/dafoam/packages/miniconda3/bin/conda
+</pre>
+
+You may see an output like this:
+
+<pre>
+#!/home/replace_this_to_your_username/dafoam/packages/miniconda3/bin/python
+</pre>
+
+Then run this command to replace all the hard-coded interpreter lines:
+
+<pre>
+sed -i 's,^#\!/home/replace_this_to_your_username/dafoam/packages/miniconda3/bin/python,#!/usr/bin/env python,g' $HOME/dafoam/packages/miniconda3/*/*
+</pre>
+
+Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
 
 {% include links.html %}
