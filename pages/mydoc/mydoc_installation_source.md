@@ -14,7 +14,7 @@ The DAFoam package can be compiled with various dependency versions. Here we ela
 
 Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython
 | :------------------------------------------------------------------------------------------------ | 
-18.04  | gcc/7.5  | 1.10.7  | 3.0.2  | 3.11.4 | 3.11.0   | 3.3.0 | 3.6.5  | 1.14.3 | 1.1.0 | 0.29.21
+18.04  | gcc/7.5  | 1.10.4  | 3.0.2  | 3.11.4 | 3.11.0   | 3.3.0 | 3.6.5  | 1.14.3 | 1.1.0 | 0.29.21
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM.
 
@@ -24,7 +24,7 @@ Run this on terminal to install prerequisites:
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev qt5-default libqt5x11extras5-dev libqt5help5 qtdeclarative5-dev qttools5-dev libqtwebkit-dev freeglut3-dev libqt5opengl5-dev texinfo  libscotch-dev libcgal-dev gfortran swig wget vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates --no-install-recommends
+sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev qt5-default libqt5x11extras5-dev libqt5help5 qtdeclarative5-dev qttools5-dev libqtwebkit-dev freeglut3-dev libqt5opengl5-dev texinfo  libscotch-dev libcgal-dev gfortran swig wget vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config --no-install-recommends
 </pre>
 
 ## **Root folder**
@@ -40,6 +40,42 @@ echo 'export DAFOAM_ROOT_PATH=$HOME/dafoam' >> $HOME/dafoam/loadDAFoam.sh && \
 chmod 755 $HOME/dafoam/loadDAFoam.sh && \
 . $HOME/dafoam/loadDAFoam.sh
 </pre>
+
+## **OpenFOAM**
+
+We need to first compile OpenFOAM-v1812 because it contains OpenMPI-1.10.4 which will be used for other packages.
+
+<pre>
+cd $HOME/dafoam/OpenFOAM && \
+wget https://sourceforge.net/projects/openfoamplus/files/v1812/OpenFOAM-v1812.tgz/download -O OpenFOAM-v1812.tgz && \
+wget https://sourceforge.net/projects/openfoamplus/files/v1812/ThirdParty-v1812.tgz/download -O ThirdParty-v1812.tgz && \
+tar -xvf OpenFOAM-v1812.tgz && \
+tar -xvf ThirdParty-v1812.tgz && \
+sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' OpenFOAM-v1812/etc/bashrc && \
+sed -i 's/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=OPENMPI/g' OpenFOAM-v1812/etc/bashrc && \
+sed -i 's/--enable-mpi-fortran=none/--enable-mpi-fortran=yes/g' ThirdParty-v1812/makeOPENMPI && \
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812 && \
+wget https://github.com/DAFoam/files/releases/download/v1.0.0/UPstream.C && \
+mv UPstream.C src/Pstream/mpi/UPstream.C && \
+echo '# OpenFOAM-v1812' >> $HOME/dafoam/loadDAFoam.sh && \
+echo 'source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc' >> $HOME/dafoam/loadDAFoam.sh && \
+echo 'export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH' >> $HOME/dafoam/loadDAFoam.sh && \
+. $HOME/dafoam/loadDAFoam.sh && \
+export WM_NCOMPPROCS=4 && \
+./Allwmake
+</pre>
+
+{% include note.html content="In the above command, we replaced the OpenFOAM-v1812's built-in UPstream.C file with a customized one because we need to prevent OpenFOAM from calling the MPI_Finialize function when wrapping OpenFOAM functions using Cython." %}
+
+{% include note.html content="The above command will compile OpenFOAM using 4 CPU cores. If you want to compile OpenFOAM using more cores, change the ``WM_NCOMPPROCS`` parameter before running ``./Allwmake``" %}
+
+Finally, verify the installation by running:
+
+<pre>
+simpleFoam -help
+</pre>
+
+It should see some basic information of OpenFOAM
 
 ## **Python**
 
@@ -65,46 +101,6 @@ pip install scipy==1.1.0 && \
 pip install cython==0.29.21
 </pre>
 
-## **OpenMPI**
-
-First append relevant environmental variables by running:
-
-<pre>
-echo '# OpenMPI-1.10.7' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export MPI_INSTALL_DIR=$DAFOAM_ROOT_PATH/packages/openmpi-1.10.7/opt-gfortran' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MPI_INSTALL_DIR/lib' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export PATH=$MPI_INSTALL_DIR/bin:$PATH' >> $HOME/dafoam/loadDAFoam.sh && \
-. $HOME/dafoam/loadDAFoam.sh
-</pre>
-
-Then, configure and build OpenMPI:
-
-<pre>
-cd $HOME/dafoam/packages && \
-wget https://download.open-mpi.org/release/open-mpi/v1.10/openmpi-1.10.7.tar.gz  && \
-tar -xvf openmpi-1.10.7.tar.gz && \
-cd openmpi-1.10.7 && \
-./configure --prefix=$MPI_INSTALL_DIR && \
-make all install
-</pre>
-
-To verify the installation, run:
-
-<pre>
-mpicc -v
-</pre>
-
-You should see the version of the compiled OpenMPI.
-
-Finally, install mpi4py-3.0.2:
-
-<pre>
-cd $HOME/dafoam/packages && \
-wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-3.0.2.tar.gz && \
-tar -xvf mpi4py-3.0.2.tar.gz && cd mpi4py-3.0.2 && \
-python setup.py install
-</pre>
-
 ## **Petsc**
 
 First append relevant environmental variables by running:
@@ -113,8 +109,6 @@ First append relevant environmental variables by running:
 echo '# Petsc-3.11.4' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.11.4' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export PETSC_ARCH=real-opt' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export PATH=$PETSC_DIR/$PETSC_ARCH/bin:$PATH' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export PATH=$PETSC_DIR/$PETSC_ARCH/include:$PATH' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PETSC_DIR/$PETSC_ARCH/lib' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export PETSC_LIB=$PETSC_DIR/$PETSC_ARCH/lib' >> $HOME/dafoam/loadDAFoam.sh && \
 . $HOME/dafoam/loadDAFoam.sh
@@ -127,13 +121,17 @@ cd $HOME/dafoam/packages && \
 wget http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-3.11.4.tar.gz  && \
 tar -xvf petsc-3.11.4.tar.gz && \
 cd petsc-3.11.4 && \
-./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 --with-mpi-dir=$MPI_INSTALL_DIR && \
+./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 && \
 make PETSC_DIR=$HOME/dafoam/packages/petsc-3.11.4 PETSC_ARCH=real-opt all
 </pre>
 
-Finally, install petsc4py-3.11.0:
+Finally, install mpi4py-3.0.2 and petsc4py-3.11.0:
 
 <pre>
+cd $HOME/dafoam/packages && \
+wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-3.0.2.tar.gz && \
+tar -xvf mpi4py-3.0.2.tar.gz && cd mpi4py-3.0.2 && \
+python setup.py install && \
 cd $HOME/dafoam/packages && \
 wget https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-3.11.0.tar.gz && \
 tar -xvf petsc4py-3.11.0.tar.gz && cd petsc4py-3.11.0 && \
@@ -211,41 +209,6 @@ tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.3.0 && \
 pip install .
 </pre>
 
-## **OpenFOAM**
-
-Compile OpenFOAM-v1812 by running:
-
-<pre>
-cd $HOME/dafoam/OpenFOAM && \
-wget https://sourceforge.net/projects/openfoamplus/files/v1812/OpenFOAM-v1812.tgz/download -O OpenFOAM-v1812.tgz && \
-wget https://sourceforge.net/projects/openfoamplus/files/v1812/ThirdParty-v1812.tgz/download -O ThirdParty-v1812.tgz && \
-tar -xvf OpenFOAM-v1812.tgz && \
-tar -xvf ThirdParty-v1812.tgz && \
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812 && \
-wget https://github.com/DAFoam/files/releases/download/v1.0.0/UPstream.C && \
-mv UPstream.C src/Pstream/mpi/UPstream.C && \
-sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
-echo '# OpenFOAM-v1812' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH' >> $HOME/dafoam/loadDAFoam.sh && \
-. $HOME/dafoam/loadDAFoam.sh && \
-export WM_NCOMPPROCS=4 && \
-./Allwmake
-</pre>
-
-{% include note.html content="In the above command, we replaced the OpenFOAM-v1812's built-in UPstream.C file with a customized one because we need to prevent OpenFOAM from calling the MPI_Finialize function when wrapping OpenFOAM functions using Cython. We also need to replace $HOME to $DAFOAM_ROOT_PATH in etc/bashrc" %}
-
-{% include note.html content="The above command will compile OpenFOAM using 4 CPU cores. If you want to compile OpenFOAM using more cores, change the ``WM_NCOMPPROCS`` parameter before running ``./Allwmake``" %}
-
-Finally, verify the installation by running:
-
-<pre>
-simpleFoam -help
-</pre>
-
-It should see some basic information of OpenFOAM
-
-
 ## **pyOFM**
 
 Compile pyOFM by running:
@@ -322,15 +285,9 @@ export DAFOAM_ROOT_PATH=$HOME/dafoam
 # Miniconda3
 export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib
-# OpenMPI-1.10.7
-export MPI_INSTALL_DIR=$DAFOAM_ROOT_PATH/packages/openmpi-1.10.7/opt-gfortran
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MPI_INSTALL_DIR/lib
-export PATH=$MPI_INSTALL_DIR/bin:$PATH
 # PETSC
 export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.11.4
 export PETSC_ARCH=real-opt
-export PATH=$PETSC_DIR/$PETSC_ARCH/bin:$PATH
-export PATH=$PETSC_DIR/$PETSC_ARCH/include:$PATH
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PETSC_DIR/$PETSC_ARCH/lib
 export PETSC_LIB=$PETSC_DIR/$PETSC_ARCH/lib
 # CGNS-3.3.0
@@ -381,6 +338,7 @@ tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-AD && \
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD && \
 sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
 sed -i 's/export WM_CODI_AD_MODE=CODI_AD_FORWARD/export WM_CODI_AD_MODE=CODI_AD_REVERSE/g' etc/bashrc && \
+sed -i 's/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=OPENMPI/g' etc/bashrc && \
 source etc/bashrc && \
 export WM_NCOMPPROCS=4 && \
 ./Allwmake 2> warningLog.txt
@@ -402,7 +360,7 @@ After OpenFOAM-v1812-AD is compiled and verified, we need to link all the compil
 ln -s $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD/platforms/*/lib/*.so $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/ && \
 ln -s $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD/platforms/*/lib/*.o $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/ && \
 ln -s $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD/platforms/*/lib/dummy/*.so $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy/ && \
-ln -s $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD/platforms/*/lib/openmpi-system/*.so $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-system/
+ln -s $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD/platforms/*/lib/openmpi-1.10.4/*.so $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-1.10.4/
 </pre>
 
 Now, compile the AD version of DAFoam:
@@ -427,13 +385,7 @@ This step is needed if you want to use SNOPT and IPOPT optimizers. Detailed inst
 
 **IPOPT**
 
-First install the pre-requisites by running:
-
-<pre>
-sudo apt-get install gcc g++ gfortran patch wget pkg-config
-</pre>
-
-Then, download Ipopt-3.13.2 and set up the relevant environmental variables to loadDAFoam.sh by runing:
+Download Ipopt-3.13.2 and set up the relevant environmental variables to loadDAFoam.sh by runing:
 
 <pre>
 echo '# Ipopt' >> $HOME/dafoam/loadDAFoam.sh && \
@@ -492,8 +444,8 @@ cd build && \
 make && \
 make install && \
 cd $IPOPT_DIR/lib && \
-ln -s libcoinlapack.so liblapack && \
-ln -s libcoinblas.so libblas && \
+ln -s libcoinlapack.so liblapack.so && \
+ln -s libcoinblas.so libblas.so && \
 cd $HOME/dafoam/repos/pyoptsparse-2.3.0 && pip install .
 </pre>
 
