@@ -447,13 +447,13 @@ head -1 $HOME/dafoam/packages/miniconda3/bin/conda
 You may see an output like this:
 
 <pre>
-#!/home/replace_this_to_your_username/dafoam/packages/miniconda3/bin/python
+#!/home/replace_this_with_your_username/dafoam/packages/miniconda3/bin/python
 </pre>
 
 Then run this command to replace all the hard-coded interpreter lines:
 
 <pre>
-sed -i 's,^#\!/home/replace_this_to_your_username/dafoam/packages/miniconda3/bin/python,#!/usr/bin/env python,g' $HOME/dafoam/packages/miniconda3/*/*
+sed -i 's,^#\!/home/replace_this_with_your_username/dafoam/packages/miniconda3/bin/python,#!/usr/bin/env python,g' $HOME/dafoam/packages/miniconda3/*/*
 </pre>
 
 Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
