@@ -24,7 +24,7 @@ Run this on terminal to install prerequisites:
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev qt5-default libqt5x11extras5-dev libqt5help5 qtdeclarative5-dev qttools5-dev libqtwebkit-dev freeglut3-dev libqt5opengl5-dev texinfo  libscotch-dev libcgal-dev gfortran swig wget vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config --no-install-recommends
+sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config --no-install-recommends
 </pre>
 
 ## **Root folder**
