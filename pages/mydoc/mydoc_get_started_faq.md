@@ -21,6 +21,10 @@ To increase the mesh density, one needs to modify the parameters in "genAirFoilM
 
 To increase the number of FFD points, one needs to increase "nx" (number of FFD points in the x direction) in "FFD/genFFD.py". Then run "python genFFD.py" in the FFD folder to generate a new "wingFFD.xyz" file. Note that the plot3D file we generate is a 3D mesh, and any internal points can be moved. Therefore, it is not necessary to use more than two points in the vertical (y) direction. Similarly, because it is a 2D case, there is no need to use more than two points in the z direction either. Also note that the "genFFD.py" script supports only uniform FFD points. We recommend using ICEM-CFD to generate more complex FFD points. 
 
+## How to visualize the FFD points?
+
+You can open a FFD file (*.xyz; plot3D format) in Paraview and choose "PLOT3D Reader" in the pop-up window. Then, on the left panel, uncheck "Binary File", check "Multi Grid", and then hit "Apply". NOTE: Paraview sometime crashes when loading Plot3D files with a small number of points (it is a bug in Paraview). To avoid this, you can convert a Plot3D file to the Tecplot format. First load the DAFoam environment, and run `dafoam_plot3d2tecplot.py yourFFDFileName.xyz newFFDFileName.dat`. Once done, a new file newFFDFileName.dat will be generated in the Tecplot format. You can then use Paraview to load this new file.
+
 ## How to use more CPU cores?
 
 To run the optimization using 8 cores, first clean up previous results `./Allclean`, then run:
