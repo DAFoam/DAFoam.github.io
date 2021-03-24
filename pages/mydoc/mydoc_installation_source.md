@@ -365,14 +365,14 @@ Download Ipopt-3.13.2 and set up the relevant environmental variables to loadDAF
 echo '# Ipopt' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export IPOPT_DIR=$DAFOAM_ROOT_PATH/packages/Ipopt' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib' >> $HOME/dafoam/loadDAFoam.sh && \
-. $HOME/dafoam/loadDAFoam.sh && \
-cd $HOME/dafoam/packages && \
-git clone -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
+. $HOME/dafoam/loadDAFoam.sh
 </pre>
 
 Next, compiles the ThirdParty dependencies Metis and Mumps by running:
 
 <pre>
+cd $HOME/dafoam/packages && \
+git clone -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
 cd $IPOPT_DIR && \
 git clone -b stable/2.0 https://github.com/coin-or-tools/ThirdParty-Metis.git && \
 cd ThirdParty-Metis && \
