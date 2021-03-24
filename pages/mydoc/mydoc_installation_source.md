@@ -24,7 +24,7 @@ Run this on terminal to install prerequisites:
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config --no-install-recommends
+sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config --no-install-recommends
 </pre>
 
 ## **Root folder**
@@ -367,43 +367,38 @@ echo 'export IPOPT_DIR=$DAFOAM_ROOT_PATH/packages/Ipopt' >> $HOME/dafoam/loadDAF
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib' >> $HOME/dafoam/loadDAFoam.sh && \
 . $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/packages && \
-wget https://www.coin-or.org/download/source/Ipopt/Ipopt-3.13.2.tgz && \
-tar -xvf Ipopt-3.13.2.tgz && mv Ipopt-releases-3.13.2 Ipopt
+git clone -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
 </pre>
 
 Next, compiles the ThirdParty dependencies Metis and Mumps by running:
 
 <pre>
 cd $IPOPT_DIR && \
-wget https://github.com/coin-or-tools/ThirdParty-Metis/archive/releases/1.3.9.tar.gz && \
-tar -xvf 1.3.9.tar.gz && mv ThirdParty-Metis* ThirdParty-Metis && \
+git clone -b stable/2.0 https://github.com/coin-or-tools/ThirdParty-Metis.git && \
 cd ThirdParty-Metis && \
 ./get.Metis && \
-./configure --prefix=$IPOPT_DIR && \
+CFLAGS='-Wno-implicit-function-declaration' ./configure --prefix=$IPOPT_DIR && \
 make && \
 make install && \
 cd $IPOPT_DIR && \
-wget https://github.com/coin-or-tools/ThirdParty-Blas/archive/releases/1.4.8.tar.gz && \
-tar -xvf 1.4.8.tar.gz && mv ThirdParty-Blas* ThirdParty-Blas && \
+git clone -b stable/1.4 https://github.com/coin-or-tools/ThirdParty-Blas.git && \
 cd ThirdParty-Blas && \
 ./get.Blas && \
 ./configure --prefix=$IPOPT_DIR && \
 make && \
 make install && \
 cd $IPOPT_DIR && \
-wget https://github.com/coin-or-tools/ThirdParty-Lapack/archive/releases/1.6.1.tar.gz && \
-tar -xvf 1.6.1.tar.gz && mv ThirdParty-Lapack* ThirdParty-Lapack && \
+git clone -b stable/1.6 https://github.com/coin-or-tools/ThirdParty-Lapack.git && \
 cd ThirdParty-Lapack && \
 ./get.Lapack && \
 ./configure --prefix=$IPOPT_DIR && \
 make && \
 make install && \
 cd $IPOPT_DIR && \
-wget https://github.com/coin-or-tools/ThirdParty-Mumps/archive/releases/1.6.2.tar.gz && \
-tar -xvf 1.6.2.tar.gz && mv ThirdParty-Mumps* ThirdParty-Mumps && \
+git clone -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
 cd ThirdParty-Mumps && \
 ./get.Mumps && \
-./configure --prefix=$IPOPT_DIR --with-metis --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" --with-metis-cflags="-I${IPOPT_DIR}/include/coin-or/metis"  --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+./configure --prefix=$IPOPT_DIR --with-metis --with-metis-lflags="-L${PREFIX}/lib -lcoinmetis" --with-metis-cflags="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" CFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" FCFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
 make && \
 make install
 </pre>
@@ -414,7 +409,7 @@ Finally, compile Ipopt and pyoptsparse by running:
 cd $IPOPT_DIR && \
 mkdir build && \
 cd build && \
-../configure --prefix=${IPOPT_DIR} --disable-java CPPFLAGS=-I${MPI_ARCH_PATH}/include --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
 make && \
 make install && \
 cd $IPOPT_DIR/lib && \
