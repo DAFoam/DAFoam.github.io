@@ -73,6 +73,14 @@ mpirun -np 4 surfaceMeshTriangulate -patches '(wing)' -latestTime -parallel optS
 
 The above command will extract the patch "wing" to a stl file called "optShape.stl". If you have multiple patches to extract, modify the "-patches" flag, e.g., -patches '(wing body)'. Also, the "-lastTime" flag extracts stl files for the last optimization step. If you don't add the "-lastTime" flag, it will extract stl files for all optimization steps.
 
+## Can I get the optimized geometry in a CAD format?
+
+Yes, you can get the optimized geometry in the IGES format through pyGeo. Follow the "deformGeo" section from [here](https://dafoam.github.io/mydoc_tutorials_aero_prowim_wing.html). Refer to the [pyGeo documentation](https://mdolab-pygeo.readthedocs-hosted.com/en/latest/update_pygeo.html) for more general instructions on how to deform the design surface geometry.
+
+## How to get sensitivity maps?
+
+Starting from [this commit](https://github.com/mdolab/dafoam/commit/c1c3ea12a49ceec7177238f7dc70a25ce260bba9), DAFoam can output sensitivity maps during optimization. You need to set the names of the design variables to "writeSensMap" in runScript.py (check [this example](https://github.com/mdolab/dafoam/blob/c1c3ea12a49ceec7177238f7dc70a25ce260bba9/tests/runTests_DASimpleFoam.py#L46)). A more general description is [here](https://github.com/mdolab/dafoam/blob/c1c3ea12a49ceec7177238f7dc70a25ce260bba9/dafoam/pyDAFoam.py#L552). Now, we only support outputting sensitivity for FFD and Field designVarType.
+
 ## How to reduce the size of parallel optimization results?
 
 When running in parallel, OpenFOAM will generate folders for each decomposed domain, e.g., processor0, processor1. This feature takes a lot of space and is slow to transfer and post-process. To fix this issue, wait until the parallel optimization is done, then go to the optimization folder, load the OpenFOAM environment, and run this command `reconstructPar` to combine all the decomposed flow fields that are stored in processor0, processor1, etc. You will see a bunch of new folders called 0.00000001, 0.00000002, etc. These are the combined flow solutions for each optimization step. So once the reconstructPar command is done, one can delete all the processor0, processor1, etc. folders. When visualizing the flow fields in Paraview, there is no need to choose "Decomposed Case" for "Case Type" because the cases have been reconstructed. This will increase the speed for visualization.  
