@@ -79,7 +79,7 @@ Yes, you can get the optimized geometry in the IGES format through pyGeo. Follow
 
 ## How to get sensitivity maps?
 
-Starting from [this commit](https://github.com/mdolab/dafoam/commit/c1c3ea12a49ceec7177238f7dc70a25ce260bba9), DAFoam can output sensitivity maps during optimization. You need to set the names of the design variables to "writeSensMap" in runScript.py (check [this example](https://github.com/mdolab/dafoam/blob/c1c3ea12a49ceec7177238f7dc70a25ce260bba9/tests/runTests_DASimpleFoam.py#L46)). A more general description is [here](https://github.com/mdolab/dafoam/blob/c1c3ea12a49ceec7177238f7dc70a25ce260bba9/dafoam/pyDAFoam.py#L552). Now, we only support outputting sensitivity for FFD and Field designVarType.
+The latest version of DAFoam can output sensitivity maps during optimization. You need to set the names of the design variables to "writeSensMap" in runScript.py (check [this example](https://github.com/mdolab/dafoam/blob/c1c3ea12a49ceec7177238f7dc70a25ce260bba9/tests/runTests_DASimpleFoam.py#L46)). A more general description is [here](https://github.com/mdolab/dafoam/blob/c1c3ea12a49ceec7177238f7dc70a25ce260bba9/dafoam/pyDAFoam.py#L552). Now, we only support outputting sensitivity for FFD and Field designVarType.
 
 ## How to reduce the size of parallel optimization results?
 
