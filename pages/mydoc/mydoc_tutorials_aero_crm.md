@@ -44,7 +44,7 @@ Then, use the following command to run the optimization (we recommend using 64 c
 mpirun -np 64 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-The case ran for 160 optimization iterations, the drag was reduced by 7.6%.
+The case ran for 160 optimization iterations, the original CD was 0.02090 and the optimized CD was 0.01932 (7.6% drag reduction).
 
 The evolution of pressure and shape during the optimization is as follows.
 
