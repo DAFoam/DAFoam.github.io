@@ -92,6 +92,6 @@ The evolution of pressure and shape during the optimization is as follows.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Onera_M6_Movie.gif" width="640" />
 
-Fig. 2. Pressure and shape evoluation during the optimization process
+Fig. 2. Pressure and shape evolution during the optimization process
 
 {% include links.html %}

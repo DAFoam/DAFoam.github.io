@@ -121,6 +121,10 @@ entries:
           url: /mydoc_tutorials_aero_m6.html
           output: web, pdf
         
+        - title: CRM wing
+          url: /mydoc_tutorials_aero_crm.html
+          output: web, pdf
+        
         - title: Prowim wing propeller
           url: /mydoc_tutorials_aero_prowim_wing.html
           output: web, pdf
