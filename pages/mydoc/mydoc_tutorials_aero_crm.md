@@ -20,7 +20,7 @@ Design variables: 192 FFD points moving in the z direction, seven twists, and on
 Constraints: volume, thickness, LE/TE, and lift constraints (total number: 768)
 Mach number: 0.85
 Reynolds number: 5 million
-Mesh cells: ~579,072
+Mesh cells: ~579K
 Solver: DARhoSimpleCFoam
 </pre>
 
