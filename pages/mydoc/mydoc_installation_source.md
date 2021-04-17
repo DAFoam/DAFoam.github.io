@@ -9,7 +9,7 @@ folder: mydoc
 
 {% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v2.2.0-](mydoc_installation_source_220.html) and [v1.0.0](mydoc_installation_source_100.html)." %}
 
-The DAFoam package can be compiled with various dependency versions. Here we elaborate on how to compile it on Ubuntu 18.04 using the dependencies shown in the following table. 
+The DAFoam package can be compiled with various dependency versions. Here we elaborate on how to compile it on **Ubuntu 18.04** using the dependencies shown in the following table. If you use **Ubuntu 20.04**, you can follow the same steps except that you need to change Miniconda3-4.5.4-Linux-x86_64.sh to Miniconda3-py37_4.8.3-Linux-x86_64.sh in the **Python** section.
 
 
 Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython
