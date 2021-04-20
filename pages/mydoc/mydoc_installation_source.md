@@ -89,10 +89,11 @@ chmod 755 Miniconda3-4.5.4-Linux-x86_64.sh && \
 echo '# Miniconda3' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib' >> $HOME/dafoam/loadDAFoam.sh && \
+echo 'export PYTHONUSERBASE=no-local-libs' >> $HOME/dafoam/loadDAFoam.sh && \
 . $HOME/dafoam/loadDAFoam.sh
 </pre>
 
-Then upgrade the pip utility:
+In the above, we use "export PYTHONUSERBASE=no-local-libs" to bypass the site-packages in user's .local directory because they may conflict with the DAFoam packages. Then we can upgrade the pip utility:
 
 <pre>
 pip install --upgrade pip && \
@@ -285,6 +286,7 @@ export DAFOAM_ROOT_PATH=$HOME/dafoam
 # Miniconda3
 export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib
+export PYTHONUSERBASE=no-local-libs
 # PETSC
 export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.11.4
 export PETSC_ARCH=real-opt
