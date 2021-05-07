@@ -3,7 +3,7 @@
 topnav:
 - title: Topnav
   items:
-    - title: News
+    - title: Announcements
       url: /news
     - title: GitHub
       external_url: https://github.com/mdolab/dafoam

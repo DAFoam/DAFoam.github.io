@@ -1201,3 +1201,43 @@ h4.panel-title {
         display:block !important;
     }
 }
+
+/* css for news ticker */
+/* WRAPPER */
+.tickerv-wrap {
+    background: #eee;
+    box-sizing: content-box;
+    height: 30px; /* Take note of this */
+    overflow: hidden; /* Hide scrollbars */
+    margin: 0;
+    padding: 0;
+  } 
+  
+  /* TICKER ANIMATION */
+  @keyframes tickerv {
+    0%   {margin-top: -2px;}
+    /* Quite literally -ve height of wrapper */
+    25%  {margin-top: -25px;} /* 1 X 25 px */
+    50%  {margin-top: -50px;} /* 2 X 25 px */
+    75%  {margin-top: -74px;} /* 3 X 25 px */
+    100% {margin-top: -2px;} /* Back to first line */
+  }
+  .tickerv-wrap ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    animation-name: tickerv; /* Loop through items */
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(1, 0, .5, 0);
+  }
+  .tickerv-wrap ul:hover {
+    /* Pause on mouse hover */
+    animation-play-state: paused;
+  }
+  
+  /* ITEMS */
+  .tickerv-wrap ul li {
+    font-size: 15px;
+    line-height: 14px /* Same as wrapper height */
+  }

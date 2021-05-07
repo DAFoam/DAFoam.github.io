@@ -6,6 +6,15 @@ permalink: index.html
 summary:
 ---
 
+[**Latest Announcements**](news.html)
+<div class="tickerv-wrap"><ul>
+  {% for post in site.posts limit:10 %}
+  <li>{{ post.date | date: "%b %-d, %Y. " }} {{ post.title }}. <a href="{{ post.permalink }}">Details.</a> </li>
+  {% endfor %}
+</ul></div>
+
+|
+
 DAFoam develops an efficient discrete adjoint method to perform high-fidelity gradient-based design optimization with the [MACH-Aero](https://github.com/mdolab/MACH-Aero) framework. DAFoam has the following features:
 
 - It uses a popular open-source package [OpenFOAM](https://www.openfoam.com) for multiphysics analysis.

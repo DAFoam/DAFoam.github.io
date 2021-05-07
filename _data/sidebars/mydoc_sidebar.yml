@@ -196,13 +196,4 @@ entries:
     - title: User guides
       url: /mydoc_docs_user_guides.html
       output: web, pdf
-  
-  - title: Discussions
-    output: web, pdf
-    folderitems:
-  
-    - title: Discussions
-      url: /mydoc_discussions.html
-      output: web, pdf
-
 
