@@ -172,22 +172,14 @@ entries:
         - title: pitzDaily
           url: /mydoc_tutorials_topo_pitzdaily.html
           output: web, pdf
-        
-  - title: Doxygen
-    output: web, pdf
-    folderitems:
-  
-    - title: DAFoam doxygen
-      url: /mydoc_doxygen.html
-      output: web, pdf
-    
-    - title: DAFoam input parameters
-      url: /mydoc_doxygen_daoption.html
-      output: web, pdf
-  
+
   - title: Documents
     output: web, pdf
     folderitems:
+
+    - title: DAFoam doxygen
+      url: /mydoc_doxygen.html
+      output: web, pdf
   
     - title: Papers
       url: /mydoc_docs_publications.html
