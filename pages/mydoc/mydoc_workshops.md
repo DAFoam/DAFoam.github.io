@@ -7,6 +7,6 @@ permalink: mydoc_workshops.html
 folder: mydoc
 ---
 
-Refer to https://github.com/DAFoam/workshops
+Workshop materials are [here](https://github.com/DAFoam/workshops)
 
 {% include links.html %}
