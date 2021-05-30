@@ -188,4 +188,8 @@ entries:
     - title: User guides
       url: /mydoc_docs_user_guides.html
       output: web, pdf
+    
+    - title: Workshops
+      url: /mydoc_workshops.html
+      output: web, pdf
 
