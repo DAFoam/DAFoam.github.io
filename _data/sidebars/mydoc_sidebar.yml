@@ -80,7 +80,7 @@ entries:
       url: /mydoc_installation_source.html
       output: web, pdf
     
-    - title: Build Docker image
+    - title: Build a new Docker image
       url: /mydoc_installation_docker.html
       output: web, pdf
   
