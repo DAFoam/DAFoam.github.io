@@ -14,7 +14,7 @@ We are looking forward to seeing you.
 
 Agenda
 
-The workshop will have three sections. Each section has about 50 minute lecture and discussion with 10 minute break. The workshop materials are available from [here](https://github.com/DAFoam/workshops). We will cover the following topics:
+The workshop will have three sections. Each section has an about 50-minute lecture and discussion with a 10-minute break. The workshop materials are available from [here](https://github.com/DAFoam/workshops). We will cover the following topics:
 
 - DAFoam Introduction
 - MACH-Aero Framework
