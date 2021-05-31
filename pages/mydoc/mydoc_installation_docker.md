@@ -1,5 +1,5 @@
 ---
-title: Build Docker image
+title: Build a new Docker image
 keywords: dafoam, installation, docker
 summary: 
 sidebar: mydoc_sidebar
@@ -7,110 +7,56 @@ permalink: mydoc_installation_docker.html
 folder: mydoc
 ---
 
-Create a file called **Dockerfile**, copy and paste the following commands into the Dockerfile and run `docker build -t my_dafoam_image .`
-
-Refer to the [docker](https://github.com/dafoam/docker) repo. Here `dafoam/prerequisites:latest` is a docker image that contains prerequisites such as OpenFOAM, Petsc, OpenMPI, etc.
+The following is an example of how to update the DAFoam repo in Docker and save it as a new Docker image. First, create a file called **Dockerfile**, copy and paste the following commands into Dockerfile, and run `docker build -t my_new_dafoam_image .`. Here "dafoam/opt-packages:latest" can be any existing Docker image. 
 
 <pre>
-FROM dafoam/prerequisites:latest
+FROM dafoam/opt-packages:latest
 
 # Swith to dafoamuser
 USER dafoamuser
 
-ENV HOME=/home/dafoamuser
-
-# f2py
-ENV PATH=$PATH:$HOME/.local/bin
-# OpenMPI-1.10.7
-ENV MPI_INSTALL_DIR=$HOME/packages/openmpi-1.10.7/opt-gfortran
-ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MPI_INSTALL_DIR/lib
-ENV PATH=$MPI_INSTALL_DIR/bin:$PATH
+# Here we need to load all the variables defined in loadDAFoam.sh
+# DAFoam root path
+ENV DAFOAM_ROOT_PATH=$HOME/dafoam
+# OpenFOAM-v1812
+ENV LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
+# Miniconda3
+ENV PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib
 # Petsc-3.11.4
-ENV PETSC_DIR=$HOME/packages/petsc-3.11.4
+ENV PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.11.4
 ENV PETSC_ARCH=real-opt
-ENV PATH=$PETSC_DIR/$PETSC_ARCH/bin:$PATH
-ENV PATH=$PETSC_DIR/$PETSC_ARCH/include:$PATH
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PETSC_DIR/$PETSC_ARCH/lib
 ENV PETSC_LIB=$PETSC_DIR/$PETSC_ARCH/lib
+# SLEPC
+ENV SLEPC_DIR=$DAFOAM_ROOT_PATH/packages/slepc-3.11.2
+ENV SLEPC_ARCH=$PETSC_ARCH
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$SLEPC_DIR/$SLEPC_ARCH/lib
+ENV SLEPC_LIB=$SLEPC_DIR/$SLEPC_ARCH/lib
 # CGNS-3.3.0
-ENV CGNS_HOME=$HOME/packages/CGNS-3.3.0/opt-gfortran
+ENV CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-3.3.0/opt-gfortran
 ENV PATH=$PATH:$CGNS_HOME/bin
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib
+# Ipopt
+ENV IPOPT_DIR=$DAFOAM_ROOT_PATH/packages/Ipopt
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib
 
-# create the repo directory
-RUN mkdir -p $HOME/repos
+# create a new repo directory
+RUN mkdir -p $DAFOAM_ROOT_PATH/repos
 
-# MACH framework
-RUN cd $HOME/repos && \
-    git clone https://github.com/mdolab/baseclasses && \
-    cd baseclasses && \
-    pip install .
-
-RUN cd $HOME/repos && \
-    git clone https://github.com/mdolab/pyspline && \
-    cd pyspline && \
-    cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
-    make && \
-    pip install .
-
-RUN cd $HOME/repos && \
-    git clone https://github.com/mdolab/pygeo && \
-    cd pygeo && \
-    pip install .
-
-RUN cd $HOME/repos && \
-    git clone https://github.com/mdolab/multipoint && \
-    cd multipoint && \
-    pip install .
-
-RUN cd $HOME/repos && \
-    git clone https://github.com/mdolab/pyhyp && \
-    cd pyhyp && \
-    cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
-    make && \
-    pip install .
-
-RUN cd $HOME/repos && \
-    git clone https://github.com/mdolab/cgnsutilities && \
-    cd cgnsutilities && \
-    cp config.mk.info config.mk && \
-    make && \
-    pip install .
-
-RUN cd $HOME/repos && \
-    git clone https://github.com/mdolab/idwarp && \
-    cd idwarp && \
-    cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
-    make && \
-    pip install .
-
-RUN cd $HOME/repos && \
-    git clone https://github.com/mdolab/pyoptsparse && \
-    cd pyoptsparse && \
-    pip install .
-
-RUN cd $HOME/repos && \
-    git clone https://github.com/mdolab/adflow && \
-    cd adflow && \
-    cp -r config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
-    make && \
-    pip install .
-
-RUN cd $HOME/repos && \
-    git clone https://github.com/mdolab/pyofm && \
-    cd pyofm && \
-    . $HOME/OpenFOAM/OpenFOAM-v1812/etc/bashrc && \
-    make && \
-    pip install .
-
-RUN cd $HOME/repos && \
+# Update the DAFoam repo to the latest, we need to compile both original
+# and AD version of DAFoam libs
+RUN cd $DAFOAM_ROOT_PATH/repos && \
     git clone https://github.com/mdolab/dafoam && \
     cd dafoam && \
-    . $HOME/OpenFOAM/OpenFOAM-v1812/etc/bashrc && \
+    . $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc && \
+    ./Allmake && \
+    . $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-AD/etc/bashrc && \
+    ./Allclean && \
     ./Allmake && \
     pip install .
 
-RUN rm -rf $HOME/repos
+RUN rm -rf $DAFOAM_ROOT_PATH/repos
 </pre>
 
 {% include links.html %}
