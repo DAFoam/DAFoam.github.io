@@ -330,13 +330,15 @@ It should see some basic information of DASimpleFoamReverseAD.
 
 {% include note.html content="We use CodiPack to differentiate the OpenFOAM libraries. During the compliation, it will generate a lot of warning messages, which are saved to the warningLog.txt file. After the compilation is done, remember to delete this warning file, which can be larger than 1 GB." %}
 
-After OpenFOAM-v1812-AD is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder.
+After OpenFOAM-v1812-AD is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
 
 <pre>
-ln -s $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD/platforms/*/lib/*.so $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/ && \
-ln -s $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD/platforms/*/lib/*.o $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/ && \
-ln -s $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD/platforms/*/lib/dummy/*.so $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy/ && \
-ln -s $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD/platforms/*/lib/openmpi-1.10.4/*.so $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-1.10.4/
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib
+ln -s ../../../../OpenFOAM-v1812-AD/platforms/*/lib/*.so .
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy
+ln -s ../../../../../OpenFOAM-v1812-AD/platforms/*/lib/dummy/*.so .
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-1.10.4
+ln -s ../../../../../OpenFOAM-v1812-AD/platforms/*/lib/openmpi-1.10.4/*.so .
 </pre>
 
 Now, compile the AD version of DAFoam:
