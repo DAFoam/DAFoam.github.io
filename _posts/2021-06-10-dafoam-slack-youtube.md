@@ -1,5 +1,5 @@
 ---
-title:  "DAFoam Slack workspace and YouTube channel created."
+title:  "DAFoam Slack workspace and YouTube channel created"
 categories: jekyll update
 permalink: dafoam_slack_youtube.html
 ---
