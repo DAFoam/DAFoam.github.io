@@ -1,9 +1,9 @@
 ---
 title: RAE2822 airfoil
-keywords: validation, rae2822
+keywords: validations, rae2822
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_validation_rae2822.html
+permalink: mydoc_validations_rae2822.html
 folder: mydoc
 ---
 
