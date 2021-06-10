@@ -9,6 +9,6 @@ bundle exec jekyll serve --detach --config _config.yml,pdfconfigs/config_mydoc_p
 echo "done";
 
 echo "Building the PDF ...";
-prince --javascript --input-list=_site/pdfconfigs/prince-list.txt -o pdf/mydoc.pdf;
+prince --javascript --input-list=_site/pdfconfigs/prince-list.txt -o mydoc.pdf;
 
-echo "Done. Look in the pdf directory to see if it printed successfully."
+echo "Done."
