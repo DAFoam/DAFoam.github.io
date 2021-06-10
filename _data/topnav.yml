@@ -5,10 +5,15 @@ topnav:
   items:
     - title: Announcements
       url: /news
-    - title: GitHub
-      external_url: https://github.com/mdolab/dafoam
     - title: Discussions
       external_url: https://github.com/mdolab/dafoam/discussions
+    - title: GitHub
+      external_url: https://github.com/mdolab/dafoam
+    - title: Slack
+      external_url: https://join.slack.com/t/dafoam/shared_invite/zt-rtjjj940-g1n4EZNkAoenxyi6Qb~hyw
+    - title: YouTube
+      external_url: https://www.youtube.com/channel/UCr9SKeQBuntzYf-3ubtfzmQ
+    
 
 #Topnav dropdowns
 #topnav_dropdowns:
