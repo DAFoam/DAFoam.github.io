@@ -309,7 +309,7 @@ We need to first compile an AD version of OpenFOAM:
 
 <pre>
 cd $HOME/dafoam/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.6.tar.gz -O OpenFOAM-v1812-AD.tgz && \
+wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.7.tar.gz -O OpenFOAM-v1812-AD.tgz && \
 tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-AD && \
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD && \
 sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
