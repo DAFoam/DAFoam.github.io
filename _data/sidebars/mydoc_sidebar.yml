@@ -180,9 +180,21 @@ entries:
     - title: Overview
       url: /mydoc_validations_overview.html
       output: web, pdf
-    
+
     - title: RAE2822 airfoil
       url: /mydoc_validations_rae2822.html
+      output: web, pdf
+    
+    - title: NACA0012 airfoil
+      url: /mydoc_validations_naca0012.html
+      output: web, pdf
+    
+    - title: Onera M6 wing
+      url: /mydoc_validations_onera_m6.html
+      output: web, pdf
+    
+    - title: Prowim wing propeller
+      url: /mydoc_validations_prowim.html
       output: web, pdf
 
   - title: Documents
