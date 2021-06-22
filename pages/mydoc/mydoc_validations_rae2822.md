@@ -7,9 +7,7 @@ permalink: mydoc_validations_rae2822.html
 folder: mydoc
 ---
 
-Under construction.
-
-This validation case examines the aerodynamic shape optimization of the RAE2822 airfoil. The initial conditions for the simulation are a Reynolds number of 6.5 million, Mach number of 0.729, and angle of attack of 2.31 degrees. Figure 1 displays the results of the simulation with a coarse mesh of 17408 cells, a medium mesh of 60672 cells, and a fine mesh of 108675 cells along with the experimental data (Cook et al.,1979). The three simulations displayed in Figure 1 were run with the Spalart Allmaras turbulence model.
+This validation case examines the aerodynamic shape optimization of the RAE2822 airfoil. The flow conditions for the simulation are a Reynolds number of 6.5 million, Mach number of 0.729, and angle of attack of 2.31 degrees. Figure 1 displays the results of the simulation with a coarse mesh of 17,408 cells, a medium mesh of 60,672 cells, and a fine mesh of 108,675 cells along with the experimental data (Cook et al.,1979). The three simulations displayed in Figure 1 were run with the Spalart Allmaras turbulence model.
 
 <img src="https://user-images.githubusercontent.com/86077528/122992939-b5852100-d374-11eb-90a4-67eebd3046f3.png" width="700" /> 
 
