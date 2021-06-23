@@ -173,7 +173,7 @@ entries:
           url: /mydoc_tutorials_topo_pitzdaily.html
           output: web, pdf
   
-  - title: Graphical interface
+  - title: GUI
     output: web, pdf
     folderitems:
 
