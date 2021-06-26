@@ -99,7 +99,8 @@ In the above, we use "export PYTHONUSERBASE=no-local-libs" to bypass the site-pa
 pip install --upgrade pip && \
 pip install numpy==1.14.3 && \
 pip install scipy==1.1.0 && \
-pip install cython==0.29.21
+pip install cython==0.29.21 && \
+pip install numpy-stl==2.16.0
 </pre>
 
 ## **Petsc**
@@ -303,15 +304,18 @@ export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
 
 ## **Compile DAFoam with automatic differentiation (optional)**
 
-This step is only needed if you want to use the automatic differentiation feature (adjJacobianOption=JacobianFree) in DAFoam. If you skip this step, you have to use the default finite-difference Jacobian adjoint, i.e., adjJacobianOption=JacobianFD. Check the detail of the adjJacobianOption key on [this page](https://dafoam.github.io/doxygen/html/classdafoam_1_1pyDAFoam_1_1DAOPTION.html). Note that some derivatives, e.g., the betaSA and alphaPorosity, are only avaiable with adjJacobianOption=JacobianFree.
+**Build Reverse Mode AD**
 
-We need to first compile an AD version of OpenFOAM:
+This step is only needed if you want to use the Jacobian free adjoint feature (e.g., adjJacobianOption=JacobianFree) in DAFoam. If you skip this step, you have to use the default finite-difference Jacobian adjoint, i.e., adjJacobianOption=JacobianFD. Check the detail of the adjJacobianOption key on [this page](https://dafoam.github.io/doxygen/html/classdafoam_1_1pyDAFoam_1_1DAOPTION.html). Note that some derivatives, e.g., the betaSA and alphaPorosity, are only avaiable with adjJacobianOption=JacobianFree.
+
+We need to first compile the reverse mode AD version of OpenFOAM:
 
 <pre>
 cd $HOME/dafoam/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.7.tar.gz -O OpenFOAM-v1812-AD.tgz && \
-tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-AD && \
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-AD && \
+wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.8.tar.gz -O OpenFOAM-v1812-AD.tgz && \
+tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADR && \
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADR && \
+sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADR/g' etc/bashrc && \
 sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
 sed -i 's/export WM_CODI_AD_MODE=CODI_AD_FORWARD/export WM_CODI_AD_MODE=CODI_AD_REVERSE/g' etc/bashrc && \
 sed -i 's/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=OPENMPI/g' etc/bashrc && \
@@ -330,15 +334,15 @@ It should see some basic information of DASimpleFoamReverseAD.
 
 {% include note.html content="We use CodiPack to differentiate the OpenFOAM libraries. During the compliation, it will generate a lot of warning messages, which are saved to the warningLog.txt file. After the compilation is done, remember to delete this warning file, which can be larger than 1 GB." %}
 
-After OpenFOAM-v1812-AD is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
+After OpenFOAM-v1812-ADR is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
 
 <pre>
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib
-ln -s ../../../../OpenFOAM-v1812-AD/platforms/*/lib/*.so .
+ln -s ../../../../OpenFOAM-v1812-ADR/platforms/*/lib/*.so .
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy
-ln -s ../../../../../OpenFOAM-v1812-AD/platforms/*/lib/dummy/*.so .
+ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/dummy/*.so .
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-1.10.4
-ln -s ../../../../../OpenFOAM-v1812-AD/platforms/*/lib/openmpi-1.10.4/*.so .
+ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/openmpi-1.10.4/*.so .
 </pre>
 
 Now, compile the AD version of DAFoam:
@@ -356,6 +360,53 @@ unset WM_CODI_AD_MODE && \
 </pre>
 
 You are ready to use the adjJacobianOption=JacobianFree option in DAFoam.
+
+**Build Foward Mode AD**
+
+This step is only needed if you want to run the forward mode AD to verify adjoint sensitivity. This build is NOT needed in optimization. 
+
+We need to first compile the forward mode AD version of OpenFOAM:
+
+<pre>
+cd $HOME/dafoam/OpenFOAM && \
+wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.8.tar.gz -O OpenFOAM-v1812-AD.tgz && \
+tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADF && \
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADF && \
+sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADF/g' etc/bashrc && \
+sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
+sed -i 's/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=OPENMPI/g' etc/bashrc && \
+source etc/bashrc && \
+export WM_NCOMPPROCS=4 && \
+./Allwmake 2> warningLog.txt
+</pre>
+
+After OpenFOAM-v1812-ADF is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
+
+<pre>
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib
+ln -s ../../../../OpenFOAM-v1812-ADF/platforms/*/lib/*.so .
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy
+ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/dummy/*.so .
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-1.10.4
+ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/openmpi-1.10.4/*.so .
+</pre>
+
+Now, compile the AD version of DAFoam:
+
+<pre>
+cd $HOME/dafoam/repos/dafoam && \
+./Allclean && ./Allmake 2> warningLog.txt && pip install .
+</pre>
+
+Finally, reset the AD environment, and re-source the original OpenFOAM-v1812.
+
+<pre>
+unset WM_CODI_AD_MODE && \
+. $HOME/dafoam/loadDAFoam.sh
+</pre>
+
+You are ready to use the forward mode AD in DAFoam.
+
 
 ## **Compile SNOPT and IPOPT for pyOptSparse (optional)**
 
