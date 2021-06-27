@@ -60,6 +60,7 @@ mv UPstream.C src/Pstream/mpi/UPstream.C && \
 echo '# OpenFOAM-v1812' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH' >> $HOME/dafoam/loadDAFoam.sh && \
+echo 'export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH' >> $HOME/dafoam/loadDAFoam.sh && \
 . $HOME/dafoam/loadDAFoam.sh && \
 export WM_NCOMPPROCS=4 && \
 ./Allwmake
@@ -300,6 +301,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib
 # OpenFOAM-v1812
 source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc
 export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
+export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH
 </pre>
 
 ## **Compile DAFoam with automatic differentiation (optional)**
