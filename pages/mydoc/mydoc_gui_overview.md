@@ -7,7 +7,7 @@ permalink: mydoc_gui_overview.html
 folder: mydoc
 ---
 
-To facilitate the pre-processing, running, and post-processing DAFoam optimization, we developed a Paraview-based Graphical User Interface (GUI) plugin called pvOptGUI. This GUI is currently in the beta version and supports only airfoil aerodynamic optimization on Ubuntu systems.
+To facilitate the DAFoam optimization, we developed a suite of Paraview-based Graphical User Interface (GUI) plugins called pvOptGUI. You can use the plugins to generate mesh, setup and run optimization, and visualize the optimization progress in Paraview. You can also use the plugins to generate the optimization configuration files, e.g., runScript.py, and then run it on an HPC. This GUI is currently in the beta version and supports only airfoil aerodynamic optimization on Ubuntu systems.
 
 ## Installation
 

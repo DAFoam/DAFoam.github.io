@@ -1,5 +1,5 @@
 ---
-title: Airfoil aerodynamic optimization GUI
+title: Airfoil aerodynamic optimization plugin pvOptAirfoil
 keywords: gui, airfoil
 summary: 
 sidebar: mydoc_sidebar
