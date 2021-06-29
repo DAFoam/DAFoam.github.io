@@ -181,7 +181,7 @@ entries:
       url: /mydoc_gui_overview.html
       output: web, pdf
     
-    - title: Airfoil
+    - title: pvOptAirfoil
       url: /mydoc_gui_pvoptairfoil.html
       output: web, pdf
     
