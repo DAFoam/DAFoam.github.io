@@ -14,8 +14,7 @@ PvOptAirfoil is the first in a series of graphical user interface (GUI) plugins 
 ![pvOptAirfoil](/images/tutorials/GUI_paraviewFull.png)
 
 For a setup and installation guide refer to [this page](mydoc_gui_overview.html)
-<br></br>
-
+<br><br>
 
 ### Load The Plugin
 
@@ -24,29 +23,28 @@ Set the environmental variables by running the shell script loadOptGUI.sh, locat
 <pre>
 . $HOME/pvOptGUI/loadOptGUI.sh
 </pre>
+<br>
 
 Now run the associated version of Paraview
 
 <pre>
 ./$ParaView_DIR/bin/paraview
 </pre>
+<br>
 
 To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen, then click 
 - Tools>>Manage Plugins...>>load new...>>
 - Then navigate to your copy of pvOptAirfoil.so and load the shared image
-<br></br>
-
+<br>
 
 The plugin acts as a filter, so open a paraview.foam file from the file explorer at the top left of the interface to begin.
 - This is an empty dummy file, so create one if you do not have one already
-<br></br>
-
+<br>
 
 Then click the green apply button on the left, below the Paraview pipeline window
 
 Finally, load the plugin from the "Filters" menu in the upper toolbar
-<br></br>
-
+<br>
 
 A message box should appear indicating whether a working Docker version was successfully found on your system, click *OK*
 
@@ -55,8 +53,7 @@ You should now see the pvOptAirfoil interface in the panel on the left, below th
 pvOptAirfoil writes several files for mesh generation, run script creation, optimization and post-processing results. Select the output folder by clicking the *Select Optimization Folder* button and select the preferred directory.
 
 **NOTE:** We recommend selecting the same folder containing the .foam dummy file, this allows the Paraview pipeline to access written data for user processing
-<br></br>
-
+<br><br>
 
 ### Generate The Mesh
 
@@ -73,10 +70,11 @@ Experienced users may choose to select the *Toggle Advanced Mesh Settings* to re
 Finally, select the *Generate Mesh* button to start mesh generation, a few seconds later a message box should appear indicating success or failure and the airfoil's calculated chord length
 
 **NOTE:** To load a generated mesh to the viewing area in Paraview, navigate to your paraview.foam file in the pipeline, and click refresh and apply in the menu below (you may need to scroll)
+<br><br>
 
 ### Write the Run Script
 
-![Runscript](/images/tutorials/GUI_runscript)
+![Runscript](/images/tutorials/GUI_runscript.png)
 
 To write the run-script, a number of paramaters need to be set
 
@@ -84,67 +82,70 @@ First, select the solver from the dropdown list of supported solvers
 - DASimpleFOAM is recommended for mach number below 0.1, incompressible steady-state flow solver for Navier-Stokes equations
 - DARhoSimpleFOAM is recommended for mach numbers between 0.1 and 0.6, compressible steady-state flow solver for Navier-Stokes equations (subsonic)
 - DARhoSimpleCFOAM is recommended for mach numbers between 0.6 and 1.0, compressible steady-state flow solver for Navier-Stokes equations (transonic)
-<br></br>
+<br>
 
 Select the optimizer from the dropdown list
 - ipopt is the default and is recommended
 
 	**NOTE:** Optimizing with SNOPT requires a license and is not supported for local optimization, more info [here](https://mdolab-pyoptsparse.readthedocs-hosted.com/en/latest/optimizers/SNOPT.html)
-<br></br>
+<br>
 
 Input the mach number
 - You will recieve a warning if the input mach number does not match the solver
-<br></br>
+<br>
 
 Input the Reynolds number, a message box will appear asking if you would like to scale the mesh or viscosity, after selection the message box re-appears with the new scaled value
 
 **NOTE:** Scaling geometry is disabled without Docker and viscosity is scaled automatically
-<br></br>
+<br>
 
 Far Field Pressure
 - Not required for DASimpleFOAM solver
+<br>
+
 Normalization Density
 - Not required for DASimpleFOAM solver
+<br>
 Temperature
 - Not required for DASimpleFOAM solver
-<br></br>
+<br>
 
 Dynamic Viscosity
 - Input disabled, this value is scaled by Reynolds number
-<br></br>
+<br>
 
 Angle of Attack
 - Input disabled, this is an initial condition for the CL Solution, true angle of attack is calculated before optimization by default
-<br></br>
+<br>
 
 Select the preferred turbulence model from the dropdown list
 - Spalart Allmaras
 - K-Omega SST
 - K-Epsilon
-<br></br>
+<br>
 
 Experienced users may want to change the turbulence variables. To edit, select the *Toggle Advanced Turbulence Settings* button
 - Eddy Viscosity Ratio
 - Turbulent Intensity
 
 **NOTE:** Some of these variables are not required and are disabled for certain turbulence models
-<br></br>
+<br>
 
 Set target lift coefficient
 - This value is used to solve for the angle of attack during the first segment of the optimization
-<br></br>
+<br>
 
 Set number of free form deformation (FFD) points
 - These points are distributed outside the airfoil surface and deformed for shape optimization
-<br></br>
+<br>
 
 Set maximum optimization (adjoint) iterations
 - The optimization will end if converged before maximum iterations reached
-<br></br>
+<br>
 
 Set maximum (minor) flow iterations
 - This limits the number of iterations within each major flow iteration, the individual major iteration will also end if flow converges before maximum iterations reached
-<br></br>
+<br>
 
 Experienced users may wish to change a number of advanced settings in the run-script, to edit the following select the *Toggle Advanced Runscript Settings* button
 - Flow convergence tolerance
@@ -158,7 +159,7 @@ Experienced users may wish to change a number of advanced settings in the run-sc
 - The user can also input custom DaOptions, refer to [this page](https://dafoam.github.io/doxygen/html/classdafoam_1_1pyDAFoam_1_1DAOPTION.html) for a full list of custom options
 
 **NOTE:** Preset values in this section are typically sufficient for airfoil optimizations
-<br></br>
+<br>
 
 Finally, you can now click the *Generate Runscript* button to create the rest of the files required for optimization including the DaFOAM runscript.py, these are created in the optimization folder
 
@@ -167,6 +168,7 @@ Finally, you can now click the *Generate Runscript* button to create the rest of
 ![Write](/images/tutorials/GUI_write.png)
 
 A message box should appear where one can see the full runscript in a small editing window by clicking the *Show Details* button, accept by clicking *OK* or run the optimization locally with one core (this requires Docker)
+<br><br>
 
 ### Optimize
 
@@ -176,10 +178,12 @@ After clicking the *Write Runscript* button at the bottom of the GUI, one should
 <pre><b>
 ctrl+\
 </b></pre>
+<br>
 
 Optimization results are output to the file logOpt.txt in your earlier selected optimization folder
 
 A few seconds after starting the optimization, a python GUI will appear showing the optimization results in real time, we recommend making this window full screen
+<br><br>
 
 ### Python Graphical User Interface
 
@@ -194,7 +198,7 @@ To select a different log file you can click the *Open File* button on the right
 The dropdown box labeled *Case History* allows one to select the case segment that is being viewed, there are currently two implemented choices that may be contained in your log file
 - CL Solution, angle of attack is solved for the target coefficient of lift
 - Optimization, selected objective function is optimized
-
+<br>
 
 After selecting the portion of the case you wish to view, one can select an adjoint or flow major iteration number
 
