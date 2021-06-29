@@ -21,13 +21,13 @@ Then run the following command in the terminal to extract the pvOptGUI package t
 tar -xvf pvOptGUI_Ubuntu1804.tar.gz $HOME/pvOptGUI
 </pre>
 
-Before running, the environmental variables for Miniconda3 and Paraview-v5.8.1 need to be set. Confirm the pvOptGui package was decompressed in your home directory. Simply run the shell script loadOptGUI in your terminal with the command below to set the required environmental variables:
+*Every time* before running, the environmental variables for Miniconda3 and Paraview-v5.8.1 need to be set. Confirm the pvOptGui package was decompressed in your home directory. Simply run the shell script loadOptGUI in your terminal with the command below to set the required environmental variables:
 
 <pre>
 . $HOME/pvOptGUI/loadOptGUI.sh
 </pre>
 
-**NOTE:** If a different location is preferred edit the file paths in loadOptGUI.sh, then execute the shell script
+**NOTE:** If a different location is preferred edit the file paths in loadOptGUI.sh, then execute the shell script.
 
 Finally, open Paraview by running:
 
@@ -35,16 +35,16 @@ Finally, open Paraview by running:
 ./$ParaView_DIR/bin/paraview
 </pre>
 
-pvOptGUI supports multiple GUI plugin, the current version supports only airfoil aerodynamic optimization, i.e., pvOptAirfoil.
+pvOptGUI supports multiple GUI plugins, the current version supports only airfoil aerodynamic optimization, i.e., pvOptAirfoil.
 
 To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen, then click 
 - Tools>>Manage Plugins...>>load new...>>
 - Then navigate to your copy of pvOptAirfoil.so and load the shared image
 
 
-The plugin acts as a filter, so open a paraview.foam file from the file explorer at the top right of the interface to begin. Then click the green apply button on the left, below the Paraview pipeline window. Finally, load the plugin from the "Filters" menu in the upper toolbar.
+The plugin acts as a filter, so open a paraview.foam file from the file explorer at the top left of the Paraview interface to begin. Then click the green apply button on the left, below the Paraview pipeline window. Finally, load the plugin from the "Filters" menu in the upper toolbar.
 
-You should now see the pvOptAirfoil menu in the panel on the left, underneath the pipeline
+You should now see the pvOptAirfoil interface in the panel on the left, below the pipeline
 
 Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
 
@@ -65,19 +65,19 @@ Next, add your user name to the docker group:
 sudo usermod -aG docker $USER
 </pre>
 
-Logout and log back in to your account for the command to take effect. Then, verify docker installation by running:
+Log out and log back in to your user account for the command to take effect. Then, verify docker installation by running:
 
 <pre>
 docker --version
 </pre>
 
-The major version should be a minimum of 19 to run pvOptGUI docker commands. Once the Docker is installed and verified, run this command from the terminal to download the DAFoam image:
+The major version should be a minimum of 19 to run pvOptGUI docker commands with pvOptAirfoil. Once the Docker is installed and verified, run this command from the terminal to download the DAFoam image:
 
 <pre>
 docker pull dafoam/opt-packages:v2.2.6
 </pre>
 
-If the docker image is not pulled, it will be pulled automatically when docker commands are attempted.
+If the docker image is not pulled, it will be pulled automatically when the first docker command is attempted.
 
-Full Docker installation guide is [here](https://docs.docker.com/engine/install/ubuntu/)
+Full Docker installation guide is located [here](https://docs.docker.com/engine/install/ubuntu/)
 
