@@ -7,7 +7,9 @@ permalink: mydoc_verifications_dasimplefoam.html
 folder: mydoc
 ---
 
-First, we need to generate the mesh by running:
+First, download the configuration files from [here](https://github.com/DAFoam/verifications), then go to the DASimpleFoam folder. 
+
+Then, we need to generate the mesh by running:
 
 <pre>
 ./preProcessing.sh
