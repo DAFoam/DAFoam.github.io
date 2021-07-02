@@ -184,6 +184,18 @@ entries:
     - title: pvOptAirfoil
       url: /mydoc_gui_pvoptairfoil.html
       output: web, pdf
+  
+  - title: Verifications
+    output: web, pdf
+    folderitems:
+  
+    - title: Overview
+      url: /mydoc_verifications_overview.html
+      output: web, pdf
+
+    - title: DASimpleFoam
+      url: /mydoc_verifications_dasimplefoam.html
+      output: web, pdf
     
   - title: Validations
     output: web, pdf
