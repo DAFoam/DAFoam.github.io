@@ -13,6 +13,8 @@ To facilitate the DAFoam optimization, we developed a suite of Paraview-based Gr
 
 ### pvOptGUI
 
+#### Ubuntu 18.04
+
 First download the pre-compiled pvOptGUI package: [pvOptGUI_Ubuntu1804](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Ubuntu1804_latest.so](https://github.com/DAFoam/files/releases/tag/pvOptGUI)
 
 Then run the following command in the terminal to extract the pvOptGUI package to your home directory
@@ -27,7 +29,7 @@ tar -xvf pvOptGUI_Ubuntu1804.tar.gz $HOME/pvOptGUI
 . $HOME/pvOptGUI/loadOptGUI.sh
 </pre>
 
-**NOTE:** If a different location is preferred edit the file paths in loadOptGUI.sh, then execute the shell script.
+**NOTE:** If a different location is preferred or the directories are renamed, edit the file paths in loadOptGUI.sh, then execute the shell script.
 
 Finally, open Paraview by running:
 
@@ -41,6 +43,33 @@ To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen,
 - Tools>>Manage Plugins...>>load new...>>
 - Then navigate to your copy of pvOptAirfoil.so and load the shared image
 
+
+The plugin acts as a filter, so open a paraview.foam file from the file explorer at the top left of the Paraview interface to begin. Then click the green apply button on the left, below the Paraview pipeline window. Finally, load the plugin from the "Filters" menu in the upper toolbar.
+
+You should now see the pvOptAirfoil interface in the panel on the left, below the pipeline
+
+Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
+
+#### Windows 10 (64bit)
+
+First download the pre-compiled pvOptGUI packages: [pvOptGUI_Windows10_64bit/Paraview-v5.8.1_Windows10_64bit](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Windows10_64bit_latest.dll](https://github.com/DAFoam/files/releases/tag/pvOptGUI)
+
+Extract the pvOptGui package to your Desktop and extract the Paraview package into the pvOptGUI folder
+**NOTE:** If a different location is preferred or the directories are renamed, edit the file paths in loadOptGUI.bat
+
+Execute the batch file loadOptGUI.bat by double clicking the file, a console window should appear with the Miniconda *base* environment loaded
+
+In the console window, launch Paraview by executing the command:
+
+<pre>
+%ParaView_DIR%\bin\Debug\paraview.exe
+</pre>
+
+pvOptGUI supports multiple GUI plugins, the current version supports only airfoil aerodynamic optimization, i.e., pvOptAirfoil.
+
+To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen, then click 
+- Tools>>Manage Plugins...>>load new...>>
+- Then navigate to your copy of pvOptAirfoil.dll and load the shared library
 
 The plugin acts as a filter, so open a paraview.foam file from the file explorer at the top left of the Paraview interface to begin. Then click the green apply button on the left, below the Paraview pipeline window. Finally, load the plugin from the "Filters" menu in the upper toolbar.
 
