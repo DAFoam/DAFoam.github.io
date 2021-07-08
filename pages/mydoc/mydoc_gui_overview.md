@@ -13,6 +13,8 @@ To facilitate the DAFoam optimization, we developed a suite of Paraview-based Gr
 
 ### pvOptGUI
 
+#### Ubuntu 18.04
+
 First download the pre-compiled pvOptGUI package: [pvOptGUI_Ubuntu1804](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Ubuntu1804_latest.so](https://github.com/DAFoam/files/releases/tag/pvOptGUI)
 
 Then run the following command in the terminal to extract the pvOptGUI package to your home directory
@@ -27,7 +29,7 @@ tar -xvf pvOptGUI_Ubuntu1804.tar.gz $HOME/pvOptGUI
 . $HOME/pvOptGUI/loadOptGUI.sh
 </pre>
 
-**NOTE:** If a different location is preferred edit the file paths in loadOptGUI.sh, then execute the shell script.
+**NOTE:** If a different location is preferred or the directories are renamed, edit the file paths in loadOptGUI.sh, then execute the shell script.
 
 Finally, open Paraview by running:
 
@@ -48,11 +50,40 @@ You should now see the pvOptAirfoil interface in the panel on the left, below th
 
 Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
 
+#### Windows 10 (64bit)
+
+First download the pre-compiled pvOptGUI packages: [pvOptGUI_Windows10_64bit/Paraview-v5.8.1_Windows10_64bit](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Windows10_64bit_latest.dll](https://github.com/DAFoam/files/releases/tag/pvOptGUI)
+
+Extract the pvOptGui package to your Desktop and extract the Paraview package into the pvOptGUI folder
+**NOTE:** If a different location is preferred or the directories are renamed, edit the file paths in loadOptGUI.bat
+
+Execute the batch file loadOptGUI.bat by double clicking the file, a console window should appear with the Miniconda *base* environment loaded
+
+In the console window, launch Paraview by executing the command:
+
+<pre>
+%ParaView_DIR%\bin\Debug\paraview.exe
+</pre>
+
+pvOptGUI supports multiple GUI plugins, the current version supports only airfoil aerodynamic optimization, i.e., pvOptAirfoil.
+
+To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen, then click 
+- Tools>>Manage Plugins...>>load new...>>
+- Then navigate to your copy of pvOptAirfoil.dll and load the shared library
+
+The plugin acts as a filter, so open a paraview.foam file from the file explorer at the top left of the Paraview interface to begin. Then click the green apply button on the left, below the Paraview pipeline window. Finally, load the plugin from the "Filters" menu in the upper toolbar.
+
+You should now see the pvOptAirfoil interface in the panel on the left, below the pipeline
+
+Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
+
 
 ### Docker (optional)
 
 Docker is not required to generate the DAFoam run script. However, Docker is needed if you want to do mesh generation, transformation, and running the aerodynamic optimization through the GUI. 
 	
+#### Ubuntu	
+
 To install Docker, open your terminal, copy and run the following command. This will uninstall any previous docker versions and install the latest version:
 
 <pre>
@@ -68,7 +99,7 @@ sudo usermod -aG docker $USER
 Log out and log back in to your user account for the command to take effect. Then, verify docker installation by running:
 
 <pre>
-docker --version
+docker -v
 </pre>
 
 The major version should be a minimum of 19 to run pvOptGUI docker commands with pvOptAirfoil. Once the Docker is installed and verified, run this command from the terminal to download the DAFoam image:
@@ -80,4 +111,27 @@ docker pull dafoam/opt-packages:v2.2.6
 If the docker image is not pulled, it will be pulled automatically when the first docker command is attempted.
 
 Full Docker installation guide is located [here](https://docs.docker.com/engine/install/ubuntu/)
+
+#### Windows 10
+
+Download [Docker Desktop](https://docs.docker.com/docker-for-windows/install/) for Windows
+
+After installation, run Docker Desktop. Wait for the notification that says Docker is running.
+
+In your Windows hidden icons on the bottom right of your taskbar, one should see the Docker icon. Right click and open the *Dashboard*
+Verify that you are signed in to your Docker account at the top right of the dashboard. You can close the dashboard but keep Docker running.
+
+Open the command prompt and verify docker installation by running:
+
+<pre>
+docker -v
+</pre>
+
+The major version should be a minimum of 19 to run pvOptGUI docker commands with pvOptAirfoil. Once the Docker is installed and verified, run this command from the terminal to download the DAFoam image:
+
+<pre>
+docker pull dafoam/opt-packages:v2.2.6
+</pre>
+
+**NOTE:** Docker must be running and you must be signed in to your Docker account when launching Paraview to run Docker commands through pvOptGUI plugins
 
