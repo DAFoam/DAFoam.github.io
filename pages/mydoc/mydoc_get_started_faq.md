@@ -117,10 +117,13 @@ If you keep getting failed mesh checks throughout the optimization, first check 
     "maxAspectRatio": 1000.0,
     "maxNonOrth": 70.0,
     "maxSkewness": 4.0,
+    "maxIncorrectlyOrientedFaces": 0,
 },
 </pre>
 
-You need to increase these default values, e.g., set `"maxSkewness": 6.0,`.
+You need to increase these default values, e.g., set `"maxSkewness": 6.0,`. If you want to ignore just a few incorrectly oriented faces, set maxIncorrectlyOrientedFaces to be greater than 0. 
+
+Another way to fix the issue is setting mesh quality constraints in optimization. Check the runScript_meshQualityConstraint.py script from the [UBend](https://github.com/DAFoam/tutorials/blob/master/UBend_Channel/runScript_meshQualityConstraint.py) tutorial.
 
 ## What are the commands to start the DAFoam Docker image?
 
