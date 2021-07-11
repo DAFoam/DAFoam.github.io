@@ -51,7 +51,10 @@ RUN cd $DAFOAM_ROOT_PATH/repos && \
     cd dafoam && \
     . $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc && \
     ./Allmake && \
-    . $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-AD/etc/bashrc && \
+    . $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-ADR/etc/bashrc && \
+    ./Allclean && \
+    ./Allmake && \
+    . $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-ADF/etc/bashrc && \
     ./Allclean && \
     ./Allmake && \
     pip install .
