@@ -54,8 +54,8 @@ Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on h
 
 First download the pre-compiled pvOptGUI packages: [pvOptGUI_Windows10_64bit/Paraview-v5.8.1_Windows10_64bit](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Windows10_64bit_latest.dll](https://github.com/DAFoam/files/releases/tag/pvOptGUI)
 
-Extract the pvOptGui package to your Desktop and extract the Paraview package into the pvOptGUI folder
-**NOTE:** If a different location is preferred or the directories are renamed, edit the file paths in loadOptGUI.bat
+Extract the pvOptGui package to your Desktop
+**NOTE:** If a different location is preferred or the directories are renamed, edit the file paths in loadOptGUI.bat by right clicking the file and opening it with your preferred text editor
 
 Execute the batch file loadOptGUI.bat by double clicking the file, a console window should appear with the Miniconda *base* environment loaded
 
