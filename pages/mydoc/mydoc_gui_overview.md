@@ -13,11 +13,11 @@ To facilitate the DAFoam optimization, we developed a suite of Paraview-based Gr
 
 ### pvOptGUI
 
-#### Ubuntu 18.04
+#### Ubuntu 18.04/20.04
 
-First download the pre-compiled pvOptGUI package: [pvOptGUI_Ubuntu1804](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Ubuntu1804_latest.so](https://github.com/DAFoam/files/releases/tag/pvOptGUI)
+First, download the pre-compiled pvOptGUI package for your version of Ubuntu: [pvOptGUI_Ubuntu](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Ubuntu_latest.so](https://github.com/DAFoam/files/releases/tag/pvOptGUI)
 
-Then run the following command in the terminal to extract the pvOptGUI package to your home directory
+Then run the following command in the terminal to extract the pvOptGUI package to your home directory, change 1804 to the installed Ubuntu version.
 
 <pre>
 tar -xvf pvOptGUI_Ubuntu1804.tar.gz $HOME/pvOptGUI
@@ -43,7 +43,6 @@ To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen,
 - Tools>>Manage Plugins...>>load new...>>
 - Then navigate to your copy of pvOptAirfoil.so and load the shared image
 
-
 The plugin acts as a filter, so open a paraview.foam file from the file explorer at the top left of the Paraview interface to begin. Then click the green apply button on the left, below the Paraview pipeline window. Finally, load the plugin from the "Filters" menu in the upper toolbar.
 
 You should now see the pvOptAirfoil interface in the panel on the left, below the pipeline
@@ -53,10 +52,12 @@ Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on h
 #### Windows 10 (64bit)
 
 First download the pre-compiled pvOptGUI packages: [pvOptGUI_Windows10_64bit/Paraview-v5.8.1_Windows10_64bit](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Windows10_64bit_latest.dll](https://github.com/DAFoam/files/releases/tag/pvOptGUI)
-**Note:** You may recieve a warning along the lines of "File is not commonly downloaded and may be dangerous." There is no problem, continue the download by selecting *keep* file.
+You may need [7Zip](https://www.7-zip.org/) or other similar software to extract pvOptGUI, WinZip encounters long file path errors.
+**Note:** You may recieve a warning along the lines of "File is not commonly downloaded and may be dangerous." Continue the download by selecting *keep* file.
 
 Extract the pvOptGui package to your Desktop
-**NOTE:** If a different location is preferred or the directories are renamed, edit the file paths in loadOptGUI.bat by right clicking the file and opening it with your preferred text editor
+
+Right click the loadOptGUI.bat file and open it in a text editor, change the first line of code *PVOPT_ROOT_PATH=...* to your install location
 
 Execute the batch file loadOptGUI.bat by double clicking the file, a console window should appear with the Miniconda *base* environment loaded
 
@@ -134,5 +135,5 @@ The major version should be a minimum of 19 to run pvOptGUI docker commands with
 docker pull dafoam/opt-packages:v2.2.6
 </pre>
 
-**NOTE:** Docker must be running and you must be signed in to your Docker account when launching Paraview to run Docker commands through pvOptGUI plugins
+**NOTE:** Docker must be running and *you must be signed in to your Docker account* when launching Paraview to run Docker commands through pvOptGUI plugins. The user can log in at any point while running the plugins
 
