@@ -107,7 +107,7 @@ docker -v
 The major version should be a minimum of 19 to run pvOptGUI docker commands with pvOptAirfoil. Once the Docker is installed and verified, run this command from the terminal to download the DAFoam image:
 
 <pre>
-docker pull dafoam/opt-packages:v2.2.6
+docker pull dafoam/opt-packages:v2.2.7
 </pre>
 
 If the docker image is not pulled, it will be pulled automatically when the first docker command is attempted.
@@ -132,7 +132,7 @@ docker -v
 The major version should be a minimum of 19 to run pvOptGUI docker commands with pvOptAirfoil. Once the Docker is installed and verified, run this command from the terminal to download the DAFoam image:
 
 <pre>
-docker pull dafoam/opt-packages:v2.2.6
+docker pull dafoam/opt-packages:v2.2.7
 </pre>
 
 **NOTE:** Docker must be running and *you must be signed in to your Docker account* when launching Paraview to run Docker commands through pvOptGUI plugins. The user can log in at any point while running the plugins
