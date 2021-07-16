@@ -197,7 +197,7 @@ A few seconds after starting the optimization, a python GUI will appear showing 
 
 The python script for the post-processing GUI is written to the optimization folder as soon as the folder is selected, this GUI can view optimization results in real time
 
-The python GUI is launched when the optimization starts, but the user can also load the GUI by clicking the *View Optimization Data* button, located at the bottom of the Paraview interface next to the *Write Runscript* button. Clicking the *View Optimization Data* button will automatically load the python GUI with prior data if there is an output logOpt.txt file in the optimization folder.
+The python GUI is launched when the optimization starts, but the user can also load the GUI by clicking the *View Optimization Data* button, located at the bottom of the Paraview interface next to the *Write Runscript* button. Clicking the *View Optimization Data* button will automatically load the python GUI with prior data if there is an output logOpt.txt file in the optimization folder. If an optimization is running and the gui has been closed, you can resume viewing optimization results by clicking the *View Optimization Data* button.
 
 To select a different log file you can click the *Open File* button on the right hand side of the python GUI
 
