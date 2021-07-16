@@ -57,9 +57,7 @@ You may need [7Zip](https://www.7-zip.org/) or other similar software to extract
 
 Extract the pvOptGui package to your Desktop
 
-Right click the loadOptGUI.bat file and open it in a text editor, change the first line of code *PVOPT_ROOT_PATH=...* to your install location
-
-Execute the batch file loadOptGUI.bat by double clicking the file, a console window should appear with the Miniconda *base* environment loaded
+Execute the batch file loadOptGUI.bat in the extracted folder by double clicking the file, a console window should appear with the Miniconda *base* environment loaded
 
 In the console window, launch Paraview by executing the command:
 
