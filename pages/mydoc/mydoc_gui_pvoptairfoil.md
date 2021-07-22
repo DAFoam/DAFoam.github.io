@@ -42,7 +42,7 @@ Create a case folder for the optimization that has an empty .foam 'dummy' file a
 
 Then open the .foam file in paraview by clicking file and open in the top left of the ParaView toolbar. You should see a source in the pipeline manager.
 
-Then click the green apply button on the left, below the Paraview pipeline window. You can also set up the 'auto-apply' feature by navigating to *edit* in the upper toolbar, then selecting settings.
+Then click the green apply button on the left, below the Paraview pipeline window. You can also set up the 'auto-apply' feature by navigating to *edit* in the upper toolbar, then selecting settings. Auto-apply is the second setting under the *general* tab.
 
 Finally, load the plugin from the "Filters" menu in the upper toolbar  
 
