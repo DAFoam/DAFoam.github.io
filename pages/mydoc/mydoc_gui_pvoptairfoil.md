@@ -17,7 +17,9 @@ For a setup and installation guide refer to [this page](mydoc_gui_overview.html)
 
 ---
 
-### Load The Plugin
+### Load ParaView
+
+#### Ubuntu
 
 Set the environmental variables by running the shell script loadOptGUI.sh, located in the pvOptGUI package
 
@@ -26,17 +28,29 @@ Set the environmental variables by running the shell script loadOptGUI.sh, locat
 </pre>  
 
 
-Now run the associated version of Paraview
+Now run the associated version of ParaView
 
 <pre>
 ./$ParaView_DIR/bin/paraview
 </pre>  
 
+#### Windows
+
+Set the environmental variables by double clicking the loadOptGUI.bat file, located in the pvOptGUI package
+
+Now run ParaView by running the following command in the command window that was opened by the batch file.
+
+<pre>
+%ParaView_DIR%/bin/Release/paraview.exe
+</pre>  
+
+---
+
+### Load the Plugin
 
 To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen, then click 
 - Tools>>Manage Plugins...>>load new...>>
 - Then navigate to your copy of pvOptAirfoil.so and load the shared image  
-
 
 Create a case folder for the optimization that has an empty .foam 'dummy' file as well as the upper (suction surface, SS) and lower (pressure surface, PS) surface profiles for the airfoil.
 
