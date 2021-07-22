@@ -38,11 +38,11 @@ To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen,
 - Then navigate to your copy of pvOptAirfoil.so and load the shared image  
 
 
-The plugin acts as a filter, so open a paraview.foam file from the file explorer at the top left of the interface to begin.
-- This is an empty dummy file, so create one if you do not have one already  
+Create a case folder for the optimization that has an empty .foam 'dummy' file as well as the upper (suction surface, SS) and lower (pressure surface, PS) surface profiles for the airfoil.
 
+Then open the .foam file in paraview by clicking file and open in the top left of the ParaView toolbar. You should see a source in the pipeline manager.
 
-Then click the green apply button on the left, below the Paraview pipeline window
+Then click the green apply button on the left, below the Paraview pipeline window. You can also set up the 'auto-apply' feature by navigating to *edit* in the upper toolbar, then selecting settings.
 
 Finally, load the plugin from the "Filters" menu in the upper toolbar  
 
