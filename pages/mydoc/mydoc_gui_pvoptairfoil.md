@@ -17,7 +17,9 @@ For a setup and installation guide refer to [this page](mydoc_gui_overview.html)
 
 ---
 
-### Load The Plugin
+### Load ParaView
+
+#### Ubuntu
 
 Set the environmental variables by running the shell script loadOptGUI.sh, located in the pvOptGUI package
 
@@ -26,23 +28,35 @@ Set the environmental variables by running the shell script loadOptGUI.sh, locat
 </pre>  
 
 
-Now run the associated version of Paraview
+Now run the associated version of ParaView
 
 <pre>
 ./$ParaView_DIR/bin/paraview
 </pre>  
 
+#### Windows
+
+Set the environmental variables by double clicking the loadOptGUI.bat file, located in the pvOptGUI package
+
+Now run ParaView by running the following command in the command window that was opened by the batch file.
+
+<pre>
+%ParaView_DIR%/bin/Release/paraview.exe
+</pre>  
+
+---
+
+### Load the Plugin
 
 To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen, then click 
 - Tools>>Manage Plugins...>>load new...>>
 - Then navigate to your copy of pvOptAirfoil.so and load the shared image  
 
+Create a case folder for the optimization that has an empty .foam 'dummy' file as well as the upper (suction surface, SS) and lower (pressure surface, PS) surface profiles for the airfoil.
 
-The plugin acts as a filter, so open a paraview.foam file from the file explorer at the top left of the interface to begin.
-- This is an empty dummy file, so create one if you do not have one already  
+Then open the .foam file in ParaView by clicking *file* then *open* in the top left of the toolbar. You should now see the new source in the pipeline manager.
 
-
-Then click the green apply button on the left, below the Paraview pipeline window
+Then click the green apply button on the left, below the Paraview pipeline window. You can also set up the 'auto-apply' feature by navigating to *edit* in the upper toolbar, then selecting settings. Auto-apply is the second setting under the *general* tab.
 
 Finally, load the plugin from the "Filters" menu in the upper toolbar  
 
