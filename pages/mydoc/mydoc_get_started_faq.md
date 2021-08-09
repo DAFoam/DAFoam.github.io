@@ -125,6 +125,10 @@ You need to increase these default values, e.g., set `"maxSkewness": 6.0,`. If y
 
 Another way to fix the issue is setting mesh quality constraints in optimization. Check the runScript_meshQualityConstraint.py script from the [UBend](https://github.com/DAFoam/tutorials/blob/master/UBend_Channel/runScript_meshQualityConstraint.py) tutorial.
 
+## How to know the detailed description for a function's input parameters defined in runScript.py?
+
+In runScript.py, we call multiple functions from other modules, e.g., pyGeo, IDWarp, pyOptSparse. To learn the detailed description for a function's input parameters, we take the function: `DVGeo.addGeoDVLocal` as an example. One can go to the `dafoam/packages/miniconda3/lib/python3.6/site-packages` directory and run this command `grep -r addGeoDVLocal *`. Then, one can find this function is defined in `pygeo/DVGeometry.py` with detailed description of its input parameters.
+
 ## What are the commands to start the DAFoam Docker image?
 
 For your convenient, here are the commands for [Linux](mydoc_get_started_start_docker_linux.html), [MacOS](mydoc_get_started_start_docker_mac.html), and [Windows](mydoc_get_started_start_docker_windows.html).
