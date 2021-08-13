@@ -51,7 +51,7 @@ Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on h
 
 #### Windows 10 (64bit)
 
-First download the [pvOptGUI_Windows10_64bit package] and extract it
+First download the [pvOptGUI_Windows10_64bit package](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and extract it
 - You may need [7Zip](https://www.7-zip.org/) or other similar software
 - To avoid file duplication warnings, move the compressed folder to the desired location and *extract here* to decompress the file.
 
