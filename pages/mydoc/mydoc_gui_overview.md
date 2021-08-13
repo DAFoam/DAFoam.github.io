@@ -68,6 +68,7 @@ Finally download the airfoil aerodynamic optimization plugin [pvOptAirfoil_Windo
 
 
 To load Paraview, execute the batch file loadOptGUI.bat in your pvOptGUI folder by double clicking the file. A console window should appear briefly, then ParaView should open a few seconds later.
+
 **NOTE:** You may need to adjust file paths if you renamed/relocated the Miniconda3 or Paraview folders
 
 To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen, then click 
