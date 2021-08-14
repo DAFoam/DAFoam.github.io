@@ -53,6 +53,7 @@ To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen,
 - Then navigate to your copy of pvOptAirfoil.so and load the shared image  
 
 Create a case folder for the optimization that has an empty .foam 'dummy' file as well as the upper (suction surface, SS) and lower (pressure surface, PS) surface profiles for the airfoil.
+- [Here](https://github.com/DAFoam/pvOptGUI_tutorials/tree/main/NACA0012) is an example case folder for the NACA0012 airfoil
 
 Then open the .foam file in ParaView by clicking *file* then *open* in the top left of the toolbar. You should now see the new source in the pipeline manager.
 
@@ -78,7 +79,8 @@ pvOptAirfoil writes several files for mesh generation, run script creation, opti
 ![MeshGeneration](/images/tutorials/GUI_meshGen.png)
 
 First, confirm the optimization folder is selected, then choose the upper and lower profiles for your airfoil by clicking the *Select Upper Surface Profile* and *Select Lower Surface Profile* buttons and selecting the files from the dialog
-- An example of the upper and lower surface profiles can be found in the [pvOptAirfoil](https://github.com/DAFoam/files/releases/tag/pvOptGUI) package with the plugin's shared library.
+- An example of the upper and lower surface profiles can be found [here](https://github.com/DAFoam/pvOptGUI_tutorials/tree/main/NACA0012)
+
 
 Next you can set the approximate number of mesh cells, the boundary layer thickness and the number of cells between the surface and the far field
 
