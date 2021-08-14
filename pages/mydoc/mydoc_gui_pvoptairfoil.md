@@ -78,6 +78,7 @@ pvOptAirfoil writes several files for mesh generation, run script creation, opti
 ![MeshGeneration](/images/tutorials/GUI_meshGen.png)
 
 First, confirm the optimization folder is selected, then choose the upper and lower profiles for your airfoil by clicking the *Select Upper Surface Profile* and *Select Lower Surface Profile* buttons and selecting the files from the dialog
+- An example of the upper and lower surface profiles can be found in the [pvOptAirfoil](https://github.com/DAFoam/files/releases/tag/pvOptGUI) package with the plugin's shared library.
 
 Next you can set the approximate number of mesh cells, the boundary layer thickness and the number of cells between the surface and the far field
 
