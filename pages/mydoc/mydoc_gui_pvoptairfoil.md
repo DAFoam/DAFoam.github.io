@@ -7,72 +7,34 @@ permalink: mydoc_gui_pvoptairfoil.html
 folder: mydoc
 ---
 
-PvOptAirfoil is the first in a series of graphical user interface (GUI) plugins that we are developing to streamline the DaFoam optimization process. PvOptAirfoil is designed to make airfoil aerodynamic shape optimization setup more visual throughout the entire process. It can be used for mesh generation and transformation via the DaFOAM Docker image, run-script setup for local optimization using Docker or later exporting to HPC, as well as visualizing optimization results. This GUI is currently in the beta version.
+pvOptAirfoil is the first in a series of graphical user interface (GUI) plugins that we are developing to streamline the DaFoam optimization process. PvOptAirfoil is designed to make airfoil aerodynamic shape optimization setup more visual throughout the entire process. It can be used for mesh generation and transformation via the DaFOAM Docker image, run-script setup for local optimization using Docker or later exporting to HPC, as well as visualizing optimization results. This GUI is currently in the beta version.
 
-## PvOptAirfoil
+## Load the case and plugin
 
-![pvOptAirfoil](/images/tutorials/GUI_paraviewFull.png)
+To run a GUI-based optimization case, first download the pvOptGUI tutorial from [here](https://github.com/DAFoam/pvOptGUI_tutorials/tree/main/NACA0012)
 
-For a setup and installation guide refer to [this page](mydoc_gui_overview.html)  
-
----
-
-### Load ParaView
-
-#### Ubuntu
-
-Set the environmental variables by running the shell script loadOptGUI.sh, located in the pvOptGUI package
-
-<pre>
-. $HOME/pvOptGUI/loadOptGUI.sh
-</pre>  
-
-
-Now run the associated version of ParaView
-
-<pre>
-./$ParaView_DIR/bin/paraview
-</pre>  
-
-#### Windows
-
-Set the environmental variables by double clicking the loadOptGUI.bat file, located in the pvOptGUI package
-
-Now run ParaView by running the following command in the command window that was opened by the batch file.
-
-<pre>
-%ParaView_DIR%/bin/Release/paraview.exe
-</pre>  
-
----
-
-### Load the Plugin
-
-To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen, then click 
-- Tools>>Manage Plugins...>>load new...>>
-- Then navigate to your copy of pvOptAirfoil.so and load the shared image  
-
-Create a case folder for the optimization that has an empty .foam 'dummy' file as well as the upper (suction surface, SS) and lower (pressure surface, PS) surface profiles for the airfoil.
-- [Here](https://github.com/DAFoam/pvOptGUI_tutorials/tree/main/NACA0012) is an example case folder for the NACA0012 airfoil
+Then, open ParaView following the instructions mentioned on [this page](mydoc_gui_overview.html). 
 
 Then open the .foam file in ParaView by clicking *file* then *open* in the top left of the toolbar. You should now see the new source in the pipeline manager.
 
-Then click the green apply button on the left, below the Paraview pipeline window. You can also set up the 'auto-apply' feature by navigating to *edit* in the upper toolbar, then selecting settings. Auto-apply is the second setting under the *general* tab.
+Then click the green apply button on the left, below the ParaView pipeline window. You can also set up the 'auto-apply' feature by navigating to *edit* in the upper toolbar, then selecting settings. Auto-apply is the second setting under the *general* tab.
 
 Finally, load the plugin from the "Filters" menu in the upper toolbar  
 
 
 A message box should appear indicating whether a working Docker version was successfully found on your system, click *OK*
 
-You should now see the pvOptAirfoil interface in the panel on the left, below the pipeline
+You should now see the pvOptAirfoil interface in the panel on the left, below the pipeline, as shown in the following figure.
+
+![pvOptAirfoil](/images/tutorials/GUI_paraviewFull.png)
 
 pvOptAirfoil writes several files for mesh generation, run script creation, optimization and post-processing results. Select the output folder by clicking the *Select Optimization Folder* button and select the preferred directory.
 
-**NOTE:** We recommend selecting the same folder containing the .foam dummy file, this allows the Paraview pipeline to access written data for user processing  
+**NOTE:** We recommend selecting the same folder containing the .foam dummy file, this allows the ParaView pipeline to access written data for user processing  
 
 ---
 
-### Generate The Mesh
+## Generate the mesh
 
 **NOTE:** This step requires Docker, if Docker is not found when loading the plugin, the generation files will be created without generating the mesh
 
@@ -81,18 +43,17 @@ pvOptAirfoil writes several files for mesh generation, run script creation, opti
 First, confirm the optimization folder is selected, then choose the upper and lower profiles for your airfoil by clicking the *Select Upper Surface Profile* and *Select Lower Surface Profile* buttons and selecting the files from the dialog
 - An example of the upper and lower surface profiles can be found [here](https://github.com/DAFoam/pvOptGUI_tutorials/tree/main/NACA0012)
 
-
 Next you can set the approximate number of mesh cells, the boundary layer thickness and the number of cells between the surface and the far field
 
 Experienced users may choose to select the *Toggle Advanced Mesh Settings* to refine their mesh further, in which case the total mesh cells is calculated from these inputs
 
 Finally, select the *Generate Mesh* button to start mesh generation, a few seconds later a message box should appear indicating success or failure and the airfoil's calculated chord length
 
-**NOTE:** To load a generated mesh to the viewing area in Paraview, navigate to your paraview.foam file in the pipeline, and click refresh and apply in the menu below (you may need to scroll)  
+**NOTE:** To load a generated mesh to the viewing area in ParaView, navigate to your paraview.foam file in the pipeline, and click refresh and apply in the menu below (you may need to scroll)  
 
 ---
 
-### Write the Run Script
+## Write the run script
 
 ![Runscript](/images/tutorials/GUI_runscript.png)
 
@@ -111,7 +72,7 @@ Select the optimizer from the dropdown list
 
 
 Input the mach number
-- You will recieve a warning if the input mach number does not match the solver  
+- You will receive a warning if the input mach number does not match the solver  
 
 
 Input the Reynolds number, a message box will appear asking if you would like to scale the mesh or viscosity, after selection the message box re-appears with the new scaled value
@@ -192,7 +153,7 @@ A message box should appear where one can see the full runscript in a small edit
 
 ---
 
-### Optimize
+## Optimize
 
 After clicking the *Write Runscript* button at the bottom of the GUI, one should see a message box as described previously. Clicking optimize will run the optimization locally with one core
 - If you wish to abort the optimization open the terminal that is currently running paraview (and the optimization) and enter 
@@ -208,13 +169,13 @@ A few seconds after starting the optimization, a python GUI will appear showing 
 
 ---
 
-### Python Graphical User Interface
+## Python GUI for post-processing
 
 ![pyGUI](/images/tutorials/GUI_pyGUI_post.png)
 
 The python script for the post-processing GUI is written to the optimization folder as soon as the folder is selected, this GUI can view optimization results in real time
 
-The python GUI is launched when the optimization starts, but the user can also load the GUI by clicking the *View Optimization Data* button, located at the bottom of the Paraview interface next to the *Write Runscript* button. Clicking the *View Optimization Data* button will automatically load the python GUI with prior data if there is an output logOpt.txt file in the optimization folder. If an optimization is running and the gui has been closed, you can resume viewing optimization results by clicking the *View Optimization Data* button.
+The python GUI is launched when the optimization starts, but the user can also load the GUI by clicking the *View Optimization Data* button, located at the bottom of the ParaView interface next to the *Write Runscript* button. Clicking the *View Optimization Data* button will automatically load the python GUI with prior data if there is an output logOpt.txt file in the optimization folder. If an optimization is running and the gui has been closed, you can resume viewing optimization results by clicking the *View Optimization Data* button.
 
 To select a different log file you can click the *Open File* button on the right hand side of the python GUI
 
