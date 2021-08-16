@@ -1,5 +1,5 @@
 ---
-title: Airfoil aerodynamic optimization plugin pvOptAirfoil
+title: Airfoil aerodynamic optimization GUI
 keywords: gui, airfoil
 summary: 
 sidebar: mydoc_sidebar
@@ -15,7 +15,7 @@ To run a GUI-based optimization case, first download the pvOptGUI tutorial from 
 
 Then, open ParaView following the instructions mentioned on [this page](mydoc_gui_overview.html). 
 
-Then open the .foam file in ParaView by clicking *file* then *open* in the top left of the toolbar. You should now see the new source in the pipeline manager.
+Then open the pvOptGUI_tutorials/NACA0012/paraview.foam file in ParaView by clicking *file* then *open* in the top left of the toolbar. You should now see the new source in the pipeline manager.
 
 Then click the green apply button on the left, below the ParaView pipeline window. You can also set up the 'auto-apply' feature by navigating to *edit* in the upper toolbar, then selecting settings. Auto-apply is the second setting under the *general* tab.
 
@@ -40,8 +40,7 @@ pvOptAirfoil writes several files for mesh generation, run script creation, opti
 
 ![MeshGeneration](/images/tutorials/GUI_meshGen.png)
 
-First, confirm the optimization folder is selected, then choose the upper and lower profiles for your airfoil by clicking the *Select Upper Surface Profile* and *Select Lower Surface Profile* buttons and selecting the files from the dialog
-- An example of the upper and lower surface profiles can be found [here](https://github.com/DAFoam/pvOptGUI_tutorials/tree/main/NACA0012)
+First, confirm the optimization folder is selected, then choose the upper and lower profiles for your airfoil by clicking the *Select Upper Surface Profile* and *Select Lower Surface Profile* buttons and selecting the files from the dialog. An example of the upper and lower surface profiles can be found pvOptGUI_tutorials/NACA0012/profiles
 
 Next you can set the approximate number of mesh cells, the boundary layer thickness and the number of cells between the surface and the far field
 

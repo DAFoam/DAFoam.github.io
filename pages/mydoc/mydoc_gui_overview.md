@@ -104,7 +104,7 @@ conda list
 
 The pvOptGUI installation is done.
 
-To open ParaView, run `./loadOptGUI.sh` in the pvOptGUI_MacOS_10.15 folder. Running this script is necessary because it will setup related environmental variables for optimization.
+To open ParaView, run `./loadOptGUI.sh` on a terminal from the pvOptGUI_MacOS_10.15 folder. Running this script is necessary because it will setup related environmental variables for optimization.
 
 Finally, we need to activate the pvOptAirfoil plugin in Paraview, locate the toolbar at the top of ParaView, then click 
 - Tools>>Manage Plugins...
