@@ -84,7 +84,7 @@ First, download the [ParaView-5.9.1.dmg](https://github.com/DAFoam/files/release
 
 Then, download [pvOptGUI_MacOS_10.15.zip](https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptGUI_MacOS_10.15.zip) and [Miniconda3-py38_4.10.3-MacOSX-x86_64.sh](https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh). Put these two files in your $HOME directory.
 
-Now, run the following commands to install pvOptGUI:
+Now, open a terminal, copy the following block of commands and paste it to the terminal and hit enter:
 
 <pre>
 cd $HOME && \
@@ -102,7 +102,7 @@ conda install tk==8.6.10 && \
 conda list
 </pre>
 
-The pvOptGUI installation is done.
+The pvOptGUI installation will be automatically done. After the commands finish, a list of packages should appear in the console. Verify matplotlib version is 3.4.2, numpy is 1.20.2, and tk is 8.6.10.
 
 To open ParaView, run `./loadOptGUI.sh` on a terminal from the pvOptGUI_MacOS_10.15 folder. Running this script is necessary because it will setup related environmental variables for optimization.
 
