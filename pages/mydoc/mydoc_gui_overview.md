@@ -82,16 +82,16 @@ Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on h
 
 First, download the [ParaView-5.9.1.dmg](https://github.com/DAFoam/files/releases/download/pvOptGUI/ParaView-5.9.1-OSX10.15-Python3.8-64bit.dmg) installer. Double click to install. When asked, drag ParaView-5.9.1.app to your "/Applications" folder.
 
-Then, run the following command to install pvOptGUI:
+Then, download [pvOptGUI_MacOS_10.15.zip](https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptGUI_MacOS_10.15.zip) and [Miniconda3-py38_4.10.3-MacOSX-x86_64.sh](https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh). Put these two files in your $HOME directory.
+
+Now, run the following commands to install pvOptGUI:
 
 <pre>
 cd $HOME && \
-wget https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptGUI_MacOS_10.15.zip && \
 unzip pvOptGUI_MacOS_10.15.zip && \
 cd pvOptGUI_MacOS_10.15 && \
-wget https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh && \
-chmod 755 Miniconda3-py38_4.10.3-MacOSX-x86_64.sh && \
-./Miniconda3-py38_4.10.3-MacOSX-x86_64.sh -b -p $HOME/pvOptGUI_MacOS_10.15/miniconda3 && \
+chmod 755 $HOME/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh && \
+.$HOME/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh -b -p $HOME/pvOptGUI_MacOS_10.15/miniconda3 && \
 export PATH=$HOME/pvOptGUI_MacOS_10.15/miniconda3/bin:$PATH && \
 export LD_LIBRARY_PATH=$HOME/pvOptGUI_MacOS_10.15/miniconda3/lib:$LD_LIBRARY_PATH && \
 export PYTHONUSERBASE=no-local-libs && \
