@@ -80,11 +80,11 @@ Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on h
 
 ### MacOS 10.15 and above
 
-First, download the [ParaView-5.9.1.dmg](https://github.com/DAFoam/files/releases/download/pvOptGUI/ParaView-5.9.1-OSX10.15-Python3.8-64bit.dmg) installer. Double click to install. When asked, drag ParaView-5.9.1.app to your /Applications folder.
+First, download the [ParaView-5.9.1.dmg](https://github.com/DAFoam/files/releases/download/pvOptGUI/ParaView-5.9.1-OSX10.15-Python3.8-64bit.dmg) installer. Double click to install. When asked, drag ParaView-5.9.1.app to your "/Applications" folder.
 
 Then download the [pvOptGUI_MacOS_10.15](https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptGUI_MacOS_10.15.zip) package and extract it to your $HOME directory.
 
-Download the [Miniconda 3](https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh) installer. Then, run this command to start the installation:
+Next, download the [Miniconda 3](https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh) installer. Open a terminal and run this command to start the installation:
 
 <pre>
 chmod 755 Miniconda3-py38_4.10.3-MacOSX-x86_64.sh && ./Miniconda3-py38_4.10.3-MacOSX-x86_64.sh
@@ -92,12 +92,12 @@ chmod 755 Miniconda3-py38_4.10.3-MacOSX-x86_64.sh && ./Miniconda3-py38_4.10.3-Ma
 
 - When asked, choose to install miniconda to $HOME/pvOptGUI_MacOS_10/miniconda3
 - When asked, choose NOT to activate the conda environment
-- After the Miniconda3 installation completes, go to the pvOptGUI_MacOS_10 folder containing the new miniconda3 directory and run `./setupMiniconda.sh` to install the required packages.
-- After the script finishes, a list of packages should appear in the console. Verify matplotlib version is 3.4.2, numpy is 1.20.2, and tk is 8.6.10; afterward you may close the console
+- After the Miniconda3 installation completes, go to the pvOptGUI_MacOS_10 folder containing the new miniconda3 directory and run `./setupMiniconda.sh` to install the required Python packages.
+- After the script finishes, a list of packages should appear in the terminal. Verify matplotlib version is 3.4.2, numpy is 1.20.2, and tk is 8.6.10; afterward you may close the terminal
 
 Finally, run `./loadOptGUI.sh`, ParaView should open a few seconds later.
 
-To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen, then click 
+To load pvOptAirfoil in Paraview, locate the toolbar at the top of the screen, then click 
 - Tools>>Manage Plugins...
 - Then navigate to the bottom of the pop-up window, select "pvOptAirfoil", and then click "Load Selected".
 
