@@ -91,7 +91,7 @@ cd $HOME && \
 unzip pvOptGUI_MacOS_10.15.zip && \
 cd pvOptGUI_MacOS_10.15 && \
 chmod 755 $HOME/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh && \
-.$HOME/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh -b -p $HOME/pvOptGUI_MacOS_10.15/miniconda3 && \
+$HOME/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh -b -p $HOME/pvOptGUI_MacOS_10.15/miniconda3 && \
 export PATH=$HOME/pvOptGUI_MacOS_10.15/miniconda3/bin:$PATH && \
 export LD_LIBRARY_PATH=$HOME/pvOptGUI_MacOS_10.15/miniconda3/lib:$LD_LIBRARY_PATH && \
 export PYTHONUSERBASE=no-local-libs && \
