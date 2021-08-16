@@ -104,7 +104,7 @@ conda list
 
 The pvOptGUI installation will be automatically done. After the commands finish, a list of packages should appear in the console. Verify matplotlib version is 3.4.2, numpy is 1.20.2, and tk is 8.6.10.
 
-To open ParaView, run `./loadOptGUI.sh` on a terminal from the pvOptGUI_MacOS_10.15 folder. Running this script is necessary because it will setup related environmental variables for optimization.
+To open ParaView, run `source ./loadOptGUI.sh` on a terminal from the pvOptGUI_MacOS_10.15 folder. Running this script is necessary because it will setup related environmental variables for optimization.
 
 Finally, we need to activate the pvOptAirfoil plugin in Paraview, locate the toolbar at the top of ParaView, then click 
 - Tools>>Manage Plugins...
