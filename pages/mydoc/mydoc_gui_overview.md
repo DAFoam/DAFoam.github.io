@@ -13,9 +13,9 @@ To facilitate the DAFoam optimization, we developed a suite of Paraview-based Gr
 
 ### pvOptGUI
 
-#### Linux
+#### Ubuntu 18.04/20.04
 
-First, download [pvOptGUI_Linux](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Linux_Latest](https://github.com/DAFoam/files/releases/tag/pvOptGUI)
+First, download the pre-compiled pvOptGUI package for your version of Ubuntu: [pvOptGUI_Ubuntu](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Ubuntu_latest.so](https://github.com/DAFoam/files/releases/tag/pvOptGUI)
 
 Then run the following command in the terminal to extract the pvOptGUI package to your home directory, change 1804 to the installed Ubuntu version.
 
@@ -63,7 +63,7 @@ Download the [Miniconda 3](https://repo.anaconda.com/miniconda/Miniconda3-py38_4
 - After the Miniconda3 installation completes, open the pvOptGUI folder containing the new miniconda3 directory and double click minicondaSetup.bat to install the required packages.
 - After the script finishes, a list of packages should appear in the console. Verify matplotlib version is 3.4.2, numpy is 1.20.2, and tk is 8.6.10; afterward you may close the console.
 
-Finally download the airfoil aerodynamic optimization plugin [pvOptAirfoil_Windows10_64bit_latest.zip](https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptAirfoil_Windows10_64bit_Latest.zip) and extract it
+Finally download the airfoil aerodynamic optimization plugin [pvOptAirfoil_Windows10_64bit_latest.zip](https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptAirfoil_Windows10_64bit_latest.zip) and extract it
 - pvOptGUI supports multiple GUI plugins, the current version supports only airfoil aerodynamic optimization, i.e., pvOptAirfoil.
 
 
