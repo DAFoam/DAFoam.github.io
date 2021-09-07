@@ -80,7 +80,7 @@ Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on h
 
 ### Linux
 
-First, download [pvOptGUI_Linux](https://github.com/DAFoam/files/releases/tag/pvOptGUI/pvOptGUI_Linux.tar.gz) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Linux_Latest.tar.gz](https://github.com/DAFoam/files/releases/tag/pvOptGUI/pvOptAirfoil_Linux_Latest.tar.gz)
+First, download [pvOptGUI_Linux](https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptGUI_Linux.tar.gz) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Linux_Latest.tar.gz](https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptAirfoil_Linux_Latest.tar.gz)
 
 Decompress both files to a convenient location. Then install the official release of [Paraview v5.9.0](https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.9&type=binary&os=Linux&downloadFile=ParaView-5.9.0-MPI-Linux-Python3.8-64bit.tar.gz) and untar it inside of the pvOptGUI folder you previously extracted.
 
