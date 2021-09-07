@@ -9,41 +9,9 @@ folder: mydoc
 
 To facilitate the DAFoam optimization, we developed a suite of Paraview-based Graphical User Interface (GUI) plugins called pvOptGUI. You can use the plugins to generate mesh, setup and run optimization, and visualize the optimization progress in Paraview. You can also use the plugins to generate the optimization configuration files, e.g., runScript.py, and then run it on an HPC. This GUI is currently in the beta version and has only one plugin (pvOptAirfoil) for airfoil aerodynamic optimization. 
 
-The installation guide is as follows. The pvOptGUI package is essential and Docker is optional.
+The installation guide for Windows, MacOS, and Linux is as follows. The pvOptGUI package is essential and Docker is optional.
 
 ## pvOptGUI
-
-### Linux
-
-First, download [pvOptGUI_Linux](https://github.com/DAFoam/files/releases/tag/pvOptGUI/pvOptGUI_Linux.tar.gz) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Linux_Latest.tar.gz](https://github.com/DAFoam/files/releases/tag/pvOptGUI/pvOptAirfoil_Linux_Latest.tar.gz)
-
-Decompress both files to a convenient location. Then install the official release of [Paraview v5.9.0](https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.9&type=binary&os=Linux&downloadFile=ParaView-5.9.0-MPI-Linux-Python3.8-64bit.tar.gz) and untar it inside of the pvOptGUI folder you previously extracted.
-
-Also download [Miniconda](https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh), run the .sh file using the default settings. When prompted for the install location, create a directory titled *miniconda3* inside the pvOptGUI folder. 
-
-After Miniconda has been installed, traverse to the pvOptGUI directory and run *minicondaSetup.sh* using the below command to obtain the required packages. When prompted for installation permissions, enter yes.
-
-<pre>
-./minicondaSetup.sh
-</pre>
-
-**NOTE:** If a different location is preferred or the directories are renamed, editing file paths in the script may be necessary.
-
-Finally, open Paraview by traversing to the pvOptGUI directory and running:
-
-<pre>
-./loadOptGUI.sh
-</pre>
-
-A console window should appear briefly, then ParaView should open a few seconds later.
-
-**NOTE:** You may need to adjust file paths if you renamed/relocated the Miniconda3 or Paraview folders
-
-To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen, then click 
-- Tools>>Manage Plugins...>>load new...>>
-- Then navigate to your copy of pvOptAirfoil.so and load the shared image
-
-Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
 
 ### Windows 10 (64bit)
 
@@ -106,6 +74,39 @@ Finally, we need to activate the pvOptAirfoil plugin in Paraview, locate the too
 - Tools>>Manage Plugins...
 - Then navigate to the bottom of the pop-up window, select "pvOptAirfoil", and then click "Load Selected".
 - You may also want to check the "auto-load" such that you don't have to manually activate the pvOptAirfoil plugin again 
+
+Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
+
+
+### Linux
+
+First, download [pvOptGUI_Linux](https://github.com/DAFoam/files/releases/tag/pvOptGUI/pvOptGUI_Linux.tar.gz) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Linux_Latest.tar.gz](https://github.com/DAFoam/files/releases/tag/pvOptGUI/pvOptAirfoil_Linux_Latest.tar.gz)
+
+Decompress both files to a convenient location. Then install the official release of [Paraview v5.9.0](https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.9&type=binary&os=Linux&downloadFile=ParaView-5.9.0-MPI-Linux-Python3.8-64bit.tar.gz) and untar it inside of the pvOptGUI folder you previously extracted.
+
+Also download [Miniconda](https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh), run the .sh file using the default settings. When prompted for the install location, create a directory titled *miniconda3* inside the pvOptGUI folder. 
+
+After Miniconda has been installed, traverse to the pvOptGUI directory and run *minicondaSetup.sh* using the below command to obtain the required packages. When prompted for installation permissions, enter yes.
+
+<pre>
+./minicondaSetup.sh
+</pre>
+
+**NOTE:** If a different location is preferred or the directories are renamed, editing file paths in the script may be necessary.
+
+Finally, open Paraview by traversing to the pvOptGUI directory and running:
+
+<pre>
+./loadOptGUI.sh
+</pre>
+
+A console window should appear briefly, then ParaView should open a few seconds later.
+
+**NOTE:** You may need to adjust file paths if you renamed/relocated the Miniconda3 or Paraview folders
+
+To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen, then click 
+- Tools>>Manage Plugins...>>load new...>>
+- Then navigate to your copy of pvOptAirfoil.so and load the shared image
 
 Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
 
