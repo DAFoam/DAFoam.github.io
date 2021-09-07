@@ -9,42 +9,44 @@ folder: mydoc
 
 First, download the configuration files from [here](https://github.com/DAFoam/verifications), then go to the DASimpleFoam folder, and run the commends mentioned in the overview section.
 
+For most of the cases, the adjoint matches the reference values by **14 significant digits**.
+
 ## Shape variable
 <pre>
 dCD/dFFD               variable 0              variable 1            variable 2
-JacobianFree Adjoint   0.009255243575551558    0.01047401958164599   0.02533621106400400
-Forward AD Reference   0.009255240832202055    0.01047401678464814   0.02533620897519522
+Forward AD Reference   0.009260839088106553    0.01047989656042717   0.02535943905573043
+JacobianFree Adjoint   0.009260839088106503    0.01047989656042720   0.02535943905573065
 </pre>
 
 <pre>
 dCL/dFFD               variable 0              variable 1            variable 2
-JacobianFree Adjoint   0.2420678446385925      0.2003391030258654    0.2803494795556929
-Forward AD Reference   0.2420677747696623      0.2003390346061161    0.280349381693572
+Forward AD Reference   0.2419525437248771      0.2002145064954005    0.2802869444676860
+JacobianFree Adjoint   0.2419525437248756      0.2002145064953999    0.2802869444676880
 </pre>
 
 <pre>
 dCM/dFFD               variable 0              variable 1            variable 2
-JacobianFree Adjoint   -0.2192318095476029     -0.2264412322773979   -0.2456426330965034
-Forward AD Reference   -0.2192318311983444     -0.2264412538422797   -0.2456426563391394
+Forward AD Reference   -0.2192473028507383     -0.2264587861502322   -0.2456468063599592
+JacobianFree Adjoint   -0.2192473028507387     -0.2264587861502318   -0.2456468063599599
 </pre>
 
 ## Angle of attack
 <pre>
-dCD/dAOA               variable 0          
-JacobianFree Adjoint   0.001315555375142706
-Forward AD Reference   0.001315555386468653
+dCD/dAOA               variable 0    
+Forward AD Reference   0.001315555355365731      
+JacobianFree Adjoint   0.001315555355365766
 </pre>
 
 <pre>
-dCL/dAOA               variable 0          
-JacobianFree Adjoint   0.09954288373370906
-Forward AD Reference   0.09954288344185892
+dCL/dAOA               variable 0    
+Forward AD Reference   0.09954288373144168      
+JacobianFree Adjoint   0.09954288373144177
 </pre>
 
 <pre>
-dCM/dAOA               variable 0          
-JacobianFree Adjoint   -0.001699253806194421
-Forward AD Reference   -0.001699253814112301
+dCM/dAOA               variable 0   
+Forward AD Reference   -0.001699253810007804       
+JacobianFree Adjoint   -0.001699253810007761
 </pre>
 
 

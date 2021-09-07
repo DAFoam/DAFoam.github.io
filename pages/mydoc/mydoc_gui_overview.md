@@ -7,13 +7,13 @@ permalink: mydoc_gui_overview.html
 folder: mydoc
 ---
 
-To facilitate the DAFoam optimization, we developed a suite of Paraview-based Graphical User Interface (GUI) plugins called pvOptGUI. You can use the plugins to generate mesh, setup and run optimization, and visualize the optimization progress in Paraview. You can also use the plugins to generate the optimization configuration files, e.g., runScript.py, and then run it on an HPC. This GUI is currently in the beta version and has only one plugin (pvOptAirfoil) for airfoil aerodynamic optimization.
+To facilitate the DAFoam optimization, we developed a suite of Paraview-based Graphical User Interface (GUI) plugins called pvOptGUI. You can use the plugins to generate mesh, setup and run optimization, and visualize the optimization progress in Paraview. You can also use the plugins to generate the optimization configuration files, e.g., runScript.py, and then run it on an HPC. This GUI is currently in the beta version and has only one plugin (pvOptAirfoil) for airfoil aerodynamic optimization. 
 
-## Installation
+The installation guide is as follows. The pvOptGUI package is essential and Docker is optional.
 
-### pvOptGUI
+## pvOptGUI
 
-#### Ubuntu 18.04/20.04
+### Ubuntu 18.04/20.04
 
 First, download the pre-compiled pvOptGUI package for your version of Ubuntu: [pvOptGUI_Ubuntu](https://github.com/DAFoam/files/releases/tag/pvOptGUI) and the airfoil aerodynamic optimization plugin [pvOptAirfoil_Ubuntu_latest.so](https://github.com/DAFoam/files/releases/tag/pvOptGUI)
 
@@ -49,7 +49,7 @@ You should now see the pvOptAirfoil interface in the panel on the left, below th
 
 Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
 
-#### Windows 10 (64bit)
+### Windows 10 (64bit)
 
 First download the [pvOptGUI_Windows10_64bit package](https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptGUI_Windows10_64bit.zip) and extract it to a desired location
 - You may need [7Zip](https://www.7-zip.org/) or other similar software
@@ -76,15 +76,48 @@ To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen,
 - Tools>>Manage Plugins...>>load new...>>
 - Then navigate to your copy of pvOptAirfoil.dll in the file dialog and load the shared library
 
+Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
+
+### MacOS 10.15 and above
+
+First, download the [ParaView-5.9.1.dmg](https://github.com/DAFoam/files/releases/download/pvOptGUI/ParaView-5.9.1-OSX10.15-Python3.8-64bit.dmg) installer. Double click to install. When asked, drag ParaView-5.9.1.app to your "/Applications" folder.
+
+Then, download [pvOptGUI_MacOS_10.15.zip](https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptGUI_MacOS_10.15.zip) and [Miniconda3-py38_4.10.3-MacOSX-x86_64.sh](https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh). Put these two files in your $HOME directory.
+
+Now, open a terminal, copy the following block of commands and paste it to the terminal and hit enter:
+
+<pre>
+cd $HOME && \
+unzip pvOptGUI_MacOS_10.15.zip && \
+cd pvOptGUI_MacOS_10.15 && \
+chmod 755 $HOME/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh && \
+$HOME/Miniconda3-py38_4.10.3-MacOSX-x86_64.sh -b -p $HOME/pvOptGUI_MacOS_10.15/miniconda3 && \
+export PATH=$HOME/pvOptGUI_MacOS_10.15/miniconda3/bin:$PATH && \
+export LD_LIBRARY_PATH=$HOME/pvOptGUI_MacOS_10.15/miniconda3/lib:$LD_LIBRARY_PATH && \
+export PYTHONUSERBASE=no-local-libs && \
+pip install --upgrade pip && \
+pip install numpy==1.20.2 && \
+pip install matplotlib==3.4.2 && \
+conda install tk==8.6.10 && \
+conda list
+</pre>
+
+The pvOptGUI installation will be automatically done. After the commands finish, a list of packages should appear in the console. Verify matplotlib version is 3.4.2, numpy is 1.20.2, and tk is 8.6.10.
+
+To open ParaView, run `source ./loadOptGUI.sh` on a terminal from the pvOptGUI_MacOS_10.15 folder. Running this script is necessary because it will setup related environmental variables for optimization.
+
+Finally, we need to activate the pvOptAirfoil plugin in Paraview, locate the toolbar at the top of ParaView, then click 
+- Tools>>Manage Plugins...
+- Then navigate to the bottom of the pop-up window, select "pvOptAirfoil", and then click "Load Selected".
+- You may also want to check the "auto-load" such that you don't have to manually activate the pvOptAirfoil plugin again 
 
 Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
 
-
-### Docker (optional)
+## Docker (optional)
 
 Docker is not required to generate the DAFoam run script. However, Docker is needed if you want to do mesh generation, transformation, and running the aerodynamic optimization through the GUI. 
 	
-#### Ubuntu	
+### Ubuntu	
 
 To install Docker, open your terminal, copy and run the following command. This will uninstall any previous docker versions and install the latest version:
 
@@ -114,7 +147,7 @@ If the docker image is not pulled, it will be pulled automatically when the firs
 
 Full Docker installation guide is located [here](https://docs.docker.com/engine/install/ubuntu/)
 
-#### Windows 10
+### Windows 10
 
 Download [Docker Desktop](https://docs.docker.com/docker-for-windows/install/) for Windows
 
@@ -136,4 +169,10 @@ docker pull dafoam/opt-packages:v2.2.7
 </pre>
 
 **NOTE:** Docker must be running and *you must be signed in to your Docker account* when launching Paraview to run Docker commands through pvOptGUI plugins. The user can log in at any point while running the plugins
+
+### MacOS
+
+Download [Docker Desktop](https://hub.docker.com/editions/community/docker-ce-desktop-mac) for MacOS
+
+Follow the same installation steps as Windows 10.
 
