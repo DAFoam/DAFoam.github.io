@@ -113,6 +113,36 @@ Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on h
 ## Docker (optional)
 
 Docker is not required to generate the DAFoam run script. However, Docker is needed if you want to do mesh generation, transformation, and running the aerodynamic optimization through the GUI. 
+
+### Windows 10
+
+Download [Docker Desktop](https://docs.docker.com/docker-for-windows/install/) for Windows
+
+After installation, run Docker Desktop. Wait for the notification that says Docker is running.
+
+In your Windows hidden icons on the bottom right of your taskbar, one should see the Docker icon. Right click and open the *Dashboard*
+Verify that you are signed in to your Docker account at the top right of the dashboard. You can close the dashboard but keep Docker running.
+
+Open the command prompt and verify docker installation by running:
+
+<pre>
+docker -v
+</pre>
+
+The major version should be a minimum of 19 to run pvOptGUI docker commands with pvOptAirfoil. Once the Docker is installed and verified, run this command from the terminal to download the DAFoam image:
+
+<pre>
+docker pull dafoam/opt-packages:v2.2.7
+</pre>
+
+**NOTE:** Docker must be running and *you must be signed in to your Docker account* when launching Paraview to run Docker commands through pvOptGUI plugins. The user can log in at any point while running the plugins
+
+### MacOS
+
+Download [Docker Desktop](https://hub.docker.com/editions/community/docker-ce-desktop-mac) for MacOS
+
+Follow the same installation steps as Windows 10.
+
 	
 ### Ubuntu	
 
@@ -144,32 +174,4 @@ If the docker image is not pulled, it will be pulled automatically when the firs
 
 Full Docker installation guide is located [here](https://docs.docker.com/engine/install/ubuntu/)
 
-### Windows 10
-
-Download [Docker Desktop](https://docs.docker.com/docker-for-windows/install/) for Windows
-
-After installation, run Docker Desktop. Wait for the notification that says Docker is running.
-
-In your Windows hidden icons on the bottom right of your taskbar, one should see the Docker icon. Right click and open the *Dashboard*
-Verify that you are signed in to your Docker account at the top right of the dashboard. You can close the dashboard but keep Docker running.
-
-Open the command prompt and verify docker installation by running:
-
-<pre>
-docker -v
-</pre>
-
-The major version should be a minimum of 19 to run pvOptGUI docker commands with pvOptAirfoil. Once the Docker is installed and verified, run this command from the terminal to download the DAFoam image:
-
-<pre>
-docker pull dafoam/opt-packages:v2.2.7
-</pre>
-
-**NOTE:** Docker must be running and *you must be signed in to your Docker account* when launching Paraview to run Docker commands through pvOptGUI plugins. The user can log in at any point while running the plugins
-
-### MacOS
-
-Download [Docker Desktop](https://hub.docker.com/editions/community/docker-ce-desktop-mac) for MacOS
-
-Follow the same installation steps as Windows 10.
 
