@@ -108,6 +108,12 @@ To load pvOptAirfoil into Paraview, locate the toolbar at the top of the screen,
 - Tools>>Manage Plugins...>>load new...>>
 - Then navigate to your copy of pvOptAirfoil.so and load the shared image
 
+If you do not have OpenGL on your system, the plugin will not run. Download it with the below command:
+
+<pre>
+sudo apt install libopengl0
+</pre>
+
 Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
 
 ## Docker (optional)
