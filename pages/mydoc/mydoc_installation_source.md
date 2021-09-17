@@ -43,7 +43,7 @@ chmod 755 $HOME/dafoam/loadDAFoam.sh && \
 
 ## **OpenFOAM**
 
-We need to first compile OpenFOAM-v1812 because it contains OpenMPI-1.10.4 which will be used for other packages. There are three versions of OpenFOAM to compile: original, reverse-mode AD (ADR), and forward-mode AD (ADF). The reverse-mode AD enables the JacobianFree adjoint option, and the forward-mode AD enables the brute-force AD for verifying the adjoint accuracy.
+We need to first compile OpenFOAM-v1812 because it contains OpenMPI-1.10.4 which will be used for other packages. **There are three versions of OpenFOAM to compile: original, reverse-mode AD (ADR), and forward-mode AD (ADF).** The reverse-mode AD enables the JacobianFree adjoint option, and the forward-mode AD enables the brute-force AD for verifying the adjoint accuracy.
 
 **Build Original**
 
@@ -299,7 +299,7 @@ make && pip install .
 
 ## **DAFoam**
 
-Similar to OpenFOAM, we need to compile three versions of DAFoam: original, reverse-mode AD (ADR), and forward-mode AD (ADF). T
+Similar to OpenFOAM, we need to compile three versions of DAFoam: original, reverse-mode AD (ADR), and forward-mode AD (ADF).
 
 Compile **original** DAFoam by running:
 
