@@ -9,12 +9,12 @@ folder: mydoc
 
 {% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v2.2.0-](mydoc_installation_source_220.html) and [v1.0.0](mydoc_installation_source_100.html)." %}
 
-The DAFoam package can be compiled with various dependency versions. Here we elaborate on how to compile it on **Ubuntu 18.04** using the dependencies shown in the following table. If you use **Ubuntu 20.04**, you can follow the same steps except that you need to change Miniconda3-4.5.4-Linux-x86_64.sh to Miniconda3-py37_4.8.3-Linux-x86_64.sh in the **Python** section.
+The DAFoam package can be compiled with various dependency versions. Here we elaborate on how to compile it on **Ubuntu 20.04** using the dependencies shown in the following table.
 
 
 Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython
 | :------------------------------------------------------------------------------------------------ | 
-18.04  | gcc/7.5  | 1.10.4  | 3.0.2  | 3.11.4 | 3.11.0   | 3.3.0 | 3.6.5  | 1.14.3 | 1.1.0 | 0.29.21
+20.04  | gcc/9.3  | 1.10.4  | 3.0.2  | 3.11.4 | 3.11.0   | 3.3.0 | 3.7    | 1.14.3 | 1.1.0 | 0.29.21
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM.
 
@@ -43,7 +43,11 @@ chmod 755 $HOME/dafoam/loadDAFoam.sh && \
 
 ## **OpenFOAM**
 
-We need to first compile OpenFOAM-v1812 because it contains OpenMPI-1.10.4 which will be used for other packages.
+We need to first compile OpenFOAM-v1812 because it contains OpenMPI-1.10.4 which will be used for other packages. There are three versions of OpenFOAM to compile: original, reverse-mode AD (ADR), and forward-mode AD (ADF). The reverse-mode AD enables the JacobianFree adjoint option, and the forward-mode AD enables the brute-force AD for verifying the adjoint accuracy.
+
+**Build Original**
+
+Run the following:
 
 <pre>
 cd $HOME/dafoam/OpenFOAM && \
@@ -78,15 +82,83 @@ simpleFoam -help
 
 It should see some basic information of OpenFOAM
 
+
+**Build Reverse Mode AD**
+
+Run the following:
+
+<pre>
+cd $HOME/dafoam/OpenFOAM && \
+wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.9.tar.gz -O OpenFOAM-v1812-AD.tgz && \
+tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADR && \
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADR && \
+sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADR/g' etc/bashrc && \
+sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
+sed -i 's/export WM_CODI_AD_MODE=CODI_AD_FORWARD/export WM_CODI_AD_MODE=CODI_AD_REVERSE/g' etc/bashrc && \
+sed -i 's/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=OPENMPI/g' etc/bashrc && \
+source etc/bashrc && \
+export WM_NCOMPPROCS=4 && \
+./Allwmake 2> warningLog.txt
+</pre>
+
+Then, verify the installation by running:
+
+<pre>
+DASimpleFoamReverseAD -help
+</pre>
+
+It should see some basic information of DASimpleFoamReverseAD.
+
+{% include note.html content="We use CodiPack to differentiate the OpenFOAM libraries. During the compliation, it will generate a lot of warning messages, which are saved to the warningLog.txt file. After the compilation is done, remember to delete this warning file, which can be larger than 1 GB." %}
+
+After OpenFOAM-v1812-ADR is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
+
+<pre>
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib
+ln -s ../../../../OpenFOAM-v1812-ADR/platforms/*/lib/*.so .
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy
+ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/dummy/*.so .
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-1.10.4
+ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/openmpi-1.10.4/*.so .
+</pre>
+
+**Build Forward Mode AD**
+
+Run the following:
+
+<pre>
+cd $HOME/dafoam/OpenFOAM && \
+wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.9.tar.gz -O OpenFOAM-v1812-AD.tgz && \
+tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADF && \
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADF && \
+sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADF/g' etc/bashrc && \
+sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
+sed -i 's/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=OPENMPI/g' etc/bashrc && \
+source etc/bashrc && \
+export WM_NCOMPPROCS=4 && \
+./Allwmake 2> warningLog.txt
+</pre>
+
+After OpenFOAM-v1812-ADF is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
+
+<pre>
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib
+ln -s ../../../../OpenFOAM-v1812-ADF/platforms/*/lib/*.so .
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy
+ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/dummy/*.so .
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-1.10.4
+ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/openmpi-1.10.4/*.so .
+</pre>
+
 ## **Python**
 
-Install Miniconda3-4.5.4 by running this command:
+Install Miniconda3-4.8.3 by running this command:
 
 <pre>
 cd $HOME/dafoam/packages && \
-wget https://repo.anaconda.com/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh && \
-chmod 755 Miniconda3-4.5.4-Linux-x86_64.sh && \
-./Miniconda3-4.5.4-Linux-x86_64.sh -b -p $HOME/dafoam/packages/miniconda3 && \
+wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh && \
+chmod 755 Miniconda3-py37_4.8.3-Linux-x86_64.sh && \
+./Miniconda3-py37_4.8.3-Linux-x86_64.sh -b -p $HOME/dafoam/packages/miniconda3 && \
 echo '# Miniconda3' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib' >> $HOME/dafoam/loadDAFoam.sh && \
@@ -131,6 +203,7 @@ make PETSC_DIR=$HOME/dafoam/packages/petsc-3.11.4 PETSC_ARCH=real-opt all
 Finally, install mpi4py-3.0.2 and petsc4py-3.11.0:
 
 <pre>
+. $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/packages && \
 wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-3.0.2.tar.gz && \
 tar -xvf mpi4py-3.0.2.tar.gz && cd mpi4py-3.0.2 && \
@@ -226,7 +299,9 @@ make && pip install .
 
 ## **DAFoam**
 
-Compile DAFoam by running:
+Similar to OpenFOAM, we need to compile three versions of DAFoam: original, reverse-mode AD (ADR), and forward-mode AD (ADF). T
+
+Compile **original** DAFoam by running:
 
 <pre>
 cd $HOME/dafoam/repos && \
@@ -236,7 +311,32 @@ tar -xvf dafoam.tar.gz && cd dafoam-* && \
 ./Allmake && pip install .
 </pre>
 
-Once DAFoam is compiled, run the regression test:
+Next, compile the **reverse-mode AD** DAFoam by running:
+
+<pre>
+. $HOME/dafoam/loadDAFoam.sh && \
+cd $HOME/dafoam/repos/dafoam && \
+source $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADR/etc/bashrc && \
+./Allmake 2> errorLog.txt && pip install .
+</pre>
+
+Finally, compile the **forward-mode AD** DAFoam by running:
+
+<pre>
+. $HOME/dafoam/loadDAFoam.sh && \
+cd $HOME/dafoam/repos/dafoam && \
+source $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADF/etc/bashrc && \
+./Allmake 2> errorLog.txt && pip install .
+</pre>
+
+Once done, reset the AD environment, and re-source the original OpenFOAM-v1812. **This step is needed everytime you compile an AD versions of DAFoam!**
+
+<pre>
+unset WM_CODI_AD_MODE && \
+. $HOME/dafoam/loadDAFoam.sh
+</pre>
+
+Now, you can run the regression tests:
 
 <pre>
 cd $HOME/dafoam/repos/dafoam/tests && ./Allrun
@@ -261,6 +361,8 @@ $HOME/dafoam
   loadDAFoam.sh
   - OpenFOAM
     - OpenFOAM-v1812
+    - OpenFOAM-v1812-ADF
+    - OpenFOAM-v1812-ADR
     - ThirdParty-v1812
   - packages
     - miniconda3
@@ -285,6 +387,10 @@ The loadDAFoam.sh file should look like this:
 #!/bin/bash
 # DAFoam root path
 export DAFOAM_ROOT_PATH=$HOME/dafoam
+# OpenFOAM-v1812
+source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc
+export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
+export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH
 # Miniconda3
 export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib
@@ -298,117 +404,7 @@ export PETSC_LIB=$PETSC_DIR/$PETSC_ARCH/lib
 export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-3.3.0/opt-gfortran
 export PATH=$PATH:$CGNS_HOME/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib
-# OpenFOAM-v1812
-source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc
-export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
-export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH
 </pre>
-
-## **Compile DAFoam with automatic differentiation (optional)**
-
-**Build Reverse Mode AD**
-
-This step is only needed if you want to use the Jacobian free adjoint feature (e.g., adjJacobianOption=JacobianFree) in DAFoam. If you skip this step, you have to use the default finite-difference Jacobian adjoint, i.e., adjJacobianOption=JacobianFD. Check the detail of the adjJacobianOption key on [this page](https://dafoam.github.io/doxygen/html/classdafoam_1_1pyDAFoam_1_1DAOPTION.html). Note that some derivatives, e.g., the betaSA and alphaPorosity, are only avaiable with adjJacobianOption=JacobianFree.
-
-We need to first compile the reverse mode AD version of OpenFOAM:
-
-<pre>
-cd $HOME/dafoam/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.9.tar.gz -O OpenFOAM-v1812-AD.tgz && \
-tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADR && \
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADR && \
-sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADR/g' etc/bashrc && \
-sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
-sed -i 's/export WM_CODI_AD_MODE=CODI_AD_FORWARD/export WM_CODI_AD_MODE=CODI_AD_REVERSE/g' etc/bashrc && \
-sed -i 's/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=OPENMPI/g' etc/bashrc && \
-source etc/bashrc && \
-export WM_NCOMPPROCS=4 && \
-./Allwmake 2> warningLog.txt
-</pre>
-
-Then, verify the installation by running:
-
-<pre>
-DASimpleFoamReverseAD -help
-</pre>
-
-It should see some basic information of DASimpleFoamReverseAD.
-
-{% include note.html content="We use CodiPack to differentiate the OpenFOAM libraries. During the compliation, it will generate a lot of warning messages, which are saved to the warningLog.txt file. After the compilation is done, remember to delete this warning file, which can be larger than 1 GB." %}
-
-After OpenFOAM-v1812-ADR is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
-
-<pre>
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib
-ln -s ../../../../OpenFOAM-v1812-ADR/platforms/*/lib/*.so .
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy
-ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/dummy/*.so .
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-1.10.4
-ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/openmpi-1.10.4/*.so .
-</pre>
-
-Now, compile the AD version of DAFoam:
-
-<pre>
-cd $HOME/dafoam/repos/dafoam && \
-./Allclean && ./Allmake 2> warningLog.txt && pip install .
-</pre>
-
-Finally, reset the AD environment, and re-source the original OpenFOAM-v1812.
-
-<pre>
-unset WM_CODI_AD_MODE && \
-. $HOME/dafoam/loadDAFoam.sh
-</pre>
-
-You are ready to use the adjJacobianOption=JacobianFree option in DAFoam.
-
-**Build Foward Mode AD**
-
-This step is only needed if you want to run the forward mode AD to verify adjoint sensitivity. This build is NOT needed in optimization. 
-
-We need to first compile the forward mode AD version of OpenFOAM:
-
-<pre>
-cd $HOME/dafoam/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.9.tar.gz -O OpenFOAM-v1812-AD.tgz && \
-tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADF && \
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADF && \
-sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADF/g' etc/bashrc && \
-sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
-sed -i 's/WM_MPLIB=SYSTEMOPENMPI/WM_MPLIB=OPENMPI/g' etc/bashrc && \
-source etc/bashrc && \
-export WM_NCOMPPROCS=4 && \
-./Allwmake 2> warningLog.txt
-</pre>
-
-After OpenFOAM-v1812-ADF is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
-
-<pre>
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib
-ln -s ../../../../OpenFOAM-v1812-ADF/platforms/*/lib/*.so .
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy
-ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/dummy/*.so .
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-1.10.4
-ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/openmpi-1.10.4/*.so .
-</pre>
-
-Now, compile the AD version of DAFoam:
-
-<pre>
-cd $HOME/dafoam/repos/dafoam && \
-./Allclean && ./Allmake 2> warningLog.txt && pip install .
-</pre>
-
-Finally, reset the AD environment, and re-source the original OpenFOAM-v1812.
-
-<pre>
-unset WM_CODI_AD_MODE && \
-. $HOME/dafoam/loadDAFoam.sh
-</pre>
-
-You are ready to use the forward mode AD in DAFoam.
-
 
 ## **Compile SNOPT and IPOPT for pyOptSparse (optional)**
 
@@ -455,7 +451,7 @@ cd $IPOPT_DIR && \
 git clone -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
 cd ThirdParty-Mumps && \
 ./get.Mumps && \
-./configure --prefix=$IPOPT_DIR --with-metis --with-metis-lflags="-L${PREFIX}/lib -lcoinmetis" --with-metis-cflags="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" CFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" FCFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+./configure --prefix=$IPOPT_DIR CFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" FCFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
 make && \
 make install
 </pre>
