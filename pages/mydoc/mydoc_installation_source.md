@@ -239,6 +239,66 @@ cmake .. -DCGNS_ENABLE_FORTRAN=1 -DCMAKE_INSTALL_PREFIX=$CGNS_HOME -DCGNS_BUILD_
 make all install
 </pre>
 
+## **IPOPT**
+
+Download Ipopt-3.13.2 and set up the relevant environmental variables to loadDAFoam.sh by runing:
+
+<pre>
+echo '# Ipopt' >> $HOME/dafoam/loadDAFoam.sh && \
+echo 'export IPOPT_DIR=$DAFOAM_ROOT_PATH/packages/Ipopt' >> $HOME/dafoam/loadDAFoam.sh && \
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib' >> $HOME/dafoam/loadDAFoam.sh && \
+. $HOME/dafoam/loadDAFoam.sh
+</pre>
+
+Next, compiles the ThirdParty dependencies Metis and Mumps by running:
+
+<pre>
+cd $HOME/dafoam/packages && \
+git clone -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
+cd $IPOPT_DIR && \
+git clone -b stable/2.0 https://github.com/coin-or-tools/ThirdParty-Metis.git && \
+cd ThirdParty-Metis && \
+./get.Metis && \
+CFLAGS='-Wno-implicit-function-declaration' ./configure --prefix=$IPOPT_DIR && \
+make && \
+make install && \
+cd $IPOPT_DIR && \
+git clone -b stable/1.4 https://github.com/coin-or-tools/ThirdParty-Blas.git && \
+cd ThirdParty-Blas && \
+./get.Blas && \
+./configure --prefix=$IPOPT_DIR && \
+make && \
+make install && \
+cd $IPOPT_DIR && \
+git clone -b stable/1.6 https://github.com/coin-or-tools/ThirdParty-Lapack.git && \
+cd ThirdParty-Lapack && \
+./get.Lapack && \
+./configure --prefix=$IPOPT_DIR && \
+make && \
+make install && \
+cd $IPOPT_DIR && \
+git clone -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
+cd ThirdParty-Mumps && \
+./get.Mumps && \
+./configure --prefix=$IPOPT_DIR CFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" FCFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+make && \
+make install
+</pre>
+
+Finally, compile Ipopt by running:
+
+<pre>
+cd $IPOPT_DIR && \
+mkdir build && \
+cd build && \
+../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+make && \
+make install && \
+cd $IPOPT_DIR/lib && \
+ln -s libcoinlapack.so liblapack.so && \
+ln -s libcoinblas.so libblas.so
+</pre>
+
 ## **MACH-Aero framework**
 
 The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest_version }} is as follows
@@ -406,72 +466,9 @@ export PATH=$PATH:$CGNS_HOME/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib
 </pre>
 
-## **Compile SNOPT and IPOPT for pyOptSparse (optional)**
+## **Compile SNOPT for pyOptSparse (optional)**
 
-This step is needed if you want to use SNOPT and IPOPT optimizers. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com).
-
-**IPOPT**
-
-Download Ipopt-3.13.2 and set up the relevant environmental variables to loadDAFoam.sh by runing:
-
-<pre>
-echo '# Ipopt' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export IPOPT_DIR=$DAFOAM_ROOT_PATH/packages/Ipopt' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib' >> $HOME/dafoam/loadDAFoam.sh && \
-. $HOME/dafoam/loadDAFoam.sh
-</pre>
-
-Next, compiles the ThirdParty dependencies Metis and Mumps by running:
-
-<pre>
-cd $HOME/dafoam/packages && \
-git clone -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
-cd $IPOPT_DIR && \
-git clone -b stable/2.0 https://github.com/coin-or-tools/ThirdParty-Metis.git && \
-cd ThirdParty-Metis && \
-./get.Metis && \
-CFLAGS='-Wno-implicit-function-declaration' ./configure --prefix=$IPOPT_DIR && \
-make && \
-make install && \
-cd $IPOPT_DIR && \
-git clone -b stable/1.4 https://github.com/coin-or-tools/ThirdParty-Blas.git && \
-cd ThirdParty-Blas && \
-./get.Blas && \
-./configure --prefix=$IPOPT_DIR && \
-make && \
-make install && \
-cd $IPOPT_DIR && \
-git clone -b stable/1.6 https://github.com/coin-or-tools/ThirdParty-Lapack.git && \
-cd ThirdParty-Lapack && \
-./get.Lapack && \
-./configure --prefix=$IPOPT_DIR && \
-make && \
-make install && \
-cd $IPOPT_DIR && \
-git clone -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
-cd ThirdParty-Mumps && \
-./get.Mumps && \
-./configure --prefix=$IPOPT_DIR CFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" FCFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
-make && \
-make install
-</pre>
-
-Finally, compile Ipopt and pyoptsparse by running:
-
-<pre>
-cd $IPOPT_DIR && \
-mkdir build && \
-cd build && \
-../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
-make && \
-make install && \
-cd $IPOPT_DIR/lib && \
-ln -s libcoinlapack.so liblapack.so && \
-ln -s libcoinblas.so libblas.so && \
-cd $HOME/dafoam/repos/pyoptsparse-2.3.0 && pip install .
-</pre>
-
-**SNOPT**
+This step is needed if you want to use the SNOPT optimizer. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com).
 
 SNOPT is a commercial package, and you can purchase it from [here](http://www.sbsi-sol-optimize.com/asp/sol_snopt.htm). Once you obtain the SNOPT source code, copy all the source files (except for snopth.f) to the "$HOME/dafoam/repos/pyoptsparse-2.3.0/pyoptsparse/pySNOPT/source" folder. Then, run this command to compile pyOptSparse with SNOPT.
 
