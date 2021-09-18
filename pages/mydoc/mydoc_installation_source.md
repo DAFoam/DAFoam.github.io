@@ -318,6 +318,7 @@ make && pip install . && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/mdolab/pyoptsparse/archive/v2.3.0.tar.gz -O pyoptsparse.tar.gz && \
 tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.3.0 && \
+sed -i 's/coinmetis/metis/g' pyoptsparse/pyIPOPT/setup.py && \
 pip install .
 </pre>
 
