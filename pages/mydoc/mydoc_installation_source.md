@@ -359,37 +359,22 @@ make && pip install .
 
 ## **DAFoam**
 
-Similar to OpenFOAM, we need to compile three versions of DAFoam: original, reverse-mode AD (ADR), and forward-mode AD (ADF).
-
-Compile **original** DAFoam by running:
+Similar to OpenFOAM, we need to compile three versions of DAFoam: original, reverse-mode AD (ADR), and forward-mode AD (ADF). It can be done by running the following commands:
 
 <pre>
 cd $HOME/dafoam/repos && \
 wget https://github.com/mdolab/dafoam/archive/{{ site.latest_version }}.tar.gz -O dafoam.tar.gz && \
 tar -xvf dafoam.tar.gz && cd dafoam-* && \
 . $HOME/dafoam/loadDAFoam.sh && \
-./Allmake && pip install .
-</pre>
-
-Next, compile the **reverse-mode AD** DAFoam by running:
-
-<pre>
-. $HOME/dafoam/loadDAFoam.sh && \
-cd $HOME/dafoam/repos/dafoam && \
+./Allmake 2> errorLog.txt && \
 source $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADR/etc/bashrc && \
-./Allmake 2> errorLog.txt && pip install .
-</pre>
-
-Finally, compile the **forward-mode AD** DAFoam by running:
-
-<pre>
-. $HOME/dafoam/loadDAFoam.sh && \
-cd $HOME/dafoam/repos/dafoam && \
+./Allclean && ./Allmake 2> errorLog.txt && \
 source $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADF/etc/bashrc && \
-./Allmake 2> errorLog.txt && pip install .
+./Allclean && ./Allmake 2> errorLog.txt && \
+pip install .
 </pre>
 
-Once done, reset the AD environment, and re-source the original OpenFOAM-v1812. **This step is needed everytime you compile an AD versions of DAFoam!**
+Once done, unset the AD environment, and re-source the original OpenFOAM-v1812. **This step is needed everytime you compile an AD versions of DAFoam!**
 
 <pre>
 unset WM_CODI_AD_MODE && \
