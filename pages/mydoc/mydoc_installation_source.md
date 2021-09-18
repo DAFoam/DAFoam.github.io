@@ -256,13 +256,6 @@ Next, compiles the ThirdParty dependencies Metis and Mumps by running:
 cd $HOME/dafoam/packages && \
 git clone -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
 cd $IPOPT_DIR && \
-git clone -b stable/2.0 https://github.com/coin-or-tools/ThirdParty-Metis.git && \
-cd ThirdParty-Metis && \
-./get.Metis && \
-./configure --prefix=$IPOPT_DIR && \
-make && \
-make install && \
-cd $IPOPT_DIR && \
 git clone -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
 cd ThirdParty-Mumps && \
 ./get.Mumps && \
@@ -288,7 +281,7 @@ The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest
 
 baseclasses | pySpline | pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.2.0      | v1.2.0   | v1.5.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.1  | v2.3.0      | v1.2.1 | {{ site.latest_version }}
+v1.2.0      | v1.2.0   | v1.5.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.1  | v2.6.2      | v1.2.1 | {{ site.latest_version }}
 
 Now run this command to install all the repos for MACH-Aero:
 
@@ -323,8 +316,8 @@ tar -xvf idwarp.tar.gz && cd idwarp-2.2.1 && \
 cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/pyoptsparse/archive/v2.3.0.tar.gz -O pyoptsparse.tar.gz && \
-tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.3.0 && \
+wget https://github.com/mdolab/pyoptsparse/archive/v2.6.2.tar.gz -O pyoptsparse.tar.gz && \
+tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.6.2 && \
 pip install .
 </pre>
 
@@ -442,10 +435,10 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib
 
 This step is needed if you want to use the SNOPT optimizer. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com).
 
-SNOPT is a commercial package, and you can purchase it from [here](http://www.sbsi-sol-optimize.com/asp/sol_snopt.htm). Once you obtain the SNOPT source code, copy all the source files (except for snopth.f) to the "$HOME/dafoam/repos/pyoptsparse-2.3.0/pyoptsparse/pySNOPT/source" folder. Then, run this command to compile pyOptSparse with SNOPT.
+SNOPT is a commercial package, and you can purchase it from [here](http://www.sbsi-sol-optimize.com/asp/sol_snopt.htm). Once you obtain the SNOPT source code, copy all the source files (except for snopth.f) to the "$HOME/dafoam/repos/pyoptsparse-2.6.2/pyoptsparse/pySNOPT/source" folder. Then, run this command to compile pyOptSparse with SNOPT.
 
 <pre>
-cd $HOME/dafoam/repos/pyoptsparse-2.3.0 && \
+cd $HOME/dafoam/repos/pyoptsparse-2.6.2 && \
 pip install .
 </pre>
 
