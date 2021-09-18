@@ -425,6 +425,7 @@ $HOME/dafoam
     - OpenFOAM-v1812-ADR
     - ThirdParty-v1812
   - packages
+    - Ipopt
     - miniconda3
     - CGNS-3.3.0
     - petsc-3.11.4
@@ -464,6 +465,9 @@ export PETSC_LIB=$PETSC_DIR/$PETSC_ARCH/lib
 export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-3.3.0/opt-gfortran
 export PATH=$PATH:$CGNS_HOME/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib
+# Ipopt
+export IPOPT_DIR=$DAFOAM_ROOT_PATH/packages/Ipopt
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib
 </pre>
 
 ## **Compile SNOPT for pyOptSparse (optional)**
