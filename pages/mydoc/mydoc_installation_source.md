@@ -24,7 +24,7 @@ Run this on terminal to install prerequisites:
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config --no-install-recommends
+sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev --no-install-recommends
 </pre>
 
 ## **Root folder**
@@ -259,20 +259,6 @@ cd $IPOPT_DIR && \
 git clone -b stable/2.0 https://github.com/coin-or-tools/ThirdParty-Metis.git && \
 cd ThirdParty-Metis && \
 ./get.Metis && \
-CFLAGS='-Wno-implicit-function-declaration' ./configure --prefix=$IPOPT_DIR && \
-make && \
-make install && \
-cd $IPOPT_DIR && \
-git clone -b stable/1.4 https://github.com/coin-or-tools/ThirdParty-Blas.git && \
-cd ThirdParty-Blas && \
-./get.Blas && \
-./configure --prefix=$IPOPT_DIR && \
-make && \
-make install && \
-cd $IPOPT_DIR && \
-git clone -b stable/1.6 https://github.com/coin-or-tools/ThirdParty-Lapack.git && \
-cd ThirdParty-Lapack && \
-./get.Lapack && \
 ./configure --prefix=$IPOPT_DIR && \
 make && \
 make install && \
@@ -280,7 +266,7 @@ cd $IPOPT_DIR && \
 git clone -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
 cd ThirdParty-Mumps && \
 ./get.Mumps && \
-./configure --prefix=$IPOPT_DIR CFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" FCFLAGS="-I${PREFIX}/include -I${PREFIX}/include/coin-or -I${PREFIX}/include/coin-or/metis" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+./configure --prefix=$IPOPT_DIR && \
 make && \
 make install
 </pre>
@@ -291,12 +277,9 @@ Finally, compile Ipopt by running:
 cd $IPOPT_DIR && \
 mkdir build && \
 cd build && \
-../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" --with-lapack --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" && \
 make && \
-make install && \
-cd $IPOPT_DIR/lib && \
-ln -s libcoinlapack.so liblapack.so && \
-ln -s libcoinblas.so libblas.so
+make install
 </pre>
 
 ## **MACH-Aero framework**
