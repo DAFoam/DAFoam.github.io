@@ -170,8 +170,8 @@ In the above, we use "export PYTHONUSERBASE=no-local-libs" to bypass the site-pa
 
 <pre>
 pip install --upgrade pip && \
-pip install numpy==1.15.4 && \
-pip install scipy==1.1.0 && \
+pip install numpy==1.21.2 && \
+pip install scipy==1.7.1 && \
 pip install cython==0.29.21 && \
 pip install numpy-stl==2.16.0
 </pre>
