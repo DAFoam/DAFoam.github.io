@@ -23,11 +23,11 @@ Then download the official release of [ParaView 5.9.1](https://www.paraview.org/
 - Extract the zip file inside the previously downloaded pvOptGUI folder.
 
 Download the [Miniconda 3](https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Windows-x86_64.exe) installer. Run the installer, select all default options during the process.
-- When asked where you want to install miniconda3, select *browse* and *make a new folder* titled miniconda3 inside the pvOptGUI folder you previously downloaded.
-- After the Miniconda3 installation completes, open the pvOptGUI folder containing the new miniconda3 directory and double click minicondaSetup.bat to install the required packages.
+- When asked where you want to install miniconda3, select *browse* and **make a new folder titled miniconda3** inside the pvOptGUI folder you previously downloaded.
+- After the Miniconda3 installation completes, open the pvOptGUI folder containing the new miniconda3 directory and double click minicondaSetup.bat to install the required packages. When asked, pressure "y" to install.
 - After the script finishes, a list of packages should appear in the console. Verify matplotlib version is 3.4.2, numpy is 1.20.2, and tk is 8.6.10; afterward you may close the console.
 
-Finally download the airfoil aerodynamic optimization plugin [pvOptAirfoil_Windows10_64bit_latest.zip](https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptAirfoil_Windows10_64bit_latest.zip) and extract it
+Finally download the airfoil aerodynamic optimization plugin [pvOptAirfoil_Windows10_64bit_latest.zip](https://github.com/DAFoam/files/releases/download/pvOptGUI/pvOptAirfoil_Windows10_64bit_latest.zip) and extract it. **NOTE**: You may receive a warning along the lines of "File is not commonly downloaded and may be dangerous.". Continue the download by selecting keep file.
 - pvOptGUI supports multiple GUI plugins, the current version supports only airfoil aerodynamic optimization, i.e., pvOptAirfoil.
 
 

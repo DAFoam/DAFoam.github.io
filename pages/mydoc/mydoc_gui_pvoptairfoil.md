@@ -11,7 +11,7 @@ pvOptAirfoil is the first in a series of graphical user interface (GUI) plugins 
 
 ## Load the case and plugin
 
-To run a GUI-based optimization case, first download the pvOptGUI tutorial from [here](https://github.com/DAFoam/pvOptGUI_tutorials/tree/main/NACA0012)
+To run a GUI-based optimization case, first download the [pvOptGUI tutorial](https://github.com/DAFoam/pvOptGUI_tutorials/archive/refs/heads/main.zip) and extract it.
 
 Then, open ParaView following the instructions mentioned on [this page](mydoc_gui_overview.html). 
 
@@ -56,7 +56,7 @@ Finally, select the *Generate Mesh* button to start mesh generation, a few secon
 
 ![Runscript](/images/tutorials/GUI_runscript.png)
 
-To write the run-script, a number of paramaters need to be set
+To write the run-script, a number of parameters need to be set
 
 First, select the solver from the dropdown list of supported solvers
 - DASimpleFOAM is recommended for mach number below 0.1, incompressible steady-state flow solver for Navier-Stokes equations
