@@ -1,5 +1,5 @@
 ---
-title: Compile from source
+title: Compile from source (Ubuntu)
 keywords: dafoam, installation, compile
 summary: 
 sidebar: mydoc_sidebar

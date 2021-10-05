@@ -76,8 +76,12 @@ entries:
     output: web, pdf
     folderitems:
   
-    - title: Compile from source
+    - title: Compile from source (Ubuntu)
       url: /mydoc_installation_source.html
+      output: web, pdf
+    
+    - title: Compile from source (HPC)
+      url: /mydoc_installation_source_hpc.html
       output: web, pdf
     
     - title: Build a new Docker image
