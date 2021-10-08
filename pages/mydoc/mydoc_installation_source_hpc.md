@@ -563,6 +563,12 @@ make all install
 
 ## **Install MACH-Aero**
 
+The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest_version }} is as follows
+
+baseclasses | pySpline | pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
+| :----------------------------------------------------------------------------------------------------------- | 
+v1.2.0      | v1.2.0   | v1.5.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.1  | v2.3.0      | v1.2.1 | {{ site.latest_version }}
+
 Move to the `repos` directory:
 
 <pre>
@@ -575,11 +581,12 @@ For simplicity, the repos will be installed in-place.
 
 ### **baseClasses**
 
-Clone the repository and enter the directory:
+Download the repository and enter the directory:
 
 <pre>
-git clone git@github.com:mdolab/baseclasses.git
-cd baseclasses
+wget https://github.com/mdolab/baseclasses/archive/v1.2.0.tar.gz -O baseclasses.tar.gz
+tar -xvf baseclasses.tar.gz
+baseclasses-1.2.0
 </pre>
 
 Install the package:
@@ -596,11 +603,12 @@ cd $DAFOAM_ROOT_PATH/repos/
 
 ### **pySpline**
 
-Clone the repository and enter the directory:
+Download the repository and enter the directory:
 
 <pre>
-git clone git@github.com:mdolab/pyspline.git
-cd pyspline
+wget https://github.com/mdolab/pyspline/archive/v1.2.0.tar.gz -O pyspline.tar.gz
+tar -xvf pyspline.tar.gz
+cd pyspline-1.2.0
 </pre>
 
 Copy the configuration file:
@@ -629,11 +637,12 @@ cd $DAFOAM_ROOT_PATH/repos/
 
 ### **pyGeo**
 
-Clone the repository and enter the directory:
+Download the repository and enter the directory:
 
 <pre>
-git clone git@github.com:mdolab/pygeo.git
-cd pygeo
+wget https://github.com/mdolab/pygeo/archive/v1.5.0.tar.gz -O pygeo.tar.gz
+tar -xvf pygeo.tar.gz
+cd pygeo-1.5.0
 </pre>
 
 Install the package:
@@ -650,11 +659,12 @@ cd $DAFOAM_ROOT_PATH/repos/
 
 ### **multipoint**
 
-Clone the repository and enter the directory:
+Download the repository and enter the directory:
 
 <pre>
-git clone git@github.com:mdolab/multipoint.git
-cd multipoint
+wget https://github.com/mdolab/multipoint/archive/v1.2.0.tar.gz -O multipoint.tar.gz
+tar -xvf multipoint.tar.gz
+cd multipoint-1.2.0
 </pre>
 
 Install the package:
@@ -671,11 +681,12 @@ cd $DAFOAM_ROOT_PATH/repos/
 
 ### **pyHyp**
 
-Clone the repository and enter the directory:
+Download the repository and enter the directory:
 
 <pre>
-git clone git@github.com:mdolab/pyhyp.git
-cd pyhyp
+wget https://github.com/mdolab/pyhyp/archive/v2.2.0.tar.gz -O pyhyp.tar.gz
+tar -xvf pyhyp.tar.gz
+cd pyhyp-2.2.0
 </pre>
 
 Copy the configuration file:
@@ -704,11 +715,12 @@ cd $DAFOAM_ROOT_PATH/repos/
 
 ### **cgnsUtilities**
 
-Clone the repository and enter the directory:
+Download the repository and enter the directory:
 
 <pre>
-git clone git@github.com:mdolab/cgnsutilities.git
-cd cgnsutilities
+wget https://github.com/mdolab/cgnsutilities/archive/v2.2.0.tar.gz -O cgnsutilities.tar.gz
+tar -xvf cgnsutilities.tar.gz
+cd cgnsutilities-2.2.0
 </pre>
 
 Copy the configuration file:
@@ -737,10 +749,12 @@ cd $DAFOAM_ROOT_PATH/repos/
 
 ### **IDWarp**
 
-Clone the repository and enter the directory:
+Download the repository and enter the directory:
 
 <pre>
-git clone git@github.com:mdolab/idwarp.git
+wget https://github.com/mdolab/idwarp/archive/v2.2.1.tar.gz -O idwarp.tar.gz
+tar -xvf idwarp.tar.gz
+cd idwarp-2.2.1
 </pre>
 
 Copy the configuration file:
@@ -771,11 +785,12 @@ cd $DAFOAM_ROOT_PATH/repos/
 
 **NOTE:** pyOptSparse can be modified before installing to include additional optimizers. Refer to the pyOptSparse documentation for more information
 
-Clone the repository and enter the directory:
+Download the repository and enter the directory:
 
 <pre>
-git clone git@github.com:mdolab/pyoptsparse.git
-cd pyoptsparse
+wget https://github.com/mdolab/pyoptsparse/archive/v2.3.0.tar.gz -O pyoptsparse.tar.gz
+tar -xvf pyoptsparse.tar.gz
+cd pyoptsparse-2.3.0
 </pre>
 
 Install the package:
@@ -792,7 +807,7 @@ cd $DAFOAM_ROOT_PATH/repos/
 
 ## **Install pyOFM**
 
-Clone the repository and enter the directory:
+Download the repository and enter the directory:
 
 <pre>
 git clone git@github.com:mdolab/pyofm.git
@@ -819,7 +834,7 @@ Make the package:
 make
 </pre>
 
-* Install the package:
+Install the package:
 
 <pre>
 pip3 install -e .
@@ -833,7 +848,7 @@ cd $DAFOAM_ROOT_PATH/repos/
 
 ## **Install DAFoam**
 
-Clone the repository and enter the directory:
+Download the repository and enter the directory:
 
 <pre>
 git clone git@github.com:mdolab/dafoam.git
