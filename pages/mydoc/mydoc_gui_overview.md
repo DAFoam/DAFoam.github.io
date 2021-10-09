@@ -173,7 +173,7 @@ docker -v
 The major version should be a minimum of 19 to run pvOptGUI docker commands with pvOptAirfoil. Once the Docker is installed and verified, run this command from the terminal to download the DAFoam image:
 
 <pre>
-docker pull dafoam/opt-packages:v2.2.7
+docker pull dafoam/opt-packages:v2.2.9
 </pre>
 
 If the docker image is not pulled, it will be pulled automatically when the first docker command is attempted.
