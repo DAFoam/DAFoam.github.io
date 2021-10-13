@@ -9,15 +9,14 @@ folder: mydoc
 
 {% include note.html content="This section provides instructions on compiling the DAFoam optimization package on an HPC system (Stampede 2) with Intel compilers. Installation on other intel-based clusters may differ, but follows the same general procedure" %}
 
-The required modules on Stampede are:
+The DAFoam package can be compiled with various dependency versions. For this installation, we will use the following modules already installed on Stampede 2:
 
 
 TACC  | git    | intel  | libfabric | impi   | boost | petsc       | python3
 | :------------------------------------------------------------------------ | 
 N / A | 2.24.1 | 18.0.2 | 1.7.0     | 18.0.2 | 1.68  | 3.11-nohdf5 | 3.7.0
 
-All DAFoam installation files should be stored within `$WORK/DAFoam_Codes`.
-The directory structure of the completed installation should be the following:
+For this installtion, we will store all of the DAFoam installation files within `$WORK/DAFoam`. Follow this guide line-by-line, reproducing each command on your terminal. Ensure that each command exits successfully before moving to the next one. Once the installation is complete, the directory structure of the installation should be the following:
 
 <pre>
 DAFoam/
@@ -50,7 +49,7 @@ DAFoam/
 └───ENV_DAFOAM.sh/
 </pre>
 
-Create this directory structure by navigating to the `$WORK` directory and running:
+Begin by navigating to the `$WORK` directory and generating the DAFoam code directory and its subdirectory structure:
 
 <pre>
 mkdir DAFoam
@@ -59,8 +58,7 @@ mkdir OpenFOAM packages repos
 </pre>
 
 ## **Setup Environment Loader**
-
-Enter `$WORK/DAFoam` and create the file: `ENV_DAFOAM.sh`. Add the following to `ENV_DAFOAM.sh`:
+To simplify the process of initializing the DAFoam environment when logging into Stampede, we will create a bash script that automates the steps required to load the required modules, export the required environment variables, and source the Python virtual environment. To generate this script, enter `$WORK/DAFoam` and create the file: `ENV_DAFOAM.sh`. Add the following to `ENV_DAFOAM.sh`:
 
 <pre>
 #!/bin/bash
@@ -109,8 +107,10 @@ This file will be responsible for loading the DAFoam environment once everything
 . ENV_DAFOAM.sh
 </pre>
 
+This command will output information stating that the DAFoam environment is being initialized. Since DAFoam and the assorted environment components are not yet installed, the script will output some errors.
+
 ## **Create Python Virtual Environment**
-Create a Python virtual environment using `venv`:
+To modularize the DAFoam environment, we will use a Python virtual environment. Create a Python virtual environment using the package `venv`:
 
 <pre>
 python3 -m venv DAFOAM_VENV
@@ -122,7 +122,7 @@ Re-source the environment initialization script to activate the virtual environm
 . ENV_DAFOAM.sh
 </pre>
 
-Install the python dependencies:
+After re-sourcing the environment initialization script your terminal prompt should include the label `(ENV_DAFOAM)`. Install the Python dependencies in the virtual environment:
 
 <pre>
 pip3 install --upgrade pip
@@ -133,10 +133,13 @@ pip3 install numpy-stl==2.16.0
 pip3 install petsc4py==3.11.0
 </pre>
 
-
 ## **Install OpenFOAM**
 
-Download OpenFOAM and untar its files into working directory:
+We will begin by install OpenFOAM-v1812. **There are three versions of OpenFOAM to compile: original, reverse-mode AD (ADR), and forward-mode AD (ADF).** The reverse-mode AD enables the JacobianFree adjoint option, and the forward-mode AD enables the brute-force AD for verifying the adjoint accuracy.
+
+**Build Original**
+
+Begin by downloading OpenFOAM-v1812 and the associated third-party libraries, and unzip the tarballs:
 
 <pre>
 cd OpenFOAM
@@ -158,6 +161,8 @@ Replace the built-in UPstream.C file with a customized version:
 wget https://github.com/DAFoam/files/releases/download/v1.0.0/UPstream.C
 mv UPstream.C src/Pstream/mpi/UPstream.C
 </pre>
+
+We will make several modifications to the configuration files within OpenFOAM. The following steps show which files need to be changed and what changes are required.
 
 Edit `OpenFOAM-v1812/etc/bashrc`:
 
@@ -255,42 +260,42 @@ Edit `ThirdParty-v1812/makeCGAL`:
   : ${BOOST_ARCH_PATH:=$TACC_BOOST_DIR}    # Fallback
 </pre>
 
-Source the OpenFOAM bashrc file:
+Once the configuration file modifications are complete, source the OpenFOAM bashrc file:
 
 <pre>
 source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc
 </pre>
 
-Make CGAL:
+We will begin the installation by making CGAL. To do this, run the following command:
 
 <pre>
 cd $WM_THIRD_PARTY_DIR and ./makeCGAL > log.mkcgal 2>&1
 </pre>
 
-Make OpenFOAM:
+Once the CGAL installation is complete, we will install OpenFOAM using the following command:
 
 <pre>
 cd $WM_PROJECT_DIR and ./Allwmake > log.make 2>&1
 </pre>
 
-## **Install OpenFOAM AD**
-
-Download the AD version of OpenFOAM:
+Once the original version of OpenFOAM is complete, we will install the AD versions of the code. Download the AD version of OpenFOAM using the following command:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/OpenFOAM
 wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.9.tar.gz -O OpenFOAM-v1812-AD.tgz
 </pre>
 
-### **Reverse Mode**
+**Reverse Mode**
 
-Unzip the code, move the AD version of OpenFOAM to mark it as reverse-mode, and enter the code directory:
+Unzip the  downloaded AD code, move the AD version of OpenFOAM to mark it as reverse-mode, and enter its code directory:
 
 <pre>
 tar -xvf OpenFOAM-v1812-AD.tgz
 mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADR
 cd OpenFOAM-v1812-ADR
 </pre>
+
+As with the original version of OpenFOAM, we need to make several modifications to the configuration files within OpenFOAM. The following steps show which files need to be changed and what changes are required.
 
 Edit `OpenFOAM-v1812-ADR/etc/bashrc`:
 
@@ -387,21 +392,19 @@ CC          = mpicxx -std=c++11 -fp-trap=common -fp-model precise
 
 Copy `mplibINTELMPI` in `OpenFOAM-v1812-ADR/wmake/rules/linux64Icc/mplibINTELMPI` to `OpenFOAM-v1812-ADR/wmake/rules/General/mplibINTELMPI`
 
-
-Source the OpenFOAM reverse-mode bashrc file:
+Once the configuration file modifications are complete, source the OpenFOAM forward-mode bashrc file:
 
 <pre>
 source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-ADR/etc/bashrc
 </pre>
 
-Make OpenFOAM reverse-mode:
-
+Install OpenFOAM reverse-mode AD using the following command:
 
 <pre>
 cd $WM_PROJECT_DIR and ./Allwmake > log.make 2>&1
 </pre>
 
-Link reverse-mode mode code to OpenFOAM:
+Once the reverse-mode AD version of the code is build, we need to link it to the original version. To do this, run the following commands to create soft links:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib
@@ -412,15 +415,17 @@ cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/mpi
 ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/mpi/*.so .
 </pre>
 
-### **Forward Mode**
+**Forward Mode**
 
-Unzip the code, move the AD version of OpenFOAM to mark it as forward-mode, and enter the code directory:
+Again unzip the AD code, move the AD version of OpenFOAM to mark it as forward-mode, and enter its code directory:
 
 <pre>
 tar -xvf OpenFOAM-v1812-AD.tgz
 mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADF
 cd OpenFOAM-v1812-ADF
 </pre>
+
+As with the original and reverse-mode versions of OpenFOAM, we need to make several modifications to the configuration files within OpenFOAM. The following steps show which files need to be changed and what changes are required.
 
 Edit `OpenFOAM-v1812-ADF/etc/bashrc`:
 
@@ -510,23 +515,21 @@ CC          = icpc -std=c++11 -fp-trap=common -fp-model precise
 CC          = mpicxx -std=c++11 -fp-trap=common -fp-model precise
 </pre>
 
-
 Copy `mplibINTELMPI` in `OpenFOAM-v1812-ADF/wmake/rules/linux64Icc/mplibINTELMPI` to `OpenFOAM-v1812-ADF/wmake/rules/General/mplibINTELMPI`
 
-
-Source the OpenFOAM forward-mode bashrc file:
+Once the configuration file modifications are complete, source the OpenFOAM forward-mode bashrc file:
 
 <pre>
 source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-ADF/etc/bashrc
 </pre>
 
-Make OpenFOAM forward-mode:
+INstall OpenFOAM forward-mode AD using the following command:
 
 <pre>
 cd $WM_PROJECT_DIR and ./Allwmake > log.make 2>&1
 </pre>
 
-Link forward-mode code to OpenFOAM:
+As with the reverse-mode AD code, we need to link the built forward-mode AD code to the original version. To do this, run the following commands to create soft links:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib
@@ -540,7 +543,7 @@ ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/mpi/*.so .
 
 ## **Install CGNS**
 
-Enter the packages directory, download CGNS, untar the code files, and enter the CGNS directory:
+CGNS is a required dependency for DAFoam that should be installed within the ``packages/`` subdirectory of the DAFoam directory. Enter the packages directory, download CGNS, untar the code files, and enter the CGNS directory:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/packages/
@@ -549,13 +552,13 @@ tar -xvaf v3.3.0.tar.gz
 cd CGNS-3.3.0
 </pre>
 
-Configure the CGNS build:
+We will configure the CGNS build with several options. We will enable Fortran bindings, set the installation location, disable 64bit architecture, and specify the paths for the required Fortran and C compilers. Run this configuration step using the following command:
 
 <pre>
 cmake -D CGNS_ENABLE_FORTRAN=ON -D CMAKE_INSTALL_PREFIX=$CGNS_HOME -D CGNS_ENABLE_64BIT=OFF -D CGNS_BUILD_CGNSTOOLS=OFF -D CMAKE_C_COMPILER=$(which icc) -D CMAKE_Fortran_COMPILER=$(which ifort) .
 </pre>
 
-Make and install CGNS:
+Once the configuration process is complete, make and install CGNS using the following command:
 
 <pre>
 make all install
@@ -569,15 +572,13 @@ baseclasses | pySpline | pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  
 | :----------------------------------------------------------------------------------------------------------- | 
 v1.2.0      | v1.2.0   | v1.5.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.1  | v2.3.0      | v1.2.1 | {{ site.latest_version }}
 
-Move to the `repos` directory:
+The MACH-Aero packages are considered part of the DAFoam ecosystem and should be installed in the `repos/` subdirectory of the `DAFoam/` directory. Move to the `repos` directory:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/repos/
 </pre>
 
-**NOTE:** This installation assumes you have already set up an SSH key to GitHub and clone the codes directly from the MDO Lab repositories. The same process can be carried out using forks instead, however the code versions should match.
-
-For simplicity, the repos will be installed in-place.
+The following steps go through the process of installing the MACH-Aero codes one at a time, downloading, unpacking, building, and installing each package. For simplicity, the packages will be installed in-place.
 
 ### **baseClasses**
 
@@ -586,7 +587,7 @@ Download the repository and enter the directory:
 <pre>
 wget https://github.com/mdolab/baseclasses/archive/v1.2.0.tar.gz -O baseclasses.tar.gz
 tar -xvf baseclasses.tar.gz
-baseclasses-1.2.0
+cd baseclasses-1.2.0
 </pre>
 
 Install the package:
@@ -807,14 +808,15 @@ cd $DAFOAM_ROOT_PATH/repos/
 
 ## **Install pyOFM**
 
-Download the repository and enter the directory:
+In addition to installing the main components of MACH-Aero, we will install pyOFM to interface with OpenFOAM meshes. Download the repository and enter its code directory:
 
 <pre>
-git clone git@github.com:mdolab/pyofm.git
-cd pyofm
+wget https://github.com/mdolab/pyofm/archive/v1.2.1.tar.gz -O pyofm.tar.gz
+tar -xvf pyofm.tar.gz
+cd pyofm-1.2.1
 </pre>
 
-pyOFM requires a newer version of `mpi4py` than is available on STAMPEDE natively. To avoid installing a second `mpi4py`, edit the `setup.py` script within the `pyofm/` root directory:
+pyOFM requires a newer version of `mpi4py` than is available on Stampede 2 natively. To avoid installing a second `mpi4py`, edit the `setup.py` script within the `pyofm/` root directory:
 
 <pre>
 install_requires=[
@@ -848,11 +850,12 @@ cd $DAFOAM_ROOT_PATH/repos/
 
 ## **Install DAFoam**
 
-Download the repository and enter the directory:
+Once OpenFOAM, CGNS, and the MACH-Aero packages are installed, we can install DAFoam. Similar to OpenFOAM, we need to compile three versions of DAFoam: original, reverse-mode AD (ADR), and forward-mode AD (ADF). Download the repository and enter its code directory:
 
 <pre>
-git clone git@github.com:mdolab/dafoam.git
-cd dafoam
+wget https://github.com/mdolab/dafoam/archive/v2.2.9.tar.gz -O dafoam.tar.gz
+tar -xvf dafoam.tar.gz
+cd dafoam-2.2.9
 </pre>
 
 DAFoam requires a newer version of `mpi4py` than is available on STAMPEDE natively. To avoid installing a second `mpi4py`, edit the `setup.py` script within the `dafoam/` root directory:
@@ -900,12 +903,39 @@ Install the package:
 pip3 install -e .
 </pre>
 
-Unset the AD environment:
+Once the installtion is complete, unset the AD environment and re-source the environment loading script. **This step is needed every time you compile an AD version of DAFoam!**
 
 <pre>
 unset WM_CODI_AD_MODE\
 . $DAFOAM_ROOT_PATH/ENV_DAFOAM.sh
 </pre>
 
+## **Regression Tests**
+
+Once DAFoam and all of its dependencies are installed, you can run the regression tests located in the `DAFoam/repos/dafoam/tests` directory. To run the cases, use the command:
+
+<pre>
+cd $HOME/dafoam/repos/dafoam/tests && ./Allrun
+</pre>
+
+If successful, the test will output the following message:
+
+<pre>
+************************************************************
+**************** All DAFoam tests passed! ******************
+************************************************************
+</pre>
+
+If for any reason the tests fail, check the output message to understand if the issue is due to numerical precision errors caused by differing hardware / compiler versions or if there is an issue with the installation.
+## **Compile SNOPT for pyOptSparse (optional)**
+
+This step is needed if you want to use the SNOPT optimizer. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com).
+
+SNOPT is a commercial package, and you can purchase it from [here](http://www.sbsi-sol-optimize.com/asp/sol_snopt.htm). Once you obtain the SNOPT source code, copy all the source files (except for snopth.f) to the "$HOME/dafoam/repos/pyoptsparse-2.3.0/pyoptsparse/pySNOPT/source" folder. Then, run this command to compile pyOptSparse with SNOPT.
+
+<pre>
+cd $HOME/dafoam/repos/pyoptsparse-2.3.0 && \
+pip install .
+</pre>
 
 {% include links.html %}
