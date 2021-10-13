@@ -101,7 +101,7 @@ source $DIR/DAFOAM_VENV/bin/activate
 echo "================= Done Initializing DAFOAM Environment ================"
 </pre>
 
-This file will be responsible for loading the DAFoam environment once everything is installed. A command to source the file can be added to your `bashrc`, or you can call the file by navigating to its directory and running (run this command now):
+This file will be responsible for loading the DAFoam environment once everything is installed. A command to source the file can be added to your `bashrc`, or you can call the file by navigating to its directory and running the following command (run this command now):
 
 <pre>
 . ENV_DAFOAM.sh
@@ -135,7 +135,7 @@ pip3 install petsc4py==3.11.0
 
 ## **Install OpenFOAM**
 
-We will begin by install OpenFOAM-v1812. **There are three versions of OpenFOAM to compile: original, reverse-mode AD (ADR), and forward-mode AD (ADF).** The reverse-mode AD enables the JacobianFree adjoint option, and the forward-mode AD enables the brute-force AD for verifying the adjoint accuracy.
+We will begin by install OpenFOAM-v1812. **There are three versions of OpenFOAM to compile: original, reverse-mode AD (ADR), and forward-mode AD (ADF).** The reverse-mode AD enables the JacobianFree adjoint option, and the forward-mode AD enables the brute-force AD for verifying the adjoint accuracy. These packages should be installed in the `OpenFoam/` directory.
 
 **Build Original**
 
@@ -249,8 +249,11 @@ CC          = mpicxx -std=c++11 -fp-trap=common -fp-model precise
 </pre>
 
 
-Copy `mplibINTELMPI` in `OpenFOAM-v1812/wmake/rules/linux64Icc/mplibINTELMPI` to `OpenFOAM-v1812/wmake/rules/General/mplibINTELMPI`
+Copy `mplibINTELMPI`:
 
+<pre>
+cp OpenFOAM-v1812/wmake/rules/linux64Icc/mplibINTELMPI OpenFOAM-v1812/wmake/rules/General/mplibINTELMPI
+</pre>
 
 Edit `ThirdParty-v1812/makeCGAL`:
 
@@ -278,7 +281,7 @@ Once the CGAL installation is complete, we will install OpenFOAM using the follo
 cd $WM_PROJECT_DIR and ./Allwmake > log.make 2>&1
 </pre>
 
-Once the original version of OpenFOAM is complete, we will install the AD versions of the code. Download the AD version of OpenFOAM using the following command:
+Once the original version of OpenFOAM is installed, we will install the AD versions of the code. These packages should be in the `OpenFOAM/` directory. Download the AD version of OpenFOAM using the following command:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/OpenFOAM
@@ -295,7 +298,7 @@ mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADR
 cd OpenFOAM-v1812-ADR
 </pre>
 
-As with the original version of OpenFOAM, we need to make several modifications to the configuration files within OpenFOAM. The following steps show which files need to be changed and what changes are required.
+As with the original version of OpenFOAM, we need to make several modifications to the configuration files within the reverse-mode AD version of OpenFOAM. The following steps show which files need to be changed and what changes are required.
 
 Edit `OpenFOAM-v1812-ADR/etc/bashrc`:
 
@@ -390,9 +393,13 @@ CC          = mpicxx -std=c++11 -fp-trap=common -fp-model precise
 </pre>
 
 
-Copy `mplibINTELMPI` in `OpenFOAM-v1812-ADR/wmake/rules/linux64Icc/mplibINTELMPI` to `OpenFOAM-v1812-ADR/wmake/rules/General/mplibINTELMPI`
+Copy `mplibINTELMPI`:
 
-Once the configuration file modifications are complete, source the OpenFOAM forward-mode bashrc file:
+<pre>
+cp OpenFOAM-v1812-ADR/wmake/rules/linux64Icc/mplibINTELMPI OpenFOAM-v1812-ADR/wmake/rules/General/mplibINTELMPI
+</pre>
+
+Once the configuration file modifications are complete, source the OpenFOAM reverse-mode bashrc file:
 
 <pre>
 source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-ADR/etc/bashrc
@@ -425,7 +432,7 @@ mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADF
 cd OpenFOAM-v1812-ADF
 </pre>
 
-As with the original and reverse-mode versions of OpenFOAM, we need to make several modifications to the configuration files within OpenFOAM. The following steps show which files need to be changed and what changes are required.
+As with the original and reverse-mode versions of OpenFOAM, we need to make several modifications to the configuration files within the forward-mode AD version of OpenFOAM. The following steps show which files need to be changed and what changes are required.
 
 Edit `OpenFOAM-v1812-ADF/etc/bashrc`:
 
@@ -515,7 +522,11 @@ CC          = icpc -std=c++11 -fp-trap=common -fp-model precise
 CC          = mpicxx -std=c++11 -fp-trap=common -fp-model precise
 </pre>
 
-Copy `mplibINTELMPI` in `OpenFOAM-v1812-ADF/wmake/rules/linux64Icc/mplibINTELMPI` to `OpenFOAM-v1812-ADF/wmake/rules/General/mplibINTELMPI`
+Copy `mplibINTELMPI`:
+
+<pre>
+cp OpenFOAM-v1812-ADF/wmake/rules/linux64Icc/mplibINTELMPI OpenFOAM-v1812-ADF/wmake/rules/General/mplibINTELMPI
+</pre>
 
 Once the configuration file modifications are complete, source the OpenFOAM forward-mode bashrc file:
 
@@ -523,7 +534,7 @@ Once the configuration file modifications are complete, source the OpenFOAM forw
 source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-ADF/etc/bashrc
 </pre>
 
-INstall OpenFOAM forward-mode AD using the following command:
+Install OpenFOAM forward-mode AD using the following command:
 
 <pre>
 cd $WM_PROJECT_DIR and ./Allwmake > log.make 2>&1
@@ -858,7 +869,7 @@ tar -xvf dafoam.tar.gz
 cd dafoam-2.2.9
 </pre>
 
-DAFoam requires a newer version of `mpi4py` than is available on STAMPEDE natively. To avoid installing a second `mpi4py`, edit the `setup.py` script within the `dafoam/` root directory:
+DAFoam requires a newer version of `mpi4py` than is available on Stampede 2 natively. To avoid installing a second `mpi4py`, edit the `setup.py` script within the `dafoam/` root directory:
 
 <pre>
 install_requires=[
