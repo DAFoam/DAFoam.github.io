@@ -26,7 +26,7 @@ A message box should appear indicating whether a working Docker version was succ
 
 You should now see the pvOptAirfoil interface in the panel on the left, below the pipeline, as shown in the following figure.
 
-![pvOptAirfoil](/images/tutorials/GUI_paraviewFull.png)
+![pvOptAirfoil](/images/tutorials/GUI_pvOptAirfoil_full.png)
 
 pvOptAirfoil writes several files for mesh generation, run script creation, optimization and post-processing results. Select the output folder by clicking the *Select Optimization Folder* button and select the preferred directory.
 
@@ -38,7 +38,7 @@ pvOptAirfoil writes several files for mesh generation, run script creation, opti
 
 **NOTE:** This step requires Docker, if Docker is not found when loading the plugin, the generation files will be created without generating the mesh
 
-![MeshGeneration](/images/tutorials/GUI_meshGen.png)
+![MeshGeneration](/images/tutorials/GUI_pvOptAirfoil_meshGen.png)
 
 First, confirm the optimization folder is selected, then choose the upper and lower profiles for your airfoil by clicking the *Select Upper Surface Profile* and *Select Lower Surface Profile* buttons and selecting the files from the dialog. An example of the upper and lower surface profiles can be found pvOptGUI_tutorials/NACA0012/profiles
 
@@ -54,7 +54,7 @@ Finally, select the *Generate Mesh* button to start mesh generation, a few secon
 
 ## Write the run script
 
-![Runscript](/images/tutorials/GUI_runscript.png)
+![Runscript](/images/tutorials/GUI_pvOptAirfoil_runScript.png)
 
 To write the run-script, a number of parameters need to be set
 
@@ -146,7 +146,7 @@ Finally, you can now click the *Generate Runscript* button to create the rest of
 
 **NOTE:** If values are changed after generating the run-script, simply click the button again to regenerate the files
 
-![Write](/images/tutorials/GUI_write.png)
+![Write](/images/tutorials/GUI_pvOptAirfoil_write.png)
 
 A message box should appear where one can see the full runscript in a small editing window by clicking the *Show Details* button, accept by clicking *OK* or run the optimization locally with one core (this requires Docker)  
 
