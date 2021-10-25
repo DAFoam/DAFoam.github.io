@@ -161,3 +161,13 @@ Finally, generate the mesh and run the new optimization using 4 CPU cores:
 </pre>
 
 {% include links.html %}
+
+## How to create a new objective function?
+
+The objective functions for DAFoam are stored in the *src/adjoint/DAObjFunc* directory of [this repository](https://github.com/mdolab/dafoam). To create a new objective function, it is recommended to base it off of a similar existing function. You will need to first create yourObjFunc.H and yourObjFunc.C with your constructors, input/output definitions and implementation. 
+
+Then, you will need to add the paths to the files you created in *src/adjoint/Make/files_Compressible* and *files_Incompressible*. At this point you can attempt to compile the project to test your code, follow [these instructions](https://dafoam.github.io/mydoc_installation_source.html) to build from source.
+
+Finally, you will need to add the objective function to one of the runTests_*.py located in the *tests* directory. Again, use the other objective functions as an example. 
+
+When making a pull request, the code coverage test will not pass unless the output from testing your objective function (the value itself and sensitivity values) is copied into the corresponding tests/refs/DAFoam_Test_*.txt file.
