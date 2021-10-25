@@ -22,7 +22,7 @@ Finally, load the pvOptUMesh filter from the *Filters* menu in the upper toolbar
 
 You should now see the pvOptUMesh interface in the panel on the left, below the pipeline, as shown in the following figure.
 
-![pvOptUMesh](/images/tutorials/GUI_pvOptUMesh_full.png)
+![pvOptUMesh](/images/tutorials/GUI_pvOptUMesh_full.PNG)
 
 pvOptUMesh writes several files necessary for mesh generation. Select the output folder by clicking the *Select Optimization Folder* button and select the preferred directory. A message box should appear indicating whether a working Docker version was successfully found on your system, click *OK*.
 
@@ -42,7 +42,7 @@ These values can be increased, but you may get a warning if you try and decrease
 
 After setting the background mesh bounds, the bounding box can be visualized around the .STL assembly by clicking *Visualize Background Mesh*.
 
-![pvOptUMesh_backgroundVisualization](/images/tutorials/GUI_pvOptUMesh_backgroundVisualization)
+![pvOptUMesh_backgroundVisualization](/images/tutorials/GUI_pvOptUMesh_backgroundVisualization.PNG)
 
 
 Now, prescribe the boundary type for each face of the background mesh block
