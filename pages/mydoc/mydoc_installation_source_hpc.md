@@ -581,7 +581,7 @@ The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest
 
 baseclasses | pySpline | pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.2.0      | v1.2.0   | v1.5.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.1  | v2.3.0      | v1.2.1 | {{ site.latest_version }}
+v1.2.0      | v1.2.0   | v1.5.0 | v1.2.0     | v2.2.0 | v2.5.0        | v2.2.1  | v2.3.0      | v1.2.1 | {{ site.latest_version }}
 
 The MACH-Aero packages are considered part of the DAFoam ecosystem and should be installed in the `repos/` subdirectory of the `DAFoam/` directory. Move to the `repos` directory:
 
@@ -730,9 +730,9 @@ cd $DAFOAM_ROOT_PATH/repos/
 Download the repository and enter the directory:
 
 <pre>
-wget https://github.com/mdolab/cgnsutilities/archive/v2.2.0.tar.gz -O cgnsutilities.tar.gz
+wget https://github.com/mdolab/cgnsutilities/archive/v2.5.0.tar.gz -O cgnsutilities.tar.gz
 tar -xvf cgnsutilities.tar.gz
-cd cgnsutilities-2.2.0
+cd cgnsutilities-2.5.0
 </pre>
 
 Copy the configuration file:
