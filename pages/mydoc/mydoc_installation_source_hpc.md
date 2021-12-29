@@ -827,20 +827,6 @@ tar -xvf pyofm.tar.gz
 cd pyofm-1.2.1
 </pre>
 
-pyOFM requires a newer version of `mpi4py` than is available on Stampede 2 natively. To avoid installing a second `mpi4py`, edit the `setup.py` script within the `pyofm/` root directory:
-
-<pre>
-install_requires=[
-    'numpy>=1.16.4',
-    'mpi4py>=3.0.2',
-],
-->
-install_requires=[
-    'numpy>=1.16.4',
-    'mpi4py>=3.0.0',
-],
-</pre>
-
 Make the package:
 
 <pre>
@@ -867,24 +853,6 @@ Once OpenFOAM, CGNS, and the MACH-Aero packages are installed, we can install DA
 wget https://github.com/mdolab/dafoam/archive/v2.2.9.tar.gz -O dafoam.tar.gz
 tar -xvf dafoam.tar.gz
 cd dafoam-2.2.9
-</pre>
-
-DAFoam requires a newer version of `mpi4py` than is available on Stampede 2 natively. To avoid installing a second `mpi4py`, edit the `setup.py` script within the `dafoam/` root directory:
-
-<pre>
-install_requires=[
-    "numpy>=1.16.4",
-    "mpi4py>=3.0.2",
-    "petsc4py>=3.11.0",
-    "cython>=0.29.21",
-],
-->
-install_requires=[
-    "numpy>=1.16.4",
-    "mpi4py>=3.0.0",
-    "petsc4py>=3.11.0",
-    "cython>=0.29.21",
-],
 </pre>
 
 Build DAFoam original:
