@@ -184,6 +184,10 @@ entries:
     - title: Overview
       url: /mydoc_gui_overview.html
       output: web, pdf
+      
+    - title: Mesh Generation
+      url: /mydoc_gui_pvoptumesh.html
+      output: web, pdf
     
     - title: Airfoil optimization
       url: /mydoc_gui_pvoptairfoil.html
