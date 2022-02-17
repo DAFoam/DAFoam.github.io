@@ -192,6 +192,10 @@ entries:
     - title: Airfoil optimization
       url: /mydoc_gui_pvoptairfoil.html
       output: web, pdf
+      
+    - title: Post Processing
+      url: /mydoc_gui_postprocessing.html
+      output: web, pdf
   
   - title: Verifications
     output: web, pdf
