@@ -7,7 +7,7 @@ permalink: mydoc_gui_postprocessing.html
 folder: mydoc
 ---
 
-PvOptPostProcessing and PvOptView are Paraview based graphical user interfaces included in the PvOptGUI plugin to aid users in post processing their data. PvOptPostProcessing can be used to view the iterations from a DAFoam log file, while PvOptView can be used to view results from any .hst file. These GUI's are currently in the beta version.
+PvOptPostProcessing and PvOptView are Paraview based graphical user interfaces included in the PvOptGUI plugin to aid users in post processing their data. PvOptPostProcessing can be used to view the iterations from a DAFoam log file, while PvOptView can be used to view results from any .hst file. PvOptView provides a ParaView interface to open OptView, a post-processing utlity from [pyOptSparse](https://github.com/mdolab/pyoptsparse). These GUI's are currently in the beta version.
 
 ---
 
@@ -32,3 +32,5 @@ Once the source is loaded, simply click *select history file* and choose the .hs
 Finally, click the *Post Process* button to open the GUI
 
 ![pvOptView](/images/tutorials/GUI_optView.png)
+
+[OptView](https://github.com/mdolab/pyoptsparse/blob/master/pyoptsparse/postprocessing/OptView.py) is an open-source post-processing utlity from pyOptSparse
