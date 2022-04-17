@@ -13,6 +13,8 @@ summary:
 {% endfor %}
 </div>
 
+{% include note.html content="This website is under construction for v3.0.0" %}
+
 DAFoam develops an efficient discrete adjoint method to perform high-fidelity gradient-based design optimization with the [MACH-Aero](https://github.com/mdolab/MACH-Aero) framework. DAFoam has the following features:
 
 - It uses a popular open-source package [OpenFOAM](https://www.openfoam.com) for multiphysics analysis.
