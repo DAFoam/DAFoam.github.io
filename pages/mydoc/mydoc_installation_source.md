@@ -381,14 +381,14 @@ To perform multidisplinary deisgn optimization, we need to install the following
 **OpenMDAO**
 [OpenMDAO](https://openmdao.org) is an open-source multidisciplinary optimization framework. 
 
-<pre>   
+<pre>
 pip install openmdao==3.16.0
 </pre>
 
 **Mphys**
 [Mphys](https://github.com/OpenMDAO/mphys) is an interface that faciliate the interation between low- and high-fidelity tools within OpenMDAO.
 
-<pre>   
+<pre>
 cd $HOME/dafoam/repos && \
 wget https://github.com/OpenMDAO/mphys/archive/07fb6bb719eaaf77987b2b0c494868e41422f8c7.tar.gz -O mphys.tar.gz && \
 tar -xvf mphys.tar.gz && mv mphys-* mphys && \
@@ -398,7 +398,7 @@ cd mphys && pip install -e .
 **FUNtoFEM**
 [FUNtoFEM](https://github.com/smdogroup/funtofem) is a generic aeroelastic analysis and adjoint-based gradient evaluation tools.
 
-<pre>   
+<pre>
 cd $HOME/dafoam/repos && \
 wget https://github.com/smdogroup/funtofem/archive/ea17dfed26e7faa8e07114eaef62b939ffe26ae7.tar.gz  -O funtofem.tar.gz && \
 tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
@@ -408,7 +408,7 @@ cd funtofem && pip install -e .
 **TACS**
 [TACS](https://github.com/smdogroup/tacs) is a finite-element library for analysis and adjoint-based gradient evaluation
 
-<pre>   
+<pre>
 cd $HOME/dafoam/repos && \
 wget https://github.com/smdogroup/tacs/archive/e67d1adfa2b61ca4c8c724b645b54ce9d0d5d08d.tar.gz -O tacs.tar.gz && \
 tar -xvf tacs.tar.gz && mv tacs-* tacs && \
