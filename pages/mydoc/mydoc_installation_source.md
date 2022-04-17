@@ -445,13 +445,16 @@ $HOME/dafoam
     - baseclasses
     - cgnsutilities
     - dafoam
+    - funtofem
     - idwarp
     - multipoint
+    - mphys
     - pygeo
     - pyhyp
     - pyofm
     - pyoptsparse
     - pyspline
+    - tacs
 </pre>
 
 The loadDAFoam.sh file should look like this:
