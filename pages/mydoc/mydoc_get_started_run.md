@@ -46,7 +46,7 @@ Then, use the following command to run the optimization with 4 CPU cores:
 mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-The optimization progress will be printed to the screen and also written to logOpt.txt (we will elaborate on logOpt.txt later on [this page](mydoc_get_started_runscript.html)). This case ran for 50 optimization iterations and took about 15 minutes with Intel 3.0 GHz CPU.
+The optimization progress will be printed to the screen and also written to logOpt.txt (we will elaborate on logOpt.txt later on [this page](mydoc_get_started_runscript.html)). This case ran for 18 optimization iterations and took about 15 minutes with Intel 3.0 GHz CPU.
 
 {% include note.html content="For MacOS and Windows, make sure you open the Docker Desktop app before running Docker commands." %}
 
