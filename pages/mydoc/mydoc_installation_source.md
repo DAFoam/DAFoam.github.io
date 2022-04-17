@@ -295,10 +295,6 @@ tar -xvf pyspline.tar.gz && cd pyspline-1.5.0 && \
 cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
-{% comment %} 
-wget https://github.com/mdolab/pygeo/archive/v1.11.0.tar.gz -O pygeo.tar.gz && \
-tar -xvf pygeo.tar.gz && cd pygeo-1.11.0 && pip install . && \
-{% endcomment %}
 wget https://github.com/mdolab/pygeo/archive/fdcfe8b24209eb8680fada9625802942a23af590.tar.gz -O pygeo.tar.gz && \
 tar -xvf pygeo.tar.gz && mv pygeo-* pygeo && pip install . && \
 cd $HOME/dafoam/repos && \
@@ -383,11 +379,13 @@ The regression tests should take less than 30 minutes. The test progress will be
 To perform multidisplinary deisgn optimization, we need to install the following packages:
 
 **OpenMDAO**
+
 <pre>   
 pip install openmdao==3.16.0
 </pre>
 
 **Mphys**
+
 <pre>   
 cd $HOME/dafoam/repos && \
 wget https://github.com/OpenMDAO/mphys/archive/07fb6bb719eaaf77987b2b0c494868e41422f8c7.tar.gz -O mphys.tar.gz && \
@@ -396,6 +394,7 @@ cd mphys && pip install -e .
 </pre>
 
 **funtofem**
+
 <pre>   
 cd $HOME/dafoam/repos && \
 wget https://github.com/smdogroup/funtofem/archive/ea17dfed26e7faa8e07114eaef62b939ffe26ae7.tar.gz  -O funtofem.tar.gz && \
