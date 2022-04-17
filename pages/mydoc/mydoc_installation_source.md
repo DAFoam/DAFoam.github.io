@@ -308,7 +308,7 @@ make && pip install . && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/mdolab/cgnsutilities/archive/v2.6.0.tar.gz -O cgnsutilities.tar.gz && \
 tar -xvf cgnsutilities.tar.gz && cd cgnsutilities-2.6.0 && \
-cp config.mk.info config.mk && \
+cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/mdolab/idwarp/archive/v2.6.0.tar.gz -O idwarp.tar.gz && \
