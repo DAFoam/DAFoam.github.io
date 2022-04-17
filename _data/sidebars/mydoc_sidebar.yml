@@ -51,7 +51,11 @@ entries:
   - title: Download
     output: web, pdf
     folderitems:
-  
+
+    - title: DAFoam-v3.0
+      url: /mydoc_download_v3.0.html
+      output: web, pdf
+      
     - title: DAFoam-v2.2
       url: /mydoc_download_v2.2.html
       output: web, pdf
