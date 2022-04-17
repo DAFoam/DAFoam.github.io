@@ -296,7 +296,7 @@ cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/mdolab/pygeo/archive/fdcfe8b24209eb8680fada9625802942a23af590.tar.gz -O pygeo.tar.gz && \
-tar -xvf pygeo.tar.gz && mv pygeo-* pygeo && pip install . && \
+tar -xvf pygeo.tar.gz && mv pygeo-* pygeo && cd pygeo && pip install . && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/mdolab/multipoint/archive/v1.4.0.tar.gz -O multipoint.tar.gz && \
 tar -xvf multipoint.tar.gz && cd multipoint-1.4.0 && pip install . && \
