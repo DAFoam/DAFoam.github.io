@@ -399,7 +399,9 @@ cd mphys && pip install -e .
 cd $HOME/dafoam/repos && \
 wget https://github.com/smdogroup/funtofem/archive/ea17dfed26e7faa8e07114eaef62b939ffe26ae7.tar.gz  -O funtofem.tar.gz && \
 tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
-cd funtofem && pip install -e .
+cd funtofem && cp Makefile.in.info Makefile.in && \
+sed -i "s/git/dafoam\/repos/g" Makefile.in && \
+make && make interface && pip install -e .
 </pre>
 
 [TACS](https://github.com/smdogroup/tacs) is a finite-element library for analysis and adjoint-based gradient evaluation
@@ -409,7 +411,7 @@ cd $HOME/dafoam/repos && \
 wget https://github.com/smdogroup/tacs/archive/e67d1adfa2b61ca4c8c724b645b54ce9d0d5d08d.tar.gz -O tacs.tar.gz && \
 tar -xvf tacs.tar.gz && mv tacs-* tacs && \
 cd tacs/extern && \
-wget https://github.com/DAFoam/files/releases/download/TACS_Extern/TACS_extern.tar.gz && \
+wget https://github.com/DAFoam/files/releases/download/TACS_Extern/TACS_extern.tar.gz && tar -xzf TACS_extern.tar.gz && \
 rm -rf metis-4.0.3* && \
 wget https://github.com/DAFoam/files/releases/download/TACS_Extern/metis-5.1.0.tar.gz && \
 tar -czvf TACS_extern.tar.gz metis*.tar.gz UFconfig*.tar.gz  AMD*.tar.gz &&\
