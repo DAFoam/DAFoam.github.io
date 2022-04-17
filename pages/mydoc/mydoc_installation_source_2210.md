@@ -3,7 +3,7 @@ title: Compile from source (Ubuntu)
 keywords: dafoam, installation, compile
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_installation_source.html
+permalink: mydoc_installation_source_2210.html
 folder: mydoc
 ---
 
