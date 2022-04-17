@@ -402,6 +402,24 @@ tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
 cd funtofem && pip install -e .
 </pre>
 
+**TACS**
+<pre>   
+cd $HOME/dafoam/repos && \
+wget https://github.com/smdogroup/tacs/archive/e67d1adfa2b61ca4c8c724b645b54ce9d0d5d08d.tar.gz -O tacs.tar.gz && \
+tar -xvf tacs.tar.gz && mv tacs-* tacs && \
+cd tacs/extern && \
+wget https://github.com/DAFoam/files/releases/download/TACS_Extern/TACS_extern.tar.gz && \
+rm -rf metis-4.0.3* && \
+wget https://github.com/DAFoam/files/releases/download/TACS_Extern/metis-5.1.0.tar.gz && \
+tar -czvf TACS_extern.tar.gz metis*.tar.gz UFconfig*.tar.gz  AMD*.tar.gz &&\
+tar -xzf metis*.tar.gz && \
+cd metis-5.1.0 && make config prefix=$HOME/dafoam/repos/tacs/extern/metis/ CFLAGS="-fPIC" && make install && cd ../.. && \
+cp Makefile.in.info Makefile.in && \
+ls && \
+sed -i "s/git/dafoam\/repos/g" Makefile.in && \
+make && make interface && pip install -e .
+</pre>
+
 |
 
 In summary, here is the folder structures for all the installed packages:
