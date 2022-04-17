@@ -378,15 +378,11 @@ The regression tests should take less than 30 minutes. The test progress will be
 
 To perform multidisplinary deisgn optimization, we need to install the following packages:
 
-**OpenMDAO**
-
 [OpenMDAO](https://openmdao.org) is an open-source multidisciplinary optimization framework. 
 
 <pre>
 pip install openmdao==3.16.0
 </pre>
-
-**Mphys**
 
 [Mphys](https://github.com/OpenMDAO/mphys) is an interface that faciliate the interation between low- and high-fidelity tools within OpenMDAO.
 
@@ -397,8 +393,6 @@ tar -xvf mphys.tar.gz && mv mphys-* mphys && \
 cd mphys && pip install -e .
 </pre>
 
-**FUNtoFEM**
-
 [FUNtoFEM](https://github.com/smdogroup/funtofem) is a generic aeroelastic analysis and adjoint-based gradient evaluation tools.
 
 <pre>
@@ -407,8 +401,6 @@ wget https://github.com/smdogroup/funtofem/archive/ea17dfed26e7faa8e07114eaef62b
 tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
 cd funtofem && pip install -e .
 </pre>
-
-**TACS**
 
 [TACS](https://github.com/smdogroup/tacs) is a finite-element library for analysis and adjoint-based gradient evaluation
 
@@ -426,6 +418,7 @@ cd metis-5.1.0 && make config prefix=$HOME/dafoam/repos/tacs/extern/metis/ CFLAG
 cp Makefile.in.info Makefile.in && \
 ls && \
 sed -i "s/git/dafoam\/repos/g" Makefile.in && \
+pip install pynastran==1.3.3 && \
 make && make interface && pip install -e .
 </pre>
 
