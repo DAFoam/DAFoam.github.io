@@ -281,38 +281,42 @@ The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest
 
 baseclasses | pySpline | pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.2.0      | v1.2.0   | v1.5.0 | v1.2.0     | v2.2.0 | v2.2.0        | v2.2.1  | v2.3.0      | v1.2.1 | {{ site.latest_version }}
+v1.6.1      | v1.5.0   | fdcfe8b | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0  | v2.3.0      | v1.2.1 | {{ site.latest_version }}
 
 Now run this command to install all the repos for MACH-Aero:
 
 <pre>
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/baseclasses/archive/v1.2.0.tar.gz -O baseclasses.tar.gz && \
-tar -xvf baseclasses.tar.gz && cd baseclasses-1.2.0 && pip install . && \
+wget https://github.com/mdolab/baseclasses/archive/v1.6.1.tar.gz -O baseclasses.tar.gz && \
+tar -xvf baseclasses.tar.gz && cd baseclasses-1.6.1 && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/pyspline/archive/v1.2.0.tar.gz -O pyspline.tar.gz && \
-tar -xvf pyspline.tar.gz && cd pyspline-1.2.0 && \
+wget https://github.com/mdolab/pyspline/archive/v1.5.0.tar.gz -O pyspline.tar.gz && \
+tar -xvf pyspline.tar.gz && cd pyspline-1.5.0 && \
 cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/pygeo/archive/v1.5.0.tar.gz -O pygeo.tar.gz && \
-tar -xvf pygeo.tar.gz && cd pygeo-1.5.0 && pip install . && \
+{% comment %} 
+wget https://github.com/mdolab/pygeo/archive/v1.11.0.tar.gz -O pygeo.tar.gz && \
+tar -xvf pygeo.tar.gz && cd pygeo-1.11.0 && pip install . && \
+{% endcomment %}
+wget https://github.com/mdolab/pygeo/archive/fdcfe8b24209eb8680fada9625802942a23af590.tar.gz -O pygeo.tar.gz && \
+tar -xvf pygeo.tar.gz && mv pygeo-* pygeo && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/multipoint/archive/v1.2.0.tar.gz -O multipoint.tar.gz && \
-tar -xvf multipoint.tar.gz && cd multipoint-1.2.0 && pip install . && \
+wget https://github.com/mdolab/multipoint/archive/v1.4.0.tar.gz -O multipoint.tar.gz && \
+tar -xvf multipoint.tar.gz && cd multipoint-1.4.0 && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/pyhyp/archive/v2.2.0.tar.gz -O pyhyp.tar.gz && \
-tar -xvf pyhyp.tar.gz && cd pyhyp-2.2.0 && \
+wget https://github.com/mdolab/pyhyp/archive/v2.5.0.tar.gz -O pyhyp.tar.gz && \
+tar -xvf pyhyp.tar.gz && cd pyhyp-2.5.0 && \
 cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/cgnsutilities/archive/v2.2.0.tar.gz -O cgnsutilities.tar.gz && \
-tar -xvf cgnsutilities.tar.gz && cd cgnsutilities-2.2.0 && \
+wget https://github.com/mdolab/cgnsutilities/archive/v2.6.0.tar.gz -O cgnsutilities.tar.gz && \
+tar -xvf cgnsutilities.tar.gz && cd cgnsutilities-2.6.0 && \
 cp config.mk.info config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/idwarp/archive/v2.2.1.tar.gz -O idwarp.tar.gz && \
-tar -xvf idwarp.tar.gz && cd idwarp-2.2.1 && \
+wget https://github.com/mdolab/idwarp/archive/v2.6.0.tar.gz -O idwarp.tar.gz && \
+tar -xvf idwarp.tar.gz && cd idwarp-2.6.0 && \
 cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
@@ -373,6 +377,31 @@ The regression tests should take less than 30 minutes. The test progress will be
 </pre>
 
 {% include note.html content="Before running any jobs, source the loadDAFoam.sh file to load DAFoam environment!" %}
+
+## **MDO packages**
+
+To perform multidisplinary deisgn optimization, we need to install the following packages:
+
+**OpenMDAO**
+<pre>   
+pip install openmdao==3.16.0
+</pre>
+
+**Mphys**
+<pre>   
+cd $HOME/dafoam/repos && \
+wget https://github.com/OpenMDAO/mphys/archive/07fb6bb719eaaf77987b2b0c494868e41422f8c7.tar.gz -O mphys.tar.gz && \
+tar -xvf mphys.tar.gz && mv mphys-* mphys && \
+cd mphys && pip install -e .
+</pre>
+
+**funtofem**
+<pre>   
+cd $HOME/dafoam/repos && \
+wget https://github.com/smdogroup/funtofem/archive/ea17dfed26e7faa8e07114eaef62b939ffe26ae7.tar.gz  -O funtofem.tar.gz && \
+tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
+cd funtofem && pip install -e .
+</pre>
 
 |
 
