@@ -1,7 +1,7 @@
 ---
 title: Post-processing
 keywords: post-processing
-summary: "Check opt_SLSQP.txt for optimization progress and use Paraview to visualize flow fields."
+summary: "Check opt_IPOPT.txt for optimization progress and use Paraview to visualize flow fields."
 sidebar: mydoc_sidebar
 permalink: mydoc_get_started_post_processing.html
 folder: mydoc
@@ -11,65 +11,35 @@ folder: mydoc
 
 Fig. 1. Pressure and shape evaluation during the optimization process
 
-## Check optimization output file opt_SLSQP.txt
+## Check optimization output file opt_IPOPT.txt
 
-Once optimization is done, first check "opt_SLSQP.txt" in tutorials-master/NACA0012_Airfoil/incompressible. "opt_SLSQP.txt" contains the variation of objective function with respect to the optimization iteration:
+Once optimization is done, first check "opt_IPOPT.txt" in tutorials-master/NACA0012_Airfoil/incompressible. "opt_IPOPT.txt" contains the variation of functions with respect to the optimization iteration:
 
 ```c++
-       ---------------------------------------------------------------------------
-         START OF THE SEQUENTIAL LEAST SQUARES PROGRAMMING ALGORIT  
-       ---------------------------------------------------------------------------
-    
-         PARAMETERS:
-            ACC =   0.1000D-06
-            MAXITER = 50
-            IPRINT =   1
-    IOUT =   6
-    
-         ITER =    1     OBJ =  0.20031286E-01
-         ITER =    2     OBJ =  0.19239441E-01
-         ITER =    3     OBJ =  0.19095023E-01
-         ITER =    4     OBJ =  0.19040727E-01
-         ITER =    5     OBJ =  0.19025003E-01
-         .....
-         .....
-         .....
-         ITER =   45     OBJ =  0.17376811E-01
-         ITER =   46     OBJ =  0.17376810E-01
-         ITER =   47     OBJ =  0.17376808E-01
-         ITER =   48     OBJ =  0.17376811E-01
-         ITER =   49     OBJ =  0.17376808E-01
-         ITER =   50     OBJ =  0.17376808E-01
-            NUMBER OF FUNC-CALLS:  NFUNC = 170
-            NUMBER OF GRAD-CALLS:  NGRAD =  51
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  2.0820236e-02 2.26e-08 8.55e-02   0.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  2.0521266e-02 3.20e-04 6.86e-02  -5.9 9.91e-03    -  9.71e-01 1.00e+00h  1
+   2  1.9623489e-02 2.54e-03 2.73e-01  -3.5 2.17e-02    -  9.75e-01 1.00e+00h  1
+   3  1.9314850e-02 8.73e-04 6.61e-03  -4.3 2.10e-02    -  1.00e+00 1.00e+00h  1
+   4  1.9241231e-02 1.72e-04 3.71e-03  -5.8 2.80e-02    -  1.00e+00 1.00e+00h  1
+   5  1.9231794e-02 6.45e-06 8.07e-04  -6.2 9.33e-03    -  1.00e+00 9.97e-01h  1
+   6  1.9170888e-02 7.57e-05 3.15e-03  -7.2 8.75e-02    -  1.00e+00 1.00e+00h  1
+   7  1.9133030e-02 1.68e-04 1.09e-02  -6.9 1.07e+00    -  1.00e+00 2.23e-01h  3
+   8  1.8913613e-02 2.22e-04 1.26e-02  -7.5 8.09e-01    -  1.00e+00 5.00e-01h  2
+   9  1.8691236e-02 2.76e-03 1.64e-02  -6.8 6.77e+00    -  1.00e+00 1.66e-01h  2
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  10  1.9355900e-02 2.63e-03 3.41e-02  -6.5 1.07e+00    -  1.00e+00 8.96e-01H  1
+  11  1.9355900e-02 2.63e-03 1.21e-01  -6.6 8.43e-01    -  1.51e-02 1.00e+00h  1
+  12  1.7524672e-02 6.56e-02 2.01e-01  -6.6 2.76e+02    -  5.47e-03 1.33e-03h  1
+  13  1.7855004e-02 2.39e-03 8.60e-03  -6.1 4.63e-01    -  1.00e+00 1.00e+00h  1
+  14  1.7799861e-02 9.25e-04 3.58e-03  -7.0 2.62e-01    -  1.00e+00 1.00e+00h  1
+  15  1.7800851e-02 1.32e-04 2.68e-03  -8.6 2.46e-01    -  1.00e+00 1.00e+00h  1
+  16  1.7802465e-02 8.81e-06 6.38e-04  -7.5 2.70e-02    -  1.00e+00 1.00e+00h  1
+  17  1.7802033e-02 2.50e-06 6.62e-05  -9.4 1.01e-02    -  1.00e+00 1.00e+00h  1
+  18  1.7802058e-02 5.87e-09 2.90e-06 -11.0 1.17e-03    -  1.00e+00 1.00e+00h  1
 ```
 
-In this case, we use the SLSQP optimizer that prints objective function value from the 1st iteration. To find the objective for the 0th iteration (baseline design), you need to go back to "logOpt.txt" (see more detailed explanation of this file from [this page](mydoc_get_started_runscript.html)):
-
-```python
-+--------------------------------------------------------------------------+
-|                  Evaluating Objective Functions 000                      |
-+--------------------------------------------------------------------------+
-Design Variables: 
-OrderedDict([('alpha', array([5.139186])), ('shapey', array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
-       0., 0., 0.]))])
-....
-....
-....
-Objective Functions: 
-{'DVCon1_volume_constraint_0': 1.0000000000000018, 'DVCon1_thickness_constraints_0': array([1.0000000000000102, 0.9999999999999997, 1.0000000000000004,
-       1.0000000000000002, 1.                , 1.0000000000000002,
-       0.9999999999999994, 1.0000000000000002, 0.9999999999999998,
-       1.0000000000000033, 1.0000000000000056, 0.9999999999999996,
-       0.9999999999999999, 1.0000000000000002, 1.0000000000000002,
-       1.0000000000000002, 0.9999999999999998, 1.0000000000000002,
-       0.9999999999999998, 1.0000000000000007]), 'CD': 0.020820258191996517, 'CL': 0.4999999575481259, 'fail': False}
-Flow Runtime: 2.62659
-```
-
-The objective (CD) is 0.020820258 for the baseline design and drops to 0.017376808 for the 50th optimization iteration with a drag reduction of **16.5%**.
-
-{% include note.html content="For other optimizers such as snopt, the opt_SNOPT_summary.txt file contains the objective for the 0th iteration so there is no need to check the logOpt.txt file." %}
+The objective (CD) is 0.02082 for the baseline design and drops to 0.01780 for the 18th optimization iteration with a drag reduction of **14.5%**. The optimality (inf_du) and feasibility (inf_pr) decrease to be less than 1e-5.
 
 ## Visualize the flow fields using Paraview
 
