@@ -1,5 +1,5 @@
 ---
-title: "DAFoam: Discrete Adjoint with OpenFOAM for High-fidelity Gradient-based Optimization"
+title: "DAFoam: Discrete Adjoint with OpenFOAM for High-fidelity Multidisciplinary Design Optimization"
 keywords: sample homepage
 sidebar: mydoc_sidebar
 permalink: index.html
