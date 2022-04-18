@@ -74,44 +74,41 @@ The first section imports modules for DAFoam.
 # =============================================================================
 import os
 import argparse
-from mpi4py import MPI
-from dafoam import PYDAFOAM, optFuncs
-from pygeo import *
-from pyspline import *
-from idwarp import USMesh
-from pyoptsparse import Optimization, OPT
 import numpy as np
+from mpi4py import MPI
+import openmdao.api as om
+from mphys.multipoint import Multipoint
+from dafoam.mphys import DAFoamBuilder, OptFuncs
+from mphys.scenario_aerodynamic import ScenarioAerodynamic
+from mphys.solver_builders.mphys_dvgeo import OM_DVGEOCOMP
+from pygeo import *
 ```
 
 |
 
-In the next section, we define the optimizer to use in "--opt". We use [pyOptSparse](https://github.com/mdolab/pyoptsparse) to set optimization problems. pyOptSparse supports multiple open-source and commercial optimizers. However, in runScript.py, we only provide optimizer setup for [slsqp](http://www.pyopt.org/reference/optimizers.slsqp.html) (default) and [snopt](https://ccom.ucsd.edu/~optimizers/solvers/snopt). Refer to [pyOptSparse documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com/en/latest/) for all supported optimizers.
+In the next section, we define the optimizer to use in "-optimizer". We use [pyOptSparse](https://github.com/mdolab/pyoptsparse) to set optimization problems. pyOptSparse supports multiple open-source and commercial optimizers. However, in runScript.py, we only provide optimizer setup for [ipopt](https://coin-or.github.io/Ipopt) (default), [slsqp](http://www.pyopt.org/reference/optimizers.slsqp.html), and [snopt](https://ccom.ucsd.edu/~optimizers/solvers/snopt). Refer to [pyOptSparse documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com/en/latest/) for all supported optimizers.
 
-The "--task" argument defines the task to run, which includes "opt": run optimization, "runPrimal": run the primal analysis, "runAdjoint": run the adjoint derivative computation, "solveCL": solve the angle of attack (alpha0) for a given CL_target. "verifySens": verify the adjoint accuracy, "testAPI": test the API of tutorials using Travis.
+The "-task" argument defines the task to run, which includes "opt": run optimization, "runPrimal": run the primal analysis, "runAdjoint": run the adjoint derivative computation, "checkTotals": verify the adjoint accuracy against the finite-difference method.
 
-We then define some global parameters such at "U0": the far field velocity, "p0": the far field pressure, "nuTilda0", "k0", "epsilon0", "omega0": the far field turbulence variables, "CL_target": the target lift coefficient, "alpha0": the initial angle of attack, "A0": the reference area to normalize drag and lift coefficients.
+We then define some global parameters such at "U0": the far field velocity, "p0": the far field pressure, "nuTilda0": the far field turbulence variables, "CL_target": the target lift coefficient, "alpha0": the initial angle of attack, "A0" and "rho0": the reference area and density to normalize drag and lift coefficients.
 
 
 ```python
+parser = argparse.ArgumentParser()
+parser.add_argument("-optimizer", help="optimizer to use", type=str, default="IPOPT")
+parser.add_argument("-task", help="type of run to do", type=str, default="opt")
+args = parser.parse_args()
+
 # =============================================================================
 # Input Parameters
 # =============================================================================
-parser = argparse.ArgumentParser()
-parser.add_argument("--opt", help="optimizer to use", type=str, default="slsqp")
-parser.add_argument("--task", help="type of run to do", type=str, default="opt")
-args = parser.parse_args()
-gcomm = MPI.COMM_WORLD
-
-# Define the global parameters here
 U0 = 10.0
 p0 = 0.0
 nuTilda0 = 4.5e-5
-k0 = 0.015
-epsilon0 = 0.14
-omega0 = 100.0
 CL_target = 0.5
-alpha0 = 5.139186
+alpha0 = 5.0
 A0 = 0.1
+rho0 = 1.0
 ```
 
 |
@@ -126,17 +123,13 @@ The "primalMinResTol" parameter is the residual convergence tolerance for the pr
 
 The "primalBC" dictionary defines the boundary conditions for primal solution. Note that if primalBC is defined, it will overwrite the values defined in the 0 folder. Here we need to provide the variable name, patch names, and value to set for each variable. If "primalBC" is left blank, we will use the BCs defined in the 0 folder. 
 
-The "objFunc" dictionary defines the objective functions. Taking "CD" as an example, we need to give a name to the objective function, e.g., "CD" or any other preferred name, and the information for each part of the objective function. Most of the time, the objective has only one part (in this case "part1"), but one can also combine two parts of objectives, e.g., we can define a new objective that is the sum of force and moment. For each part, we need to define the type of objective (e.g., "force", "moment"; we need to use the reserved type names), how to select the discrete mesh faces to compute the objective (e.g., we select them from the name of a patch "patchToFace"), and the name of the patch (wing) for "patchToFace". Since it is a force objective, we need to project the force vector to a specific direction. Here we defines that "CD" is the force that is parallel to the flow direction ("parallelToFlow"). Alternative, we can also use "fixedDirection" and provide a "direction" key for force, i.e., "directionMode": "fixedDirection", "direction": [1.0, 0.0, 0.0]. Since we select "parallelToFlow", we need to prescribe the name of angle of attack design variable to determine the flow direction. Here "alpha" will be defined later in: DVGeo.addGeoDVGlobal("alpha", [alpha0], alpha, lower=-10.0, upper=10.0, scale=1.0).  NOTE: if no alpha is added in DVGeo.addGeoDVGlobal, we can NOT use "parallelToFlow". For this case, we have to use "directionMode": "fixedDirection" instead. The "scale" parameter is scaling factor for this objective "CD", i.e., CD = force / (0.5 * U0 * U0 * A0). Finally, if "addToAdjoint" is "True", the adjoint solver will compute the derivative for this objective. Otherwise, it will only calculate the objective value and print it to screen when solving the primal, no adjoint will be computed for this objective. The definition of "CL" is similar to "CD" except that we use "normalToFlow" for "directionMode".
+The "objFunc" dictionary defines the objective functions. Taking "CD" as an example, we need to give a name to the objective function, e.g., "CD" or any other preferred name, and the information for each part of the objective function. Most of the time, the objective has only one part (in this case "part1"), but one can also combine two parts of objectives, e.g., we can define a new objective that is the sum of force and moment. For each part, we need to define the type of objective (e.g., "force", "moment"; we need to use the reserved type names), how to select the discrete mesh faces to compute the objective (e.g., we select them from the name of a patch "patchToFace"), and the name of the patch (wing) for "patchToFace". Since it is a force objective, we need to project the force vector to a specific direction. Here we defines that "CD" is the force that is parallel to the flow direction ("parallelToFlow"). Alternative, we can also use "fixedDirection" and provide a "direction" key for force, i.e., "directionMode": "fixedDirection", "direction": [1.0, 0.0, 0.0]. Since we select "parallelToFlow", we need to prescribe the name of angle of attack (aoa) design variable to determine the flow direction. NOTE: if no aoa is defined as the design variables, we can NOT use "parallelToFlow". For this case, we have to use "directionMode": "fixedDirection" instead. The "scale" parameter is scaling factor for this objective "CD", i.e., CD = force / (0.5 * U0 * U0 * A0). Finally, if "addToAdjoint" is "True", the adjoint solver will compute the derivative for this objective. Otherwise, it will only calculate the objective value and print it to screen when solving the primal, no adjoint will be computed for this objective. The definition of "CL" is similar to "CD" except that we use "normalToFlow" for "directionMode".
 
 The "adjEqnOption" dictionary contains the adjoint linear equation solution options. If the adjoint does not converge, increase "pcFillLevel" to 2. Or try "jacMatReOrdering" : "nd". By default, we require the adjoint equation to drop six orders of magnitudes.
 
 "normalizeStates" contains the state normalization values. Here we use the far field values as reference. NOTE: since "p" is relative, we use the dynamic pressure "U0 * U0 / 2". Also, the face flux variable phi will be automatically normalized by its surface area so we can set "phi": 1.0. We also need to normalize the turbulence variables, such as nuTilda, k, omega, and epsilon.
 
-The "adjPartDerivFDStep" dictionary contains the finite difference step sizes for computing partial derivatives in the adjoint solver. The delta for state is typically 1e-8 to 1e-6 and the delta for the FFD point displacement is typically LRef / 1000. 
-
-The "adjPCLag" parameter allows us to compute the preconditioner (dRdWTPC) every a few adjoint equation solutions. Because the flow field does not significantly change during the optimization, we don't necessarily need to re-compute dRdWTPC for each optimization iteration. Setting adjPCLag to a large number increases the adjoint derivative speed because dRdWTPC consists of 20-30% of the total adjoint runtime. However, if the adjoint equation does not converge well, reduce adjPCLag such that we use the latest flow field to construct dRdWTPC.
-
-Finally, we reserve an empty "designVar" dictionary and will add values for it later in "DVGeo.addGeoDVLocal".
+Finally, we define the design variables in the "designVar" dictionary. We need to set the "designVarType" to let DAFoam knows what type of total derivatives to compute.
 
 ```python
 daOptions = {
@@ -147,10 +140,7 @@ daOptions = {
         "U0": {"variable": "U", "patches": ["inout"], "value": [U0, 0.0, 0.0]},
         "p0": {"variable": "p", "patches": ["inout"], "value": [p0]},
         "nuTilda0": {"variable": "nuTilda", "patches": ["inout"], "value": [nuTilda0]},
-        "k0": {"variable": "k", "patches": ["inout"], "value": [k0]},
-        "omega0": {"variable": "omega", "patches": ["inout"], "value": [omega0]},
-        "epsilon0": {"variable": "epsilon", "patches": ["inout"], "value": [epsilon0]},
-        "useWallFunction":True
+        "useWallFunction": True,
     },
     "objFunc": {
         "CD": {
@@ -159,8 +149,8 @@ daOptions = {
                 "source": "patchToFace",
                 "patches": ["wing"],
                 "directionMode": "parallelToFlow",
-                "alphaName": "alpha",
-                "scale": 1.0 / (0.5 * U0 * U0 * A0),
+                "alphaName": "aoa",
+                "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
                 "addToAdjoint": True,
             }
         },
@@ -170,8 +160,8 @@ daOptions = {
                 "source": "patchToFace",
                 "patches": ["wing"],
                 "directionMode": "normalToFlow",
-                "alphaName": "alpha",
-                "scale": 1.0 / (0.5 * U0 * U0 * A0),
+                "alphaName": "aoa",
+                "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
                 "addToAdjoint": True,
             }
         },
@@ -181,62 +171,27 @@ daOptions = {
         "U": U0,
         "p": U0 * U0 / 2.0,
         "nuTilda": nuTilda0 * 10.0,
-        "k": k0 * 10.0,
-        "epsilon": epsilon0,
-        "omega": omega0,
         "phi": 1.0,
     },
-    "adjPartDerivFDStep": {"State": 1e-7, "FFD": 1e-3},
-    "adjPCLag": 20,  # recompute preconditioner every 20 adjoint solutions
-    "designVar": {},
+    "designVar": {
+        "aoa": {"designVarType": "AOA", "patches": ["inout"], "flowAxis": "x", "normalAxis": "y"},
+        "shape": {"designVarType": "FFD"},
+    },
 }
 ```
 
 |
 
-Next, we need to define the mesh deformation and optimizer option. Users need to manually provide the point and normal of all symmetry planes for "symmetryPlanes" in meshOptions. For the optimizer options, we let the optimizer to run for maximal 50 steps, and set the tolerance of optimization to be 1e-7. These setup should work for most of the cases.
+Next, we need to define the mesh deformation option. Users need to manually provide the point and normal of all symmetry planes for "symmetryPlanes" in meshOptions.
 
 ```python
 # mesh warping parameters
 meshOptions = {
     "gridFile": os.getcwd(),
-    "fileType": "openfoam",
+    "fileType": "OpenFOAM",
+    # point and normal for the symmetry plane
     "symmetryPlanes": [[[0.0, 0.0, 0.0], [0.0, 0.0, 1.0]], [[0.0, 0.0, 0.1], [0.0, 0.0, 1.0]]],
 }
-
-# options for optimizers
-if args.opt == "snopt":
-    optOptions = {
-        "Major feasibility tolerance": 1.0e-7,
-        "Major optimality tolerance": 1.0e-7,
-        "Function precision": 1.0e-7,
-        "Verify level": -1,
-        "Major iterations limit": 50,
-        "Nonderivative linesearch": None,
-        "Print file": "opt_SNOPT_print.txt",
-        "Summary file": "opt_SNOPT_summary.txt",
-    }
-elif args.opt == "ipopt":
-    optOptions = {
-        "tol": 1.0e-7,
-        "constr_viol_tol": 1.0e-7,
-        "max_iter": 50,
-        "output_file": "opt_IPOPT.txt",
-        "mu_strategy": "adaptive",
-        "limited_memory_max_history": 10,
-        "nlp_scaling_method": "none",
-        "alpha_for_y": "full",
-        "recalc_y": "yes",
-    }
-elif args.opt == "slsqp":
-    optOptions = {
-        "ACC": 1.0e-7,
-        "MAXIT": 50,
-        "IFILE": "opt_SLSQP.txt",
-    }
-else:
-    print("opt arg not valid!")
-    exit(0)
 ```
 
 |
