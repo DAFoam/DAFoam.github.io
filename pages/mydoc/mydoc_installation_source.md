@@ -205,7 +205,7 @@ Finally, install mpi4py-3.0.2 and petsc4py-3.11.0:
 <pre>
 . $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/packages && \
-wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-3.0.3.tar.gz && \
+wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-3.0.2.tar.gz && \
 tar -xvf mpi4py-3.0.2.tar.gz && cd mpi4py-3.0.2 && \
 python setup.py install && \
 cd $HOME/dafoam/packages && \
