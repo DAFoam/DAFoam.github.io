@@ -14,7 +14,7 @@ The DAFoam package can be compiled with various dependency versions. Here we ela
 
 Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython
 | :------------------------------------------------------------------------------------------------ | 
-20.04  | gcc/9.3  | 1.10.4  | 3.0.2  | 3.11.4 | 3.11.0   | 3.3.0 | 3.8    | 1.21.2 | 1.7.1 | 0.29.21
+20.04  | gcc/9.3  | 1.10.4  | 3.0.3  | 3.11.4 | 3.11.0   | 3.3.0 | 3.8    | 1.21.2 | 1.7.1 | 0.29.21
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM.
 
@@ -200,13 +200,13 @@ cd petsc-3.11.4 && \
 make PETSC_DIR=$HOME/dafoam/packages/petsc-3.11.4 PETSC_ARCH=real-opt all
 </pre>
 
-Finally, install mpi4py-3.0.2 and petsc4py-3.11.0:
+Finally, install mpi4py-3.0.3 and petsc4py-3.11.0:
 
 <pre>
 . $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/packages && \
-wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-3.0.2.tar.gz && \
-tar -xvf mpi4py-3.0.2.tar.gz && cd mpi4py-3.0.2 && \
+wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-3.0.3.tar.gz && \
+tar -xvf mpi4py-3.0.3.tar.gz && cd mpi4py-3.0.3 && \
 python setup.py install && \
 cd $HOME/dafoam/packages && \
 wget https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-3.11.0.tar.gz && \
