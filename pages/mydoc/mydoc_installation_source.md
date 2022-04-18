@@ -173,29 +173,16 @@ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib' >> $HOME/dafoam/lo
 . $HOME/dafoam/loadDAFoam.sh
 </pre>
 
-Next, compiles the ThirdParty dependencies. First build Metis by running:
+Next, compiles the ThirdParty dependencies Metis and Mumps by running:
 
 <pre>
+cd $HOME/dafoam/packages && \
+git clone -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
 cd $IPOPT_DIR && \
-git clone https://github.com/coin-or-tools/ThirdParty-Metis.git && \
-cd ThirdParty-Metis && \
-./get.Metis && \
-./configure --prefix=$IPOPT_DIR && \
-make && \
-make install
-</pre>
-
-Next, build Mumps:
-
-<pre>
-cd $IPOPT_DIR && \
-git clone https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
+git clone -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
 cd ThirdParty-Mumps && \
 ./get.Mumps && \
-./configure --with-metis --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
-     --with-metis-cflags="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" \
-     --prefix=$IPOPT_DIR CFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis" \
-     FCFLAGS="-I${IPOPT_DIR}/include -I${IPOPT_DIR}/include/coin-or -I${IPOPT_DIR}/include/coin-or/metis"  && \
+./configure --prefix=$IPOPT_DIR && \
 make && \
 make install
 </pre>
@@ -206,8 +193,7 @@ Finally, compile Ipopt by running:
 cd $IPOPT_DIR && \
 mkdir build && \
 cd build && \
-../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" \
-     --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" && \
+../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" && \
 make && \
 make install
 </pre>
