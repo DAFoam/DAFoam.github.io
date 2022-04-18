@@ -428,7 +428,7 @@ make && make interface && pip install -e .
 
 In summary, here is the folder structures for all the installed packages:
 
-<pre>   
+<pre>
 $HOME/dafoam
   loadDAFoam.sh
   - OpenFOAM
