@@ -408,7 +408,7 @@ make && make interface && pip install -e .
 
 <pre>
 cd $HOME/dafoam/repos && \
-wget https://github.com/smdogroup/tacs/archive/0e6613e107071d1e1e2d6109d2d10f76766b6182.tar.gz -O tacs.tar.gz && \
+wget https://github.com/smdogroup/tacs/archive/64949d6e878efcba0f589f20b7fb86e79793a4ff.tar.gz -O tacs.tar.gz && \
 tar -xvf tacs.tar.gz && mv tacs-* tacs && \
 cd tacs/extern && \
 wget https://github.com/DAFoam/files/releases/download/TACS_Extern/TACS_extern.tar.gz && tar -xzf TACS_extern.tar.gz && \
