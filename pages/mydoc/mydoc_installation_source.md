@@ -14,7 +14,7 @@ The DAFoam package can be compiled with various dependency versions. Here we ela
 
 Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython
 | :------------------------------------------------------------------------------------------------ | 
-20.04  | gcc/9.3  | 1.10.4  | 3.0.3  | 3.11.4 | 3.11.0   | 3.3.0 | 3.8    | 1.21.2 | 1.7.1 | 0.29.21
+20.04  | gcc/9.3  | 1.10.4  | 3.0.3  | 3.11.4 | 3.11.0   | 3.3.0 | 3.7    | 1.21.2 | 1.7.1 | 0.29.21
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM.
 
@@ -156,9 +156,9 @@ Install Miniconda3-4.8.3 by running this command:
 
 <pre>
 cd $HOME/dafoam/packages && \
-wget https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh && \
-chmod 755 Miniconda3-py38_4.10.3-Linux-x86_64.sh && \
-./Miniconda3-py38_4.10.3-Linux-x86_64.sh -b -p $HOME/dafoam/packages/miniconda3 && \
+wget https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.3-Linux-x86_64.sh && \
+chmod 755 Miniconda3-py37_4.8.3-Linux-x86_64.sh && \
+./Miniconda3-py37_4.8.3-Linux-x86_64.sh -b -p $HOME/dafoam/packages/miniconda3 && \
 echo '# Miniconda3' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib' >> $HOME/dafoam/loadDAFoam.sh && \
@@ -200,13 +200,13 @@ cd petsc-3.11.4 && \
 make PETSC_DIR=$HOME/dafoam/packages/petsc-3.11.4 PETSC_ARCH=real-opt all
 </pre>
 
-Finally, install mpi4py-3.0.3 and petsc4py-3.11.0:
+Finally, install mpi4py-3.0.2 and petsc4py-3.11.0:
 
 <pre>
 . $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/packages && \
 wget https://bitbucket.org/mpi4py/mpi4py/downloads/mpi4py-3.0.3.tar.gz && \
-tar -xvf mpi4py-3.0.3.tar.gz && cd mpi4py-3.0.3 && \
+tar -xvf mpi4py-3.0.2.tar.gz && cd mpi4py-3.0.2 && \
 python setup.py install && \
 cd $HOME/dafoam/packages && \
 wget https://bitbucket.org/petsc/petsc4py/downloads/petsc4py-3.11.0.tar.gz && \
@@ -408,7 +408,7 @@ make && make interface && pip install -e .
 
 <pre>
 cd $HOME/dafoam/repos && \
-wget https://github.com/smdogroup/tacs/archive/e67d1adfa2b61ca4c8c724b645b54ce9d0d5d08d.tar.gz -O tacs.tar.gz && \
+wget https://github.com/smdogroup/tacs/archive/0e6613e107071d1e1e2d6109d2d10f76766b6182.tar.gz -O tacs.tar.gz && \
 tar -xvf tacs.tar.gz && mv tacs-* tacs && \
 cd tacs/extern && \
 wget https://github.com/DAFoam/files/releases/download/TACS_Extern/TACS_extern.tar.gz && tar -xzf TACS_extern.tar.gz && \
