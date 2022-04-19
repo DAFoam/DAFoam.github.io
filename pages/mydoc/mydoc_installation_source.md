@@ -255,8 +255,8 @@ Run the following:
 
 <pre>
 cd $HOME/dafoam/OpenFOAM && \
-wget https://sourceforge.net/projects/openfoamplus/files/v1812/OpenFOAM-v1812.tgz/download -O OpenFOAM-v1812.tgz && \
-wget https://sourceforge.net/projects/openfoamplus/files/v1812/ThirdParty-v1812.tgz/download -O ThirdParty-v1812.tgz && \
+wget https://sourceforge.net/projects/openfoam/files/v1812/OpenFOAM-v1812.tgz/download -O OpenFOAM-v1812.tgz && \
+wget https://sourceforge.net/projects/openfoam/files/v1812/ThirdParty-v1812.tgz/download -O ThirdParty-v1812.tgz && \
 tar -xvf OpenFOAM-v1812.tgz && \
 tar -xvf ThirdParty-v1812.tgz && \
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812 && \
