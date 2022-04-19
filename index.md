@@ -18,7 +18,7 @@ summary:
 DAFoam develops an efficient discrete adjoint method to perform high-fidelity multidisciplinary design optimization. DAFoam has the following features:
 
 - It uses a popular open-source package [OpenFOAM](https://www.openfoam.com) for multiphysics analysis.
-- It implements an efficient discrete adjoint approach with competitive speed, scalability, accuracy, and compatibility.
+- It implements a [Jacobian-free discrete adjoint](https://www.sciencedirect.com/science/article/abs/pii/S0376042119300120) approach with competitive speed, scalability, and accuracy.
 - It has a convenient Python interface to couple with [OpenMDAO](https://openmdao.org) for multidisciplinary design optimization.
 
 DAFoam is distributed using the [GPL-v3 license](https://www.gnu.org/licenses/gpl-3.0.en.html), and its source code is available from [Github](https://github.com/mdolab/dafoam)
