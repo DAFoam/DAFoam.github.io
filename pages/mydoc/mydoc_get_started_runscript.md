@@ -198,7 +198,7 @@ meshOptions = {
 
 Next, we use the [Mphys](https://github.com/OpenMDAO/mphys) interface to set up the optimization. Mphys is based on [OpenMDAO](https://github.com/OpenMDAO/mphys) and allows use to set up multidisciplinary optimization problems easily.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/aero_n2.png" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/aero_n2.png" width="800" />
 
 Fig. 1. The OpenMDAO N2 diagram for the airfoil aerodynamic optimization problem.
 
