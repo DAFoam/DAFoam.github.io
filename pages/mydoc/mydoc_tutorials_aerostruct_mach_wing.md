@@ -1,9 +1,9 @@
 ---
-title: MDOLab wing
-keywords: tutorial, mdolab wing
+title: MACH tutorial wing
+keywords: tutorial, mach tutorial wing
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aerostruct_mdolab_wing.html
+permalink: mydoc_tutorials_aerostruct_mach_wing.html
 folder: mydoc
 ---
 

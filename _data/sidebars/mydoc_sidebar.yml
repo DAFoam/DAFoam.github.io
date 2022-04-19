@@ -153,8 +153,8 @@ entries:
         output: web, pdf
         subfolderitems:
   
-        - title: MDOLab wing
-          url: /mydoc_tutorials_aerostruct_mdolab_wing.html
+        - title: MACH tutorial wing
+          url: /mydoc_tutorials_aerostruct_mach_wing.html
           output: web, pdf
       
       - title: Heat transfer
