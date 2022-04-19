@@ -84,7 +84,7 @@ echo 'export PATH=$MPI_INSTALL_DIR/bin:$PATH' >> $HOME/dafoam/loadDAFoam.sh&& \
 Then, configure and build OpenMPI:
 
 <pre>
-cd $HOME/packages && \
+cd $HOME/dafoam/packages && \
 wget https://download.open-mpi.org/release/open-mpi/v3.1/openmpi-3.1.6.tar.gz  && \
 tar -xvf openmpi-3.1.6.tar.gz && \
 cd openmpi-3.1.6 && \
