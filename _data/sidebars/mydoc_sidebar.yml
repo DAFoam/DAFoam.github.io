@@ -149,6 +149,14 @@ entries:
           url: /mydoc_tutorials_aero_nrel6.html
           output: web, pdf
       
+      - title: Aerostructural
+        output: web, pdf
+        subfolderitems:
+  
+        - title: MDOLab wing
+          url: /mydoc_tutorials_aerostruct_mdolab_wing.html
+          output: web, pdf
+      
       - title: Heat transfer
         output: web, pdf
         subfolderitems:
