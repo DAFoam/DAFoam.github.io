@@ -504,8 +504,8 @@ export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.11.4
 export PETSC_ARCH=real-opt
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PETSC_DIR/$PETSC_ARCH/lib
 export PETSC_LIB=$PETSC_DIR/$PETSC_ARCH/lib
-# CGNS-3.3.0
-export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-3.3.0/opt-gfortran
+# CGNS-4.1.2
+export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-4.1.2/opt-gfortran
 export PATH=$PATH:$CGNS_HOME/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib
 # Ipopt
@@ -521,10 +521,10 @@ export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH
 
 This step is needed if you want to use the SNOPT optimizer. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com).
 
-SNOPT is a commercial package, and you can purchase it from [here](http://www.sbsi-sol-optimize.com/asp/sol_snopt.htm). Once you obtain the SNOPT source code, copy all the source files (except for snopth.f) to the "$HOME/dafoam/repos/pyoptsparse-2.3.0/pyoptsparse/pySNOPT/source" folder. Then, run this command to compile pyOptSparse with SNOPT.
+SNOPT is a commercial package, and you can purchase it from [here](http://www.sbsi-sol-optimize.com/asp/sol_snopt.htm). Once you obtain the SNOPT source code, copy all the source files (except for snopth.f) to the "$HOME/dafoam/repos/pyoptsparse-2.8.1/pyoptsparse/pySNOPT/source" folder. Then, run this command to compile pyOptSparse with SNOPT.
 
 <pre>
-cd $HOME/dafoam/repos/pyoptsparse-2.3.0 && \
+cd $HOME/dafoam/repos/pyoptsparse-2.8.1 && \
 pip install .
 </pre>
 
