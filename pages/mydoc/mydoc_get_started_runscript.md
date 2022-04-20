@@ -327,8 +327,8 @@ teList = [[0.998 - 1e-4, 0.0, 1e-4], [0.998 - 1e-4, 0.0, 0.1 - 1e-4]]
 self.geometry.nom_addThicknessConstraints2D("thickcon", leList, teList, nSpan=2, nChord=10)
 self.geometry.nom_addVolumeConstraint("volcon", leList, teList, nSpan=2, nChord=10)
 # add the LE/TE constraints
-self.geometry.nom_add_LETEConstraint("lecon", volID=0, "iLow", topID="k")
-self.geometry.nom_add_LETEConstraint("tecon", volID=0, "iHigh", topID="k")
+self.geometry.nom_add_LETEConstraint("lecon", volID=0, faceID="iLow", topID="k")
+self.geometry.nom_add_LETEConstraint("tecon", volID=0, faceID="iHigh", topID="k")
 ```
 
 Next, we set the outputs for the dvs component and use them as the design variables. We also need to connect the output of dvs component to the cruise and geometry component. Check the above N2. Once done, we can choose the shape and aoa in the dvs component as the design variables with proper lower and upper bounds. Note that the outputs for the dvs component has been "promoted" so we can directly use without the dvs. prefix, i.e., no need to use "dvs.shape". Check the OpenMDAO's documentation for promoting variable names.
