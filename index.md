@@ -13,8 +13,6 @@ summary:
 {% endfor %}
 </div>
 
-{% include note.html content="This website is under construction for v3. The v2 website is moved to https://dafoamv2.github.io" %}
-
 DAFoam develops an efficient discrete adjoint method to perform high-fidelity multidisciplinary design optimization. DAFoam has the following features:
 
 - It uses a popular open-source package [OpenFOAM](https://www.openfoam.com) for multiphysics analysis.
