@@ -24,7 +24,7 @@ Mesh cells: ~38,000
 Solver: DARhoSimpleFoam
 </pre>
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/MACH_Tutorial_Wing.png" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/MACH_Wing_Mesh.png" width="500" />
 
 Fig. 1. Mesh and FFD points for the MACH tutorial wing.
 
