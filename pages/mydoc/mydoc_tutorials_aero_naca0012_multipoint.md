@@ -196,7 +196,7 @@ The `runScript.py` is based on the one used in the NACA0012 [low speed case](myd
       optProb.addCon("mp%d_CL" % i, lower=CL_target[i], upper=CL_target[i], scale=1)
   ```
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/NACA0012_Airfoil/multipoint and run the `preProcessing.sh` script to generate the mesh:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/NACA0012_Airfoil/multipoint and run the `preProcessing.sh` script to generate the mesh:
 
 <pre>
 ./preProcessing.sh

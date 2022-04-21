@@ -57,7 +57,7 @@ Other notes:
 
 - We need to properly scale the design variable because the alpha porosity field could be very large, e.g., 1e4. So we use "scale=1e-4" in DVGeo.addGeoDVVGlobal("alphaPorosity", ...).
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/pitzDaily and run the "preProcessing.sh" script to generate the mesh:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/pitzDaily and run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh

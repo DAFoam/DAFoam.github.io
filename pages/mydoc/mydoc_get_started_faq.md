@@ -47,7 +47,7 @@ To run optimization at different flow conditions, one needs to modify the bounda
 
 To run at a different lift coefficient, modify "CL_target", then run `mpirun -np 4 python runScript.py --task=solveCL`. Once the solveCL is done, note down the "alpha0" value that is printed to the screen, and replace the value in "runScript.py". 
 
-This tutorial uses an incompressible flow solver DASimpleFoam, so the Mach number should be less than 0.1. For subsonic flow conditions (e.g., ~0.1 < M < ~0.6), refer to the settings in tutorials-master/NACA0012_Airfoil/subsonic. For the transonic flow conditions, refer to tutorials-master/NACA0012_Airfoil/transonic. Note that both runScript.py and the OpenFOAM configuration files (e.g., fvSchemes, fvSolution) are modified for these flow conditions.
+This tutorial uses an incompressible flow solver DASimpleFoam, so the Mach number should be less than 0.1. For subsonic flow conditions (e.g., ~0.1 < M < ~0.6), refer to the settings in tutorials-main/NACA0012_Airfoil/subsonic. For the transonic flow conditions, refer to tutorials-main/NACA0012_Airfoil/transonic. Note that both runScript.py and the OpenFOAM configuration files (e.g., fvSchemes, fvSolution) are modified for these flow conditions.
 
 ## How to use different turbulence models?
 
@@ -87,7 +87,7 @@ When running in parallel, OpenFOAM will generate folders for each decomposed dom
 
 ## Does DAFoam support optimization for pure 2D problems?
 
-No, DAFoam does **NOT** support pure 2D optimization. In OpenFOAM, there is an option to do pure 2D simulation, which is setting a patch type to **empty** in constant/polyMesh/boundary. This feature is **NOT** supported in DAFoam. So, one need to change the **empty** patch type to **symmetry** instead, and use one cell in the symmetry direction to mimic a 2D simulation. Refer to the case setup in the [NACA0012 case](https://github.com/DAFoam/tutorials/tree/master/NACA0012_Airfoil/incompressible).
+No, DAFoam does **NOT** support pure 2D optimization. In OpenFOAM, there is an option to do pure 2D simulation, which is setting a patch type to **empty** in constant/polyMesh/boundary. This feature is **NOT** supported in DAFoam. So, one need to change the **empty** patch type to **symmetry** instead, and use one cell in the symmetry direction to mimic a 2D simulation. Refer to the case setup in the [NACA0012 case](https://github.com/DAFoam/tutorials/tree/main/NACA0012_Airfoil/incompressible).
 
 ## Can I use my own mesh?
 
@@ -123,7 +123,7 @@ If you keep getting failed mesh checks throughout the optimization, first check 
 
 You need to increase these default values, e.g., set `"maxSkewness": 6.0,`. If you want to ignore just a few incorrectly oriented faces, set maxIncorrectlyOrientedFaces to be greater than 0. 
 
-Another way to fix the issue is setting mesh quality constraints in optimization. Check the runScript_meshQualityConstraint.py script from the [UBend](https://github.com/DAFoam/tutorials/blob/master/UBend_Channel/runScript_meshQualityConstraint.py) tutorial.
+Another way to fix the issue is setting mesh quality constraints in optimization. Check the runScript_meshQualityConstraint.py script from the [UBend](https://github.com/DAFoam/tutorials/blob/main/UBend_Channel/runScript_meshQualityConstraint.py) tutorial.
 
 ## How to know the detailed description for a function's input parameters defined in runScript.py?
 
@@ -139,11 +139,11 @@ If your OS system has more than one user, and you are not the first user and do 
 
 ## How to run a multipoint optimization?
 
-Refer to the tutorial tutorials-master/NACA0012_Airfoil/multipoint.
+Refer to the tutorial tutorials-main/NACA0012_Airfoil/multipoint.
 
 ## How to run an optimization for 3D wings?
 
-Refer to the tutorial tutorials-master/Onera_M6_Wing.
+Refer to the tutorial tutorials-main/Onera_M6_Wing.
 
 |
 

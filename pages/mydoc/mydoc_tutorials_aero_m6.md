@@ -66,7 +66,7 @@ The "runScript.py" is based on the one used in the NACA0012 [transonic case](myd
   DVCon.addLeTeConstraints(0, "iHigh")
   ```
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/Onera_M6_Wing and run the "preProcessing.sh" script to generate the mesh:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/Onera_M6_Wing and run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh

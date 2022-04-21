@@ -42,7 +42,7 @@ DVCon.addCurvatureConstraint(
 
 Fig. 2. Example of adding curvature constraint. The red mesh is the 2D surface mesh defined hullCurv.xyz.
 
-This case requires the IPOPT optimizer and the AD version of DAFoam. To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/JBC_Hull and run the "preProcessing.sh" script to generate the mesh:
+This case requires the IPOPT optimizer and the AD version of DAFoam. To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/JBC_Hull and run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh

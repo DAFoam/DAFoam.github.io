@@ -13,7 +13,7 @@ Fig. 1. Pressure and shape evaluation during the optimization process
 
 ## Check optimization output file opt_IPOPT.txt
 
-Once optimization is done, first check "opt_IPOPT.txt" in tutorials-master/NACA0012_Airfoil/incompressible. "opt_IPOPT.txt" contains the variation of functions with respect to the optimization iteration:
+Once optimization is done, first check "opt_IPOPT.txt" in tutorials-main/NACA0012_Airfoil/incompressible. "opt_IPOPT.txt" contains the variation of functions with respect to the optimization iteration:
 
 ```c++
 iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
@@ -43,7 +43,7 @@ The objective (CD) is 0.02082 for the baseline design and drops to 0.01780 for t
 
 ## Visualize the flow fields using Paraview
 
-Next, we can use [Paraview](https://www.paraview.org) to visualize the flow fields. Download the Paraview binaries [from here](https://www.paraview.org/download). They are ready to use for Windows, Linux, and MacOS. Once installed, open the Paraview app and click "File->Open..." from the top menu. In the pop-up window, navigate to tutorials-master/NACA0012_Airfoil/incompressible, select the paraview.foam file, and click "OK".
+Next, we can use [Paraview](https://www.paraview.org) to visualize the flow fields. Download the Paraview binaries [from here](https://www.paraview.org/download). They are ready to use for Windows, Linux, and MacOS. Once installed, open the Paraview app and click "File->Open..." from the top menu. In the pop-up window, navigate to tutorials-main/NACA0012_Airfoil/incompressible, select the paraview.foam file, and click "OK".
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Open.png" width="300" />
 

@@ -33,4 +33,4 @@ Finally, click the *Post Process* button to open the GUI
 
 ![pvOptView](/images/tutorials/GUI_optView.png)
 
-[OptView](https://github.com/mdolab/pyoptsparse/blob/master/pyoptsparse/postprocessing/OptView.py) is an open-source post-processing utlity from pyOptSparse
+[OptView](https://github.com/mdolab/pyoptsparse/blob/main/pyoptsparse/postprocessing/OptView.py) is an open-source post-processing utlity from pyOptSparse

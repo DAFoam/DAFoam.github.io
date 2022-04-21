@@ -96,7 +96,7 @@ optProb.addObj("CD", scale=1)
 optProb.addCon("CL", lower=CL_target, upper=CL_target, scale=1)
 </pre>
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/30N30P_MultiElement_Airfoil and run the "preProcessing.sh" script to generate the mesh:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/30N30P_MultiElement_Airfoil and run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh

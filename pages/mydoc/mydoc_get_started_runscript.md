@@ -9,7 +9,7 @@ folder: mydoc
 
 ## OpenFOAM configurations
 
-As mentioned in [Overview](index.html), DAFoam uses OpenFOAM for multiphysics analysis. So before running DAFoam optimizations, one needs to set up an OpenFOAM run case for NACA0012 airfoil. tutorials-master/NACA0012_Airfoil/incompressible has the following folder structure:
+As mentioned in [Overview](index.html), DAFoam uses OpenFOAM for multiphysics analysis. So before running DAFoam optimizations, one needs to set up an OpenFOAM run case for NACA0012 airfoil. tutorials-main/NACA0012_Airfoil/incompressible has the following folder structure:
 
 ```bash
 NACA0012_Airfoil/incompressible
