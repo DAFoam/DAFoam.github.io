@@ -440,6 +440,6 @@ else:
 
 ```
 
-In the [next section](mydoc_get_started_common_modifications.html), we will elaborate on some common modification for this case.
+In the [next section](mydoc_get_started_faq.html), we will elaborate on some common modification for this case.
 
 {% include links.html %}
