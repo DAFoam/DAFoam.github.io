@@ -318,7 +318,7 @@ Similarly, we call "nom_addThicknessConstraints2D" to add thickness constraints 
 
 We can also add the LE/TE constraint.  This is done by requiring the upper and lower FFD point on the leading and trailing edges to move in opposite directions. This constraint is needed because we do not want the shape variable to change the pitch and therefore the angle of attack. Instead, we want to change the far field velocity direction for the angle of attack. Here we have only one FFD block so volID=0. We also need to set the topID, which is the direction for the spanwise. This is needed only for airfoil case. For wing case, topID is automatically determined so no input is needed. "iLow" means i=0 (leading edge), and "iHigh" means i=max (trailing edge).
 
-For more detailed explanation of constraint setup, refer to [MACH-Aero-Tutorials](https://mdolab-mach-aero-tutorial.readthedocs-hosted.com/en/latest/opt_aero.html).
+For more detailed explanation of constraint setup, refer to [MACH-Aero-Tutorials](https://mdolab-mach-aero.readthedocs-hosted.com/en/latest/).
 
 ```python
 # setup the volume and thickness constraints
