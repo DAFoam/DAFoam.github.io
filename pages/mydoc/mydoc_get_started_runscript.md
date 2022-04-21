@@ -86,7 +86,7 @@ from pygeo import geo_utils
 
 |
 
-In the next section, we define the optimizer to use in "-optimizer". We use [pyOptSparse](https://github.com/mdolab/pyoptsparse) to set optimization problems. pyOptSparse supports multiple open-source and commercial optimizers. However, in runScript.py, we only provide optimizer setup for [ipopt](https://coin-or.github.io/Ipopt) (default), [slsqp](http://www.pyopt.org/reference/optimizers.slsqp.html), and [snopt](https://ccom.ucsd.edu/~optimizers/solvers/snopt). Refer to [pyOptSparse documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com/en/latest/) for all supported optimizers.
+In the next section, we define the optimizer to use in "-optimizer". We use [pyOptSparse](https://github.com/mdolab/pyoptsparse) to set optimization problems. pyOptSparse supports multiple open-source and commercial optimizers. However, in runScript.py, we only provide optimizer setup for [IPOPT](https://coin-or.github.io/Ipopt) (default), [SLSQP](http://www.pyopt.org/reference/optimizers.slsqp.html), and [SNOPT](https://ccom.ucsd.edu/~optimizers/solvers/snopt). Refer to [pyOptSparse documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com/en/latest/) for all supported optimizers.
 
 The "-task" argument defines the task to run, which includes "opt": run optimization, "runPrimal": run the primal analysis, "runAdjoint": run the adjoint derivative computation, "checkTotals": verify the adjoint accuracy against the finite-difference method.
 
