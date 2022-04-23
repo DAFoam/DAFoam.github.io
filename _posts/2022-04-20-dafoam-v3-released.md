@@ -10,4 +10,6 @@ While most of the settings are exact same as before, version 3 uses very differe
 
 We have also updated some of the [tutorials](https://github.com/dafoam/tutorials) for v3. The version 2 run scripts are now called _v2.py. **NOTE: All the version 2 run scripts are currently compatible with DAFoam v3**. In other words, you can use DAFoam v3.0.0 to run any v2 scripts. However, we may drop the support for v2 in the future. 
 
+**The v2 website has been moved to https://dafoamv2.github.io** and will no longer be maintained.
+
 {% include links.html %}
