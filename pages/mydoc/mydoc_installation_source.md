@@ -386,19 +386,6 @@ unset WM_CODI_AD_MODE && \
 . $HOME/dafoam/loadDAFoam.sh
 </pre>
 
-Now, you can run the regression tests:
-
-<pre>
-cd $HOME/dafoam/repos/dafoam/tests && ./Allrun
-</pre>
-
-The regression tests should take less than 30 minutes. The test progress will be printed to screen. Make sure you see this at the end:
-
-<pre>   
-************************************************************
-**************** All DAFoam tests passed! ******************
-************************************************************
-</pre>
 
 {% include note.html content="Before running any jobs, source the loadDAFoam.sh file to load DAFoam environment!" %}
 
@@ -449,6 +436,22 @@ cp Makefile.in.info Makefile.in && \
 ls && \
 sed -i "s/git/dafoam\/repos/g" Makefile.in && \
 make && make interface && pip install -e .
+</pre>
+
+## **DAFoam regression tests**
+
+To verify the DAFoam installation, you can run the regression tests:
+
+<pre>
+cd $HOME/dafoam/repos/dafoam/tests && ./Allrun
+</pre>
+
+The regression tests should take less than 30 minutes. The test progress will be printed to screen. Make sure you see this at the end:
+
+<pre>   
+************************************************************
+**************** All DAFoam tests passed! ******************
+************************************************************
 </pre>
 
 |
@@ -527,5 +530,32 @@ SNOPT is a commercial package, and you can purchase it from [here](http://www.sb
 cd $HOME/dafoam/repos/pyoptsparse-2.8.1 && \
 pip install .
 </pre>
+
+
+## **Make the DAFoam package portable (optional)**
+
+This step is only needed if you want to change the root path of your installation, e.g., copy your compiled DAFoam packages to another directory.
+
+The only thing you need to do is to modify the interpreter lines "#!" for files in $HOME/dafoam/packages/miniconda3/. This is because Miniconda hard codes the Python path, so we need to chagne it to "#!/usr/bin/env python"
+
+First find an example of the hard-coded interpreter line from $HOME/dafoam/packages/miniconda3/bin/conda. Run this command
+
+<pre>
+head -1 $HOME/dafoam/packages/miniconda3/bin/conda
+</pre>
+
+You may see an output like this:
+
+<pre>
+#!/home/replace_this_with_your_username/dafoam/packages/miniconda3/bin/python
+</pre>
+
+Then run this command to replace all the hard-coded interpreter lines:
+
+<pre>
+sed -i 's,^#\!/home/replace_this_with_your_username/dafoam/packages/miniconda3/bin/python,#!/usr/bin/env python,g' $HOME/dafoam/packages/miniconda3/*/*
+</pre>
+
+Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
 
 {% include links.html %}
