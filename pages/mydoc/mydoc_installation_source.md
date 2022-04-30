@@ -503,7 +503,7 @@ export MPI_INSTALL_DIR=$DAFOAM_ROOT_PATH/packages/openmpi-3.1.6/opt-gfortran
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MPI_INSTALL_DIR/lib
 export PATH=$MPI_INSTALL_DIR/bin:$PATH
 # PETSC
-export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.11.4
+export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.14.6
 export PETSC_ARCH=real-opt
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PETSC_DIR/$PETSC_ARCH/lib
 export PETSC_LIB=$PETSC_DIR/$PETSC_ARCH/lib
