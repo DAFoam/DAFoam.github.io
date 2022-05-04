@@ -143,7 +143,7 @@ This error is likely caused by not running `Allclean` before running `Allmake` f
 
 ## How to fix the "No module named dafoam.pyDASolver" error?
 
-This error is likely caused by using different Python versions to compile DAFoam and run DAFoam cases. For example, one may forget to load the DAFoam environment when running a case using the system built-in Python 2.7, while the DAFoam was compiled with Python 3.8. To fix this, first check if you can find some compiled DAFoam libraries in the dafoam/dafoam folder, e.g., pyDASolverIncompressible.cpython-38-x86_64-linux-gnu.so. The last few words in the library name shows the Python version (cpython-38). So make sure your current Python environment matches the version in the library name. To make sure you have the correct Python environment, make sure you load the loadDAFoam.sh file before compiling DAFoam and running `pip install .`.
+This error is likely caused by using different Python versions to compile DAFoam and run DAFoam cases. For example, one may forget to load the DAFoam environment and use the system built-in Python 2.7 to run a case, while DAFoam was compiled with Python 3.8. To fix this, first check if you can find some compiled DAFoam libraries in the dafoam/dafoam folder, e.g., pyDASolverIncompressible.cpython-38-x86_64-linux-gnu.so. The Python version is in the library name (cpython-38). So make sure your current Python environment (type `python -V` to check) matches the version in the library name. They do not match, we suggest you recompile DAFoam following the **exact** steps from [here](https://dafoam.github.io/mydoc_installation_source.html#dafoam)
 
 ## How to run a multipoint optimization?
 
