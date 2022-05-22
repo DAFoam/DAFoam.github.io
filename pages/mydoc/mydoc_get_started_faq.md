@@ -139,7 +139,7 @@ If your OS system has more than one user, and you are not the first user and do 
 
 ## How to fix: "Error: There was an error projecting a node at xxx"?
 
-This error is likely caused by the incorrect leList and teList for the thickness and volume constraints. So double check the leList and teList in runScript.py and make sure they are completely within the wing geometry.
+This error is likely caused by the incorrect leList and teList for the thickness and volume constraints. So double check the leList and teList in runScript.py and make sure they are completely within the wing geometry. Refer to [here](https://dafoam.github.io/mydoc_get_started_runscript.html#runscriptpy) for more details on how to setup leList and teList.
 
 ## How to fix: "ImportError: dynamic module does not define module export function"?
 
