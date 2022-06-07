@@ -11,6 +11,6 @@ The overall objective of DAFoam workshops is to facilitate the usage and develop
 
 - June 9, 2021. The first DAFoam workshop ([details](https://dafoam.github.io/dafoam_workshop_2021.html), [slides](https://github.com/DAFoam/workshops/blob/main/2021_Summer/slides/2021_Summer_Workshop.pdf)).
 
-- June 8, 2022. The second DAFoam workshop ([details](https://dafoam.github.io/dafoam_workshop_2022.html)).
+- June 8, 2022. The second DAFoam workshop ([details](https://dafoam.github.io/dafoam_workshop_2022.html), [slides](https://github.com/DAFoam/workshops/blob/main/2022_Summer/slides/2022_Summer_Workshop.pdf)).
 
 {% include links.html %}
