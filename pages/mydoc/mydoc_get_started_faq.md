@@ -133,6 +133,8 @@ You need to increase these default values, e.g., set `"maxSkewness": 6.0,`. If y
 
 Another way to fix the issue is setting mesh quality constraints in optimization. Check the runScript_meshQualityConstraint.py script from the [UBend](https://github.com/DAFoam/tutorials/blob/main/UBend_Channel/runScript_meshQualityConstraint.py) tutorial.
 
+If you have to run optimization with highly non-orthogonal meshes, try to use `Gauss linear limited corrected 0.33` for laplacianSchemes and `limited corrected 0.33` for snGradSchemes in system/fvSchemes. These settings will alleviate the negative impact of mesh quality on the CFD results. See details from [here](https://www.openfoam.com/documentation/user-guide/6-solving/6.2-numerical-schemes).
+
 ## How to know the detailed description for a function's input parameters defined in runScript.py?
 
 In runScript.py, we call multiple functions from other modules, e.g., pyGeo, IDWarp, pyOptSparse. To learn the detailed description for a function's input parameters, we take the function: `DVGeo.addGeoDVLocal` as an example. One can go to the `dafoam/packages/miniconda3/lib/python3.6/site-packages` directory and run this command `grep -r addGeoDVLocal *`. Then, one can find this function is defined in `pygeo/DVGeometry.py` with detailed description of its input parameters.
