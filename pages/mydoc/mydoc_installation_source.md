@@ -558,4 +558,24 @@ sed -i 's,^#\!/home/replace_this_with_your_username/dafoam/packages/miniconda3/b
 
 Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
 
+
+## **Tensorflow C API (optional)**
+
+If you want to use Tensorflow C CPI in DAFoam, run the following commands:
+
+<pre>
+cd $HOME/dafoam/packages && \
+mkdir tensorflow-1.15 && \
+cd tensorflow-1.15 && \
+wget https://github.com/DAFoam/files/releases/download/TensorFlow/libtensorflow-cpu-linux-x86_64-1.15.0.tar.gz && \
+tar -xvf libtensorflow-cpu-linux-x86_64-1.15.0.tar.gz && \
+echo '# Tensorflow' >> $HOME/dafoam/loadDAFoam.sh && \
+echo 'export LIBRARY_PATH=$LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/tensorflow-1.15/lib' >> $HOME/dafoam/loadDAFoam.sh && \
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/tensorflow-1.15/lib' >> $HOME/dafoam/loadDAFoam.sh && \
+echo 'export TENSOR_FLOW_INCLUDE_PATH=$DAFOAM_ROOT_PATH/packages/tensorflow-1.15/include' >> $HOME/dafoam/loadDAFoam.sh && \
+. $HOME/dafoam/loadDAFoam.sh
+</pre>
+
+The Tensorflow C API is ready to use, and DAFoam will compile Tensorflow related libraries when running `./Allmake`.
+
 {% include links.html %}
