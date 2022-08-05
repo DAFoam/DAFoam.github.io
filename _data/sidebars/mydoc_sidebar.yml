@@ -130,7 +130,7 @@ entries:
           output: web, pdf
         
         - title: ADODG3 wing
-          url: /mydoc_tutorials_adodg3_wing.html
+          url: /mydoc_tutorials_aero_adodg3_wing.html
           output: web, pdf
         
         - title: CRM wing
