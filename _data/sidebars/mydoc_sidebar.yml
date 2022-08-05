@@ -129,6 +129,10 @@ entries:
           url: /mydoc_tutorials_aero_m6.html
           output: web, pdf
         
+        - title: ADODG3 wing
+          url: /mydoc_tutorials_adodg3_wing.html
+          output: web, pdf
+        
         - title: CRM wing
           url: /mydoc_tutorials_aero_crm.html
           output: web, pdf
