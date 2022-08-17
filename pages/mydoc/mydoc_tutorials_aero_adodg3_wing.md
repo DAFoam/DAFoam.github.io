@@ -16,29 +16,29 @@ Case: Wing aerodynamic optimization
 Geometry: ADODG3 Wing
 Objective function: Drag coefficient (CD)
 Lift coefficient (CL): 0.375
-Design variables: xx FFD points, twist, and angle of attack for the shape-only case (total: 126).
+Design variables: 120 FFD points, twist, and angle of attack for the shape-only case (total: 126).
 Constraints: volume, thickness, LE/TE, and the lift coefficient (total number: 764)
 Mach number: 0.3
 Reynolds number: 0.22 million
 Mesh cells: ~435,000
 Solver: DARhoSimpleCFoam
 </pre>
-
+![image](https://user-images.githubusercontent.com/106775921/184982881-66223c83-2e5b-46c3-b9da-33b5f99795d2.png)<br>
 Fig. 1. Mesh and FFD points for the ADODG3 wing.
 
-For the ADODG3 Wing configuration, we create three cases: a shape-only case using “runScript.py”, a planform case using “runScript_planform.py”, and a combined shape and planform case using “runScript_both.py”.
+For the ADODG3 Wing configuration, we create three cases: a shape-only case using “runScript.py”, a planform case using “runScript_planform.py”, and a combined shape and planform case using “runScript_shape_planform.py”.
 
 The shape-only case has the variables aoa, twist, and shape.<br>
 The planform case has the variables aoa, taper, and span. <br>
-The combined shape and planform case has all of the previous variables: aoa, twist, shape, taper, and span. <br>
-The angle of attack was used consistently as a variable for all three cases in order to facilitate CFD convergence. 
+The shape and planform case has all of the previous variables: aoa, twist, shape, taper, and span. <br>
+The angle of attack is used consistently for all three cases in order to facilitate CFD convergence. We select "paralleltoFlow" in "objFunc" to specify the air flow direction, which requires use of the aoa variable. 
 <br>
 
 The shape-only case has volume, thickness, LE/TE, and lift constraints.<br>
 The planform case has only volume and lift constraints. The LE/TE and thickness constraints are redundant in the planform case.<br>
-The combined shape and planform case has volume, thickness, LE/TE, and lift constraints. 
+The shape and planform case has volume, thickness, LE/TE, and lift constraints. 
 
-The runScripts are similar to the one used in the NACA0012 [incompressible case](mydoc_tutorials_naca0012_incompressible.html) with a few differences:
+The "runScript.py" is similar to the one used in the NACA0012 [incompressible case](mydoc_tutorials_naca0012_incompressible.html) with a few differences:
 
 - Similarly to the [Onera M6 case,](mydoc_tutorials_aero_m6.html), we set FFD points to “nTwist” and do not change the root twist. 
 
@@ -55,7 +55,7 @@ The runScripts are similar to the one used in the NACA0012 [incompressible case]
   daOptions["designVar"]["twist"] = {"designVarType": "FFD"}
   ```
 
-- We add the function checkMeshThreshold in daOptions.
+- We add the function "checkMeshThreshold" in daOptions in order to relax the mesh quality criteria.
   ```python
    "checkMeshThreshold": {
         "maxAspectRatio": 3000.0,
@@ -72,7 +72,23 @@ The runScripts are similar to the one used in the NACA0012 [incompressible case]
   "primalMinResTolDiff": 1.0e4,
   ```
   
-The value of primalMinResTolDiff is multiplied with the value of primalMinResTol to loosen the tolerances. 
+The value of "primalMinResTolDiff" is multiplied with the value of "primalMinResTol" to loosen the tolerances. 
+<br>
+The "runScript_planform.py" is the same as the "runScript.py" with just the aoa, taper, and span design variables. <br>
+The "runScript_shape_planform.py" is similar to the "runScript.py" with the following differences:
+- We add the function "adjStateOrdering" to 
+
+- We change the scaling factor "scaler" for all of the variables except for angle of attack. This is done to control the relative step sizes of the design variables. We give the variables taper and span significance by scaling them up by a factor of 100 while reducing the impact of the shape variable by scaling it down by a factor of 10. 
+
+  ```python
+   self.add_design_var("twist", lower=-10.0, upper=10.0, scaler=0.1)
+   self.add_design_var("span", lower=-30.0, upper=30.0, scaler=0.01)
+   self.add_design_var("taper", lower=[0.0, -30.0], upper=30.0, scaler=0.01)
+   self.add_design_var("shape", lower=-1.0, upper=1.0, scaler=10.0)
+   self.add_design_var("aoa", lower=0.0, upper=10.0, scaler=1.0)
+  ```
+  
+- As previously stated, the "runscript_shape_planform.py" adds the variables taper and span along with the variables contained in "runScript.py", twist, aoa, and shape.
 
 <br>
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/ADODG3_Wing and run the "preProcessing.sh" script to generate the mesh:
@@ -87,14 +103,17 @@ Then, use the following command to run the optimization with 4 CPU cores:
 mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-The shape-only case ran for 49 steps and took about 11 hours with 320 cores on 4 Icelake nodes of [Stampede 2](https://portal.xsede.org/tacc-stampede2). According to "opt_SNOPT_summary.txt", the drag reduction was **8.79%**.
-The planform case ran for 7 steps and took about 1 hour with 320 cores on 4 Icelake nodes of Stampede2. According to "opt_SNOPT_summary.txt", the drag reduction was **11.5%**.
-The combined case ran for 100 steps and took about 12 hours with 320 cores on 4 Icelake nodes of Stampede 2. According to "opt_SNOPT_summary.txt", the drag reduction was **17.2%**.
-
-The evolution of pressure and shape during the optimization is as follows.
-
+The shape-only case ran for 49 steps and took about 11 hours with 320 cores on 4 Icelake nodes of [Stampede 2](https://portal.xsede.org/tacc-stampede2). According to "opt_SNOPT_summary.txt", the drag reduction was **8.79%**. <br>
 ![Movie_shapecase](https://user-images.githubusercontent.com/106775921/184717033-aba631c2-b29a-4c23-919c-474c5c8db5b2.gif)
-Fig. 2. Pressure and shape evolution during the optimization process for the shape-only case
+Fig. 2. Pressure and shape evolution during the optimization process for the shape-only case<br><br>
+
+The planform case ran for 5 steps and took about 1 hour with 320 cores on 4 Icelake nodes of Stampede2. According to "opt_SNOPT_summary.txt", the drag reduction was **8.47%**. <br>
+![movie_gif](https://user-images.githubusercontent.com/106775921/184983955-667beac1-ce20-4a17-8052-db14f946e8dc.gif)
+Fig. 3. Pressure and shape evolution during the optimization process for the planform case<br><br>
+
+The shape and planform case ran for 100 steps (exceeding the SNOPT iteration limit) and took about 12 hours with 320 cores on 4 Icelake nodes of Stampede 2. According to "opt_SNOPT_summary.txt", the drag reduction was **17.2%**. It is not recommended to run the case for more than 100 major iterations because of the minimal change in drag after iteration 100. 
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/106775921/185023313-5ddebf4c-0efb-431a-8216-a8e9adfe7a74.gif)
+Fig. 4. Pressure and shape evolution during the optimization process for the combined case
 
 {% include links.html %}
 
