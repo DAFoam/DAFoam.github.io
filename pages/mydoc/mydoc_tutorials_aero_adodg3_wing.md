@@ -31,14 +31,14 @@ For the ADODG3 Wing configuration, we create three cases: a shape-only case usin
 The shape-only case has the variables aoa, twist, and shape.<br>
 The planform case has the variables aoa, taper, and span. <br>
 The shape and planform case has all of the previous variables: aoa, twist, shape, taper, and span. <br>
-The angle of attack is used consistently for all three cases in order to facilitate CFD convergence. We select "paralleltoFlow" in "objFunc" to specify the air flow direction, which requires use of the aoa variable. 
+The angle of attack is used consistently for all three cases to facilitate CFD convergence. We select "paralleltoFlow" in "objFunc" to specify the airflow direction, which requires the use of the aoa variable. 
 <br>
 
 The shape-only case has volume, thickness, LE/TE, and lift constraints.<br>
 The planform case has only volume and lift constraints. The LE/TE and thickness constraints are redundant in the planform case.<br>
 The shape and planform case has volume, thickness, LE/TE, and lift constraints. 
 
-The "runScript.py" is similar to the one used in the NACA0012 [incompressible case](mydoc_tutorials_naca0012_incompressible.html) with a few differences:
+The "runScript.py" is similar to the one used in the NACA0012 [incompressible case](mydoc_tutorials_aero_naca0012_incompressible.html) with a few differences:
 
 - Similarly to the [Onera M6 case,](mydoc_tutorials_aero_m6.html), we set FFD points to “nTwist” and do not change the root twist. 
 
@@ -55,7 +55,7 @@ The "runScript.py" is similar to the one used in the NACA0012 [incompressible ca
   daOptions["designVar"]["twist"] = {"designVarType": "FFD"}
   ```
 
-- We add the function "checkMeshThreshold" in daOptions in order to relax the mesh quality criteria.
+- We add the function "checkMeshThreshold" in daOptions to relax the mesh quality criteria.
   ```python
    "checkMeshThreshold": {
         "maxAspectRatio": 3000.0,
@@ -65,20 +65,23 @@ The "runScript.py" is similar to the one used in the NACA0012 [incompressible ca
         }
    ```
 
-- In daOptions, we add the function “primalMinResTolDiff” to adjust the convergence tolerance for the primal solver. 
+- In daOptions, we add the function “primalMinResTolDiff” to adjust the convergence tolerance for the primal solver. The value of "primalMinResTolDiff" is multiplied by the value of "primalMinResTol" to loosen the tolerances. 
 
   ```python
   "primalMinResTol": 1.0e-8,
   "primalMinResTolDiff": 1.0e4,
   ```
   
-The value of "primalMinResTolDiff" is multiplied with the value of "primalMinResTol" to loosen the tolerances. 
 <br>
-The "runScript_planform.py" is the same as the "runScript.py" with just the aoa, taper, and span design variables. <br>
+The "runScript_planform.py" is the same as the "runScript.py" but with only the aoa, taper, and span design variables. <br>
 The "runScript_shape_planform.py" is similar to the "runScript.py" with the following differences:
-- We add the function "adjStateOrdering" to 
 
-- We change the scaling factor "scaler" for all of the variables except for angle of attack. This is done to control the relative step sizes of the design variables. We give the variables taper and span significance by scaling them up by a factor of 100 while reducing the impact of the shape variable by scaling it down by a factor of 10. 
+- We add the function "adjStateOrdering" to ease the convergence of the adjoint equation.
+  ```python
+  "adjStateOrdering": "cell",
+  ```
+
+- We change the scaling factor "scaler" for all of the variables except for the angle of attack. This is done to control the relative step sizes of the design variables. We give the variables taper and span significance by scaling them up by a factor of 100 while reducing the impact of the shape variable by scaling it down by a factor of 10. 
 
   ```python
    self.add_design_var("twist", lower=-10.0, upper=10.0, scaler=0.1)
@@ -88,16 +91,16 @@ The "runScript_shape_planform.py" is similar to the "runScript.py" with the foll
    self.add_design_var("aoa", lower=0.0, upper=10.0, scaler=1.0)
   ```
   
-- As previously stated, the "runscript_shape_planform.py" adds the variables taper and span along with the variables contained in "runScript.py", twist, aoa, and shape.
+- As previously stated, the "runscript_shape_planform.py" adds the variables taper and span along with the variables contained in "runScript.py", twist, aoa, and shape. 
 
 <br>
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/ADODG3_Wing and run the "preProcessing.sh" script to generate the mesh:
+To run this case, first, download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/ADODG3_Wing and run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh
 </pre>
 
-Then, use the following command to run the optimization with 4 CPU cores:
+It is recommended to run this tutorial on an HPC. However, the following command can be used to run the optimization with 4 CPU cores:
 
 <pre>
 mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
@@ -113,8 +116,17 @@ Fig. 3. Pressure and shape evolution during the optimization process for the pla
 
 The shape and planform case ran for 100 steps (exceeding the SNOPT iteration limit) and took about 12 hours with 320 cores on 4 Icelake nodes of Stampede 2. According to "opt_SNOPT_summary.txt", the drag reduction was **17.2%**. It is not recommended to run the case for more than 100 major iterations because of the minimal change in drag after iteration 100. 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/106775921/185023313-5ddebf4c-0efb-431a-8216-a8e9adfe7a74.gif)
-Fig. 4. Pressure and shape evolution during the optimization process for the combined case
+Fig. 4. Pressure and shape evolution during the optimization process for the shape and planform case
 
+To generate the pressure and shape figure of the wing, first reconstruct the processor folders from the optimization into simpler timestamp folders using the following command. 
+<pre>
+reconstructPar
+</pre>
+Next, delete the processor folders.
+<pre>
+rm -r processor*
+</pre>
+Then, open Paraview and open the "paraview.foam" file. Make sure that the case type selected is "reconstructed", select "patch/wing" in Mesh Regions, and check the box that says "Camera Parallel Projection. Click "Apply" to view a colored pressure gradient on the ADODG3 Wing. For more details related to post-processing, refer to the [post-processing](mydoc_get_started_post_processing.html) page in Get Started.
 {% include links.html %}
 
 
