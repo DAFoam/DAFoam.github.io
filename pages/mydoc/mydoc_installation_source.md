@@ -432,13 +432,13 @@ wget https://github.com/DAFoam/files/releases/download/TACS_Extern/metis-5.1.0.t
 tar -czvf TACS_extern.tar.gz metis*.tar.gz UFconfig*.tar.gz  AMD*.tar.gz &&\
 tar -xzf metis*.tar.gz && \
 cd metis-5.1.0 && make config prefix=$HOME/dafoam/repos/tacs/extern/metis/ CFLAGS="-fPIC" && make install && \
-cd ../f5tovtk && make && cp f5tovtk $HOME/dafoam/OpenFOAM/sharedBins && \
-cd ../f5totec && make && cp f5totec $HOME/dafoam/OpenFOAM/sharedBins && \
 cd ../../ && \
 cp Makefile.in.info Makefile.in && \
 ls && \
 sed -i "s/git/dafoam\/repos/g" Makefile.in && \
-make && pip install -e .
+make && pip install -e . && \
+cd extern/f5tovtk && make && cp f5tovtk $HOME/dafoam/OpenFOAM/sharedBins && \
+cd ../f5totec && make && cp f5totec $HOME/dafoam/OpenFOAM/sharedBins
 </pre>
 
 ## **DAFoam regression tests**
