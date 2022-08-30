@@ -437,8 +437,7 @@ cp Makefile.in.info Makefile.in && \
 ls && \
 sed -i "s/git/dafoam\/repos/g" Makefile.in && \
 make && pip install -e . && \
-cd extern/f5tovtk && make && cp f5tovtk $HOME/dafoam/OpenFOAM/sharedBins && \
-cd ../f5totec && make && cp f5totec $HOME/dafoam/OpenFOAM/sharedBins
+cd extern/f5tovtk && make && cp f5tovtk $HOME/dafoam/OpenFOAM/sharedBins
 </pre>
 
 ## **DAFoam regression tests**
