@@ -10,7 +10,7 @@ folder: mydoc
 First, verify if the Docker Desktop app is open and if it says "Docker Desktop is running". Then, open a **Terminal** and go to a tutorial folder. For example, if you download and extract the tutorial files to the Downloads folder and want to run the NACA0012 airfoil case with incompressible flow conditions, use this command:
 
 <pre>
-cd Downloads/tutorials-master/NACA0012_Airfoil/incompressible
+cd Downloads/tutorials-main/NACA0012_Airfoil/incompressible
 </pre>
 
 Now run the following command in the terminal and check the output to make sure you are in the right directory:

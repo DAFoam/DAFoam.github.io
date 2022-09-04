@@ -13,20 +13,18 @@ pvOptUMesh is the second graphical user interface (GUI) plugin in the pvOptGUI s
 
 First, install and open ParaView following the instructions mentioned on [this page](mydoc_gui_overview.html).
 
-Next, open a paraview.foam blank dummy file by clicking the *file* menu and *open* in the top left of the toolbar. A zipped tutorial folder containing this dummy file can be downloaded [here](https://github.com/DAFoam/pvOptGUI_tutorials/archive/refs/heads/main.zip). After opening the .foam file, you should see a source in the pipeline tree on the left side of the screen.
+Next, open the pvOptUMesh source, located by opening the *sources* tab of the toolbar then hovering over *pvOptGUI*.
+
+Then open a paraview.foam dummy file in the file select option of this source. A zipped tutorial folder containing an example of this dummy file can be downloaded [here](https://github.com/DAFoam/pvOptGUI_tutorials/archive/refs/heads/main.zip).
 
 Then click the green apply button on the left, below the ParaView pipeline window. You can also set up the 'auto-apply' feature by navigating to *edit* in the upper toolbar, then selecting *settings*. Auto-apply is the second setting under the general tab.
-
-Finally, load the pvOptUMesh filter from the *Filters* menu in the upper toolbar
 
 
 You should now see the pvOptUMesh interface in the panel on the left, below the pipeline, as shown in the following figure.
 
 ![pvOptUMesh](/images/tutorials/GUI_pvOptUMesh_full.PNG)
 
-pvOptUMesh writes several files necessary for mesh generation. Select the output folder by clicking the *Select Optimization Folder* button and select the preferred directory. A message box should appear indicating whether a working Docker version was successfully found on your system, click *OK*.
-
-**NOTE:** We recommend selecting the same folder containing the .foam dummy file, this allows the ParaView pipeline to access written data for user processing  
+A message box should appear indicating whether a working Docker version was successfully found on your system, click *OK*.
 
 ---
 

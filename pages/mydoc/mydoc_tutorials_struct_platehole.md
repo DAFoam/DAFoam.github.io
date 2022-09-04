@@ -27,7 +27,7 @@ Fig. 1. Mesh and FFD points for the plate hole case
 
 |
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/PlateHole_Structure and  run the "preProcessing.sh" script to generate the mesh:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/PlateHole_Structure and  run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh

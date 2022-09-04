@@ -32,7 +32,7 @@ Fig. 1. Mesh and FFD points for the CRM wing.
 
 The "runScript.py" is similar to that used in the [Onera M6 wing](mydoc_tutorials_aero_m6.html).
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/CRM_Wing and run the "preProcessing.sh" script to generate the mesh:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/CRM_Wing and run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh

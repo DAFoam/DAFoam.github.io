@@ -1,5 +1,5 @@
 ---
-title: "DAFoam: Discrete Adjoint with OpenFOAM for High-fidelity Gradient-based Optimization"
+title: "DAFoam: Discrete Adjoint with OpenFOAM for High-fidelity Multidisciplinary Design Optimization"
 keywords: sample homepage
 sidebar: mydoc_sidebar
 permalink: index.html
@@ -13,14 +13,13 @@ summary:
 {% endfor %}
 </div>
 
-DAFoam develops an efficient discrete adjoint method to perform high-fidelity gradient-based design optimization with the [MACH-Aero](https://github.com/mdolab/MACH-Aero) framework. DAFoam has the following features:
+DAFoam develops an efficient discrete adjoint method to perform high-fidelity multidisciplinary design optimization. DAFoam has the following features:
 
 - It uses a popular open-source package [OpenFOAM](https://www.openfoam.com) for multiphysics analysis.
-- It implements an efficient discrete adjoint approach with competitive speed, scalability, accuracy, and compatibility.
-- It allows rapid discrete adjoint development for any steady and unsteady OpenFOAM primal solvers with modifying only a few hundred lines of source codes.
-- It supports design optimizations for a wide range of disciplines such as aerodynamics, heat transfer, solid mechanics, hydrodynamics, and radiation.
+- It implements a [Jacobian-free discrete adjoint](https://www.sciencedirect.com/science/article/abs/pii/S0376042119300120) approach with competitive speed, scalability, and accuracy.
+- It has a convenient Python interface to couple with [OpenMDAO](https://openmdao.org) for multidisciplinary design optimization.
 
-DAFoam is distributed using the [GPL-v3 license](https://www.gnu.org/licenses/gpl-3.0.en.html), and its source code is avaiable from [Github](https://github.com/mdolab/dafoam)
+DAFoam is distributed using the [GPL-v3 license](https://www.gnu.org/licenses/gpl-3.0.en.html), and its source code is available from [Github](https://github.com/mdolab/dafoam)
 
 Download the [DAFoam image](mydoc_get_started_download_docker.html) and follow the rest of steps in **Get started** to run your first DAFoam optimization!
 

@@ -15,22 +15,15 @@ To run a GUI-based optimization case, first download the [pvOptGUI tutorial](htt
 
 Then, open ParaView following the instructions mentioned on [this page](mydoc_gui_overview.html). 
 
-Then open the pvOptGUI_tutorials/NACA0012/paraview.foam file in ParaView by clicking *file* then *open* in the top left of the toolbar. You should now see the new source in the pipeline manager.
+Then open the pvOptAirfoil source by first clicking the sources tab in the toolbar at the top of the screen. Then hover over pvOptGUI and select pvOptAirfoil. Open a paraview.foam dummy file inside the new source's file select option, an example of this file is found in pvOptGUI_tutorials.
 
 Then click the green apply button on the left, below the ParaView pipeline window. You can also set up the 'auto-apply' feature by navigating to *edit* in the upper toolbar, then selecting settings. Auto-apply is the second setting under the *general* tab.
-
-Finally, load the plugin from the "Filters" menu in the upper toolbar  
-
 
 A message box should appear indicating whether a working Docker version was successfully found on your system, click *OK*
 
 You should now see the pvOptAirfoil interface in the panel on the left, below the pipeline, as shown in the following figure.
 
-![pvOptAirfoil](/images/tutorials/GUI_pvOptAirfoil_full.png)
-
-pvOptAirfoil writes several files for mesh generation, run script creation, optimization and post-processing results. Select the output folder by clicking the *Select Optimization Folder* button and select the preferred directory.
-
-**NOTE:** We recommend selecting the same folder containing the .foam dummy file, this allows the ParaView pipeline to access written data for user processing  
+![pvOptAirfoil](/images/tutorials/GUI_pvOptAirfoil_full.png) 
 
 ---
 
@@ -96,7 +89,8 @@ Dynamic Viscosity
 
 
 Angle of Attack
-- Input disabled, this is an initial condition for the CL Solution, true angle of attack is calculated before optimization by default  
+- Input disabled during optimization setup only, this is an initial condition for the CL Solution, true angle of attack is calculated before optimization by default.
+- This option is enabled for flow solution 
 
 
 Select the preferred turbulence model from the dropdown list

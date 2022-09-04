@@ -59,7 +59,7 @@ In this case, we set up a combined objective function of wall heat flux and tota
 },
 </pre>
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/UBend_Channel and run the "preProcessing.sh" script to generate the mesh:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/UBend_Channel and run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh

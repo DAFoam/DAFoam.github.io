@@ -40,7 +40,7 @@ The "runScript.py" is similar to the one used in the NACA0012 [low speed case](m
 
 - To ensure a robust convergence, we need to bound the variables when solving the primal. This is done by setting lower and upper bounds in "primalVarBounds" for all variables.
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/NACA0012_Airfoil/subsonic and run the "preProcessing.sh" script to generate the mesh:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/NACA0012_Airfoil/subsonic and run the "preProcessing.sh" script to generate the mesh:
 
 <pre>
 ./preProcessing.sh
