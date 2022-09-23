@@ -16,7 +16,7 @@ Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Nump
 | :------------------------------------------------------------------------------------------------ | 
 20.04  | gcc/9.3  | 3.1.6   | 3.1.3  | 3.14.6 | 3.14.1   | 4.1.2 | 3.8    | 1.21.2 | 1.7.1 | 0.29.21
 
-To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM.
+To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM. **Make sure you DO NOT close the terminal before all the installation steps are done!**
 
 ## **Prerequisites**
 
