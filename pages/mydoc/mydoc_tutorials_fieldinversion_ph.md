@@ -169,7 +169,9 @@ The following code snippet in the runScript.py is unique to flows where we want 
   },
 },
 </pre>
-{% include note.html content="Users must remove these lines for the cases that do not require a forcing term to the momentum equation. %}
+{% include note.html content="Users must remove these lines for the cases that do not require a forcing term to the momentum equation." %}
 
 ### Contact
 Please note that the field inversion feature in DAFoam is a work in progress. More tutorials, documentation, and features will be added as the work progresses. In the meantime, if you have questions about the tool or would like to collaborate please get in touch: obidar1@sheffield.ac.uk. 
+
+{% include links.html %}
