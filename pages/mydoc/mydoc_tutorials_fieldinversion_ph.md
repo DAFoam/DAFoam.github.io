@@ -20,7 +20,7 @@ Fig. 1. Periodic hill geometry and mesh.
 
 ## Run field inversion
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/periodicHill_fieldInversion and run the "preProcessing.sh" script to make a copy of the 0 directory. 
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/PeriodicHill_FieldInversion and run the "preProcessing.sh" script to make a copy of the 0 directory. 
 
 <pre>
 ./preProcessing.sh
