@@ -33,7 +33,7 @@ First create a "dafoam" folder in your home directory. Then create a "loadDAFoam
 
 <pre>
 mkdir -p $HOME/dafoam && \
-mkdir -p $HOME/dafoam/packages $HOME/dafoam/OpenFOAM $HOME/dafoam/repos && \
+mkdir -p $HOME/dafoam/packages $HOME/dafoam/OpenFOAM $HOME/dafoam/OpenFOAM/sharedBins $HOME/dafoam/OpenFOAM/sharedLibs $HOME/dafoam/repos && \
 echo '#!/bin/bash' > $HOME/dafoam/loadDAFoam.sh && \
 echo '# DAFoam root path' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export DAFOAM_ROOT_PATH=$HOME/dafoam' >> $HOME/dafoam/loadDAFoam.sh && \
