@@ -209,6 +209,7 @@ v1.6.1      | v1.5.0   | 65bd5cf | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0 
 Now run this command to install all the repos for MACH-Aero:
 
 <pre>
+. $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/mdolab/baseclasses/archive/v1.6.1.tar.gz -O baseclasses.tar.gz && \
 tar -xvf baseclasses.tar.gz && cd baseclasses-1.6.1 && pip install . && \
@@ -297,6 +298,7 @@ cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADR && \
 sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADR/g' etc/bashrc && \
 sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
 sed -i 's/export WM_CODI_AD_MODE=CODI_AD_FORWARD/export WM_CODI_AD_MODE=CODI_AD_REVERSE/g' etc/bashrc && \
+. $HOME/dafoam/loadDAFoam.sh && \
 source etc/bashrc && \
 export WM_NCOMPPROCS=4 && \
 ./Allwmake 2> warningLog.txt
@@ -334,6 +336,7 @@ tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADF && \
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADF && \
 sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADF/g' etc/bashrc && \
 sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
+. $HOME/dafoam/loadDAFoam.sh && \
 source etc/bashrc && \
 export WM_NCOMPPROCS=4 && \
 ./Allwmake 2> warningLog.txt
@@ -396,12 +399,14 @@ To perform multidisplinary deisgn optimization, we need to install the following
 [OpenMDAO](https://openmdao.org) is an open-source multidisciplinary optimization framework. 
 
 <pre>
+. $HOME/dafoam/loadDAFoam.sh && \
 pip install openmdao==3.19
 </pre>
 
 [Mphys](https://github.com/OpenMDAO/mphys) is an interface that faciliate the interation between low- and high-fidelity tools within OpenMDAO.
 
 <pre>
+. $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/OpenMDAO/mphys/archive/337347ec5325e66234e881fc99fd9c4857c16e4e.tar.gz -O mphys.tar.gz && \
 tar -xvf mphys.tar.gz && mv mphys-* mphys && \
@@ -411,6 +416,7 @@ cd mphys && pip install -e .
 [FUNtoFEM](https://github.com/smdogroup/funtofem) is a generic aeroelastic analysis and adjoint-based gradient evaluation tools.
 
 <pre>
+. $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/smdogroup/funtofem/archive/f2b39efd280ac52000ba821307cd8e3f10b3dae2.tar.gz -O funtofem.tar.gz && \
 tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
@@ -422,6 +428,7 @@ make && pip install -e .
 [TACS](https://github.com/smdogroup/tacs) is a finite-element library for analysis and adjoint-based gradient evaluation
 
 <pre>
+. $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/smdogroup/tacs/archive/refs/tags/v3.0.0.tar.gz -O tacs.tar.gz && \
 tar -xvf tacs.tar.gz && mv tacs-* tacs && \
