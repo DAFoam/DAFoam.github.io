@@ -204,7 +204,7 @@ The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest
 
 baseclasses | pySpline |  pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.6.1      | v1.5.0   | 65bd5cf | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0  | v2.8.1      | v1.2.1 | {{ site.latest_version }}
+v1.6.1      | v1.5.0   | v1.12.2 | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0  | v2.8.1      | v1.2.1 | {{ site.latest_version }}
 
 Now run this command to install all the repos for MACH-Aero:
 
@@ -219,7 +219,7 @@ tar -xvf pyspline.tar.gz && cd pyspline-1.5.0 && \
 cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/pygeo/archive/65bd5cfaeaedf3764fe53c2cd56507e047e601f5.tar.gz -O pygeo.tar.gz && \
+wget https://github.com/friedenhe/pygeo/archive/refs/heads/fix_comm.tar.gz -O pygeo.tar.gz && \
 tar -xvf pygeo.tar.gz && mv pygeo-* pygeo && cd pygeo && pip install . && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/mdolab/multipoint/archive/v1.4.0.tar.gz -O multipoint.tar.gz && \
@@ -374,11 +374,12 @@ cd $HOME/dafoam/repos && \
 wget https://github.com/mdolab/dafoam/archive/{{ site.latest_version }}.tar.gz -O dafoam.tar.gz && \
 tar -xvf dafoam.tar.gz && cd dafoam-* && \
 . $HOME/dafoam/loadDAFoam.sh && \
-./Allmake 2> errorLog.txt && \
+export DAFOAM_NO_WARNINGS=1 && \
+./Allmake && \
 source $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADR/etc/bashrc && \
-./Allclean && ./Allmake 2> errorLog.txt && \
+./Allclean && ./Allmake && \
 source $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADF/etc/bashrc && \
-./Allclean && ./Allmake 2> errorLog.txt && \
+./Allclean && ./Allmake && \
 pip install .
 </pre>
 
