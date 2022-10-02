@@ -13,6 +13,8 @@ The latest version is [DAFoam {{ site.latest_version }}](https://github.com/mdol
 
 Release notes:
 
+- [DAFoam v3.0.1](https://github.com/mdolab/dafoam/releases/tag/v3.0.2)
+
 - [DAFoam v3.0.1](https://github.com/mdolab/dafoam/releases/tag/v3.0.1)
 
 - [DAFoam v3.0.0](https://github.com/mdolab/dafoam/releases/tag/v3.0.0)
