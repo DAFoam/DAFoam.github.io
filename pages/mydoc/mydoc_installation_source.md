@@ -219,7 +219,7 @@ tar -xvf pyspline.tar.gz && cd pyspline-1.5.0 && \
 cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/friedenhe/pygeo/archive/refs/heads/fix_comm.tar.gz -O pygeo.tar.gz && \
+wget https://github.com/mdolab/pygeo/archive/4641625e28b0bae97e05351c23d9083a693734d3.tar.gz -O pygeo.tar.gz && \
 tar -xvf pygeo.tar.gz && mv pygeo-* pygeo && cd pygeo && pip install . && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/mdolab/multipoint/archive/v1.4.0.tar.gz -O multipoint.tar.gz && \
