@@ -317,11 +317,11 @@ It should see some basic information of DASimpleFoamReverseAD.
 After OpenFOAM-v1812-ADR is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
 
 <pre>
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib
-ln -s ../../../../OpenFOAM-v1812-ADR/platforms/*/lib/*.so .
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy
-ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/dummy/*.so .
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-system
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib && \
+ln -s ../../../../OpenFOAM-v1812-ADR/platforms/*/lib/*.so . && \
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy && \
+ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/dummy/*.so . && \
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-system && \
 ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/openmpi-system/*.so .
 </pre>
 
@@ -345,11 +345,11 @@ export WM_NCOMPPROCS=4 && \
 After OpenFOAM-v1812-ADF is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
 
 <pre>
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib
-ln -s ../../../../OpenFOAM-v1812-ADF/platforms/*/lib/*.so .
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy
-ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/dummy/*.so .
-cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-system
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib && \
+ln -s ../../../../OpenFOAM-v1812-ADF/platforms/*/lib/*.so . && \
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy && \
+ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/dummy/*.so . && \
+cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-system && \
 ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/openmpi-system/*.so .
 </pre>
 
