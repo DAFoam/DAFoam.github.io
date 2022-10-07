@@ -353,6 +353,13 @@ cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-system && \
 ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/openmpi-system/*.so .
 </pre>
 
+Once done, unset the AD environment, and re-source the original OpenFOAM-v1812. **This step is needed everytime you compile an AD versions of DAFoam or OpenFOAM!**
+
+<pre>
+unset WM_CODI_AD_MODE && \
+. $HOME/dafoam/loadDAFoam.sh
+</pre>
+
 ## **pyOFM**
 
 Compile pyOFM by running:
