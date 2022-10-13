@@ -460,7 +460,7 @@ cd extern/f5tovtk && make && cp f5tovtk $HOME/dafoam/OpenFOAM/sharedBins
 To verify the DAFoam installation, you can run the regression tests:
 
 <pre>
-cd $HOME/dafoam/repos/dafoam/tests && ./Allrun
+cd $HOME/dafoam/repos/dafoam-*/tests && ./Allrun
 </pre>
 
 The regression tests should take less than 30 minutes. The test progress will be printed to screen. Make sure you see this at the end:
