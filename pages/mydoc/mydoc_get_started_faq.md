@@ -75,6 +75,8 @@ The above command will extract the patch "wing" to a stl file called "optShape.s
 
 An alternative way to output the optimized geometry is to load it in ParaView, go to the last time step for the optimized shape, select the surfaces you want to output, choose Files-Save Data, and save it as STL files.
 
+If you want to get the optimized geometry from the original STL file instead of the OpenFOAM mesh (e.g., for 3D printing), you can use this [script](https://github.com/DAFoam/tutorials/tree/main/Prowim_Wing_Propeller/deformSTL). It will read the optimized design variables from file and use pyGeo to deform a STL file to its optimal shape. 
+
 ## Can I get the optimized geometry in a CAD format?
 
 Yes, you can get the optimized geometry in the IGES format through pyGeo. Follow the "deformGeo" section from [here](https://dafoam.github.io/mydoc_tutorials_aero_prowim_wing.html). Refer to the [pyGeo documentation](https://mdolab-pygeo.readthedocs-hosted.com/en/latest/update_pygeo.html) for more general instructions on how to deform the design surface geometry.
