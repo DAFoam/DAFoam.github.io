@@ -104,13 +104,14 @@ Not exactly. DAFoam's primal solvers are slightly different from the ones in Ope
 
 ## Does DAFoam support all the OpenFOAM's configurations and boundary conditions?
 
-No. These OpenFOAM features are NOT supported in DAFoam.
+No. These OpenFOAM features are NOT supported in DAFoam. **Note**: the configurations and boundary conditions used in [DAFoam tutorials](https://github.com/dafoam/tutorials) are tested and working. Use caution if you want to add a new configuration that has not been used the tutorials.
 
 - Unsteady solvers
 - AMI boundary condition
 - Non-stationary boundary conditions, such as totalPressure, totalTemperature
 - fvOptions and MRF are implemented for only some of primal solvers
 - empty boundary condition
+- Limited schemes such as `Gauss linear limited corrected 0.33` for laplacianSchemes and `limited corrected 0.33` for snGradSchemes in system/fvSchemes may cause inaccurate adjoint gradients. Don't use them!
 
 ## How to fix the "Primal solution failed for the baseline design!" error?
 
@@ -152,7 +153,6 @@ You need to increase these default values, e.g., set `"maxSkewness": 6.0,`. If y
 
 Another way to fix the issue is setting mesh quality constraints in optimization. Check the runScript_meshQualityConstraint.py script from the [UBend](https://github.com/DAFoam/tutorials/blob/main/UBend_Channel/runScript_meshQualityConstraint.py) tutorial.
 
-If you have to run optimization with highly non-orthogonal meshes, try to use `Gauss linear limited corrected 0.33` for laplacianSchemes and `limited corrected 0.33` for snGradSchemes in system/fvSchemes. These settings will alleviate the negative impact of mesh quality on the CFD results. See details from [here](https://www.openfoam.com/documentation/user-guide/6-solving/6.2-numerical-schemes).
 
 ## How to know the detailed description for a function's input parameters defined in runScript.py?
 
