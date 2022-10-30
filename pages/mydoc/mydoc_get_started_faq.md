@@ -178,6 +178,10 @@ This error is likely caused by not running `Allclean` before running `Allmake` f
 
 This error is likely caused by using different Python versions to compile DAFoam and run DAFoam cases. **Make sure you DO NOT close the terminal before all the installation steps are done!** For example, one may forget to load the DAFoam environment and use the system built-in Python 2.7 to run a case, while DAFoam was compiled with Python 3.8. To fix this, first check if you can find some compiled DAFoam libraries in the dafoam/dafoam folder, e.g., pyDASolverIncompressible.cpython-38-x86_64-linux-gnu.so. The Python version is in the library name (cpython-38). So make sure your current Python environment (type `python -V` to check) matches the version in the library name. They do not match, we suggest you recompile DAFoam following the **exact** steps from [here](https://dafoam.github.io/mydoc_installation_source.html#dafoam)
 
+## How to speed up DAFoam repo compilation speed for code development?
+
+Compiling the DAFoam repo may make take up 30 minutes, depending on your PC performance. If you are modifying the DAFoam source code and need to quickly test your changes, you don't need to compile all the DAFoam components. To speed up the DAFoam repo compilation, you can use the command `Allmake incompressible` to compile only the incompressible libraries and solvers. This will significantly speed up the process because all the compressible and solid libraries and solvers will not be compiled. To further speed up the compilation process, you can open dafoam/src/adjoint/Make/files_Incompressible and delete the solvers, turbulence models, and other stuff you don't need to compile. For example, if you want to test a new change for DASimpleFoam with the SA turbulence model and force objective, you can use this simplified [files_Incompressible](mydoc_get_started_files_incompressible_simplefoam.html).
+
 ## How to run a multipoint optimization?
 
 Refer to the tutorial tutorials-main/NACA0012_Airfoil/multipoint.
@@ -201,8 +205,6 @@ Finally, generate the mesh and run the new optimization using 4 CPU cores:
 ./preProcessing.sh && mpirun -np 4 python runScript.py 2>&1 | tee optLog.txt
 </pre>
 
-{% include links.html %}
-
 ## How to create a new objective function?
 
 The objective functions for DAFoam are stored in the *src/adjoint/DAObjFunc* directory of [this repository](https://github.com/mdolab/dafoam). To create a new objective function, it is recommended to base it off of a similar existing function. You will need to first create yourObjFunc.H and yourObjFunc.C with your constructors, input/output definitions and implementation. Make sure you assign a new type name for your objective function by setting `TypeName("nameOfYourNewObjFunc");` in the yourObjFunc.H file. Then in runScript.py, you will need to use the same name for the "type" key in daOptions-objFunc.
@@ -212,3 +214,5 @@ Then, you will need to add the paths to the files you created in *src/adjoint/Ma
 Finally, you will need to add the objective function to one of the runTests_*.py located in the *tests* directory. Again, use the other objective functions as an example. 
 
 When making a pull request, the code coverage test will not pass unless the output from testing your objective function (the value itself and sensitivity values) is copied into the corresponding tests/refs/DAFoam_Test_*.txt file.
+
+{% include links.html %}
