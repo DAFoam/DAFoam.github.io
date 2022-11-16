@@ -121,6 +121,10 @@ This error basically says the first primal solution does not converge to the pre
 
 This error basically says your FFD box does not fully contain the design surface geometry. You need to adjust the FFD points. 
 
+## How to fix the "Conflicting Colors Found!" error?
+
+This usually happens when you regenerate the mesh but forget to delete the old coloring files. In this case, DAFoam will read the old coloring files for the new mesh and report a coloring conflict. To fix this error, simply delete the existing coloring files that end with ".bin", such as "dFdWColoring*.bin" and "dRdWColoring*.bin", and then rerun DAFoam. If DAFoam can not find the coloring files in the optimization folder, it will regenerate them for the new mesh.
+
 ## How to fix "Warning: xxx the ray might not have been long enough to intersect the nearest curve."?
 
 This usually happens if you have a highly skewed FFD box. To fix this warning, add `raySize=5` to the "nom_addRefAxis" call. Refer to the interface from [here](https://github.com/mdolab/pygeo/blob/c417b0fea7d534458871aac8721a0c452a47eaae/pygeo/parameterization/DVGeo.py#L240)
