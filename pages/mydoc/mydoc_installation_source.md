@@ -409,7 +409,7 @@ To perform multidisplinary deisgn optimization, we need to install the following
 
 <pre>
 . $HOME/dafoam/loadDAFoam.sh && \
-pip install openmdao==3.19
+pip install openmdao==3.25
 </pre>
 
 [Mphys](https://github.com/OpenMDAO/mphys) is an interface that faciliate the interation between low- and high-fidelity tools within OpenMDAO.
@@ -417,7 +417,7 @@ pip install openmdao==3.19
 <pre>
 . $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/OpenMDAO/mphys/archive/337347ec5325e66234e881fc99fd9c4857c16e4e.tar.gz -O mphys.tar.gz && \
+wget https://github.com/OpenMDAO/mphys/archive/refs/tags/v1.1.0.tar.gz -O mphys.tar.gz && \
 tar -xvf mphys.tar.gz && mv mphys-* mphys && \
 cd mphys && pip install -e .
 </pre>
@@ -439,7 +439,7 @@ make && pip install -e .
 <pre>
 . $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/smdogroup/tacs/archive/refs/tags/v3.0.0.tar.gz -O tacs.tar.gz && \
+wget https://github.com/smdogroup/tacs/archive/refs/tags/v3.2.1.tar.gz -O tacs.tar.gz && \
 tar -xvf tacs.tar.gz && mv tacs-* tacs && \
 cd tacs/extern && \
 wget https://github.com/DAFoam/files/releases/download/TACS_Extern/TACS_extern.tar.gz && tar -xzf TACS_extern.tar.gz && \
