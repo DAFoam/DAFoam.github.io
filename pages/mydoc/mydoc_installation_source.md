@@ -66,7 +66,8 @@ pip install scipy==1.7.1 && \
 pip install cython==0.29.21 && \
 pip install numpy-stl==2.16.0 && \
 pip install pynastran==1.3.3 && \
-pip install nptyping==1.4.4
+pip install nptyping==1.4.4 && \
+pip install swig==4.1.1
 </pre>
 
 
