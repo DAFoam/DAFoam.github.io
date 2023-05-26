@@ -67,7 +67,8 @@ pip install cython==0.29.21 && \
 pip install numpy-stl==2.16.0 && \
 pip install pynastran==1.3.3 && \
 pip install nptyping==1.4.4 && \
-pip install swig==4.1.1
+pip install swig==4.1.1 && \
+pip install tensorflow-cpu==2.12
 </pre>
 
 
@@ -294,7 +295,7 @@ Run the following:
 
 <pre>
 cd $HOME/dafoam/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.9.tar.gz -O OpenFOAM-v1812-AD.tgz && \
+wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.0.tar.gz -O OpenFOAM-v1812-AD.tgz && \
 tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADR && \
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADR && \
 sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADR/g' etc/bashrc && \
@@ -333,7 +334,7 @@ Run the following:
 
 <pre>
 cd $HOME/dafoam/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.2.9.tar.gz -O OpenFOAM-v1812-AD.tgz && \
+wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.0.tar.gz -O OpenFOAM-v1812-AD.tgz && \
 tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADF && \
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADF && \
 sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADF/g' etc/bashrc && \
@@ -576,25 +577,5 @@ sed -i 's,^#\!/home/replace_this_with_your_username/dafoam/packages/miniconda3/b
 </pre>
 
 Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
-
-
-## **Tensorflow C API (optional)**
-
-If you want to use Tensorflow C CPI in DAFoam, run the following commands:
-
-<pre>
-cd $HOME/dafoam/packages && \
-mkdir tensorflow-1.15 && \
-cd tensorflow-1.15 && \
-wget https://github.com/DAFoam/files/releases/download/TensorFlow/libtensorflow-cpu-linux-x86_64-1.15.0.tar.gz && \
-tar -xvf libtensorflow-cpu-linux-x86_64-1.15.0.tar.gz && \
-echo '# Tensorflow' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export LIBRARY_PATH=$LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/tensorflow-1.15/lib' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/tensorflow-1.15/lib' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export TENSOR_FLOW_INCLUDE_PATH=$DAFOAM_ROOT_PATH/packages/tensorflow-1.15/include' >> $HOME/dafoam/loadDAFoam.sh && \
-. $HOME/dafoam/loadDAFoam.sh
-</pre>
-
-The Tensorflow C API is ready to use, and DAFoam will compile Tensorflow related libraries when running `./Allmake`.
 
 {% include links.html %}
