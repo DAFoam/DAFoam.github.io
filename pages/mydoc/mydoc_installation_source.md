@@ -419,7 +419,7 @@ pip install openmdao==3.25
 <pre>
 . $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/OpenMDAO/mphys/archive/refs/tags/v1.1.0.tar.gz -O mphys.tar.gz && \
+wget https://github.com/friedenhe/mphys/archive/refs/heads/dafoam_aerothermal.tar.gz -O mphys.tar.gz && \
 tar -xvf mphys.tar.gz && mv mphys-* mphys && \
 cd mphys && pip install -e .
 </pre>

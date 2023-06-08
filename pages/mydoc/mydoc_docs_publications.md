@@ -7,6 +7,12 @@ permalink: mydoc_docs_publications.html
 folder: mydoc
 ---
 
+The following publications used DAFoam in their studies.
+
+- Omid Bidar, Ping He, Sean Anderson, Ning Qin. An open-source adjoint-based field inversion tool for data-driven RANS modelling, In: AIAA Aviation Forum, 2022. AIAA 2022-4125. https://doi.org/10.2514/6.2022-4125
+  
+- Omid Bidar, Ping He, Sean Anderson, Ning Qin. Turbulent mean flow reconstruction based on sparse multi-sensor data and adjoint-based field inversion, In: AIAA Aviation Forum, 2022. AIAA 2022-3900. https://doi.org/10.2514/6.2022-3900
+
 - Ping He, Joaquim R. R. A. Martins. A hybrid time-spectral approach for aerodynamic optimization with unsteady flow. In: AIAA Scitech Forum, 2021. https://doi.org/10.2514/6.2021-0278
 
 - Ping He, Charles A. Mader, Joaquim R.R.A. Martins, Kevin J. Maki. DAFoam: An open-source adjoint framework for multidisciplinary design optimization with OpenFOAM. AIAA Journal, 2020. https://doi.org/10.2514/1.J058853
@@ -26,12 +32,5 @@ folder: mydoc
 - Ping He, Grzegorz Filip, Joaquim R. R. A. Martins, Kevin J. Maki. Hull form hydrodynamic design using a discrete adjoint optimization method, In: 13th International Marine Design Conference, 2018
 
 - Ping He, Charles A. Mader, Joaquim R. R. A. Martins, Kevin J. Maki. An aerodynamic design optimization framework using a discrete adjoint approach with OpenFOAM. Computers & Fluids, 168, pp. 285-303, 2018. http://dx.doi.org/10.1016/j.compfluid.2018.04.012
-
-Field inversion: 
-
-- Omid Bidar, Ping He, Sean Anderson, Ning Qin. An open-source adjoint-based field inversion tool for data-driven RANS modelling, In: AIAA Aviation Forum, 2022. AIAA 2022-4125. https://doi.org/10.2514/6.2022-4125
-  
-- Omid Bidar, Ping He, Sean Anderson, Ning Qin. Turbulent mean flow reconstruction based on sparse multi-sensor data and adjoint-based field inversion, In: AIAA Aviation Forum, 2022. AIAA 2022-3900. https://doi.org/10.2514/6.2022-3900
-
 
 {% include links.html %}
