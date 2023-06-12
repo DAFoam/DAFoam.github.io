@@ -1,0 +1,36 @@
+<script>
+    //If the following doesn't work anymore your website is probably blocked because of usage, get the Pro Package at extreme-ip-lookup.com
+     function GA4getIP1(json) {
+       if (json) {
+           EIPL=json;
+       }
+           if (typeof gaGlobal  === 'object' && gaGlobal.vid) {
+            var org=''+EIPL.org;
+                    if (EIPL.businessName) {
+                        org=''+EIPL.businessName;
+                if (EIPL.businessWebsite) {
+                    org+=' - '+EIPL.businessWebsite;
+                }
+            }
+            org=encodeURIComponent(org);
+            var ipType='b'; // sends as Business type of visitor, this is reflected in the Event name: eiplb_*
+            if (EIPL.ipType === 'Education') {
+                ipType='e'; // sends as Education type of visitor, this is reflected in the Event name: eiple_*
+            }
+            else if (EIPL.ipType === 'Residential') {
+                ipType='r'; // sends as Residential type of visitor, this is reflected in the Event name: eiplr_*
+            }
+            var blob = new Blob([], {type: 'text/plain;charset=UTF-8'});
+            var regex = /_ga_([^=]+)/gi, result = [];
+            while ( (result = regex.exec(document.cookie)) ) {
+                var sid = document.cookie.match(new RegExp("(^| )_ga_"+result[1]+"=GS[0-9].[0-9].([^.]+)"));
+                var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-'+result[1]+'&cid='+gaGlobal.vid+'&sid='+sid[2]+'&';
+                navigator.sendBeacon(url+'en=eipl'+ipType+'_'+org+'&ep.visitorType='+EIPL.ipType+'&ep.source=extreme-ip-lookup.com', blob);
+            }
+        }
+        else {
+            setTimeout(function() {GA4getIP1();}, 200);
+        }
+     }
+</script>
+<script src="//extreme-ip-lookup.com/json/?callback=GA4getIP1&key=demo2" async defer></script>
