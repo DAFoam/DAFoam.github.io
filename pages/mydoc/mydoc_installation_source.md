@@ -429,7 +429,7 @@ cd mphys && pip install -e .
 <pre>
 . $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/smdogroup/funtofem/archive/f2b39efd280ac52000ba821307cd8e3f10b3dae2.tar.gz -O funtofem.tar.gz && \
+wget https://github.com/smdogroup/funtofem/archive/2c664b4b985dce43c3438848998ab69c53b54645.tar.gz -O funtofem.tar.gz && \
 tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
 cd funtofem && cp Makefile.in.info Makefile.in && \
 sed -i "s/git/dafoam\/repos/g" Makefile.in && \
