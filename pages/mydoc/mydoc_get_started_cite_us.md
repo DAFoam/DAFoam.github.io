@@ -13,6 +13,8 @@ Please cite the following papers in any publication for which you find DAFoam us
 
 - Ping He, Charles A. Mader, Joaquim R.R.A. Martins, Kevin J. Maki. An aerodynamic design optimization framework using a discrete adjoint approach with OpenFOAM. Computer & Fluids, 168:285-303, 2018. https://doi.org/10.1016/j.compfluid.2018.04.012
 
+Latex bib keys:
+
 <pre>
 @article{DAFoamPaper1,
   title={{DAFoam}: An open-source adjoint framework for multidisciplinary design optimization with {OpenFOAM}},
