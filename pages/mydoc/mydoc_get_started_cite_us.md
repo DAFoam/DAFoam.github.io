@@ -17,24 +17,24 @@ Latex bib keys:
 
 <pre>
 @article{DAFoamPaper1,
-  title={{DAFoam}: An open-source adjoint framework for multidisciplinary design optimization with {OpenFOAM}},
-  author={He, Ping and Mader, Charles A and Martins, Joaquim RRA and Maki, Kevin J},
-  journal={AIAA journal},
-  volume={58},
-  number={3},
-  pages={1304--1319},
-  year={2020},
-  publisher={American Institute of Aeronautics and Astronautics}
+  title={DAFoam}: An open-source adjoint framework for multidisciplinary design optimization with {OpenFOAM},
+  author=He, Ping and Mader, Charles A and Martins, Joaquim RRA and Maki, Kevin J,
+  journal=AIAA journal,
+  volume=58,
+  number=3,
+  pages=1304--1319,
+  year=2020,
+  publisher=American Institute of Aeronautics and Astronautics
 }
 
 @article{DAFoamPaper2,
-  title={An aerodynamic design optimization framework using a discrete adjoint approach with {OpenFOAM}},
-  author={He, Ping and Mader, Charles A and Martins, Joaquim RRA and Maki, Kevin J},
-  journal={Computers \& Fluids},
-  volume={168},
-  pages={285--303},
-  year={2018},
-  publisher={Elsevier}
+  title=An aerodynamic design optimization framework using a discrete adjoint approach with {OpenFOAM},
+  author=He, Ping and Mader, Charles A and Martins, Joaquim RRA and Maki, Kevin J,
+  journal=Computers \& Fluids,
+  volume=168,
+  pages=285--303,
+  year=2018,
+  publisher=Elsevier
 }
 </pre>
 
