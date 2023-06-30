@@ -47,10 +47,6 @@ entries:
     - title: FAQ
       url: /mydoc_get_started_faq.html
       output: web, pdf
-    
-    - title: Cite us
-      url: /mydoc_get_started_cite_us.html
-      output: web, pdf
 
   - title: Download
     output: web, pdf
