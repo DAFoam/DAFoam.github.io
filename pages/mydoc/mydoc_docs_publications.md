@@ -25,6 +25,8 @@ The following publications used or tested DAFoam in their studies. If we miss yo
 
 1. B Pacini M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Understanding Distributed Propulsion on the NASA Tiltwing Concept Vehicle with Aerodynamic Shape Optimization. In: AIAA Scitech Forum, 2023. 
 
+1. M. H. Negahban, M. Bashir, R.M. Botez. Free-Form Deformation Parameterization on the Aerodynamic Optimization of Morphing Trailing Edge. Applied Mechanics, 2023.
+
 1. M. H. Negahban, M. Bashir, R.M. Botez. Aerodynamic Optimization of a Novel Synthetic Trailing Edge and Chord Elongation Morphing: Application to the UAS-S45 Airfoil. In: AIAA Scitech Forum, 2023. 
 
 1. C. Wu, Y. Zhang. Enhancing the SST Turbulence Model with Symbolic Regression: A Generalizable and Interpretable Data-Driven Approach. arXiv:2304.11347, 2023.
