@@ -30,10 +30,10 @@ To run this case, first download [tutorials](https://github.com/DAFoam/tutorials
 ./preProcessing.sh
 </pre>
 
-Then, use the following command to run the optimization with 4 CPU cores:
+Then, use the following command to run the optimization in serial:
 
 <pre>
-mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
+python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/FI/U_comparison_coarse_mesh.png" width="400" />
