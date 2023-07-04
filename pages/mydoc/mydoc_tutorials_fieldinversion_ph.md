@@ -6,6 +6,9 @@ sidebar: mydoc_sidebar
 permalink: mydoc_tutorials_field_inversion_ph.html
 folder: mydoc
 ---
+
+{% include note.html content="The periodic hill case is known to have an adjoint accuracy issue when running in parallel. So please run this case in serial. This issue affects ONLY cases with periodic boundary conditions. For other cases without periodic boundary conditions, such as the wind turbine and hump, we can run field inversion in parallel." %}
+
 ## Overview
 The following is a demonstration of how to perform field inversion using DAFoam. We have selected the periodic hill flow as a demonstrative case. In this tutorial we will show how we can augment the Spalart-Allmaras model using velocity field data for "training". For the purposes of this tutorial, we will be treating the results from the k-epsilon model as the reference data (for simplicity). We have found the k-epsilon results to be closer to high-fidelity data compared to other RANS models.
 
