@@ -265,7 +265,7 @@ entries:
       url: /mydoc_doxygen.html
       output: web, pdf
   
-    - title: Papers that used DAFoam
+    - title: DAFoam publications
       url: /mydoc_docs_publications.html
       output: web, pdf
     

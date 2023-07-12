@@ -1,5 +1,5 @@
 ---
-title: Papers that used DAFoam
+title: DAFoam publications
 keywords: Papers
 summary: 
 sidebar: mydoc_sidebar
