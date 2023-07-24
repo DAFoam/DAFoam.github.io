@@ -7,7 +7,7 @@ permalink: mydoc_get_started_faq.html
 folder: mydoc
 ---
 
-The following are some frequently asked questions (FAQ) for the NACA0012 airfoil and other tutorials. If you have more questions, please post them to [DAFoam Github Discussions](https://github.com/mdolab/dafoam/discussions).
+The following are some frequently asked questions (FAQ) for DAFoam. If you have more questions, please post them to [DAFoam Github Discussions](https://github.com/mdolab/dafoam/discussions).
 
 ## Where can I find all supported parameters and their default values for the daOption dictionary in runScript.py?
 
@@ -224,6 +224,17 @@ Then, you will need to add the paths to the files you created in *src/adjoint/Ma
 Finally, you will need to add the objective function to one of the runTests_*.py located in the *tests* directory. Again, use the other objective functions as an example. 
 
 When making a pull request, the code coverage test will not pass unless the output from testing your objective function (the value itself and sensitivity values) is copied into the corresponding tests/refs/DAFoam_Test_*.txt file.
+
+## How can I contribute to this website?
+
+The DAFoam website is built based on JekyII. Most of the webpages are written in Markdown (.md) files. To make changes to the DAFoam website, please submit a pull request following these steps:
+
+1. Sign up for an account on Github.com
+2. Create a fork of the DAFoam website repo: https://github.com/DAFoam/DAFoam.github.io
+3. Change the website .md files on your fork
+4. When ready, submit a pull request
+
+We assume you are familiar with pull request submission on Github.com. If not, please refer to [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request).
 
 ## How to cite DAFoam?
 
