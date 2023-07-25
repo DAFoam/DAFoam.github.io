@@ -127,7 +127,7 @@ Next, delete the processor folders.
 rm -r processor*
 </pre>
 Then, open Paraview and open the "paraview.foam" file. Make sure that the case type selected is "reconstructed", select "patch/wing" in Mesh Regions, and check the box that says "Camera Parallel Projection. Click "Apply" to view a colored pressure gradient on the ADODG3 Wing. For more details related to post-processing, refer to the [post-processing](mydoc_get_started_post_processing.html) page in Get Started.
-{% include links.html %}
+
 
 The following is a transonic optimization of the same wing as above
 
@@ -148,3 +148,4 @@ Fig. 6. Pressure and shape evolution during the optimization process for the tra
 
 Over the iterations, it is possible to see shock waves as large differentiations in pressure can be seen on the ParaView post-processing images. In the transonic case, the drag reduction is much higher compared to the subsonic cases. This is due to the overall higher drag values that come from the higher Mach numbers, which leaves more room for optimization and drag reduction. 
 
+{% include links.html %}
