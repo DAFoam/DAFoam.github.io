@@ -112,11 +112,11 @@ Fig. 2. Pressure and shape evolution during the optimization process for the sha
 
 The planform case ran for 5 steps and took about 1 hour with 320 cores on 4 Icelake nodes of Stampede2. According to "opt_SNOPT_summary.txt", the drag reduction was **8.47%**. <br>
 ![movie_gif](https://user-images.githubusercontent.com/106775921/184983955-667beac1-ce20-4a17-8052-db14f946e8dc.gif)
-Fig. 3. Pressure and shape evolution during the optimization process for the planform case<br><br>
+Fig. 3. Pressure and shape evolution during the optimization process for the subsonic planform case<br><br>
 
 The shape and planform case ran for 100 steps (exceeding the SNOPT iteration limit) and took about 12 hours with 320 cores on 4 Icelake nodes of Stampede 2. According to "opt_SNOPT_summary.txt", the drag reduction was **17.2%**. It is not recommended to run the case for more than 100 major iterations because of the minimal change in drag after iteration 100. 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/106775921/185023313-5ddebf4c-0efb-431a-8216-a8e9adfe7a74.gif)
-Fig. 4. Pressure and shape evolution during the optimization process for the shape and planform case
+Fig. 4. Pressure and shape evolution during the optimization process for the subsonic shape and planform case
 
 To generate the pressure and shape figure of the wing, first reconstruct the processor folders from the optimization into simpler timestamp folders using the following command. 
 <pre>
@@ -127,6 +127,25 @@ Next, delete the processor folders.
 rm -r processor*
 </pre>
 Then, open Paraview and open the "paraview.foam" file. Make sure that the case type selected is "reconstructed", select "patch/wing" in Mesh Regions, and check the box that says "Camera Parallel Projection. Click "Apply" to view a colored pressure gradient on the ADODG3 Wing. For more details related to post-processing, refer to the [post-processing](mydoc_get_started_post_processing.html) page in Get Started.
+
+
+The following is a transonic optimization of the same wing as above
+
+<pre>
+Lift coefficient (CL): 0.375
+Mach number: 0.7
+</pre>
+
+The shape-only case ran for 103 steps and ran for 72 hours with 72 cores on the Nova HPC.  According to “opt_SNOPT_summary.txt”, the drag reduction was **17.4%**. <br>
+![ezgif com-video-to-gif](https://github.com/DAFoam/DAFoam.github.io/assets/137945749/333d639a-6ec1-4e0b-aa55-488dff8595b2)
+
+Fig. 5. Pressure and shape evolution during the optimization process for the transonic shape-only case<br><br>
+
+The shape and planform case ran for 91 steps and ran for 48 hours with 72 cores on the Nova HPC. According to “opt_SNOPT_summary.txt”, the drag reduction was **25.4%**. <br>
+![ezgif com-video-to-gif](https://github.com/DAFoam/DAFoam.github.io/assets/137945749/bf68b277-a5cc-43e9-a584-1b90d502b35e)
+
+Fig. 6. Pressure and shape evolution during the optimization process for the transonic shape and planform case<br><br>
+
+Over the iterations, it is possible to see shock waves as large differentiations in pressure can be seen on the ParaView post-processing images. In the transonic case, the drag reduction is much higher compared to the subsonic cases. This is due to the overall higher drag values that come from the higher Mach numbers, which leaves more room for optimization and drag reduction. 
+
 {% include links.html %}
-
-
