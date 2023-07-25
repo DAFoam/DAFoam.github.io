@@ -411,7 +411,7 @@ To perform multidisplinary deisgn optimization, we need to install the following
 
 <pre>
 . $HOME/dafoam/loadDAFoam.sh && \
-pip install openmdao==3.25
+pip install openmdao==3.26
 </pre>
 
 [Mphys](https://github.com/OpenMDAO/mphys) is an interface that faciliate the interation between low- and high-fidelity tools within OpenMDAO.
@@ -429,7 +429,7 @@ cd mphys && pip install -e .
 <pre>
 . $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/smdogroup/funtofem/archive/2c664b4b985dce43c3438848998ab69c53b54645.tar.gz -O funtofem.tar.gz && \
+wget https://github.com/smdogroup/funtofem/archive/refs/tags/v0.3.tar.gz -O funtofem.tar.gz && \
 tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
 cd funtofem && cp Makefile.in.info Makefile.in && \
 sed -i "s/git/dafoam\/repos/g" Makefile.in && \
