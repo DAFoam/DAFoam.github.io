@@ -134,7 +134,7 @@ The following is a transonic optimization of the same wing as above
 <pre>
 Lift coefficient (CL): 0.375
 Mach number: 0.7
-<pre>
+</pre>
 
 The shape-only case ran for 103 steps and ran for 72 hours with 72 cores on the Nova HPC.  According to “opt_SNOPT_summary.txt”, the drag reduction was **17.4%**. <br>
 ![ezgif com-video-to-gif](https://github.com/DAFoam/DAFoam.github.io/assets/137945749/333d639a-6ec1-4e0b-aa55-488dff8595b2)
