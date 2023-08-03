@@ -40,5 +40,10 @@ We recommend running this case on an HPC system with 80 CPU cores:
 mpirun -np 80 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-
 {% include links.html %}
+
+The case ran for 82 major iterations and took about 33 hours using HPC with 72 cores. According to “opt_snopt_summary.txt”, the initial torque is 6.7699821E+02 and the optimized torque is 1.2347349E+03 with a percentage increase of **82%**.
+The evolution of pressure and shape during the optimization is as follows.
+
+![ezgif com-gif-maker (1)](https://github.com/DAFoam/DAFoam.github.io/assets/140402482/5fbec539-8e65-4328-8e1d-a48f7c17f766)
+
