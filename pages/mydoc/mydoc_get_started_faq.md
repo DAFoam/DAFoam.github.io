@@ -108,7 +108,6 @@ No. These OpenFOAM features are NOT supported in DAFoam. **Note**: the configura
 
 - Unsteady solvers
 - AMI boundary condition
-- Non-stationary boundary conditions, such as totalPressure, totalTemperature
 - fvOptions and MRF are implemented for only some of primal solvers
 - empty boundary condition
 - Limited schemes such as `Gauss linear limited corrected 0.33` for laplacianSchemes and `limited corrected 0.33` for snGradSchemes in system/fvSchemes may cause inaccurate adjoint gradients. Don't use them!
