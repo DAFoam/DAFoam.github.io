@@ -156,6 +156,8 @@ You need to increase these default values, e.g., set `"maxSkewness": 6.0,`. If y
 
 Another way to fix the issue is setting mesh quality constraints in optimization. Check the runScript_meshQualityConstraint.py script from the [UBend](https://github.com/DAFoam/tutorials/blob/main/UBend_Channel/runScript_meshQualityConstraint.py) tutorial.
 
+If you need to visualize which part of the mesh has poor quality, you can set `"writeMinorIterations": True`. DAFoam will write the mesh to the disk every time it tries to run the flow (even the checkMesh fails). You can then load the failed mesh in ParaView to visualize it.
+
 
 ## How to know the detailed description for a function's input parameters defined in runScript.py?
 
