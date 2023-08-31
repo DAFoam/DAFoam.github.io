@@ -207,7 +207,7 @@ The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest
 
 baseclasses | pySpline |  pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.6.1      | v1.5.2   | v1.12.2 | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0  | v2.8.1      | v1.2.1 | {{ site.latest_version }}
+v1.6.1      | v1.5.2   | v1.12.2 | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0  | v2.10.1      | v1.2.1 | {{ site.latest_version }}
 
 Now run this command to install all the repos for MACH-Aero:
 
@@ -243,8 +243,8 @@ tar -xvf idwarp.tar.gz && cd idwarp-2.6.0 && \
 cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/pyoptsparse/archive/v2.8.1.tar.gz -O pyoptsparse.tar.gz && \
-tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.8.1 && \
+wget https://github.com/mdolab/pyoptsparse/archive/v2.10.1.tar.gz -O pyoptsparse.tar.gz && \
+tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.10.1 && \
 pip install .
 </pre>
 
@@ -544,10 +544,10 @@ export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH
 
 This step is needed if you want to use the SNOPT optimizer. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com).
 
-SNOPT is a commercial package, and you can purchase it from [here](http://www.sbsi-sol-optimize.com/asp/sol_snopt.htm). Once you obtain the SNOPT source code, copy all the source files (except for snopth.f) to the "$HOME/dafoam/repos/pyoptsparse-2.8.1/pyoptsparse/pySNOPT/source" folder. Then, run this command to compile pyOptSparse with SNOPT.
+SNOPT is a commercial package, and you can purchase it from [here](http://www.sbsi-sol-optimize.com/asp/sol_snopt.htm). Once you obtain the SNOPT source code, copy all the source files (except for snopth.f) to the "$HOME/dafoam/repos/pyoptsparse-2.10.1/pyoptsparse/pySNOPT/source" folder. Then, run this command to compile pyOptSparse with SNOPT.
 
 <pre>
-cd $HOME/dafoam/repos/pyoptsparse-2.8.1 && \
+cd $HOME/dafoam/repos/pyoptsparse-2.10.1 && \
 pip install .
 </pre>
 
