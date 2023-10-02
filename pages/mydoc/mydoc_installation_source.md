@@ -441,7 +441,7 @@ make && pip install -e .
 <pre>
 . $HOME/dafoam/loadDAFoam.sh && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/smdogroup/tacs/archive/refs/tags/v3.2.1.tar.gz -O tacs.tar.gz && \
+wget https://github.com/smdogroup/tacs/archive/refs/tags/v3.4.0.tar.gz -O tacs.tar.gz && \
 tar -xvf tacs.tar.gz && mv tacs-* tacs && \
 cd tacs/extern && \
 wget https://github.com/DAFoam/files/releases/download/TACS_Extern/TACS_extern.tar.gz && tar -xzf TACS_extern.tar.gz && \
