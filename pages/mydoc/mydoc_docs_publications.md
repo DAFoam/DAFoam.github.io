@@ -13,6 +13,8 @@ The following publications used or tested DAFoam in their studies. If we miss yo
 
 1. J. Park, B. Knight, Y. Liao, M. Mangano, B. Pacini, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based Design Optimization of Ducted Hydrokinetic Turbines, Scientific Reports, 2023.
 
+1. M.H. Negahban, M. Bashir, V. Traisnel, R.M. Botez. Seamless morphing trailing edge flaps for UAS-S45 using high-fidelity aerodynamic optimization. Chinese Journal of Aeronautics, 2023.
+
 1. S. Batay, A. Baidullayeva, Y. Zhao, D. Wei. Aero-Structural Design Optimization of Wind Turbine Blades. Preprints, 2023.
 
 1. F. Cao, Z. Tang, C. Zhu X. Zhao. An Efficient Hybrid Multi-Objective Optimization Method Coupling Global Evolutionary and Local Gradient Searches for Solving Aerodynamic Optimization Problems. Mathematics, 2023.
