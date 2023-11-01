@@ -9,7 +9,7 @@ folder: mydoc
 
 {: reversed="reversed"}
 
-The following publications used or tested DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
+The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
 1. J. Park, B. Knight, Y. Liao, M. Mangano, B. Pacini, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based Design Optimization of Ducted Hydrokinetic Turbines, Scientific Reports, 2023.
 
