@@ -21,6 +21,8 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 
 1. C. Wu, Y. Zhang. Enhancing the shear-stress-transport turbulence model with symbolic regression: A generalizable and interpretable data-driven approach. Physical Review Fluids, 2023.
 
+1. F. Yeganehdoust, H. Karbasian, B. Vermeire. Aerodynamic Optimization of eVTOL Rotor Profiles. Proceedings of the Canadian Society for Mechanical Engineering International Congress, 2023.
+
 1. B. Pacini, M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Towards Mixed-Fidelity Aero-Structural-Acoustic Optimization for Urban Air Mobility Vehicle Design. In: AIAA Aviation Forum, 2023.
 
 1. H. M. Hajdik, B. Pacini, A. Yildirim, B. J. Brelje, J.R.R.A. Martins. Combined systems packaging and aerodynamic shape optimization of a full aircraft configuration. In: AIAA Aviation Forum, 2023.
