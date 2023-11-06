@@ -130,7 +130,9 @@ This usually happens if you have a highly skewed FFD box. To fix this warning, a
 
 ## Why the adjoint equation is not converging?
 
-If your adjoint equation is not converging well. Try to use the following setup for daOptions in runScript.py
+If your adjoint equation is not converging well. First, please make sure you run `renumberMesh -overwrite` to renumber the mesh and minimize the matrix bandwidth, which is found to help adjoint convergence. 
+
+If the above does not help, please try to use the following setup for daOptions in runScript.py
 
 <pre>
 "adjStateOrdering": "cell",
