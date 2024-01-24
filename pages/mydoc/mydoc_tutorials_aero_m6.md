@@ -84,7 +84,7 @@ Then, use the following command to run the optimization with 8 CPU cores:
 mpirun -np 8 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-For the structured hex mesh, the case ran for 50 steps and took about 3 hours using Intel 2.6 GHz CPU with 8 cores on one Skylake node of [Stampede 2](https://portal.xsede.org/tacc-stampede2). According to "logOpt.txt" and "opt_SLSQP.txt", the initial drag is 0.016597241 and the optimized drag is 0.013540159 with a drag reduction of **18.4%**.
+For the structured hex mesh, the case ran for 50 steps and took about 3 hours using Intel 2.6 GHz CPU with 8 cores on one Skylake node of [Stampede 2](https://portal.xsede.org/tacc-stampede2). According to "logOpt.txt" and "opt_SLSQP.txt", the initial drag is 0.016597241 and the optimized drag is 0.013540159 with a drag reduction of **18.4%**. **NOTE: the above numbers are based on a mesh much finer than the default mesh provided in the Onera_M6_wing tutorial.**
 
 The evolution of pressure and shape during the optimization is as follows.
 
