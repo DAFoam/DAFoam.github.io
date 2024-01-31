@@ -9,9 +9,11 @@ folder: mydoc
 
 DAFoam v3.0 is a major update that adds the interface with OpenMDAO for multidisciplinary design optimization.
 
-The latest version is [DAFoam {{ site.latest_version }}](https://github.com/mdolab/dafoam/archive/{{ site.latest_version }}.tar.gz).
+The latest version is [DAFoam v3.0.8](https://github.com/mdolab/dafoam/archive/v3.0.8.tar.gz).
 
 Release notes:
+
+- [DAFoam v3.0.8](https://github.com/mdolab/dafoam/releases/tag/v3.0.8)
 
 - [DAFoam v3.0.7](https://github.com/mdolab/dafoam/releases/tag/v3.0.7)
 

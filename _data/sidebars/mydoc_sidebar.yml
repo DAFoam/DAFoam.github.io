@@ -2,7 +2,7 @@
 
 entries:
 - title: sidebar
-  product: Documentation v3.0.8
+  product: Documentation v3.1.0
   version: 
   folders:
 
@@ -51,6 +51,10 @@ entries:
   - title: Download
     output: web, pdf
     folderitems:
+
+    - title: DAFoam-v3.1
+      url: /mydoc_download_v3.1.html
+      output: web, pdf
 
     - title: DAFoam-v3.0
       url: /mydoc_download_v3.0.html
