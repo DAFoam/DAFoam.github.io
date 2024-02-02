@@ -11,6 +11,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+1. O. Bidar, S. Anderson, N. Qin. Sensor placement for data assimilation of turbulence models using eigenspace perturbations, Physics of Fluids, 2024.
+
 1. J. Park, B. Knight, Y. Liao, M. Mangano, B. Pacini, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based Design Optimization of Ducted Hydrokinetic Turbines, Scientific Reports, 2023.
 
 1. M.H. Negahban, M. Bashir, V. Traisnel, R.M. Botez. Seamless morphing trailing edge flaps for UAS-S45 using high-fidelity aerodynamic optimization. Chinese Journal of Aeronautics, 2023.
@@ -49,9 +51,9 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 
 1. Y.L. Lamer, J. Morlier, E. Benard, P. He. Aeroelastic analysis of high aspect ratio and strut-braced wings. In: 33th Congress of the International Council of the Aeronautical Sciences. 2022.
 
-1. Omid Bidar, Ping He, Sean Anderson, Ning Qin. An open-source adjoint-based field inversion tool for data-driven RANS modelling, In: AIAA Aviation Forum, 2022. AIAA 2022-4125. https://doi.org/10.2514/6.2022-4125
+1. O. Bidar, P. He, S. Anderson, N. Qin. An open-source adjoint-based field inversion tool for data-driven RANS modelling, In: AIAA Aviation Forum, 2022. AIAA 2022-4125. https://doi.org/10.2514/6.2022-4125
   
-1. Omid Bidar, Ping He, Sean Anderson, Ning Qin. Turbulent mean flow reconstruction based on sparse multi-sensor data and adjoint-based field inversion, In: AIAA Aviation Forum, 2022. AIAA 2022-3900. https://doi.org/10.2514/6.2022-3900
+1. O. Bidar, P. He, S. Anderson, N. Qin. Turbulent mean flow reconstruction based on sparse multi-sensor data and adjoint-based field inversion, In: AIAA Aviation Forum, 2022. AIAA 2022-3900. https://doi.org/10.2514/6.2022-3900
 
 1. H. U. Koyuncuoglu, P. He. Coupled Wing-Propeller Aerodynamic Optimization Using the Adjoint Method. In: AIAA Scitech Forum, 2022.
 
