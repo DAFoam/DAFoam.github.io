@@ -14,7 +14,7 @@ The DAFoam package can be compiled with various dependency versions. Here we ela
 
 Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython
 | :------------------------------------------------------------------------------------------------ | 
-20.04.5 | gcc/9.4  | 3.1.6   | 3.1.3  | 3.14.6 | 3.14.1   | 4.1.2 | 3.8    | 1.21.2 | 1.7.1 | 0.29.21
+20.04.5 | gcc/9.4  | 3.1.6   | 3.1.3  | 3.14.6 | 3.14.1   | 4.1.2 | 3.9    | 1.21.2 | 1.7.1 | 0.29.21
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM.
 
@@ -47,9 +47,9 @@ Install Miniconda3 by running this command:
 
 <pre>
 cd $HOME/dafoam/packages && \
-wget https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh && \
-chmod 755 Miniconda3-py38_4.10.3-Linux-x86_64.sh && \
-./Miniconda3-py38_4.10.3-Linux-x86_64.sh -b -p $HOME/dafoam/packages/miniconda3 && \
+wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh && \
+chmod 755 Miniconda3-py39_4.10.3-Linux-x86_64.sh && \
+./Miniconda3-py39_4.10.3-Linux-x86_64.sh -b -p $HOME/dafoam/packages/miniconda3 && \
 echo '# Miniconda3' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib' >> $HOME/dafoam/loadDAFoam.sh && \
@@ -67,7 +67,6 @@ pip install cython==0.29.21 && \
 pip install numpy-stl==2.16.0 && \
 pip install pynastran==1.3.3 && \
 pip install nptyping==1.4.4 && \
-pip install swig==4.1.1 && \
 pip install tensorflow-cpu==2.12
 </pre>
 
