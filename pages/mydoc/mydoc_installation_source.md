@@ -128,7 +128,7 @@ cd $HOME/dafoam/packages && \
 wget https://www.mcs.anl.gov/petsc/mirror/release-snapshots/petsc-3.14.6.tar.gz  && \
 tar -xvf petsc-3.14.6.tar.gz && \
 cd petsc-3.14.6 && \
-./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 && \
+./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --download-f2cblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 && \
 make PETSC_DIR=$HOME/dafoam/packages/petsc-3.14.6 PETSC_ARCH=real-opt all
 </pre>
 
