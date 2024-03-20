@@ -276,7 +276,7 @@ export WM_NCOMPPROCS=4 && \
 ./Allwmake
 </pre>
 
-{% include note.html content="In the above command, we replaced the OpenFOAM-v1812's built-in UPstream.C file with a customized one because we need to prevent OpenFOAM from calling the MPI_Finialize function when wrapping OpenFOAM functions using Cython. We also slightly modified the IListStream.H file to make it compatible with newer Gcc compilers, like Gcc 11." %}
+{% include note.html content="In the above command, we replaced the OpenFOAM-v1812's built-in UPstream.C file with a customized one because we need to prevent OpenFOAM from calling the MPI_Finialize function when wrapping OpenFOAM functions using Cython. We also slightly modified the IListStream.H file to make it compatible with newer Gcc compilers, like Gcc 13." %}
 
 {% include note.html content="The above command will compile OpenFOAM using 4 CPU cores. If you want to compile OpenFOAM using more cores, change the ``WM_NCOMPPROCS`` parameter before running ``./Allwmake``" %}
 
