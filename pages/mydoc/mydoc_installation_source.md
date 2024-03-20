@@ -266,7 +266,7 @@ cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812 && \
 sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
 wget https://github.com/DAFoam/files/releases/download/v1.0.0/UPstream.C && \
 mv UPstream.C src/Pstream/mpi/UPstream.C && \
-sed -i 's/List<char>\&\& buffer,/Foam::List<char>\&\& buffer,/g' src/OpenFOAM/db/IOstreams/memory/IListStream.H && \
+sed -i '159s/.*/            Foam::List< char >\&\& buffer,/g' src/OpenFOAM/db/IOstreams/memory/IListStream.H && \
 echo '# OpenFOAM-v1812' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH' >> $HOME/dafoam/loadDAFoam.sh && \
