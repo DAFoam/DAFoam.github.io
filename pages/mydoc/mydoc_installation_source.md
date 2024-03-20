@@ -276,7 +276,7 @@ export WM_NCOMPPROCS=4 && \
 ./Allwmake
 </pre>
 
-{% include note.html content="In the above command, we replaced the OpenFOAM-v1812's built-in UPstream.C file with a customized one because we need to prevent OpenFOAM from calling the MPI_Finialize function when wrapping OpenFOAM functions using Cython. We also slightly modified the IListStream.H file to make it compatible with Gcc 11+ compilers." %}
+{% include note.html content="In the above command, we replaced the OpenFOAM-v1812's built-in UPstream.C file with a customized one because we need to prevent OpenFOAM from calling the MPI_Finialize function when wrapping OpenFOAM functions using Cython. We also slightly modified the IListStream.H file to make it compatible with newer Gcc compilers, like Gcc 11." %}
 
 {% include note.html content="The above command will compile OpenFOAM using 4 CPU cores. If you want to compile OpenFOAM using more cores, change the ``WM_NCOMPPROCS`` parameter before running ``./Allwmake``" %}
 
@@ -295,7 +295,7 @@ Run the following:
 
 <pre>
 cd $HOME/dafoam/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.0.tar.gz -O OpenFOAM-v1812-AD.tgz && \
+wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.1.tar.gz -O OpenFOAM-v1812-AD.tgz && \
 tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADR && \
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADR && \
 sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADR/g' etc/bashrc && \
@@ -334,7 +334,7 @@ Run the following:
 
 <pre>
 cd $HOME/dafoam/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.0.tar.gz -O OpenFOAM-v1812-AD.tgz && \
+wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.1.tar.gz -O OpenFOAM-v1812-AD.tgz && \
 tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADF && \
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADF && \
 sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADF/g' etc/bashrc && \
