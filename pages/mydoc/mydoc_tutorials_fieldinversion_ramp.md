@@ -37,7 +37,7 @@ Training configurations: c1: U0 = 10 m/s. c2: U0 = 20 m/s
 Prediction configuration: U0 = 15 m/s
 </pre>
 
-The optimization converged in 14 iterations, and the objective function reduced from 3.9575071E+01 to 3.5429828E+00.
+The optimization converged in 14 iterations, and the objective function reduced from 3.957E+01 to 3.542E+00.
 
 To test the trained model's accuracy for an unseen flow condition (i.e., U0 = 15 m/s), we can copy the designVariable.json (this file will be generated after the FIML optimization is done.) to tutorials-master/Ramp/steady/predict/trained. Then, go to tutorials-master/Ramp/steady/predict and run `Allrun.sh`. This command will run the primal for the baseline (k-omega), reference (k-omega SST), and the trained (FIML k-omega) models. The trained will read the optimized neural network weights and biases from designVariable.json, assign them to the built-in neural network model (defined in the `regressionModel` key in daOption) and run the primal solver.
 
@@ -67,7 +67,7 @@ Training configuration: U0 = 10 m/s
 Prediction configuration: U0 = 5 m/s
 </pre>
 
-The optimization exited with 50 iterations. The objective function reduced from 4.7564760E-01 to xxx.
+The optimization exited with 50 iterations. The objective function reduced from 4.756E-01 to 3.274E-02.
 
 Once the unsteady FIML is done. We can copy the last dict from designVariableHist.txt to tutorials-master/Ramp/unsteady/predict/trained. Then, go to tutorials-master/Ramp/unsteady/predict and run `Allrun.sh`.  This command will run the primal for the baseline (SA), reference (k-omega SST), and the trained (FIML SA) models, similar to the steady-state case.
 
