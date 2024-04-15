@@ -73,7 +73,7 @@ Once the unsteady FIML is done. We can copy the last dict from designVariableHis
 
 The following animation shows the comparison among these prediction case. The trained SA model significantly improves the spatial temporal evolution of velocity fields.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Ramp_ufiml.png" width="400" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Ramp_ufiml.gif" width="400" />
 
 Fig. 2 Comparison among the reference, baseline, and trained models.
 
