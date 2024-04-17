@@ -7,7 +7,7 @@ folder: mydoc
 ---
 
 ## Overview
-This is a new tutorial for steady and unsteady field inversion machine learning (FIML) using the latest DAFoam version. Please check the tutorial from [here](https://github.com/DAFoam/tutorials/tree/main/Ramp). 
+This tutorial elaborates on our latest field inversion machine learning (FIML) capability for steady-state and time-resolved unsteady flow problems. For more details, please refer to our [POF paper](https://www.researchgate.net/publication/379889817_Field_Inversion_Machine_Learning_Augmented_Turbulence_Modeling_for_Time-Accurate_Unsteady_Flow).
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Ramp_mesh.png" width="400" />
 
@@ -27,7 +27,7 @@ Then, use the following command to run the case:
 mpirun -np 4 python runScript_FIML.py 2>&1 | tee logOpt.txt
 </pre>
 
-This case uses our latest FIML interface, which incorporates a neural network model into the CFD solver to compute the augmented field variables. We augment the k-omega model and make it match the k-omega SST model. The FIML optimization is formulated as:
+This case uses our latest FIML interface, which incorporates a neural network model into the CFD solver to compute the augmented field variables (refer to the POF paper for details). We augment the k-omega model and make it match the k-omega SST model. The FIML optimization is formulated as:
 
 <pre>
 Objective function: Regulated prediction error for the bottom wall pressure and the CD values
