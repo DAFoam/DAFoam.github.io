@@ -13,6 +13,8 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 
 1. L. Fang, P. He. Field inversion machine learning augmented turbulence modeling for time-accurate unsteady flow. Physics of Fluids, 2024.
 
+1. L. Fang, P. He. A Duality-Preserving Adjoint Method for Segregated Navier-Stokes Solvers. Journal of Computational Physics, 2024.
+
 1. O. Bidar, S. Anderson, N. Qin. Sensor placement for data assimilation of turbulence models using eigenspace perturbations, Physics of Fluids, 2024.
 
 1. C. Wu, Y. Zhang. Development of a Generalizable Data-driven Turbulence Model: Conditioned Field Inversion and Symbolic Regression. arXiv:2402.16355, 2024.
