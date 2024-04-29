@@ -3,7 +3,7 @@ title: Command to start the DAFoam Docker image on Windows 10
 keywords: run, tutorial, windows
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_get_started_start_docker_windows.html
+permalink: mydoc_get_started_start_docker_windows10.html
 folder: mydoc
 ---
 
