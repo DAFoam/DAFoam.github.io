@@ -29,7 +29,7 @@ Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on h
 
 Docker is not required to generate the DAFoam run script. However, Docker is needed if you want to do mesh generation, transformation, and running the aerodynamic optimization through the GUI. 
 
-### Windows 10
+### Windows 10/11
 
 Download [Docker Desktop](https://docs.docker.com/docker-for-windows/install/) for Windows
 
