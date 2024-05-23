@@ -21,6 +21,12 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 
 1. C. Wu, Y. Zhang. Development of a Generalizable Data-driven Turbulence Model: Conditioned Field Inversion and Symbolic Regression. arXiv:2402.16355, 2024.
 
+1. L. Fang, P. He. A Segregated Time-Accurate Adjoint Method for Field Inversion of Unsteady Flow. AIAA SciTech forum, 2024.
+
+1. S. Zoppelt, H. Koyuncuoglu. P. He. High-fidelity Aerostructural Optimization Benchmark for Aircraft Propellers in Hover. AIAA SciTech forum, 2024.
+
+1. O. Bidar, P. He, S. Anderson, N. Qin. Aerodynamic Shape Optimisation Using a Machine Learning-Augmented Turbulence Model. AIAA SciTech forum, 2024.
+
 1. J. Park, B. Knight, Y. Liao, M. Mangano, B. Pacini, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based Design Optimization of Ducted Hydrokinetic Turbines, Scientific Reports, 2023.
 
 1. M.H. Negahban, M. Bashir, V. Traisnel, R.M. Botez. Seamless morphing trailing edge flaps for UAS-S45 using high-fidelity aerodynamic optimization. Chinese Journal of Aeronautics, 2023.
