@@ -7,7 +7,7 @@ folder: mydoc
 ---
 
 ## Overview
-This tutorial elaborates on our latest field inversion machine learning (FIML) capability for steady-state and time-resolved unsteady flow problems. For more details, please refer to our [POF paper](https://www.researchgate.net/publication/379889817_Field_Inversion_Machine_Learning_Augmented_Turbulence_Modeling_for_Time-Accurate_Unsteady_Flow).
+This tutorial elaborates on our latest field inversion machine learning (FIML) capability for steady-state and time-resolved unsteady flow problems. For more details, please refer to our [POF paper](https://doi.org/10.1063/5.0207704).
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Ramp_mesh.png" width="400" />
 
