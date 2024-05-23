@@ -11,6 +11,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+1. E. Ntantis, V. Xezonakis. Aerodynamic design optimization of a NACA 0012 airfoil: An introductory adjoint discrete tool for educational purposes. International Journal of Mechanical Engineering Education, 2024
+
 1. L. Fang, P. He. Field inversion machine learning augmented turbulence modeling for time-accurate unsteady flow. Physics of Fluids, 2024.
 
 1. L. Fang, P. He. A Duality-Preserving Adjoint Method for Segregated Navier-Stokes Solvers. Journal of Computational Physics, 2024.
