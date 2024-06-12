@@ -125,6 +125,10 @@ entries:
           url: /mydoc_tutorials_aero_naca0012_multipoint.html
           output: web, pdf
         
+        - title: Cylinder (unsteady flow)
+          url: /mydoc_tutorials_aero_cylinder.html
+          output: web, pdf
+        
         - title: 30N30P multi-element airfoil
           url: /mydoc_tutorials_aero_30n30p.html
           output: web, pdf
