@@ -206,7 +206,7 @@ The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest
 
 baseclasses | pySpline |  pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.6.1      | v1.5.2   | v1.12.2 | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0  | v2.10.1      | v1.2.1 | {{ site.latest_version }}
+v1.6.1      | v1.5.2   | v1.12.2 | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0  | v2.10.1      | v1.2.2 | {{ site.latest_version }}
 
 Now run this command to install all the repos for MACH-Aero:
 
@@ -369,8 +369,8 @@ Compile pyOFM by running:
 
 <pre>
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/pyofm/archive/v1.2.1.tar.gz -O pyofm.tar.gz && \
-tar -xvf pyofm.tar.gz && cd pyofm-1.2.1 && \
+wget https://github.com/mdolab/pyofm/archive/v1.2.2.tar.gz -O pyofm.tar.gz && \
+tar -xvf pyofm.tar.gz && cd pyofm-1.2.2 && \
 . $HOME/dafoam/loadDAFoam.sh && \
 make && pip install .
 </pre>
