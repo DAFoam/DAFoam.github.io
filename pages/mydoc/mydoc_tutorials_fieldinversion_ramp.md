@@ -13,7 +13,42 @@ This tutorial elaborates on our latest field inversion machine learning (FIML) c
 
 Fig. 1 Mesh and the vertical probe profile for a 45-degree ramp.
 
-## Field inversion machine learning for steady-state flow over the ramp
+
+## FIML for time-accurate unsteady flow over the ramp
+
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/Ramp/unsteady/train and run the "preProcessing.sh" script. 
+
+<pre>
+./preProcessing.sh
+</pre>
+
+Then, use the following command to run the case:
+
+<pre>
+mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
+</pre>
+
+The setup is similar to the steady state FIML except that we consider both spatial and temporal evolutions of the flow. In other words, the trained model will improve both spatial and temporal predictions of the flow. We augment the SA model and make it match the k-omega SST model. **Note:** the default optimizer is SNOPT. If you don't have access to SNOPT, you can also choose other optimizers, such as IPOPT and SLSQP.
+
+<pre>
+Objective function: Regulated prediction error for the bottom wall pressure at all time steps
+Design variables: Weights and biases for the built-in neural network
+Augmented variables: betaFINuTilda for the nuTilda equations
+Training configuration: U0 = 10 m/s
+Prediction configuration: U0 = 5 m/s
+</pre>
+
+The optimization exited with 50 iterations. The objective function reduced from 4.756E-01 to 3.274E-02.
+
+Once the unsteady FIML is done. We can copy the last dict from designVariableHist.txt to tutorials-master/Ramp/unsteady/predict/trained. Then, go to tutorials-master/Ramp/unsteady/predict and run `Allrun.sh`.  This command will run the primal for the baseline (SA), reference (k-omega SST), and the trained (FIML SA) models, similar to the steady-state case.
+
+The following animation shows the comparison among these prediction case. The trained SA model significantly improves the spatial temporal evolution of velocity fields.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Ramp_ufiml.gif" width="400" />
+
+Fig. 2 Comparison among the reference, baseline, and trained models.
+
+## FIML for steady-state flow over the ramp (coupled FI and ML)
 
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/Ramp/steady/train and run the "preProcessing.sh" script. 
 
@@ -43,38 +78,45 @@ To test the trained model's accuracy for an unseen flow condition (i.e., U0 = 15
 
 For the U0 = 15 m/s case, the drag from the reference, baseline, and trained models are: 0.3881, 0.4458, 0.3829, respectively. The trained model significantly improve the drag prediction accuracy for this case.
 
-## Field inversion machine learning for time-accurate unsteady flow over the ramp
+## FIML for steady-state flow over the ramp (decoupled FI and ML)
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/master.tar.gz) and untar it. Then go to tutorials-master/Ramp/unsteady/train and run the "preProcessing.sh" script. 
+We can also first conduct field inversion, save the augmented fields and features to the disk, then conduct an offline ML to train the relationship between the features and augmented fields. This decoupled FIML approach was used in most of previous steady-state FIML studies.
+
+First, generate the mesh and data for the c1 and c2 cases:
 
 <pre>
 ./preProcessing.sh
 </pre>
 
-Then, use the following command to run the case:
+Then, use the following command to run FI for case c1:
 
 <pre>
-mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
+mpirun -np 4 python runScript_FI.py -index=0 2>&1 | tee logOpt.txt
 </pre>
 
-The setup is similar to the steady state FIML except that we consider both spatial and temporal evolutions of the flow. In other words, the trained model will improve both spatial and temporal predictions of the flow. We augment the SA model and make it match the k-omega SST model. 
+After that, use the following command to run FI for case c2:
 
 <pre>
-Objective function: Regulated prediction error for the bottom wall pressure at all time steps
-Design variables: Weights and biases for the built-in neural network
-Augmented variables: betaFINuTilda for the nuTilda equations
-Training configuration: U0 = 10 m/s
-Prediction configuration: U0 = 5 m/s
+mpirun -np 4 python runScript_FI.py -index=1 2>&1 | tee logOpt.txt
 </pre>
 
-The optimization exited with 50 iterations. The objective function reduced from 4.756E-01 to 3.274E-02.
+Once the above two FI cases converge, reconstruct the data for the last optimization iteration (it should be 0.0050). Copy c1/0.0050 to tf_training/c1_data. Copy c2/0.0050 to tf_training/c2_data.
 
-Once the unsteady FIML is done. We can copy the last dict from designVariableHist.txt to tutorials-master/Ramp/unsteady/predict/trained. Then, go to tutorials-master/Ramp/unsteady/predict and run `Allrun.sh`.  This command will run the primal for the baseline (SA), reference (k-omega SST), and the trained (FIML SA) models, similar to the steady-state case.
+Then, go to tf_training and run TensorFlow training:
 
-The following animation shows the comparison among these prediction case. The trained SA model significantly improves the spatial temporal evolution of velocity fields.
+<pre>
+python trainModel.py
+</pre>
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Ramp_ufiml.gif" width="400" />
+After the training is done, it will save the model's coefficients in a "model" folder. Copy this "model" folder to the c1 and c2 folders.
 
-Fig. 2 Comparison among the reference, baseline, and trained models.
+Lastly, we can use the trained model for prediction. For example, you can go to the c1 folder and run:
+
+<pre>
+mpirun -np 4 python runPrimal.py -augmented=True 2>&1 | tee logOpt.txt
+</pre>
+
+DAFoam will read the trained tensorflow model, compute flow features, use the trained tensorflow model to compute the augmented fields, and run the primal flow solutions. In addition to runPrimal, you can also do an optimization using the trained model.
+
 
 {% include links.html %}
