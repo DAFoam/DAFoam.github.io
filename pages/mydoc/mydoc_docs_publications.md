@@ -11,6 +11,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+1. C. Wu, Y. Zhang. Flow Topology Optimization at High Reynolds Numbers Based on Modified Turbulence Models. Aerospace, 2024.
+
 1. E. Ntantis, V. Xezonakis. Aerodynamic design optimization of a NACA 0012 airfoil: An introductory adjoint discrete tool for educational purposes. International Journal of Mechanical Engineering Education, 2024
 
 1. L. Fang, P. He. Field inversion machine learning augmented turbulence modeling for time-accurate unsteady flow. Physics of Fluids, 2024.
@@ -70,8 +72,6 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 1. O. Bidar, P. He, S. Anderson, N. Qin. Turbulent mean flow reconstruction based on sparse multi-sensor data and adjoint-based field inversion, In: AIAA Aviation Forum, 2022. AIAA 2022-3900. https://doi.org/10.2514/6.2022-3900
 
 1. H. U. Koyuncuoglu, P. He. Coupled Wing-Propeller Aerodynamic Optimization Using the Adjoint Method. In: AIAA Scitech Forum, 2022.
-
-1. C. Wu, Y. Zhang. Flow Topology Optimization at High Reynolds Numbers Based on Modified Turbulence Models. arXiv:2207.11711, 2022.
 
 1. N.N. Kozyulin, M.S. Bobrov, M.Y. Hrebtov. Adjoint shape optimization of a duct for a wall jet film cooling setup. J. Phys.: Conf. Ser. 2119, 2021.
 
