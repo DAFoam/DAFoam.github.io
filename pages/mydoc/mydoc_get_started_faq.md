@@ -25,6 +25,10 @@ To increase the number of FFD points, one needs to increase "nx" (number of FFD 
 
 You can open a FFD file (*.xyz; plot3D format) in Paraview and choose "PLOT3D Reader" in the pop-up window. Then, on the left panel, uncheck "Binary File", check "Multi Grid", and then hit "Apply". NOTE: Paraview sometime crashes when loading Plot3D files with a small number of points (it is a bug in Paraview). To avoid this, you can convert a Plot3D file to the Tecplot format. First load the DAFoam environment, and run `dafoam_plot3d2tecplot.py yourFFDFileName.xyz newFFDFileName.dat`. Once done, a new file newFFDFileName.dat will be generated in the Tecplot format. You can then use Paraview to load this new file.
 
+## How to generate body-fitted FFDs?
+
+You can use ICEM-CFD to generate body-fitted FFDs and save them as .xyz (plot3D format). Refer to this [discussion](https://github.com/mdolab/dafoam/discussions/652) for more information about how to generate body-fitted FFDs using ICEM-CFD.
+
 ## How to use more CPU cores?
 
 To run the optimization using 8 cores, first clean up previous results `./Allclean`, then run:
