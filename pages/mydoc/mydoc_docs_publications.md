@@ -11,6 +11,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+1. C. Thompson, U. Padmanaban, B. Ganapathisubramani, S. Symon. The effect of variations in experimental and computational fidelity on data assimilation approaches. Theoretical and Computational Fluid Dynamics, 2024.
+
 1. C. Wu, Y. Zhang. Flow Topology Optimization at High Reynolds Numbers Based on Modified Turbulence Models. Aerospace, 2024.
 
 1. E. Ntantis, V. Xezonakis. Aerodynamic design optimization of a NACA 0012 airfoil: An introductory adjoint discrete tool for educational purposes. International Journal of Mechanical Engineering Education, 2024
@@ -40,6 +42,8 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 1. C. Wu, Y. Zhang. Enhancing the shear-stress-transport turbulence model with symbolic regression: A generalizable and interpretable data-driven approach. Physical Review Fluids, 2023.
 
 1. F. Yeganehdoust, H. Karbasian, B. Vermeire. Aerodynamic Optimization of eVTOL Rotor Profiles. Proceedings of the Canadian Society for Mechanical Engineering International Congress, 2023.
+
+1. F. Chen, X. Cheng, K. Zhang, Y. Chen, X. Zhang. Unsteady Aerodynamic Shape Optimization of a Vertical Axis Wind Turbine Under the Framework of DAFoam. 2023 Asia-Pacific International Symposium on Aerospace Technology (APISAT 2023) Proceedings.
 
 1. B. Pacini, M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Towards Mixed-Fidelity Aero-Structural-Acoustic Optimization for Urban Air Mobility Vehicle Design. In: AIAA Aviation Forum, 2023.
 
