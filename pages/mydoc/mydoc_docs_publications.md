@@ -11,6 +11,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+1. S. Batay, A. Baidullayeva, E. Sarsenov, Y. Zhao, T. Zhou, E. Ng, T. Kadylulu. Integrated Aerodynamic Shape and Aero-Structural Optimization: Applications from Ahmed Body to NACA 0012 Airfoil and Wind Turbine Blades. Fluids, 2024.
+
 1. C. Thompson, U. Padmanaban, B. Ganapathisubramani, S. Symon. The effect of variations in experimental and computational fidelity on data assimilation approaches. Theoretical and Computational Fluid Dynamics, 2024.
 
 1. C. Wu, Y. Zhang. Flow Topology Optimization at High Reynolds Numbers Based on Modified Turbulence Models. Aerospace, 2024.
