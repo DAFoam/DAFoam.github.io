@@ -13,6 +13,10 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 
 1. S. Batay, A. Baidullayeva, E. Sarsenov, Y. Zhao, T. Zhou, E. Ng, T. Kadylulu. Integrated Aerodynamic Shape and Aero-Structural Optimization: Applications from Ahmed Body to NACA 0012 Airfoil and Wind Turbine Blades. Fluids, 2024.
 
+1. J. Henry. Modeling and Optimization of Embedded Active Flow Control Systems. PhD Thesis. Illinois Institute of Technology, 2024.
+
+1. K. Hoang. High-fidelity aerostructural optimization of high aspect ratio wings, MS Thesis. Iowa State University, 2024.
+
 1. C. Thompson, U. Padmanaban, B. Ganapathisubramani, S. Symon. The effect of variations in experimental and computational fidelity on data assimilation approaches. Theoretical and Computational Fluid Dynamics, 2024.
 
 1. C. Wu, Y. Zhang. Flow Topology Optimization at High Reynolds Numbers Based on Modified Turbulence Models. Aerospace, 2024.
@@ -38,6 +42,8 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 1. M.H. Negahban, M. Bashir, V. Traisnel, R.M. Botez. Seamless morphing trailing edge flaps for UAS-S45 using high-fidelity aerodynamic optimization. Chinese Journal of Aeronautics, 2023.
 
 1. S. Batay, A. Baidullayeva, Y. Zhao, D. Wei. Aero-Structural Design Optimization of Wind Turbine Blades. Preprints, 2023.
+
+1. U. Toman. High-fidelity aerodynamic and aerostructural optimization of UAV propellers, MS Thesis. Iowa State University, 2023.
 
 1. F. Cao, Z. Tang, C. Zhu X. Zhao. An Efficient Hybrid Multi-Objective Optimization Method Coupling Global Evolutionary and Local Gradient Searches for Solving Aerodynamic Optimization Problems. Mathematics, 2023.
 
@@ -86,6 +92,8 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 1. J. Ho, A. West. Field Inversion and Machine Learning for Turbulence Modelling Applied to Three-Dimensional Separated Flows. In: AIAA Aviation Forum, 2021.
 
 1. Ping He, Joaquim R. R. A. Martins. A hybrid time-spectral approach for aerodynamic optimization with unsteady flow. In: AIAA Scitech Forum, 2021. https://doi.org/10.2514/6.2021-0278
+
+1. O. Bidar. Towards statistical inference to improve turbulence RANS closures for multi-element aerofoils. MS Thesis, The University of Sheffield, 2020.
 
 1. Ping He, Charles A. Mader, Joaquim R.R.A. Martins, Kevin J. Maki. DAFoam: An open-source adjoint framework for multidisciplinary design optimization with OpenFOAM. AIAA Journal, 2020. https://doi.org/10.2514/1.J058853
 
