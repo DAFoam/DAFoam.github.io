@@ -7,13 +7,7 @@ permalink: dafoam_workshop_2024.html
 folder: mydoc
 ---
 
-The objectives of this workshop are: 
-
-(1) Introduce DAFoam’s new features
-
-(2) Have DAFoam users present their latest research.
-
-(3) Discuss how to promote a more interactive community.
+The objectives of this workshop are: (1) Introduce DAFoam’s new features. (2) Have DAFoam users present their latest research. (3) Discuss how to promote a more interactive community.
 
 Presentations:
 
@@ -35,5 +29,6 @@ Presentations:
 
 (9) Karim Ahmed, Iowa State University. "Field inversion of RANS modeling for transition flows". [slides](https://dafoam.github.io/images/pdfs/DAFoam_Workshop_2024_Presentation_Karim_Ahmed.pdf)
 
+Here is the link for the presentation [videos](https://www.youtube.com/watch?v=NCNKDXpHJ2w&t)
 
 {% include links.html %}
