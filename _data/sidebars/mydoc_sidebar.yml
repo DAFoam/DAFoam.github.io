@@ -269,16 +269,20 @@ entries:
       url: /mydoc_validations_prowim.html
       output: web, pdf
 
+  - title: Publications
+    output: web, pdf
+    folderitems:
+
+    - title: DAFoam publications
+      url: /mydoc_docs_publications.html
+      output: web, pdf
+
   - title: Documents
     output: web, pdf
     folderitems:
 
     - title: DAFoam doxygen
       url: /mydoc_doxygen.html
-      output: web, pdf
-  
-    - title: DAFoam publications
-      url: /mydoc_docs_publications.html
       output: web, pdf
     
     - title: User guides
