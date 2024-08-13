@@ -25,7 +25,7 @@ Presentations:
 
 (7) Jeongbin Park, University of Michigan. "Ducted hydrokinetic turbine design optimization using DAFoam". [slides](https://dafoam.github.io/images/pdfs/DAFoam_Workshop_2024_Presentation_Jeongbin_Park.pdf)
 
-(8) Hossein Negahban, University of Quebec in Montreal. "Aerodynamic shape optimization for morphing wing technology using DAFoam".
+(8) Hossein Negahban, University of Quebec in Montreal. "Aerodynamic shape optimization for morphing wing technology using DAFoam". [slides](https://dafoam.github.io/images/pdfs/DAFoam_Workshop_2024_Presentation_Hossein_Negahban.pdf)
 
 (9) Karim Ahmed, Iowa State University. "Field inversion of RANS modeling for transition flows". [slides](https://dafoam.github.io/images/pdfs/DAFoam_Workshop_2024_Presentation_Karim_Ahmed.pdf)
 
