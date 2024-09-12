@@ -15,7 +15,7 @@ The following is an aerostructural shape optimization case for the MACH tutorial
 Case: Wing aerostructural optimization 
 Geometry: MACH tutorial wing
 Objective function: Drag coefficient (CD)
-Lift coefficient (CL): 0.3
+Lift coefficient (CL): 0.5
 Design variables: 96 FFD points moving in the y direction, seven twists, and one angle of attack.
 Constraints: volume, thickness, LE/TE, lift, and stress constraints (total number: 118)
 Mach number: ~0.3 (100 m/s)
