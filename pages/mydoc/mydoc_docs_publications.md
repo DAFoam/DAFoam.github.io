@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<54> J. Caudron. Aerostructural optimization of an aircraft wing assisted by dimensionality reduction methods. MS Thesis. University of Liège, 2024.
+
 <53> U. C. Padmanaban, B. Ganapathisubramani, C. Vanderwel, S. Symon. Towards passive scalar reconstruction using data assimilation. 14th UK Conference on Wind Engineering, 2024. 
 
 <52> M.H. Negahban, M. Bashir, C. Priolet, R.M. Botez.Novel Twist Morphing Aileron and Winglet Design for UAS Control and Performance. Drones. 2024.
