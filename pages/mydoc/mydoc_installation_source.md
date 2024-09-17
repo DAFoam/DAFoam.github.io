@@ -206,7 +206,7 @@ The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest
 
 baseclasses | pySpline |  pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.6.1      | v1.5.2   | v1.12.2 | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0  | v2.10.1      | v1.2.2 | {{ site.latest_version }}
+v1.6.1      | v1.5.2   | v1.13.0 | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0  | v2.10.1      | v1.2.2 | {{ site.latest_version }}
 
 Now run this command to install all the repos for MACH-Aero:
 
@@ -221,8 +221,8 @@ tar -xvf pyspline.tar.gz && cd pyspline-1.5.2 && \
 cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
 make && pip install . && \
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/pygeo/archive/4641625e28b0bae97e05351c23d9083a693734d3.tar.gz -O pygeo.tar.gz && \
-tar -xvf pygeo.tar.gz && mv pygeo-* pygeo && cd pygeo && pip install . && \
+wget https://github.com/mdolab/pygeo/archive/v1.13.0.tar.gz -O pygeo.tar.gz && \
+tar -xvf pygeo.tar.gz && cd pygeo-1.13.0 && pip install . && \
 cd $HOME/dafoam/repos && \
 wget https://github.com/mdolab/multipoint/archive/v1.4.0.tar.gz -O multipoint.tar.gz && \
 tar -xvf multipoint.tar.gz && cd multipoint-1.4.0 && pip install . && \
