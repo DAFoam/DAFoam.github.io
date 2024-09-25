@@ -9,15 +9,19 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
-<54> J. Caudron. Aerostructural optimization of an aircraft wing assisted by dimensionality reduction methods. MS Thesis. University of Liège, 2024.
+<56> J. Ho, N Pepper, T. Dodwell. Probabilistic Machine Learning to Improve Generalisation of Data-Driven Turbulence Modelling. Computers & Fluids, 2024.
 
-<53> U. C. Padmanaban, B. Ganapathisubramani, C. Vanderwel, S. Symon. Towards passive scalar reconstruction using data assimilation. 14th UK Conference on Wind Engineering, 2024. 
+<55> J. Caudron. Aerostructural optimization of an aircraft wing assisted by dimensionality reduction methods. MS Thesis. University of Liège, 2024.
 
-<52> M.H. Negahban, M. Bashir, C. Priolet, R.M. Botez.Novel Twist Morphing Aileron and Winglet Design for UAS Control and Performance. Drones. 2024.
+<54> U. C. Padmanaban, B. Ganapathisubramani, C. Vanderwel, S. Symon. Towards passive scalar reconstruction using data assimilation. 14th UK Conference on Wind Engineering, 2024. 
 
-<51> S. Batay, A. Baidullayeva, E. Sarsenov, Y. Zhao, T. Zhou, E. Ng, T. Kadylulu. Integrated Aerodynamic Shape and Aero-Structural Optimization: Applications from Ahmed Body to NACA 0012 Airfoil and Wind Turbine Blades. Fluids, 2024.
+<53> M.H. Negahban, M. Bashir, C. Priolet, R.M. Botez.Novel Twist Morphing Aileron and Winglet Design for UAS Control and Performance. Drones. 2024.
 
-<50> J. Henry. Modeling and Optimization of Embedded Active Flow Control Systems. PhD Thesis. Illinois Institute of Technology, 2024.
+<52> S. Batay, A. Baidullayeva, E. Sarsenov, Y. Zhao, T. Zhou, E. Ng, T. Kadylulu. Integrated Aerodynamic Shape and Aero-Structural Optimization: Applications from Ahmed Body to NACA 0012 Airfoil and Wind Turbine Blades. Fluids, 2024.
+
+<51> J. Henry. Modeling and Optimization of Embedded Active Flow Control Systems. PhD Thesis. Illinois Institute of Technology, 2024.
+
+<50> R. Halder. Data-Driven Surrogate Models for Computational Fluid Dynamics. PhD Thesis. University of Michigan, 2024.
 
 <49> K. Hoang. High-fidelity aerostructural optimization of high aspect ratio wings, MS Thesis. Iowa State University, 2024.
 
