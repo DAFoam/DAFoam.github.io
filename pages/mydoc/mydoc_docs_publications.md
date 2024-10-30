@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<58> E. Ntantis, V. Xezonakis. Improving Transonic Performance with Adjoint-Based NACA 0012 Airfoil Design Optimization. Results in Engineering, 2024
+
 <57> Z. Ding, Q. Liu, H Luo, M. Yang, Y. ZHang, S. Wang, Y. Luo, S. Chen. A preoperative planning procedure of septal myectomy for hypertrophic obstructive cardiomyopathy using image-based computational fluid dynamics simulations and shape optimization. Scientific Reports, 2024.
 
 <56> J. Ho, N Pepper, T. Dodwell. Probabilistic Machine Learning to Improve Generalisation of Data-Driven Turbulence Modelling. Computers & Fluids, 2024.
