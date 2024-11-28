@@ -43,7 +43,7 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 
 <43> O. Bidar, S. Anderson, N. Qin. Sensor placement for data assimilation of turbulence models using eigenspace perturbations, Physics of Fluids, 2024.
 
-<42> C. Wu, Y. Zhang. Development of a Generalizable Data-driven Turbulence Model: Conditioned Field Inversion and Symbolic Regression. arXiv:2402.16355, 2024.
+<42> C. Wu, Y. Zhang. Development of a Generalizable Data-Driven Turbulence Model: Conditioned Field Inversion and Symbolic Regression. AIAA Journal, 2024.
 
 <41> L. Fang, P. He. A Segregated Time-Accurate Adjoint Method for Field Inversion of Unsteady Flow. AIAA SciTech forum, 2024.
 
