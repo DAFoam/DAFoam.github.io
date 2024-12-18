@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<60> C. Wu, Y. Zhang. Field Inversion and Machine Learning Based on the Rubber-Band Spalart-Allmaras Model. Theoretical and Applied Mechanics Letters. 2024.
+
 <59> J. Park, M. Mangano, S. Seraj, B. Pacini, Y. Liao, B. Knight, K. Naik, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based design optimization of a 5 kW ducted hydrokinetic turbine with practical constraints, arXiv.2411.13492, 2024.
 
 <58> E. Ntantis, V. Xezonakis. Improving Transonic Performance with Adjoint-Based NACA 0012 Airfoil Design Optimization. Results in Engineering, 2024
