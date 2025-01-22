@@ -263,10 +263,11 @@ wget https://sourceforge.net/projects/openfoam/files/v1812/ThirdParty-v1812.tgz/
 tar -xvf OpenFOAM-v1812.tgz && \
 tar -xvf ThirdParty-v1812.tgz && \
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812 && \
-sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
-wget https://github.com/DAFoam/files/releases/download/v1.0.0/UPstream.C && \
-mv UPstream.C src/Pstream/mpi/UPstream.C && \
-sed -i '159s/.*/            Foam::List< char >\&\& buffer,/g' src/OpenFOAM/db/IOstreams/memory/IListStream.H && \
+wget https://github.com/DAFoam/files/releases/download/v1.0.0/OpenFOAM-v1812-patch-files.tar.gz && \
+tar -xvf OpenFOAM-v1812-patch-files.tar.gz && \
+cd OpenFOAM-v1812-patch-files && \
+./runPatch.sh && \
+cd .. && \
 echo '# OpenFOAM-v1812' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH' >> $HOME/dafoam/loadDAFoam.sh && \
@@ -276,7 +277,7 @@ export WM_NCOMPPROCS=4 && \
 ./Allwmake
 </pre>
 
-{% include note.html content="In the above command, we replaced the OpenFOAM-v1812's built-in UPstream.C file with a customized one because we need to prevent OpenFOAM from calling the MPI_Finialize function when wrapping OpenFOAM functions using Cython. We also slightly modified the IListStream.H file to make it compatible with newer Gcc compilers, like Gcc 13." %}
+{% include note.html content="In the above command, we replaced some custome source files to enable Python wrapping for OpenFOAM. These patch files also make OpenFOAM-v1812 compatible with newer Gcc compilers, like Gcc 13." %}
 
 {% include note.html content="The above command will compile OpenFOAM using 4 CPU cores. If you want to compile OpenFOAM using more cores, change the ``WM_NCOMPPROCS`` parameter before running ``./Allwmake``" %}
 
@@ -295,16 +296,15 @@ Run the following:
 
 <pre>
 cd $HOME/dafoam/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.1.tar.gz -O OpenFOAM-v1812-AD.tgz && \
+wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.2.tar.gz -O OpenFOAM-v1812-AD.tgz && \
 tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADR && \
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADR && \
 sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADR/g' etc/bashrc && \
-sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
-sed -i 's/export WM_CODI_AD_MODE=CODI_AD_FORWARD/export WM_CODI_AD_MODE=CODI_AD_REVERSE/g' etc/bashrc && \
+sed -i 's/export WM_CODI_AD_LIB_POSTFIX=ADF/export WM_CODI_AD_LIB_POSTFIX=ADR/g' etc/bashrc && \
 . $HOME/dafoam/loadDAFoam.sh && \
 source etc/bashrc && \
 export WM_NCOMPPROCS=4 && \
-./Allwmake 2> warningLog.txt
+./Allwmake
 </pre>
 
 Then, verify the installation by running:
@@ -315,7 +315,7 @@ DASimpleFoamReverseAD -help
 
 It should see some basic information of DASimpleFoamReverseAD.
 
-{% include note.html content="We use CodiPack to differentiate the OpenFOAM libraries. During the compliation, it will generate a lot of warning messages, which are saved to the warningLog.txt file. After the compilation is done, remember to delete this warning file, which can be larger than 1 GB." %}
+{% include note.html content="We use CodiPack to differentiate the OpenFOAM libraries." %}
 
 After OpenFOAM-v1812-ADR is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
 
@@ -328,21 +328,20 @@ cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-system && \
 ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/openmpi-system/*.so .
 </pre>
 
-**Build Forward Mode AD**
+**Build Forward Mode AD (Optional)**
 
 Run the following:
 
 <pre>
 cd $HOME/dafoam/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.1.tar.gz -O OpenFOAM-v1812-AD.tgz && \
+wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.2.tar.gz -O OpenFOAM-v1812-AD.tgz && \
 tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADF && \
 cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADF && \
 sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADF/g' etc/bashrc && \
-sed -i 's/$HOME/$DAFOAM_ROOT_PATH/g' etc/bashrc && \
 . $HOME/dafoam/loadDAFoam.sh && \
 source etc/bashrc && \
 export WM_NCOMPPROCS=4 && \
-./Allwmake 2> warningLog.txt
+./Allwmake
 </pre>
 
 After OpenFOAM-v1812-ADF is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
@@ -356,10 +355,9 @@ cd $HOME/dafoam/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-system && \
 ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/openmpi-system/*.so .
 </pre>
 
-Once done, unset the AD environment, and re-source the original OpenFOAM-v1812. **This step is needed everytime you compile an AD versions of DAFoam or OpenFOAM!**
+Once done, we need to re-source the original OpenFOAM-v1812.
 
 <pre>
-unset WM_CODI_AD_MODE && \
 . $HOME/dafoam/loadDAFoam.sh
 </pre>
 
@@ -369,8 +367,8 @@ Compile pyOFM by running:
 
 <pre>
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/pyofm/archive/v1.2.2.tar.gz -O pyofm.tar.gz && \
-tar -xvf pyofm.tar.gz && cd pyofm-1.2.2 && \
+wget https://github.com/mdolab/pyofm/archive/refs/heads/v4.tar.gz -O pyofm.tar.gz && \
+tar -xvf pyofm.tar.gz && cd pyofm-* && \
 . $HOME/dafoam/loadDAFoam.sh && \
 make && pip install .
 </pre>
@@ -381,23 +379,17 @@ Similar to OpenFOAM, we need to compile three versions of DAFoam: original, reve
 
 <pre>
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/dafoam/archive/{{ site.latest_version }}.tar.gz -O dafoam.tar.gz && \
+wget https://github.com/mdolab/dafoam/archive/refs/heads/v4.tar.gz -O dafoam.tar.gz && \
 tar -xvf dafoam.tar.gz && cd dafoam-* && \
 . $HOME/dafoam/loadDAFoam.sh && \
-export DAFOAM_NO_WARNINGS=1 && \
-./Allmake && \
-source $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADR/etc/bashrc && \
-./Allclean && ./Allmake && \
-source $HOME/dafoam/OpenFOAM/OpenFOAM-v1812-ADF/etc/bashrc && \
-./Allclean && ./Allmake && \
-pip install .
+./Allmake
 </pre>
 
-Once done, unset the AD environment, and re-source the original OpenFOAM-v1812. **This step is needed everytime you compile an AD versions of DAFoam!**
+The above command will compile the original and ADR versions of DAFoam. If you need to compile the ADF version run:
 
 <pre>
-unset WM_CODI_AD_MODE && \
-. $HOME/dafoam/loadDAFoam.sh
+export COMPILE_DAFOAM_ADF=1 && \
+./Allmake
 </pre>
 
 
