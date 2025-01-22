@@ -7,6 +7,10 @@ summary:
 ---
 
 <div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> 
+This website is under construction for DAFoam v4. Please refer to https://dafoam.github.io/v3-pages for v3 documentation.
+</div>
+
+<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> 
 <b>[Latest Announcements](news.html):</b>   
 {% for post in site.posts limit:3 %}
   {{ post.date | date: "%m/%d/%Y" }}. {{ post.title }}. <a href="{{ post.permalink }}">Details.</a>  
