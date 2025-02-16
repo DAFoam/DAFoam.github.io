@@ -367,7 +367,7 @@ Compile pyOFM by running:
 
 <pre>
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/pyofm/archive/refs/heads/v4.tar.gz -O pyofm.tar.gz && \
+wget https://github.com/mdolab/pyofm/archive/refs/heads/main.tar.gz -O pyofm.tar.gz && \
 tar -xvf pyofm.tar.gz && cd pyofm-* && \
 . $HOME/dafoam/loadDAFoam.sh && \
 make && pip install .
@@ -379,7 +379,7 @@ Similar to OpenFOAM, we need to compile three versions of DAFoam: original, reve
 
 <pre>
 cd $HOME/dafoam/repos && \
-wget https://github.com/mdolab/dafoam/archive/refs/heads/v4.tar.gz -O dafoam.tar.gz && \
+wget https://github.com/mdolab/dafoam/archive/refs/heads/main.tar.gz -O dafoam.tar.gz && \
 tar -xvf dafoam.tar.gz && cd dafoam-* && \
 . $HOME/dafoam/loadDAFoam.sh && \
 ./Allmake
