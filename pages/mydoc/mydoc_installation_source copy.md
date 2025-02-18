@@ -29,7 +29,7 @@ sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-sys
 
 ## **Root folder**
 
-First, we need to create a "dafoam" folder in your home directory. Then create a "loadDAFoam.sh" bash script to set up the root path $DAFOAM_ROOT_PATH, and load loadDAFoam.sh the script:
+First create a "dafoam" folder in your home directory. Then create a "loadDAFoam.sh" bash script and set up the root path $DAFOAM_ROOT_PATH. Finally, we will create the "packages", "OpenFOAM", and "repos" folders. We will compile and install everything in $DAFOAM_ROOT_PATH.
 
 <pre>
 mkdir -p $HOME/dafoam && \
@@ -38,15 +38,10 @@ echo '# DAFoam root path' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export DAFOAM_ROOT_PATH=$HOME/dafoam' >> $HOME/dafoam/loadDAFoam.sh && \
 chmod 755 $HOME/dafoam/loadDAFoam.sh && \
 . $HOME/dafoam/loadDAFoam.sh && \
-</pre>
-
-{% include note.html content="You need to complete the following steps on the same termimal session. If you start a new terminal session, you need to load the loadDAFoam.sh script before installing DAFoam packages!" %}
-
-Next, we will create the "packages", "OpenFOAM", and "repos" folders in $DAFOAM_ROOT_PATH.
-
-<pre>
 mkdir -p $DAFOAM_ROOT_PATH/packages $DAFOAM_ROOT_PATH/OpenFOAM $DAFOAM_ROOT_PATH/OpenFOAM/sharedBins $DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs $DAFOAM_ROOT_PATH/repos
 </pre>
+
+{% include note.html content="You need to complete the following steps on the same termimal session. If you start a new terminal session, you need to first load the loadDAFoam.sh script!" %}
 
 ## **Python**
 
@@ -218,7 +213,6 @@ v1.6.1      | v1.5.2   | v1.13.0 | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0 
 Now run this command to install all the repos for MACH-Aero:
 
 <pre>
-. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/baseclasses/archive/v1.6.1.tar.gz -O baseclasses.tar.gz && \
 tar -xvf baseclasses.tar.gz && cd baseclasses-1.6.1 && pip install . && \
@@ -374,7 +368,7 @@ Compile pyOFM by running:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/pyofm/archive/refs/tags/v1.2.3.tar.gz -O pyofm.tar.gz && \
+wget https://github.com/mdolab/pyofm/archive/refs/heads/main.tar.gz -O pyofm.tar.gz && \
 tar -xvf pyofm.tar.gz && cd pyofm-* && \
 make && pip install .
 </pre>
@@ -385,7 +379,7 @@ Similar to OpenFOAM, we need to compile three versions of DAFoam: original, reve
 
 <pre>
 cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/dafoam/archive/{{ site.latest_version }}.tar.gz -O dafoam.tar.gz && \
+wget https://github.com/mdolab/dafoam/archive/refs/heads/main.tar.gz -O dafoam.tar.gz && \
 tar -xvf dafoam.tar.gz && cd dafoam-* && \
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 ./Allmake
@@ -430,7 +424,7 @@ cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/smdogroup/funtofem/archive/refs/tags/v0.3.tar.gz -O funtofem.tar.gz && \
 tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
 cd funtofem && cp Makefile.in.info Makefile.in && \
-sed -i "s/F2F_DIR=.*/F2F_DIR=\$\{DAFOAM_ROOT_PATH\}\/repos\/funtofem/g" Makefile.in && \
+sed -i "s/git/dafoam\/repos/g" Makefile.in && \
 make && pip install -e .
 </pre>
 
@@ -451,7 +445,7 @@ cd metis-5.1.0 && make config prefix=$DAFOAM_ROOT_PATH/repos/tacs/extern/metis/ 
 cd ../../ && \
 cp Makefile.in.info Makefile.in && \
 ls && \
-sed -i "s/TACS_DIR\ =.*/TACS_DIR=\$\{DAFOAM_ROOT_PATH\}\/repos\/tacs/g" Makefile.in && \
+sed -i "s/git/dafoam\/repos/g" Makefile.in && \
 make && pip install -e . && \
 cd extern/f5tovtk && make && cp f5tovtk $DAFOAM_ROOT_PATH/OpenFOAM/sharedBins
 </pre>
