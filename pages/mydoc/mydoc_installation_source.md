@@ -37,7 +37,7 @@ echo '#!/bin/bash' > $HOME/dafoam/loadDAFoam.sh && \
 echo '# DAFoam root path' >> $HOME/dafoam/loadDAFoam.sh && \
 echo 'export DAFOAM_ROOT_PATH=$HOME/dafoam' >> $HOME/dafoam/loadDAFoam.sh && \
 chmod 755 $HOME/dafoam/loadDAFoam.sh && \
-. $HOME/dafoam/loadDAFoam.sh && \
+. $HOME/dafoam/loadDAFoam.sh
 </pre>
 
 {% include note.html content="You need to complete the following steps on the same termimal session. If you start a new terminal session, you need to load the loadDAFoam.sh script before installing DAFoam packages!" %}
