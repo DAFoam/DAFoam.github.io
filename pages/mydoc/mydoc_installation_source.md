@@ -77,6 +77,12 @@ pip install nptyping==1.4.4 && \
 pip install tensorflow-cpu==2.12
 </pre>
 
+The miniconda built-in libstdc++ lib may conflict with the Ubuntu's libstdc++, so we need to remove it by runninng:
+
+<pre>
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6.backup
+</pre>
+
 
 ## **OpenMPI**
 
