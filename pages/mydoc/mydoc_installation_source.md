@@ -91,7 +91,7 @@ mv $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld $DAFOAM_ROOT_PATH/pa
 First append relevant environmental variables by running:
 
 <pre>
-echo '# Petsc-3.15.5' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo '# Petsc' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.15.5' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PETSC_ARCH=real-opt' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PETSC_DIR/$PETSC_ARCH/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -122,7 +122,7 @@ pip install .
 First append relevant environmental variables by running:
 
 <pre>
-echo '# CGNS-4.2.0' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo '# CGNS' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-4.2.0/opt-gfortran' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PATH=$PATH:$CGNS_HOME/bin' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -440,9 +440,7 @@ cd $DAFOAM_ROOT_PATH/repos/dafoam-*/tests && ./Allrun
 The regression tests should take less than 30 minutes. The test progress will be printed to screen. Make sure you see this at the end:
 
 <pre>   
-************************************************************
-**************** All DAFoam tests passed! ******************
-************************************************************
+*** All Tests Passed! ***
 </pre>
 
 |
@@ -457,8 +455,8 @@ $HOME/dafoam
     - OpenFOAM-v1812-ADF
     - OpenFOAM-v1812-ADR
     - ThirdParty-v1812
-    - sharedBin
-    - sharedLib
+    - sharedBins
+    - sharedLibs
   - packages
     - Ipopt
     - miniconda3
@@ -490,16 +488,12 @@ export DAFOAM_ROOT_PATH=$HOME/dafoam
 export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib
 export PYTHONUSERBASE=no-local-libs
-# OpenMPI-3.1.6
-export MPI_INSTALL_DIR=$DAFOAM_ROOT_PATH/packages/openmpi-3.1.6/opt-gfortran
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MPI_INSTALL_DIR/lib
-export PATH=$MPI_INSTALL_DIR/bin:$PATH
 # PETSC
 export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.15.5
 export PETSC_ARCH=real-opt
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PETSC_DIR/$PETSC_ARCH/lib
 export PETSC_LIB=$PETSC_DIR/$PETSC_ARCH/lib
-# CGNS-4.2.0
+# CGNS
 export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-4.2.0/opt-gfortran
 export PATH=$PATH:$CGNS_HOME/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib
