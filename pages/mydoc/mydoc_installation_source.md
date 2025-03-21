@@ -7,14 +7,14 @@ permalink: mydoc_installation_source.html
 folder: mydoc
 ---
 
-{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v2.2.10-](mydoc_installation_source_2210.html), [v2.2.0-](mydoc_installation_source_220.html), and [v1.0.0](mydoc_installation_source_100.html)." %}
+{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](mydoc_installation_source_2210.html), [v2.2.0-](mydoc_installation_source_220.html), and [v1.0.0](mydoc_installation_source_100.html)." %}
 
-The DAFoam package can be compiled with various dependency versions. Here we elaborate on how to compile it on **Ubuntu 20.04** using the dependencies shown in the following table.
+The DAFoam package can be compiled with various dependency versions. Here we elaborate on how to compile it on **Ubuntu 22.04** using the dependencies shown in the following table.
 
 
 Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython
 | :------------------------------------------------------------------------------------------------ | 
-20.04.5 | gcc/9.4  | 3.1.6   | 3.1.3  | 3.14.6 | 3.14.1   | 4.1.2 | 3.8    | 1.21.2 | 1.7.1 | 0.29.21
+22.04.2 | gcc/11.4  | 4.1.2   | 3.1.5  | 3.15.5 | 3.15.5   | 4.2.0 | 3.9    | 1.23.5 | 1.13.1 | 0.29.21
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM.
 
@@ -24,7 +24,7 @@ Run this on terminal to install prerequisites:
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev --no-install-recommends
+sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin --no-install-recommends
 </pre>
 
 ## **Root folder**
@@ -40,7 +40,7 @@ chmod 755 $HOME/dafoam/loadDAFoam.sh && \
 . $HOME/dafoam/loadDAFoam.sh
 </pre>
 
-{% include note.html content="You need to complete the following steps on the same termimal session. If you start a new terminal session, you need to load the loadDAFoam.sh script before installing DAFoam packages!" %}
+{% include note.html content="You need to complete the following steps on the same terminal session. If you start a new terminal session, you need to load the loadDAFoam.sh script before installing DAFoam packages!" %}
 
 Next, we will create the "packages", "OpenFOAM", and "repos" folders in $DAFOAM_ROOT_PATH.
 
@@ -54,9 +54,9 @@ Install Miniconda3 by running this command:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/packages && \
-wget https://repo.anaconda.com/miniconda/Miniconda3-py38_4.10.3-Linux-x86_64.sh && \
-chmod 755 Miniconda3-py38_4.10.3-Linux-x86_64.sh && \
-./Miniconda3-py38_4.10.3-Linux-x86_64.sh -b -p $DAFOAM_ROOT_PATH/packages/miniconda3 && \
+wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh && \
+chmod 755 Miniconda3-py39_4.12.0-Linux-x86_64.sh && \
+./Miniconda3-py39_4.12.0-Linux-x86_64.sh -b -p $DAFOAM_ROOT_PATH/packages/miniconda3 && \
 echo '# Miniconda3' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -68,8 +68,9 @@ In the above, we use "export PYTHONUSERBASE=no-local-libs" to bypass the site-pa
 
 <pre>
 pip install --upgrade pip && \
-pip install numpy==1.21.2 && \
-pip install scipy==1.7.1 && \
+pip install numpy==1.23.5 && \
+pip install scipy==1.13.1 && \
+pip install mpi4py==3.1.5 && \
 pip install cython==0.29.21 && \
 pip install numpy-stl==2.16.0 && \
 pip install pynastran==1.3.3 && \
@@ -77,48 +78,16 @@ pip install nptyping==1.4.4 && \
 pip install tensorflow-cpu==2.12
 </pre>
 
-The miniconda built-in libstdc++ lib may conflict with the Ubuntu's libstdc++, so we need to remove it by runninng:
+The miniconda's built-in libstdc++ and libtinfo libs may conflict with the Ubuntu's system libs. Also, the new miniconda's compiler_compat ld may conflict with the system ld. So we need to rename the miniconda's libs and exes by running:
 
 <pre>
-mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6.backup
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6.backup && \
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6.backup && \
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld.backup
 </pre>
 
-
-## **OpenMPI**
-
-First append relevant environmental variables by running:
-
 <pre>
-echo '# OpenMPI-3.1.6' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-echo 'export MPI_INSTALL_DIR=$DAFOAM_ROOT_PATH/packages/openmpi-3.1.6/opt-gfortran' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MPI_INSTALL_DIR/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-echo 'export PATH=$MPI_INSTALL_DIR/bin:$PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh&& \
-. $DAFOAM_ROOT_PATH/loadDAFoam.sh
-</pre>
 
-Then, configure and build OpenMPI:
-
-<pre>
-cd $DAFOAM_ROOT_PATH/packages && \
-wget https://download.open-mpi.org/release/open-mpi/v3.1/openmpi-3.1.6.tar.gz  && \
-tar -xvf openmpi-3.1.6.tar.gz && \
-cd openmpi-3.1.6 && \
-./configure --prefix=$MPI_INSTALL_DIR && \
-make all install
-</pre>
-
-To verify the installation, run:
-
-<pre>
-mpicc -v
-</pre>
-
-You should see the version of the compiled OpenMPI.
-
-Finally, install mpi4py-3.1.3:
-
-<pre>
-pip install mpi4py==3.1.3
 </pre>
 
 ## **Petsc**
@@ -126,8 +95,8 @@ pip install mpi4py==3.1.3
 First append relevant environmental variables by running:
 
 <pre>
-echo '# Petsc-3.14.6' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-echo 'export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.14.6' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo '# Petsc-3.15.5' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo 'export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.15.5' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PETSC_ARCH=real-opt' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PETSC_DIR/$PETSC_ARCH/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PETSC_LIB=$PETSC_DIR/$PETSC_ARCH/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -138,14 +107,14 @@ Then, configure and compile:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/packages && \
-wget https://www.mcs.anl.gov/petsc/mirror/release-snapshots/petsc-3.14.6.tar.gz  && \
-tar -xvf petsc-3.14.6.tar.gz && \
-cd petsc-3.14.6 && \
+wget https://www.mcs.anl.gov/petsc/mirror/release-snapshots/petsc-3.15.5.tar.gz  && \
+tar -xvf petsc-3.15.5.tar.gz && \
+cd petsc-3.15.5 && \
 ./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 && \
-make PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.14.6 PETSC_ARCH=real-opt all
+make PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.15.5 PETSC_ARCH=real-opt all
 </pre>
 
-Finally, install petsc4py-3.14.1:
+Finally, install petsc4py-3.15:
 
 <pre>
 cd $PETSC_DIR/src/binding/petsc4py && \
@@ -157,8 +126,8 @@ pip install .
 First append relevant environmental variables by running:
 
 <pre>
-echo '# CGNS-4.1.2' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-echo 'export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-4.1.2/opt-gfortran' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo '# CGNS-4.2.0' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo 'export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-4.2.0/opt-gfortran' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PATH=$PATH:$CGNS_HOME/bin' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh
@@ -168,9 +137,9 @@ Then, configure and compile:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/packages && \
-wget https://github.com/CGNS/CGNS/archive/v4.1.2.tar.gz  && \
-tar -xvaf v4.1.2.tar.gz && \
-cd CGNS-4.1.2 && \
+wget https://github.com/CGNS/CGNS/archive/v4.2.0.tar.gz  && \
+tar -xvaf v4.2.0.tar.gz && \
+cd CGNS-4.2.0 && \
 mkdir -p build && \
 cd build && \
 cmake .. -DCGNS_ENABLE_FORTRAN=1 -DCMAKE_INSTALL_PREFIX=$CGNS_HOME -DCGNS_BUILD_CGNSTOOLS=0 && \
@@ -243,6 +212,7 @@ cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/pyhyp/archive/v2.5.0.tar.gz -O pyhyp.tar.gz && \
 tar -xvf pyhyp.tar.gz && cd pyhyp-2.5.0 && \
 cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
+sed -i "s/mpifort/mpif90/g" config/config.mk && \
 make && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/cgnsutilities/archive/v2.6.0.tar.gz -O cgnsutilities.tar.gz && \
@@ -253,6 +223,7 @@ cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/idwarp/archive/v2.6.0.tar.gz -O idwarp.tar.gz && \
 tar -xvf idwarp.tar.gz && cd idwarp-2.6.0 && \
 cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
+sed -i "s/mpifort/mpif90/g" config/config.mk && \
 make && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/pyoptsparse/archive/v2.10.1.tar.gz -O pyoptsparse.tar.gz && \
@@ -490,12 +461,13 @@ $HOME/dafoam
     - OpenFOAM-v1812-ADF
     - OpenFOAM-v1812-ADR
     - ThirdParty-v1812
+    - sharedBin
+    - sharedLib
   - packages
     - Ipopt
     - miniconda3
-    - CGNS-4.1.2
-    - openmpi-3.1.6
-    - petsc-3.14.6
+    - CGNS-4.2.0
+    - petsc-3.15.5
   - repos
     - baseclasses
     - cgnsutilities
@@ -527,12 +499,12 @@ export MPI_INSTALL_DIR=$DAFOAM_ROOT_PATH/packages/openmpi-3.1.6/opt-gfortran
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MPI_INSTALL_DIR/lib
 export PATH=$MPI_INSTALL_DIR/bin:$PATH
 # PETSC
-export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.14.6
+export PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.15.5
 export PETSC_ARCH=real-opt
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PETSC_DIR/$PETSC_ARCH/lib
 export PETSC_LIB=$PETSC_DIR/$PETSC_ARCH/lib
-# CGNS-4.1.2
-export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-4.1.2/opt-gfortran
+# CGNS-4.2.0
+export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-4.2.0/opt-gfortran
 export PATH=$PATH:$CGNS_HOME/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib
 # Ipopt
