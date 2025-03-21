@@ -86,10 +86,6 @@ mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6 $DAFOAM_ROOT_PATH/pac
 mv $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld.backup
 </pre>
 
-<pre>
-
-</pre>
-
 ## **Petsc**
 
 First append relevant environmental variables by running:
