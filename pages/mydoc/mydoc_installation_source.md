@@ -64,7 +64,17 @@ echo 'export PYTHONUSERBASE=no-local-libs' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh &&
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh
 </pre>
 
-In the above, we use "export PYTHONUSERBASE=no-local-libs" to bypass the site-packages in user's .local directory because they may conflict with the DAFoam packages. Then we can upgrade the pip utility:
+In the above, we use "export PYTHONUSERBASE=no-local-libs" to bypass the site-packages in user's .local directory because they may conflict with the DAFoam packages. 
+
+The miniconda's built-in libstdc++ and libtinfo libs may conflict with the Ubuntu's system libs. Also, the new miniconda's compiler_compat ld may conflict with the system ld. So we need to rename the miniconda's libs and exes by running:
+
+<pre>
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6.backup && \
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6.backup && \
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld.backup
+</pre>
+
+Next, we need to upgrade the pip utility and install python packages:
 
 <pre>
 pip install --upgrade pip && \
@@ -76,14 +86,6 @@ pip install numpy-stl==2.16.0 && \
 pip install pynastran==1.3.3 && \
 pip install nptyping==1.4.4 && \
 pip install tensorflow-cpu==2.12
-</pre>
-
-The miniconda's built-in libstdc++ and libtinfo libs may conflict with the Ubuntu's system libs. Also, the new miniconda's compiler_compat ld may conflict with the system ld. So we need to rename the miniconda's libs and exes by running:
-
-<pre>
-mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6.backup && \
-mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6.backup && \
-mv $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld.backup
 </pre>
 
 ## **Petsc**
