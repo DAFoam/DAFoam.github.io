@@ -9,6 +9,14 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<64> U. Padmanaban, B. Ganapathisubramani, and S. Symon. Three-dimensional variational data assimilation of separated flows using time-averaged experimental data. arXiv.2503.19689, 2025.
+
+<63> P. He, C. Psenica, L. Fang, M. Leader. Aerothermal Shape Optimization of Actively-Cooled Battery Packs Using Conjugate Heat Transfer. AIAA SciTech Forum, 2025.
+
+<62> C. Psenica, L. Fang, S. Zoppelt, P. He. Conjugate Heat Transfer Shape Optimization of a U-bend Pipe With a Discrete Adjoint Method. AIAA SciTech Forum, 2025.
+
+<61> Z. Li, L. Fang, A. Sharma, P. He. Field Inversion Machine Learning for Accurate Predictions of Time-Resolved Unsteady Flows Over Airfoils. AIAA SciTech Forum, 2025.
+
 <60> C. Wu, Y. Zhang. Field Inversion and Machine Learning Based on the Rubber-Band Spalart-Allmaras Model. Theoretical and Applied Mechanics Letters. 2024.
 
 <59> J. Park, M. Mangano, S. Seraj, B. Pacini, Y. Liao, B. Knight, K. Naik, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based design optimization of a 5 kW ducted hydrokinetic turbine with practical constraints, arXiv.2411.13492, 2024.
