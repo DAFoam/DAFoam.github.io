@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<65> B. Pacini, M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Investigating the Benefit of Aerodynamic Shape Optimization for a Wing with Distributed Propulsion. Meccanica, 2025.
+
 <64> U. Padmanaban, B. Ganapathisubramani, and S. Symon. Three-dimensional variational data assimilation of separated flows using time-averaged experimental data. arXiv.2503.19689, 2025.
 
 <63> P. He, C. Psenica, L. Fang, M. Leader. Aerothermal Shape Optimization of Actively-Cooled Battery Packs Using Conjugate Heat Transfer. AIAA SciTech Forum, 2025.
