@@ -14,7 +14,7 @@ The DAFoam package can be compiled with various dependency versions. Here we ela
 
 Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython
 | :------------------------------------------------------------------------------------------------ | 
-22.04.2 | gcc/11.4  | 4.1.2   | 3.1.5  | 3.15.5 | 3.15.5   | 4.2.0 | 3.9    | 1.23.5 | 1.13.1 | 0.29.21
+22.04.2 | gcc/11.4  | 4.1.2   | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.9    | 1.23.5 | 1.13.1 | 0.29.21
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM.
 
@@ -125,7 +125,7 @@ First append relevant environmental variables by running:
 
 <pre>
 echo '# CGNS' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-echo 'export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-4.2.0/opt-gfortran' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo 'export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-4.5.0/opt-gfortran' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PATH=$PATH:$CGNS_HOME/bin' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh
@@ -135,12 +135,12 @@ Then, configure and compile:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/packages && \
-wget https://github.com/CGNS/CGNS/archive/v4.2.0.tar.gz  && \
-tar -xvaf v4.2.0.tar.gz && \
-cd CGNS-4.2.0 && \
+wget https://github.com/CGNS/CGNS/archive/v4.5.0.tar.gz  && \
+tar -xvaf v4.5.0.tar.gz && \
+cd CGNS-4.5.0 && \
 mkdir -p build && \
 cd build && \
-cmake .. -DCGNS_ENABLE_FORTRAN=1 -DCMAKE_INSTALL_PREFIX=$CGNS_HOME -DCGNS_BUILD_CGNSTOOLS=0 && \
+cmake .. -DCGNS_ENABLE_FORTRAN=1 -DCMAKE_INSTALL_PREFIX=$CGNS_HOME -DCGNS_BUILD_CGNSTOOLS=0 -DCGNS_ENABLE_HDF5=OFF && \
 make all install
 </pre>
 
@@ -186,7 +186,7 @@ The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest
 
 baseclasses | pySpline |  pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.6.1      | v1.5.2   | v1.13.0 | v1.4.0     | v2.5.0 | v2.6.0        | v2.6.0  | v2.10.1      | v1.2.2 | {{ site.latest_version }}
+v1.6.1      | v1.5.2   | v1.13.0 | v1.4.0     | v2.6.1 | v2.6.0        | v2.6.0  | v2.10.1      | v1.2.2 | {{ site.latest_version }}
 
 Now run this command to install all the repos for MACH-Aero:
 
@@ -207,8 +207,8 @@ cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/multipoint/archive/v1.4.0.tar.gz -O multipoint.tar.gz && \
 tar -xvf multipoint.tar.gz && cd multipoint-1.4.0 && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/pyhyp/archive/v2.5.0.tar.gz -O pyhyp.tar.gz && \
-tar -xvf pyhyp.tar.gz && cd pyhyp-2.5.0 && \
+wget https://github.com/mdolab/pyhyp/archive/v2.6.1.tar.gz -O pyhyp.tar.gz && \
+tar -xvf pyhyp.tar.gz && cd pyhyp-2.6.1 && \
 cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
 sed -i "s/mpifort/mpif90/g" config/config.mk && \
 make && pip install . && \
@@ -462,7 +462,7 @@ $HOME/dafoam
   - packages
     - Ipopt
     - miniconda3
-    - CGNS-4.2.0
+    - CGNS-4.5.0
     - petsc-3.15.5
   - repos
     - baseclasses
@@ -496,7 +496,7 @@ export PETSC_ARCH=real-opt
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PETSC_DIR/$PETSC_ARCH/lib
 export PETSC_LIB=$PETSC_DIR/$PETSC_ARCH/lib
 # CGNS
-export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-4.2.0/opt-gfortran
+export CGNS_HOME=$DAFOAM_ROOT_PATH/packages/CGNS-4.5.0/opt-gfortran
 export PATH=$PATH:$CGNS_HOME/bin
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib
 # Ipopt
