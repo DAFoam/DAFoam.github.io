@@ -221,7 +221,7 @@ make && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/idwarp/archive/v2.6.2.tar.gz -O idwarp.tar.gz && \
 tar -xvf idwarp.tar.gz && cd idwarp-2.6.2 && \
-cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
+cp -r config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
 sed -i "s/mpifort/mpif90/g" config/config.mk && \
 make && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
