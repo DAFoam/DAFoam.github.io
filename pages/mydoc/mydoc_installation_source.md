@@ -187,7 +187,7 @@ The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest
 
 baseclasses | pySpline |  pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
 | :----------------------------------------------------------------------------------------------------------- | 
-v1.6.1      | v1.5.2   | v1.13.0 | v1.4.0     | v2.6.1 | v2.6.0        | v2.6.0  | v2.10.1      | v1.2.2 | {{ site.latest_version }}
+v1.6.1      | v1.5.2   | v1.13.0 | v1.4.0     | v2.6.1 | v2.6.0        | v2.6.2  | v2.10.1      | v1.2.2 | {{ site.latest_version }}
 
 Now run this command to install all the repos for MACH-Aero:
 
@@ -219,8 +219,8 @@ tar -xvf cgnsutilities.tar.gz && cd cgnsutilities-2.6.0 && \
 cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
 make && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/idwarp/archive/v2.6.0.tar.gz -O idwarp.tar.gz && \
-tar -xvf idwarp.tar.gz && cd idwarp-2.6.0 && \
+wget https://github.com/mdolab/idwarp/archive/v2.6.2.tar.gz -O idwarp.tar.gz && \
+tar -xvf idwarp.tar.gz && cd idwarp-2.6.2 && \
 cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
 sed -i "s/mpifort/mpif90/g" config/config.mk && \
 make && pip install . && \
