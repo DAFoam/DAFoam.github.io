@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<67> Eric Segalerba. High fidelity simulations of the nasal flow with heat transfer and adjoint based optimization. PhD Thesis. University of Genoa, 2025.
+
 <66> B. Pacini, M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Investigating the Benefit of Aerodynamic Shape Optimization for a Wing with Distributed Propulsion. Meccanica, 2025.
 
 <65> S. Zhang, C. Wu, Y. Zhang. Numerical Simulation of Three-dimensional High-Lift Configurations Using Data-Driven Turbulence Model. arXiv.2503.14859, 2025.
