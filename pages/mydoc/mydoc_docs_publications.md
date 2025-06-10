@@ -11,7 +11,7 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 
 <69> T.H.N Vuong, G.H. Long, T.H.H Le, T.L. Le. Improvement in aerodynamic performance of airfoils using aerodynamic shape optimization. JP Journal of Heat and Mass Transfer, 2025.
 
-<68> M. H Negahban, B.M. Ruxandra. Comparison of Aerodynamic Characteristics of Morphing and Conventional Wings. INCAS Bulletin, 2025.
+<68> M. H Negahban, R.M. Botez. Comparison of Aerodynamic Characteristics of Morphing and Conventional Wings. INCAS Bulletin, 2025.
 
 <67> Eric Segalerba. High fidelity simulations of the nasal flow with heat transfer and adjoint based optimization. PhD Thesis. University of Genoa, 2025.
 
@@ -41,7 +41,7 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 
 <54> U. C. Padmanaban, B. Ganapathisubramani, C. Vanderwel, S. Symon. Towards passive scalar reconstruction using data assimilation. 14th UK Conference on Wind Engineering, 2024. 
 
-<53> M.H. Negahban, M. Bashir, C. Priolet, R.M. Botez.Novel Twist Morphing Aileron and Winglet Design for UAS Control and Performance. Drones. 2024.
+<53> M.H. Negahban, M. Bashir, C. Priolet, R.M. Botez. Novel Twist Morphing Aileron and Winglet Design for UAS Control and Performance. Drones. 2024.
 
 <52> S. Batay, A. Baidullayeva, E. Sarsenov, Y. Zhao, T. Zhou, E. Ng, T. Kadylulu. Integrated Aerodynamic Shape and Aero-Structural Optimization: Applications from Ahmed Body to NACA 0012 Airfoil and Wind Turbine Blades. Fluids, 2024.
 
