@@ -9,6 +9,10 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<69> T.H.N Vuong, G.H. Long, T.H.H Le, T.L. Le. Improvement in aerodynamic performance of airfoils using aerodynamic shape optimization. JP Journal of Heat and Mass Transfer, 2025.
+
+<68> M. H Negahban, B.M. Ruxandra. Comparison of Aerodynamic Characteristics of Morphing and Conventional Wings. INCAS Bulletin, 2025.
+
 <67> Eric Segalerba. High fidelity simulations of the nasal flow with heat transfer and adjoint based optimization. PhD Thesis. University of Genoa, 2025.
 
 <66> B. Pacini, M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Investigating the Benefit of Aerodynamic Shape Optimization for a Wing with Distributed Propulsion. Meccanica, 2025.
