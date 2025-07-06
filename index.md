@@ -7,7 +7,7 @@ summary:
 ---
 
 <div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> 
-This website is under construction for DAFoam v4. Please refer to https://dafoam.github.io/v3-pages for v3 documentation.
+The 2025 DAFoam online workshop is open for registration! <a href="https://dafoam.github.io/dafoam_workshop_2025.html">Details.</a>    
 </div>
 
 <div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> 
