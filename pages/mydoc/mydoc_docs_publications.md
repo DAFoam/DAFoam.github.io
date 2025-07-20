@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<70> L. Carlsson. Optimizing rotor blades for heavier-than-air flight on mars using the discrete adjoint method in the open-source framework DAFoam. Master Thesis, Uppsala University, 2025.
+
 <69> T.H.N Vuong, G.H. Long, T.H.H Le, T.L. Le. Improvement in aerodynamic performance of airfoils using aerodynamic shape optimization. JP Journal of Heat and Mass Transfer, 2025.
 
 <68> M. H Negahban, R.M. Botez. Comparison of Aerodynamic Characteristics of Morphing and Conventional Wings. INCAS Bulletin, 2025.
