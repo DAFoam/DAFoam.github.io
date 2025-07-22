@@ -9,6 +9,12 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<73> H. Blumhoefer, A. Sharma. Numerical Simulation of Tornado-Like Vortices: Swirl Ratio Optimization. AIAA Aviation Forum, 2025.
+
+<72> S. Menon, K. Ahmed, A. Sharma, P. Durbin. Machine-Learning-Enhanced Simulation of Unsteady Turbulent Flows. AIAA Aviation Forum, 2025.
+
+<71> K. Ahmed, S. Menon, D. Sitarski, A. Sharma, P. Durbin. Data-Enhanced RANS Modeling of Unsteady Transitional Flows. AIAA Aviation Forum, 2025.
+
 <70> L. Carlsson. Optimizing rotor blades for heavier-than-air flight on mars using the discrete adjoint method in the open-source framework DAFoam. Master Thesis, Uppsala University, 2025.
 
 <69> T.H.N Vuong, G.H. Long, T.H.H Le, T.L. Le. Improvement in aerodynamic performance of airfoils using aerodynamic shape optimization. JP Journal of Heat and Mass Transfer, 2025.
