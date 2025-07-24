@@ -14,6 +14,7 @@ As mentioned in [Overview](index.html), DAFoam uses OpenFOAM for multiphysics an
 ```bash
 NACA0012_Airfoil/incompressible
 |-- 0.orig            # initial fields and boundary conditions (OpenFOAM essentials)
+|-- FFD               # generate the FFD points
 |-- constant          # flow and turbulence property definition (OpenFOAM essentials)
 |-- profiles          # NACA0012 profile coordinate for mesh generation
 |-- system            # flow discretization, setup, time step, etc (OpenFOAM essentials)
