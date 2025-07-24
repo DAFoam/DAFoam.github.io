@@ -95,8 +95,10 @@ We then define some global parameters such at "U0": the far field velocity, "p0"
 
 ```python
 parser = argparse.ArgumentParser()
+# which optimizer to use. Options are: IPOPT (default), SLSQP, and SNOPT
 parser.add_argument("-optimizer", help="optimizer to use", type=str, default="IPOPT")
-parser.add_argument("-task", help="type of run to do", type=str, default="opt")
+# which task to run. Options are: run_driver (default), run_model, compute_totals, check_totals
+parser.add_argument("-task", help="type of run to do", type=str, default="run_driver")
 args = parser.parse_args()
 
 # =============================================================================
@@ -106,8 +108,9 @@ U0 = 10.0
 p0 = 0.0
 nuTilda0 = 4.5e-5
 CL_target = 0.5
-alpha0 = 5.0
+aoa0 = 5.13918623195176
 A0 = 0.1
+# rho is used for normalizing CD and CL
 rho0 = 1.0
 ```
 
