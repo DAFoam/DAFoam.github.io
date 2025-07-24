@@ -1,7 +1,7 @@
 ---
 title: Details of run scripts
 keywords: run script, log, optimization
-summary: "We need to set OpenFOAM configurations, preProcessing.sh, and runScript.py for DAFoam optimization."
+summary: "We need to set OpenFOAM configurations,  preProcessing.sh, and runScript.py for DAFoam optimization."
 sidebar: mydoc_sidebar
 permalink: mydoc_get_started_runscript.html
 folder: mydoc
