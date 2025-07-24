@@ -142,28 +142,22 @@ daOptions = {
         "nuTilda0": {"variable": "nuTilda", "patches": ["inout"], "value": [nuTilda0]},
         "useWallFunction": True,
     },
-    "objFunc": {
+    "function": {
         "CD": {
-            "part1": {
-                "type": "force",
-                "source": "patchToFace",
-                "patches": ["wing"],
-                "directionMode": "parallelToFlow",
-                "alphaName": "aoa",
-                "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
-                "addToAdjoint": True,
-            }
+            "type": "force",
+            "source": "patchToFace",
+            "patches": ["wing"],
+            "directionMode": "parallelToFlow",
+            "patchVelocityInputName": "patchV",
+            "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
         },
         "CL": {
-            "part1": {
-                "type": "force",
-                "source": "patchToFace",
-                "patches": ["wing"],
-                "directionMode": "normalToFlow",
-                "alphaName": "aoa",
-                "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
-                "addToAdjoint": True,
-            }
+            "type": "force",
+            "source": "patchToFace",
+            "patches": ["wing"],
+            "directionMode": "normalToFlow",
+            "patchVelocityInputName": "patchV",
+            "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
         },
     },
     "adjEqnOption": {"gmresRelTol": 1.0e-6, "pcFillLevel": 1, "jacMatReOrdering": "rcm"},
@@ -173,9 +167,15 @@ daOptions = {
         "nuTilda": nuTilda0 * 10.0,
         "phi": 1.0,
     },
-    "designVar": {
-        "aoa": {"designVarType": "AOA", "patches": ["inout"], "flowAxis": "x", "normalAxis": "y"},
-        "shape": {"designVarType": "FFD"},
+    "inputInfo": {
+        "aero_vol_coords": {"type": "volCoord", "components": ["solver", "function"]},
+        "patchV": {
+            "type": "patchVelocity",
+            "patches": ["inout"],
+            "flowAxis": "x",
+            "normalAxis": "y",
+            "components": ["solver", "function"],
+        },
     },
 }
 ```
