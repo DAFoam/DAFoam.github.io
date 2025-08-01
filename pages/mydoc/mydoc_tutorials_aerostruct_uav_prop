@@ -19,7 +19,7 @@ Design variables: 6 twist variables, 72 shape variables, 6 chord variables, rota
 Constraints: Thrust coefficient, propeller thickness, propeller spanwise curvature, leading edge, and mass
 RPM: 5000
 Reynolds number: 180 thousand
-Mesh cells: ...
+Mesh cells: ~1.5 million
 Solver: DARhoSimpleFoam
 </pre>
 
