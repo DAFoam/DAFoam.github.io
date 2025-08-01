@@ -23,5 +23,5 @@ Mesh cells: ...
 Solver: DARhoSimpleFoam
 </pre>
 
-
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Prop_Solid_Mesh.png" width="500" />
 
