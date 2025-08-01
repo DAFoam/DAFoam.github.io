@@ -9,17 +9,17 @@ folder: mydoc
 
 {% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
-The following is an aerodynamic shape optimization case for the Prowim wing-propeller configuration. Refer to [this paper](https://arc.aiaa.org/doi/10.2514/6.2020-1764) for more simulations and optimization results.
+The following is an aerodynamic shape optimization case for the Prowim wing-propeller configuration. Refer to [this paper]([https://www.sciencedirect.com/science/article/abs/pii/S1270963822005508?via%3Dihub]) for more simulations and optimization results.
 
 <pre>
 Case: Wing-propeller aerodynamic optimization
 Geometry: Prowim wing
 Objective function: Drag
 Design variables: 120 FFD points moving in the y direction
-Constraints: Volume, thickness, and lift
+Constraints: Volume, thickness, curvature and lift
 Propeller model: Actuator disk
 Mach number: 0.3
-Mesh cells: 190 K
+Mesh cells: 690 K
 Adjoint solver: DARhoSimpleFoam
 </pre>
 
@@ -78,5 +78,9 @@ elif args.task == "deformGeo":
 
 When using this function, it is important to provide an initial geometry that exactly matches the initial geometry used in the optimization.
 Additionally, the quality of the deformation and it's representation of the optimized geometry will greatly depend on how refined its surfaces are; if the output geometry does not match the optimized geometry, provide a more refined initial geometry or increase the values of the parameters `nRefU` and `nRefV`.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Optimization_animation.gif" width="500" />
+
+Fig. 2. Animation of the Prowim wing-propeller case optimization
 
 {% include links.html %}
