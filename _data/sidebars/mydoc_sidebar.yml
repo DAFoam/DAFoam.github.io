@@ -217,7 +217,7 @@ entries:
       url: /mydoc_guide_developer.html
       output: web, pdf
 
-  - title: Verifications and Validations
+  - title: V&V
     output: web, pdf
     folderitems:
   
