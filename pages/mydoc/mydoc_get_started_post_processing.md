@@ -45,6 +45,8 @@ The objective (CD) is 0.02082 for the baseline design and drops to 0.01780 for t
 
 Next, we can use [Paraview](https://www.paraview.org) to visualize the flow fields. Download the Paraview binaries [from here](https://www.paraview.org/download). They are ready to use for Windows, Linux, and MacOS. Once installed, open the Paraview app and click "File->Open..." from the top menu. In the pop-up window, navigate to tutorials-main/NACA0012_Airfoil/incompressible, select the paraview.foam file, and click "OK".
 
+{% include note.html content="paraview.foam is just a dummy file to tell ParaView where the case is located. paraview.foam itself does not contain any optimization data." %}
+
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Open.png" width="300" />
 
 Fig. 2. Open the paraview.foam file
@@ -55,7 +57,7 @@ Fig. 2. Open the paraview.foam file
 
 Then at the left panel, select "**Decomposed Case**" for "Case Type". 
 
-{% include note.html content="The **Decomposed Case** type tells Paraview to load data from processor* folders since we ran this case in parallel using 4 CPU cores. If one runs a serial run with one CPU core, select **Reconstructed Case** for **Case Type** instead." %}
+{% include note.html content="The **Decomposed Case** type tells Paraview to load data from processor* folders since we ran this case in parallel using 4 CPU cores. If one runs a serial run with one CPU core, or you have reconstruct the intermediate result using the **reconstructPar** command, select **Reconstructed Case**." %}
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Decomposed_Case.png" width="300" />
 
@@ -83,6 +85,10 @@ Now, click "Apply" at the left panel to load the flow fields. By default, the pr
 
 Fig. 5. Change variable to load and surface representation
 
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_NACA0012_Mesh.png" width="300" />
+
+Fig. 5. Pressure contour and mesh for the NACA0012 case
+
 |
 
 |
@@ -91,11 +97,26 @@ Finally, you can hit the play button at the top panel to play a movie of evoluti
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Play.png" width="300" />
 
-Fig. 6. Hit play to visualize a movie of optimization process
+Fig. 7. Hit play to visualize a movie of optimization process
 
 |
 
 |
+
+## Plot the surface pressure distribution using Paraview
+
+To plot the surface pressure profile, you need to first click the "paraview.foam" from the "Pipeline Browser" window on the left. Then, unselect "internalMesh" and select "wing" in the "Mesh Regions" window on the left panel. After that, hit "Apply" to show the wing surface only. 
+NOTE: By default, you will not "see" the wing surface because you are viewing from the z direction. You need to left click and drag to rotate the view. 
+
+Then, on the top menu, click "Sources-Search.." and search for the keyword "slice" and select it. Then on the left panel, click "Z Normal" and click "Apply" to cut a z-normal slice for the wing surface. 
+
+Then, right click "Slice1" from the "Pipeline Browser" and select "Add Filter-Data Analysis-Plot On Sorted Lines", and then click "Apply". 
+
+After that, you should see the plot on the right. By default, the plot is not for pressure profile. You need to go to the left properties panel and choose "Points_X" for "X Array Name", and then in the "Select Parameters" windows, select "p" and unselect all other variables. NOTE: make sure you click the plot on the right to see its properties panel.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Pressure_Profile.png" width="300" />
+
+Fig. 7. Surface pressure distribution for the NACA0012 airfoil
 
 Refer to the [Paraview User Guide](https://www.paraview.org/paraview-guide) for more advanced usage. 
 
