@@ -14,6 +14,7 @@ As mentioned in [Overview](index.html), DAFoam uses OpenFOAM for multiphysics an
 ```bash
 NACA0012_Airfoil/incompressible
 |-- 0.orig            # initial fields and boundary conditions (OpenFOAM essentials)
+|-- FFD               # generate the FFD points
 |-- constant          # flow and turbulence property definition (OpenFOAM essentials)
 |-- profiles          # NACA0012 profile coordinate for mesh generation
 |-- system            # flow discretization, setup, time step, etc (OpenFOAM essentials)
@@ -95,8 +96,10 @@ We then define some global parameters such at "U0": the far field velocity, "p0"
 
 ```python
 parser = argparse.ArgumentParser()
+# which optimizer to use. Options are: IPOPT (default), SLSQP, and SNOPT
 parser.add_argument("-optimizer", help="optimizer to use", type=str, default="IPOPT")
-parser.add_argument("-task", help="type of run to do", type=str, default="opt")
+# which task to run. Options are: run_driver (default), run_model, compute_totals, check_totals
+parser.add_argument("-task", help="type of run to do", type=str, default="run_driver")
 args = parser.parse_args()
 
 # =============================================================================
@@ -106,8 +109,9 @@ U0 = 10.0
 p0 = 0.0
 nuTilda0 = 4.5e-5
 CL_target = 0.5
-alpha0 = 5.0
+aoa0 = 5.13918623195176
 A0 = 0.1
+# rho is used for normalizing CD and CL
 rho0 = 1.0
 ```
 
@@ -142,28 +146,22 @@ daOptions = {
         "nuTilda0": {"variable": "nuTilda", "patches": ["inout"], "value": [nuTilda0]},
         "useWallFunction": True,
     },
-    "objFunc": {
+    "function": {
         "CD": {
-            "part1": {
-                "type": "force",
-                "source": "patchToFace",
-                "patches": ["wing"],
-                "directionMode": "parallelToFlow",
-                "alphaName": "aoa",
-                "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
-                "addToAdjoint": True,
-            }
+            "type": "force",
+            "source": "patchToFace",
+            "patches": ["wing"],
+            "directionMode": "parallelToFlow",
+            "patchVelocityInputName": "patchV",
+            "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
         },
         "CL": {
-            "part1": {
-                "type": "force",
-                "source": "patchToFace",
-                "patches": ["wing"],
-                "directionMode": "normalToFlow",
-                "alphaName": "aoa",
-                "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
-                "addToAdjoint": True,
-            }
+            "type": "force",
+            "source": "patchToFace",
+            "patches": ["wing"],
+            "directionMode": "normalToFlow",
+            "patchVelocityInputName": "patchV",
+            "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
         },
     },
     "adjEqnOption": {"gmresRelTol": 1.0e-6, "pcFillLevel": 1, "jacMatReOrdering": "rcm"},
@@ -173,9 +171,15 @@ daOptions = {
         "nuTilda": nuTilda0 * 10.0,
         "phi": 1.0,
     },
-    "designVar": {
-        "aoa": {"designVarType": "AOA", "patches": ["inout"], "flowAxis": "x", "normalAxis": "y"},
-        "shape": {"designVarType": "FFD"},
+    "inputInfo": {
+        "aero_vol_coords": {"type": "volCoord", "components": ["solver", "function"]},
+        "patchV": {
+            "type": "patchVelocity",
+            "patches": ["inout"],
+            "flowAxis": "x",
+            "normalAxis": "y",
+            "components": ["solver", "function"],
+        },
     },
 }
 ```
@@ -414,26 +418,24 @@ else:
 Finally, we select the proper task to run. By default, the script will run findFeasibleDesign to find the correct aoa to get the target lift, and then start the optimization. You can also do runPrimal (solve the primal once), runAdjoint (run the primal and adjoint once), or checkTotals (compare the adjoint derivatives with the finite-difference references.)
 
 ```python
-if args.task == "opt":
+if args.task == "run_driver":
     # solve CL
-    optFuncs.findFeasibleDesign(["cruise.aero_post.CL"], ["aoa"], targets=[CL_target])
+    optFuncs.findFeasibleDesign(["scenario1.aero_post.CL"], ["patchV"], targets=[CL_target], designVarsComp=[1])
     # run the optimization
     prob.run_driver()
-elif args.task == "runPrimal":
+elif args.task == "run_model":
     # just run the primal once
     prob.run_model()
-elif args.task == "runAdjoint":
+elif args.task == "compute_totals":
     # just run the primal and adjoint once
     prob.run_model()
     totals = prob.compute_totals()
     if MPI.COMM_WORLD.rank == 0:
         print(totals)
-elif args.task == "checkTotals":
+elif args.task == "check_totals":
     # verify the total derivatives against the finite-difference
     prob.run_model()
-    prob.check_totals(
-        of=["CD", "CL"], wrt=["shape", "aoa"], compact_print=True, step=1e-3, form="central", step_calc="abs"
-    )
+    prob.check_totals(compact_print=False, step=1e-3, form="central", step_calc="abs")
 else:
     print("task arg not found!")
     exit(1)
