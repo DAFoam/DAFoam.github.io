@@ -144,6 +144,10 @@ entries:
         - title: U bend channel
           url: /mydoc_tutorials_heat_ubend.html
           output: web, pdf
+        
+        - title: U bend channel
+          url: /mydoc_tutorials_heat_ubend_circular.html
+          output: web, pdf
 
       - title: Solid mechanics
         output: web, pdf
