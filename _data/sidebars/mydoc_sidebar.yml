@@ -145,7 +145,7 @@ entries:
           url: /mydoc_tutorials_heat_ubend.html
           output: web, pdf
         
-        - title: U bend channel
+        - title: U bend channel (circular)
           url: /mydoc_tutorials_heat_ubend_circular.html
           output: web, pdf
 
