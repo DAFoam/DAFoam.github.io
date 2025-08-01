@@ -85,9 +85,9 @@ Now, click "Apply" at the left panel to load the flow fields. By default, the pr
 
 Fig. 5. Change variable to load and surface representation
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_NACA0012_Mesh.png" width="300" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_NACA0012_Mesh.png" width="200" />
 
-Fig. 5. Pressure contour and mesh for the NACA0012 case
+Fig. 6. Pressure contour and mesh for the NACA0012 case
 
 |
 
@@ -114,7 +114,7 @@ Then, right click "Slice1" from the "Pipeline Browser" and select "Add Filter-Da
 
 After that, you should see the plot on the right. By default, the plot is not for pressure profile. You need to go to the left properties panel and choose "Points_X" for "X Array Name", and then in the "Select Parameters" windows, select "p" and unselect all other variables. NOTE: make sure you click the plot on the right to see its properties panel.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Pressure_Profile.png" width="300" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Pressure_Profile.png" width="400" />
 
 Fig. 7. Surface pressure distribution for the NACA0012 airfoil
 
