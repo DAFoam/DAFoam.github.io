@@ -88,7 +88,7 @@ First, generate the mesh and data for the c1 and c2 cases:
 ./preProcessing.sh
 </pre>
 
-Then, use the following command to run FI for case c1:
+Then, use the following command to run FI for case c1 (ToDo: need to update the runScript_FI.py):
 
 <pre>
 mpirun -np 4 python runScript_FI.py -index=0 2>&1 | tee logOpt.txt
