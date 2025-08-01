@@ -136,6 +136,10 @@ entries:
         - title: MACH tutorial wing
           url: /mydoc_tutorials_aerostruct_mach_wing.html
           output: web, pdf
+        
+        - title: UAV propeller
+          url: /mydoc_tutorials_aerostruct_uav_prop.html
+          output: web, pdf
       
       - title: Heat transfer
         output: web, pdf
