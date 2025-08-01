@@ -25,3 +25,4 @@ Solver: DARhoSimpleFoam
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Prop_Solid_Mesh.png" width="500" />
 
+Figure 1. Propeller solid FEM mesh. The blue and red dots are the FFD points, where the blue dots are the only ones that move during the optimization.
