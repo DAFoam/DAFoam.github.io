@@ -237,6 +237,22 @@ entries:
       url: /mydoc_gui_postprocessing.html
       output: web, pdf
   
+  - title: User Guide
+    output: web, pdf
+    folderitems:
+  
+    - title: Overview
+      url: /mydoc_guide_user.html
+      output: web, pdf
+
+  - title: Developer Guide
+    output: web, pdf
+    folderitems:
+  
+    - title: Overview
+      url: /mydoc_guide_developer.html
+      output: web, pdf
+
   - title: Verifications
     output: web, pdf
     folderitems:
