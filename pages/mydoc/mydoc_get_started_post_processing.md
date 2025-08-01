@@ -101,7 +101,6 @@ Fig. 7. Hit play to visualize a movie of optimization process
 
 |
 
-|
 
 ## Plot the surface pressure distribution using Paraview
 
@@ -117,6 +116,10 @@ After that, you should see the plot on the right. By default, the plot is not fo
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Pressure_Profile.png" width="400" />
 
 Fig. 7. Surface pressure distribution for the NACA0012 airfoil
+
+|
+
+|
 
 Refer to the [Paraview User Guide](https://www.paraview.org/paraview-guide) for more advanced usage. 
 
