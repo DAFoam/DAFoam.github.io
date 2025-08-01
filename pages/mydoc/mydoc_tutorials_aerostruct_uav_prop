@@ -1,1 +1,28 @@
+---
+title: UAV Propeller 
+keywords: tutorial,uav propeller
+summary: 
+sidebar: mydoc_sidebar
+permalink: mydoc_tutorials_aerostruct_uav_prop.html
+folder: mydoc
+---
+
+{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
+
+The following is an aerostructural shape optimization case for the MACH tutorial wing in subsonic conditions. The flow is solved using the DARhoSimpleFoam CFD solver and the structure is solved using an open-source FEM solver [TACS](https://github.com/smdogroup/tacs). The load and displacement transfer is computed using [FUNtoFEM](https://github.com/smdogroup/funtofem). The aerostructural coupling is implemented in the [OpenMDAO/Mphys](https://github.com/OpenMDAO/mphys) framework.
+
+<pre>
+Case: Propeller aerostructural optimization 
+Geometry: NACA 0012 UAV Propeller 
+Objective function: Power Coefficient
+Thrust Coefficient: ...
+Design variables: ...
+Constraints: ...
+RPM: ...
+Reynolds number: ...
+Mesh cells: ...
+Solver: DARhoSimpleFoam
+</pre>
+
+
 
