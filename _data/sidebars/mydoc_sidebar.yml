@@ -48,42 +48,6 @@ entries:
       url: /mydoc_get_started_faq.html
       output: web, pdf
 
-  - title: Download
-    output: web, pdf
-    folderitems:
-
-    - title: DAFoam-v4.0
-      url: /mydoc_download_v4.0.html
-      output: web, pdf
-
-    - title: DAFoam-v3.1
-      url: /mydoc_download_v3.1.html
-      output: web, pdf
-
-    - title: DAFoam-v3.0
-      url: /mydoc_download_v3.0.html
-      output: web, pdf
-      
-    - title: DAFoam-v2.2
-      url: /mydoc_download_v2.2.html
-      output: web, pdf
-
-    - title: DAFoam-v2.1
-      url: /mydoc_download_v2.1.html
-      output: web, pdf
-
-    - title: DAFoam-v2.0
-      url: /mydoc_download_v2.0.html
-      output: web, pdf
-    
-    - title: DAFoam-v1.1
-      url: /mydoc_download_v1.1.html
-      output: web, pdf
-    
-    - title: DAFoam-v1.0
-      url: /mydoc_download_v1.0.html
-      output: web, pdf
-
   - title: Installation
     output: web, pdf
     folderitems:
@@ -180,6 +144,10 @@ entries:
         - title: U bend channel
           url: /mydoc_tutorials_heat_ubend.html
           output: web, pdf
+        
+        - title: U bend channel
+          url: /mydoc_tutorials_heat_ubend_circular.html
+          output: web, pdf
 
       - title: Solid mechanics
         output: web, pdf
@@ -253,43 +221,27 @@ entries:
       url: /mydoc_guide_developer.html
       output: web, pdf
 
-  - title: Verifications
+  - title: V&V
     output: web, pdf
     folderitems:
   
-    - title: Overview
+    - title: Verification - Overview
       url: /mydoc_verifications_overview.html
       output: web, pdf
 
-    - title: DASimpleFoam
+    - title: Verification - DASimpleFoam
       url: /mydoc_verifications_dasimplefoam.html
       output: web, pdf
-    
-  - title: Validations
-    output: web, pdf
-    folderitems:
   
-    - title: Overview
+    - title: Validation - Overview
       url: /mydoc_validations_overview.html
       output: web, pdf
 
-    - title: RAE2822 airfoil
+    - title: Validation - RAE2822 airfoil
       url: /mydoc_validations_rae2822.html
       output: web, pdf
-    
-    - title: NACA0012 airfoil
-      url: /mydoc_validations_naca0012.html
-      output: web, pdf
-    
-    - title: Onera M6 wing
-      url: /mydoc_validations_onera_m6.html
-      output: web, pdf
-    
-    - title: Prowim wing propeller
-      url: /mydoc_validations_prowim.html
-      output: web, pdf
 
-  - title: Publications
+  - title: Documents
     output: web, pdf
     folderitems:
 
@@ -297,16 +249,8 @@ entries:
       url: /mydoc_docs_publications.html
       output: web, pdf
 
-  - title: Documents
-    output: web, pdf
-    folderitems:
-
     - title: DAFoam doxygen
       url: /mydoc_doxygen.html
-      output: web, pdf
-    
-    - title: User guides
-      url: /mydoc_docs_user_guides.html
       output: web, pdf
     
     - title: Workshops
