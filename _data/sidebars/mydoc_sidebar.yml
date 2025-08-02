@@ -216,6 +216,10 @@ entries:
     - title: Overview
       url: /mydoc_user_guide_overview.html
       output: web, pdf
+    
+    - title: Chapter 1 Background
+      url: /mydoc_user_guide_background.html
+      output: web, pdf
 
   - title: Developer Guide
     output: web, pdf
