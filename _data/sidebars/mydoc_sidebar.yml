@@ -214,7 +214,7 @@ entries:
     folderitems:
   
     - title: Overview
-      url: /mydoc_guide_user.html
+      url: /mydoc_user_guide_overview.html
       output: web, pdf
 
   - title: Developer Guide
@@ -222,7 +222,7 @@ entries:
     folderitems:
   
     - title: Overview
-      url: /mydoc_guide_developer.html
+      url: /mydoc_developer_overview.html
       output: web, pdf
 
   - title: V&V

@@ -3,7 +3,7 @@ title: DAFoam User Guide
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_guide_user.html
+permalink: mydoc_user_guide_overview.html
 folder: mydoc
 ---
 
