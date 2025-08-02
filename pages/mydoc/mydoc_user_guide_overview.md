@@ -1,5 +1,5 @@
 ---
-title: DAFoam User Guide
+title: DAFoam User Guide - Overview
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
@@ -11,7 +11,7 @@ folder: mydoc
 
 The objective of this user guide is to serve as a comprehensive, stand-alone resource to help new users onboard efficiently and become proficient in using DAFoam for a wide range of design optimization problems.
 
-- Chapter 1. Background
+- [Chapter 1. Background ](mydoc_user_guide_background.html)
 
 - Chapter 2. OpenFOAM and DAFoam basics
 
