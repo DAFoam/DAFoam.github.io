@@ -113,6 +113,8 @@ Then, right click "Slice1" from the "Pipeline Browser" and select "Add Filter-Da
 
 After that, you should see the plot on the right. By default, the plot is not for pressure profile. You need to go to the left properties panel and choose "Points_X" for "X Array Name", and then in the "Select Parameters" windows, select "p" and unselect all other variables. NOTE: make sure you click the plot on the right to see its properties panel.
 
+To save the raw data for the pressure profile, you can select the plotOnSortedLine1 on the left, and then click "Save Data" under the "File" menu.
+
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Pressure_Profile.png" width="350" />
 
 Fig. 7. Surface pressure distribution for the NACA0012 airfoil
