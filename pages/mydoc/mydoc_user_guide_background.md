@@ -41,12 +41,14 @@ Here $n$ is the optimization iteration number, $\alpha$ is a scalar step size, a
 An example of iterative optimization processes for a 2D optimization problem is illustrated in the following figure. Here, the x and y axes are the two design variables, and the contour denotes the value of the objective function. The baseline design $\vec{x}^0$ is located in the bottom left region of the 2D design space. The next design variables are computed using $\vec{x}^1=\vec{x}^0+\alpha^0 \vec{d}^0$. This process is repeated until the optimal design point ($\vec{x}^*$) is found.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/opt_process.png" style="width:500px !important;" />
+Fig. 1. Schematic of an iterative optimization process for a 2D problem
 
 ### 1.3 Objective function evaluation
 
 For simple optimization problems, the objective function ($f$) is an explicit function of the design variable $\vec{x}$, so we can directly compute the $f$ value for a given set of $\vec{x}$ values. However, for many engineering design problems, the objective function ($f$) is an implicit function of the design variable $\vec{x}$. In this case, $f$ depends on both the state variables $\vec{w}$ and design variable $\vec{x}$, and they are correlated by a governing equation $\vec{R}(\vec{w}, \vec{x})=0$. The objective function evaluation consists of two steps (see the following figure). 1. Use $\vec{x}$ as the input to solve the governing equation and obtain the converged state variable $\vec{w}$. 2. Use $\vec{x}$ and $\vec{w}$ as the inputs to compute $f(\vec{w}, \vec{x})$. In design optimization, we call the step 1 **the primal solution**. One example is to solve the Navier-Stokes governing equation to get the state variables (flow fields), and then use the flow fields (state variables) to compute the drag coefficient (objective function). We will discuss the details of primal solutions later.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/xdsm/f_calculation.png" style="width:500px !important;" />
+Fig. 2. Schematic of objective function computation process
 
 ### 1.4 Search direction computation
 
@@ -62,7 +64,7 @@ At the optimal point, the first-order necessary condition states that the gradie
 
 ## 2. Primal simulation using numerical methods
 
-2.1 Numerical methods and discretization
+### 2.1 Numerical methods and discretization
 
 As mentioned above, we need to solve a set of governing equations, $\vec{R}(\vec{w}, \vec{x}) = 0$, to obtain the state variables and evaluate the objective function. This process is called the primal solution in the context of design optimization. For many engineering problems, such as those governed by the Navier–Stokes equations, analytical solutions are infeasible due to the complexity of the equations. To address this, we can use numerical methods that approximate the solution over a finite number of spatial (mesh) and temporal (time step) intervals, a process also known as discretization.
 
@@ -74,11 +76,14 @@ $$
 
 Here the subscript i denotes the mesh cell index and $\Delta x$ is the mesh size.
 
-2.2 Initial and boundary conditions
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/analysis_discretization.png" style="width:500px !important;" />
+Fig. 3. A schematic of spatial discretization for a 2D simulation domain
+
+### 2.2 Initial and boundary conditions
 
 Although the above numerical analysis makes the solution of complex governing equations feasible, there are infinite number of discrete solutions that satisfy the governing equations. To make the solution unique and relevant to the specific problem we are interested in, we need to prescribe proper initial and boundary condition to the problem. The initial conditions are the initial values for all state variables, before the simulation starts. The boundary conditions are the state variable values at the outer boundary of the simulation domain. In general, we can set two types of boundary conditions: Dirichlet (fixed-value) and Neumann (fixed-gradient). Refer to the figure above.
 
-2.3 Solution of discretized governing equation
+### 2.3 Solution of discretized governing equation
 
 ## 3. Gradient computation using the discrete adjoint method
 
