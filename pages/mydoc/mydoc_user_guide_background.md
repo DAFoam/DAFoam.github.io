@@ -30,7 +30,7 @@ A typical example is airfoil aerodynamic shape optimization, where the objective
 
 ### 1.2 Iterative optimization process
 
-In general, the above optimization problem can not be solved analytically, so we need to use an iterative approach to find the optimal solution $\vec{x}$. The iterative optimization process starts with an initial guess of the design variables $\vec{x}_0$, called initial design or baseline design. Then, an optimization algorithm compute a search direction and step size to update the design variable using
+In general, the above optimization problem can not be solved analytically, so we need to use an iterative approach to find the optimal solution $\vec{x}$. The iterative optimization process starts with an initial guess of the design variables $\vec{x}_0$, called the initial design or baseline design. Then, an optimization algorithm computes a search direction and step size to update the design variable using
 
 $$
 \vec{x}^{n+1} = \vec{x}^n + \alpha^n \vec{d}^n
@@ -38,14 +38,20 @@ $$
 
 Here $n$ is the optimization iteration number, $\alpha$ is a scalar step size, and $\vec{d}$ is the search direction vector.  $\vec{d}$ and  $\vec{x}$ have the same size. 
 
-An example of iterative optimization processes for a 2D optimization problem is illustrated in the following figure. Here the x and y axes are the two design variables, and the contour denotes the value of the objective function. The baseline design $\vec{x}^0$ is located in the bottom left region in this 2D design space.
+An example of iterative optimization processes for a 2D optimization problem is illustrated in the following figure. Here the x and y axes are the two design variables, and the contour denotes the value of the objective function. The baseline design $\vec{x}^0$ is located in the bottom left region of the 2D design space. The next design variables are computed using $\vec{x}^1=\vec{x}^0+\alpha^0 \vec{d}^0$. This process is repeated until the optimal design point ($\vec{x}^*$) is found.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/opt_process.png" style="width:500px !important;" />
 
-### 1.3 Search direction computation (adjoint gradient computation)
+### 1.3 Objective function evaluation
+
+For simple optimization problems, the objective function ($f$) is an explicit function of the design variable $\vec{x}$, so we can directly compute the $f$ value for a given set of $\vec{x}$ values. However, for many engineering design problems, the objective function ($f$) is an implicit function of the design variable $\vec{x}$. In this case, $f$ depends on both the state variables $\vec{w}$ and design variable $\vec{x}$, and they are correlated by a governing equation $\vec{R}(\vec{w}, \vec{x})=0$. The objective function evaluation consists of two steps. 1. Use $\vec{x}$ as the input to solve the governing equation and obtain the converged state variable $\vec{w}$. 2. Use $\vec{x}$ and $\vec{w}$ as the inputs to compute $f(\vec{w}, \vec{x})$. In design optimization, we call the step 1 **the primal solution**. One example is to solve the Navier-Stokes governing equation to get the state variables (flow fields), and then use the flow fields (state variables) to compute the drag coefficient (objective function).
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/xdsm/f_calculation.png" style="width:300px !important;" />
+
+### 1.4 Search direction computation
 
 The search direction $\vec{d}$ is typically computed based on the gradients $\text{d}f/\text{d}\vec{x}$. 
 
-### 1.4 Step size computation (line search)
+### 1.5 Step size computation (line search)
 
 {% include links.html %}
