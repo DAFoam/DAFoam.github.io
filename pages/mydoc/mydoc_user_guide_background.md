@@ -46,7 +46,7 @@ An example of iterative optimization processes for a 2D optimization problem is 
 
 For simple optimization problems, the objective function ($f$) is an explicit function of the design variable $\vec{x}$, so we can directly compute the $f$ value for a given set of $\vec{x}$ values. However, for many engineering design problems, the objective function ($f$) is an implicit function of the design variable $\vec{x}$. In this case, $f$ depends on both the state variables $\vec{w}$ and design variable $\vec{x}$, and they are correlated by a governing equation $\vec{R}(\vec{w}, \vec{x})=0$. The objective function evaluation consists of two steps. 1. Use $\vec{x}$ as the input to solve the governing equation and obtain the converged state variable $\vec{w}$. 2. Use $\vec{x}$ and $\vec{w}$ as the inputs to compute $f(\vec{w}, \vec{x})$. In design optimization, we call the step 1 **the primal solution**. One example is to solve the Navier-Stokes governing equation to get the state variables (flow fields), and then use the flow fields (state variables) to compute the drag coefficient (objective function).
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/xdsm/f_calculation.png" style="width:300px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/xdsm/f_calculation.png" style="width:500px !important;" />
 
 ### 1.4 Search direction computation
 
