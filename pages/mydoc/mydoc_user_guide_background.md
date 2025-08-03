@@ -15,10 +15,9 @@ DAFoam solves constrained nonlinear optimization problems using gradient-based o
 
 $$
 \begin{aligned}
-\text{minimize } & f(x), \\
-\text{with respect to } & x \\
-\text{subject to: } & \\
-& h(x) = 0, \\
+\text{minimize: } & f(x), \\
+\text{with respect to: } & x \\
+\text{subject to: } & h(x) = 0, \\
 & g(x) \le 0.
 \end{aligned}
 $$
