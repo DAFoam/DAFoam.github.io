@@ -11,15 +11,15 @@ folder: mydoc
 
 ## Constrained gradient-based optimization
 
-DAFoam solves constrained nonlinear optimization problems using gradient-based optimization algorithms, with the gradients efficiently computed by the discrete adjoint method. In such problems, an objective function (\( f(x) \)) is minimized by changing the design variables ($x$), subject to certain constraints ($g(x)$, and $h(x)$).
+DAFoam solves constrained nonlinear optimization problems using gradient-based optimization algorithms, with the gradients efficiently computed by the discrete adjoint method. In such problems, an objective function ($f(x)$) is minimized by changing the design variables ($x$), subject to certain constraints ($g(x)$, and $h(x)$).
 
 $$
-Changing x to:
+\text{Changing} x \text{to:} \\
 
-minimize f(x),
+\text{minimize} f(x), \\
 
-subject to: 
-h(x) = 0
+\text{subject to:} 
+h(x) = 0, \\
 g(x) \le 0
 $$
 
