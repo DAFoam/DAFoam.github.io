@@ -115,7 +115,7 @@ After that, you should see the plot on the right. By default, the plot is not fo
 
 To save the raw data for the pressure profile, you can select the plotOnSortedLine1 on the left, and then click "Save Data" under the "File" menu.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Pressure_Profile.png" width="350" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Pressure_Profile.png" style="width:900px !important;" />
 
 Fig. 7. Surface pressure distribution for the NACA0012 airfoil
 
