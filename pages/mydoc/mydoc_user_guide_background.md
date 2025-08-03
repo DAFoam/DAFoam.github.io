@@ -40,7 +40,7 @@ Here $n$ is the optimization iteration number, $\alpha$ is a scalar step size, a
 
 An example of iterative optimization processes for a 2D optimization problem is illustrated in the following figure. Here the x and y axes are the two design variables, and the contour denotes the value of the objective function. The baseline design $\vec{x}^0$ is located in the bottom left region in this 2D design space.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/opt_process.png" style="width:100px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/opt_process.png" style="width:500px !important;" />
 
 ### 1.3 Search direction computation (adjoint gradient computation)
 
