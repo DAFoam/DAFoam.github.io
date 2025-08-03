@@ -50,10 +50,14 @@ For simple optimization problems, the objective function ($f$) is an explicit fu
 
 ### 1.4 Search direction computation
 
-The search direction $\vec{d}$ is typically computed based on the gradient vector $\nabla f = \text{d}f/\text{d}\vec{x}$. In the steepest descent optimization algorithm, the search direction is simply the opposite direction of the normalized gradient vector $\vec{d} = - \nabla f / || \nabla f ||$. For more advanced optimization algorithms, such as sequential quadratic programming (SQP), the search direction is typically a complex function of the gradient vector. For large-scale optimization problems with hundreds of design variables, computing gradients become computationally expensive. So, DAFoam uses the **discrete adjoint method** to efficiently compute the gradients, which will be discussed later.
+The search direction $\vec{d}$ is typically computed based on the gradient vector $\nabla f = \text{d}f/\text{d}\vec{x}$. In the steepest descent optimization algorithm, the search direction is simply the opposite direction of the normalized gradient vector $\vec{d} = - \nabla f / \lvert \nabla f \rvert$. For more advanced optimization algorithms, such as sequential quadratic programming (SQP), the search direction is typically a complex function of the gradient vector. For large-scale optimization problems with hundreds of design variables, computing gradients become computationally expensive. So, DAFoam uses the **discrete adjoint method** to efficiently compute the gradients, which will be discussed later.
 
 ### 1.5 Step size computation (line search)
 
 Once the search direction $\vec{d}$ is computed, we need to take a step size to actually update the design variable. The step size determination is always a 1D problem, no matter how many design variables we have. So, this process is also called line search. The process typically starts with trying a default step size to update the design, i.e., $\vec{x}^{n+1} = \vec{x}^n + \alpha^\textrm{init} \vec{d}^n$. Then, we can use this new candidate design variable to evaluate $f$ (call the primal solution). If the objective function $f$ is reduced (the design is improved for this iteration), we accept the step size. Otherwise (i.e., $f$ increases instead of decreasing), we may reduce the step size by a factor, e.g., 0.1, and compute a new candidate design variable vector. This line search process will repeated until $f$ is reduced for this iteration. The line search ensures the objective function always reduces for all optimization iterations. Note that each line search iteration requires calling the primal solution once.
+
+## 2. Primal simulation using numerical analysis
+
+## 3. Gradient computation using the discrete adjoint method
 
 {% include links.html %}
