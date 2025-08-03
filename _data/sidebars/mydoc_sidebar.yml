@@ -226,7 +226,7 @@ entries:
     folderitems:
   
     - title: Overview
-      url: /mydoc_developer_overview.html
+      url: /mydoc_developer_guide_overview.html
       output: web, pdf
 
   - title: V&V
