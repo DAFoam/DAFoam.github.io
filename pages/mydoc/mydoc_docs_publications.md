@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<74> Justin Beland. Bayesian Optimization Algorithms for High-Dimensional Problems and Robust Design. PhD Thesis, University of Toronto, 2025. 
+
 <73> H. Blumhoefer, A. Sharma. Numerical Simulation of Tornado-Like Vortices: Swirl Ratio Optimization. AIAA Aviation Forum, 2025.
 
 <72> S. Menon, K. Ahmed, A. Sharma, P. Durbin. Machine-Learning-Enhanced Simulation of Unsteady Turbulent Flows. AIAA Aviation Forum, 2025.
