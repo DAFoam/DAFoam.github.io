@@ -66,7 +66,13 @@ At the optimal point, the first-order necessary condition states that the gradie
 
 As mentioned above, we need to solve a set of governing equations, $\vec{R}(\vec{w}, \vec{x}) = 0$, to obtain the state variables and evaluate the objective function. This process is called the primal solution in the context of design optimization. For many engineering problems, such as those governed by the Navier–Stokes equations, analytical solutions are infeasible due to the complexity of the equations. To address this, we can use numerical methods that approximate the solution over a finite number of spatial (mesh) and temporal (time step) intervals, a process also known as discretization.
 
-Taking the following figure as an example. We divide the simulation domain into smaller piece, called mesh cells. Then, we solve for the state variables, such as velocity, pressure, and density, only for these discrete mesh cells. By doing this, the original continuous problems become discrete, and solving the states for these discrete mesh cells become computationally feasible. For example, we can approximate the first-order spatial derivative, defined in continuous space, by using the information from discrete space (mesh cells): $\frac{\partial u}{\partial x}_i = \frac{u_{i+1} - u_{i-1}}{\Delta x}$. Here the subscript i denotes the mesh cell index and $\Delta x$ is the mesh size.
+Taking the following figure as an example. We divide the simulation domain into smaller piece, called mesh cells. Then, we solve for the state variables, such as velocity, pressure, and density, only for these discrete mesh cells. By doing this, the original continuous problems become discrete, and solving the states for these discrete mesh cells become computationally feasible. For example, we can approximate the first-order spatial derivative, defined in continuous space, by using the information from discrete space (mesh cells): 
+
+$$
+\frac{\partial u}{\partial x}_i = \frac{u_{i+1} - u_{i-1}}{\Delta x}
+$$
+
+Here the subscript i denotes the mesh cell index and $\Delta x$ is the mesh size.
 
 2.2 Initial and boundary conditions
 
