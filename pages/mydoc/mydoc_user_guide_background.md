@@ -40,7 +40,7 @@ Here $n$ is the optimization iteration number, $\alpha$ is a scalar step size, a
 
 An example of iterative optimization processes for a 2D optimization problem is illustrated in the following figure. Here, the x and y axes are the two design variables, and the contour denotes the value of the objective function. The baseline design $\vec{x}^0$ is located in the bottom left region of the 2D design space. The next design variables are computed using $\vec{x}^1=\vec{x}^0+\alpha^0 \vec{d}^0$. This process is repeated until the optimal design point ($\vec{x}^*$) is found.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/opt_process.png" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/opt_process.png" style="width:500px !important;" />
 
 Fig. 1. Schematic of an iterative optimization process for a 2D problem
 
@@ -48,7 +48,7 @@ Fig. 1. Schematic of an iterative optimization process for a 2D problem
 
 For simple optimization problems, the objective function ($f$) is an explicit function of the design variable $\vec{x}$, so we can directly compute the $f$ value for a given set of $\vec{x}$ values. However, for many engineering design problems, the objective function ($f$) is an implicit function of the design variable $\vec{x}$. In this case, $f$ depends on both the state variables $\vec{w}$ and design variable $\vec{x}$, and they are correlated by a governing equation $\vec{R}(\vec{w}, \vec{x})=0$. The objective function evaluation consists of two steps (see the following figure). 1. Use $\vec{x}$ as the input to solve the governing equation and obtain the converged state variable $\vec{w}$. 2. Use $\vec{x}$ and $\vec{w}$ as the inputs to compute $f(\vec{w}, \vec{x})$. In design optimization, we call the step 1 **the primal solution**. One example is to solve the Navier-Stokes governing equation to get the state variables (flow fields), and then use the flow fields (state variables) to compute the drag coefficient (objective function). We will discuss the details of primal solutions later.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/xdsm/f_calculation.png" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/f_calculation.png" style="width:500px !important;" />
 
 Fig. 2. Schematic of objective function computation process
 
@@ -78,7 +78,7 @@ $$
 
 Here the subscript i denotes the mesh cell index and $\Delta x$ is the mesh size.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/analysis_discretization.png" style="width:700px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/analysis_discretization.png" style="width:700px !important;" />
 
 Fig. 3. A schematic of spatial discretization for a 2D simulation domain
 
