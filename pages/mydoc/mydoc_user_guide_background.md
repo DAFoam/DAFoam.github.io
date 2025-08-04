@@ -88,8 +88,26 @@ Although the above numerical analysis makes the solution of complex governing eq
 
 ### 2.3 Solution of the discretized governing equations
 
-After discretizing the simulation domain and setting proper initial and boundary conditions, we will get a set of discretized governing equations. These equations can often be written as $\mathbf{A}\vec{w}=\vec{b}$, where $A$ is a matrix that contains all the discretization operators, $\vec{w}$ is the state variables (solutions), and $\vec{b}$ is the right-hand side (constant) operators from the discretization. Then, the primal solver will solve the above equation in an iterative manner. To monitor the convergence, we often print out the **residuals** during the primal solution process. Here the primal residuals are defined as $\vec{R}_\textrm{primal} = \mathbf{A}\vec{w} - \vec{b}$.
+After discretizing the simulation domain and setting proper initial and boundary conditions, we will get a set of discretized governing equations. These equations can often be written as $\mathbf{A}\vec{w}=\vec{b}$, where $A$ is a matrix that contains all the discretization operators, $\vec{w}$ is the state variables (solutions), and $\vec{b}$ is the right-hand side (constant) operators from the discretization. For general nonlinear governing equations, both $A$ and $\vec{b}$ can be functions of the state variables $\vec{w}$ and design variables $\vec{x}$. Then, the primal solver will solve the above equation in an iterative manner (e.g., using the Gauss-Seidel method). To monitor the convergence, we often print out the **residuals** during the primal solution process. Here the primal residuals are defined as $\vec{R} = \mathbf{A}\vec{w} - \vec{b}$.
 
 ## 3. Gradient computation using the discrete adjoint method
+
+DAFoam uses the discrete adjoint method to compute gradients efficiently. A key advantage of this approach is that its computational cost is independent of the number of design variables. Adjoint-based gradient computation involves two main steps: 
+
+1. Solving the adjoint equation
+
+$$
+\frac{\partial \vec{R}}{\partial \vec{w}}^T \psi = \frac{\partial f }{\partial \vec{w}}^T
+$$
+
+Here $\psi$ is the adjoint vector, and the superscript $T$ denotes the transpose operator. The above adjoint equation is a large-scale linear equation, and DAFoam uses the generalized minimal residual method (GMRES) method to solve it. 
+
+2. Computing the total derivative:
+
+$$
+\frac{\text{d} f }{\text{d} \vec{x}} = \frac{\partial f }{\partial \vec{x}} - \frac{\partial \vec{R} }{\partial \vec{x}}^T \psi
+$$
+
+In this step, the total derivative of the objective function with respect to the design variables $\vec{x}$ is computed explicitly, using the adjoint vector computed from step 1. Since the design variables do not appear in the adjoint equation, only one adjoint solve per objective function is needed, regardless of the number of design variables. The second equation is non-iterative and computationally inexpensive. DAFoam computes all partial derivatives and matrix–vector products using automatic differentiation (AD) for accuracy and efficiency.
 
 {% include links.html %}
