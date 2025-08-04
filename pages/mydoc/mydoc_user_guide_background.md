@@ -94,20 +94,20 @@ After discretizing the simulation domain and setting proper initial and boundary
 
 DAFoam uses the discrete adjoint method to compute gradients efficiently. A key advantage of this approach is that its computational cost is independent of the number of design variables. Adjoint-based gradient computation involves two main steps: 
 
-1. Solving the adjoint equation
+1 Solving the adjoint equation
 
 $$
-\frac{\partial \vec{R}}{\partial \vec{w}}^T \psi = \frac{\partial f }{\partial \vec{w}}^T
+\frac{\partial \vec{R}}{\partial \vec{w}}^T \vec{\psi} = \frac{\partial f }{\partial \vec{w}}^T
 $$
 
-Here $\psi$ is the adjoint vector, and the superscript $T$ denotes the transpose operator. The above adjoint equation is a large-scale linear equation, and DAFoam uses the generalized minimal residual method (GMRES) method to solve it. 
+Here $\vec{\psi}$ is the adjoint vector, and the superscript $T$ denotes the transpose operator. The above adjoint equation is a large-scale linear equation, and DAFoam uses the generalized minimal residual method (GMRES) method to solve it. During the GMRES solution processes, the **adjoint residual** measures the difference between the left and right hand side of the above equation.
 
-2. Computing the total derivative:
+2 Computing the total derivative:
 
 $$
-\frac{\text{d} f }{\text{d} \vec{x}} = \frac{\partial f }{\partial \vec{x}} - \frac{\partial \vec{R} }{\partial \vec{x}}^T \psi
+\frac{\text{d} f }{\text{d} \vec{x}} = \frac{\partial f }{\partial \vec{x}} - \frac{\partial \vec{R} }{\partial \vec{x}}^T \vec{\psi}
 $$
 
-In this step, the total derivative of the objective function with respect to the design variables $\vec{x}$ is computed explicitly, using the adjoint vector computed from step 1. Since the design variables do not appear in the adjoint equation, only one adjoint solve per objective function is needed, regardless of the number of design variables. The second equation is non-iterative and computationally inexpensive. DAFoam computes all partial derivatives and matrix–vector products using automatic differentiation (AD) for accuracy and efficiency.
+In this step, the total derivative of the objective function with respect to the design variables $\vec{x}$ is computed explicitly, using the adjoint vector $\vec{\psi}$ computed from step 1. Since the design variables do not appear in the adjoint equation, only one adjoint solve per objective function is needed, regardless of the number of design variables. The second equation is non-iterative and computationally inexpensive. DAFoam computes all partial derivatives and matrix–vector products using automatic differentiation (AD) for accuracy and efficiency.
 
 {% include links.html %}
