@@ -9,7 +9,7 @@ folder: mydoc
 
 ## OpenFOAM configurations
 
-As mentioned in [Overview](index.html), DAFoam uses OpenFOAM for multiphysics analysis. So before running DAFoam optimizations, one needs to set up an OpenFOAM run case for NACA0012 airfoil. tutorials-main/NACA0012_Airfoil/incompressible has the following folder structure:
+As mentioned in [Overview](index.html), DAFoam uses OpenFOAM for multiphysics analysis. So, before running DAFoam optimizations, one needs to set up an OpenFOAM run case for the NACA0012 airfoil. tutorials-main/NACA0012_Airfoil/incompressible has the following folder structure:
 
 ```bash
 NACA0012_Airfoil/incompressible
@@ -29,15 +29,15 @@ Here we assume you are familiar with the OpenFOAM setup. Otherwise, refer to the
 
 ## preProcessing.sh
 
-Once the OpenFOAM configuration files are properly set, we run the preProcessing.sh script to generate the mesh. This script first runs the genAirFoilMesh.py script to generate hyperbolic mesh using [pyHyp](https://github.com/mdolab/pyhyp), save the mesh to the plot3D format (volumeMesh.xyz). 
+Once the OpenFOAM configuration files are properly set, we run the preProcessing.sh script to generate the mesh. This script first runs the genAirFoilMesh.py script to generate a hyperbolic mesh using [pyHyp](https://github.com/mdolab/pyhyp), saves the mesh to the plot3D format (volumeMesh.xyz). 
 
 Then it uses the OpenFOAM's built-in utility plot3dToFoam to convert the plot3D mesh to the OpenFOAM mesh and save it to constant/polyMesh (`plot3dToFoam -noBlank volumeMesh.xyz`). 
 
-Since the plot3D mesh does not have boundary information, the converted OpenFOAM mesh has only one boundary patch, so we need to use the autoPatch utility to split boundaries (`autoPatch 30 -overwrite`). Here 30 is the feature angle between two surface mesh faces. The utility will split patches if the feature angle is larger than 30 degree.
+Since the plot3D mesh does not have boundary information, the converted OpenFOAM mesh has only one boundary patch, so we need to use the autoPatch utility to split boundaries (`autoPatch 30 -overwrite`). Here, 30 is the feature angle between two surface mesh faces. The utility will split patches if the feature angle is larger than 30 degrees.
 
 The above split patches will have names such as auto0, auto1, auto2, we need to rename them to wing, sym, inout, etc. This is done by running `createPatch -overwrite`. The definition of boundary name is in system/createPatchDict. 
 
-Next we call `renumberMesh -overwrite` to renumber the mesh points to reduce the bandwidth of Jacobians and reduce the memory usage. Finally, we copy the boundary condition files 0.orig to 0.
+Next, we call `renumberMesh -overwrite` to renumber the mesh points to reduce the bandwidth of Jacobians and reduce the memory usage. Finally, we copy the boundary condition files 0.orig to 0.
 
 ```bash
 #!/bin/bash
@@ -119,26 +119,26 @@ rho0 = 1.0
 
 Next, the "daOptions" dictionary contains all the DAFoam parameters for primal and adjoint solvers. For a full list of input parameters in daOptions, refer to [here](https://dafoam.github.io/doxygen/html/classdafoam_1_1pyDAFoam_1_1DAOPTION.html).
 
-"designSurfaces" is a list of patch names for the design surface to change during optimization. Here "wing" is a patch in constant/polyMesh/boundary and it needs to be of **wall** type. 
+"designSurfaces" is a list of patch names for the design surface to change during optimization. Here, "wing" is a patch in constant/polyMesh/boundary, and it needs to be of **wall** type. 
 
-"DASimpleFoam" is an incompressible solver that uses the SIMPLE algorithm, and it is derived from the OpenFOAM's built-in solver simpleFoam with modification to compute adjoint derivatives. 
+"DASimpleFoam" is an incompressible solver that uses the SIMPLE algorithm, and it is derived from OpenFOAM's built-in solver simpleFoam with modifications to compute adjoint derivatives. 
 
 The "primalMinResTol" parameter is the residual convergence tolerance for the primal solver (DASimpleFoam). 
 
-The "primalBC" dictionary defines the boundary conditions for primal solution. Note that if primalBC is defined, it will overwrite the values defined in the 0 folder. Here we need to provide the variable name, patch names, and value to set for each variable. If "primalBC" is left blank, we will use the BCs defined in the 0 folder. 
+The "primalBC" dictionary defines the boundary conditions for the primal solution. Note that if primalBC is defined, it will overwrite the values defined in the 0 folder. Here we need to provide the variable name, patch names, and value to set for each variable. If "primalBC" is left blank, we will use the BCs defined in the 0 folder. 
 
-The "function" dictionary defines the objective functions. Taking "CD" as an example, we need to give a name to the objective function, e.g., "CD" or any other preferred name. We need to define the type of objective (e.g., "force", "moment"; we need to use the reserved type names), how to select the discrete mesh faces to compute the objective (e.g., we select them from the name of a patch "patchToFace"), and the name of the patch (wing) for "patchToFace". Since it is a force objective, we need to project the force vector to a specific direction. Here we defines that "CD" is the force that is parallel to the flow direction ("parallelToFlow"). Alternative, we can also use "fixedDirection" and provide a "direction" key for force, i.e., "directionMode": "fixedDirection", "direction": [1.0, 0.0, 0.0]. Since we select "parallelToFlow", we need to prescribe the name of the patch for velocity input ("patchV") design variable to determine the flow direction. NOTE: if no "patchV" is defined as the design variables, we can NOT use "parallelToFlow". For this case, we have to use "directionMode": "fixedDirection" instead. The "scale" parameter is scaling factor for this objective "CD", i.e., CD = force / (0.5 * U0 * U0 * A0 * rho0). The definition of "CL" is similar to "CD" except that we use "normalToFlow" for "directionMode".
+The "function" dictionary defines the objective functions. Taking "CD" as an example, we need to give a name to the objective function, e.g., "CD" or any other preferred name. We need to define the type of objective (e.g., "force", "moment"; we need to use the reserved type names), how to select the discrete mesh faces to compute the objective (e.g., we select them from the name of a patch "patchToFace"), and the name of the patch (wing) for "patchToFace". Since it is a force objective, we need to project the force vector to a specific direction. Here we define that "CD" is the force that is parallel to the flow direction ("parallelToFlow"). Alternative, we can also use "fixedDirection" and provide a "direction" key for force, i.e., "directionMode": "fixedDirection", "direction": [1.0, 0.0, 0.0]. Since we select "parallelToFlow", we need to prescribe the name of the patch for velocity input ("patchV") design variable to determine the flow direction. NOTE: if no "patchV" is defined as the design variables, we can NOT use "parallelToFlow". For this case, we have to use "directionMode": "fixedDirection" instead. The "scale" parameter is a scaling factor for this objective "CD", i.e., CD = force / (0.5 * U0 * U0 * A0 * rho0). The definition of "CL" is similar to "CD" except that we use "normalToFlow" for "directionMode".
 
-The "adjEqnOption" dictionary contains the adjoint linear equation solution options. If the adjoint does not converge, increase "pcFillLevel" to 2. Or try "jacMatReOrdering" : "nd". By default, we require the adjoint equation to drop six orders of magnitudes.
+The "adjEqnOption" dictionary contains the adjoint linear equation solution options. If the adjoint does not converge, increase "pcFillLevel" to 2. Or try "jacMatReOrdering" : "nd". By default, we require the adjoint equation to drop six orders of magnitude.
 
-"normalizeStates" contains the state normalization values. Here we use the far field values as reference. NOTE: since "p" is relative, we use the dynamic pressure "U0 * U0 / 2". For compressible flow, we can just use p0. Also, the face flux variable phi will be automatically normalized by its surface area so we can set "phi": 1.0. We also need to normalize the turbulence variables, such as nuTilda, k, omega, and epsilon.
+"normalizeStates" contains the state normalization values. Here we use the far field values as a reference. NOTE: Since "p" is relative, we use the dynamic pressure "U0 * U0 / 2". For compressible flow, we can just use p0. Also, the face flux variable phi will be automatically normalized by its surface area, so we can set "phi": 1.0. We also need to normalize the turbulence variables, such as nuTilda, k, omega, and epsilon.
 
 <!--
 Stopped here
 We changed designVar to inputInfo
 -->
 
-Finally, we define the design variables in the "designVar" dictionary. We need to set the "designVarType" to let DAFoam knows what type of total derivatives to compute.
+Finally, we define the design variables in the "designVar" dictionary. We need to set the "designVarType" to let DAFoam know what type of total derivatives to compute.
 
 ```python
 daOptions = {
@@ -207,7 +207,7 @@ meshOptions = {
 
 Next, we use the [Mphys](https://github.com/OpenMDAO/mphys) interface to set up the optimization problem. Mphys is based on [OpenMDAO](https://github.com/OpenMDAO/mphys) and allows us to develop multidisciplinary optimization capability in a modular way. If you are not familiar with OpenMDAO, check [OpenMDAO documentation](https://openmdao.org/newdocs/versions/latest/getting_started/getting_started.html). We suggest you read the "Getting Started", "Basic user guide", and "Advanced user guide" (optional).
 
-The following is the OpenMDAO N2 diagram that illustrates the inputs and outputs of components and their interaction in an optimization problem. The `Top` class will essentially create the components and sets the proper connection. 
+The following is the OpenMDAO N2 diagram that illustrates the inputs and outputs of components and their interaction in an optimization problem. The `Top` class will essentially create the components and set the proper connection. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/aero_n2.png" width="800" />
 
@@ -228,11 +228,11 @@ The dvs component is a special component that has only outputs. We usually use i
 
 The mesh component has the airfoil surface mesh coordinates as the output. It is used as the initial design surface coordinates.
 
-The geometry component is based on [pyGeo](https://github.com/mdolab/pygeo). pyGeo uses the free-form deformation (FFD) approach to manipulate the design surface geometry. Here pyGeo takes the baseline surface mesh and the shape variables as the input and outputs the deformed surface mesh x_aero0, as well as all the geometry constraints (defined later in this script). The FFD point file (wingFFD.xyz) is loaded to the geometry (pyGeo) component. NOTE: the FFD volume should completely contain the design surface (see the red dots from [this page](mydoc_get_started_run.html)). The FFD file wingFFD.xyz is generated by running "python genFFD.py" in the FFD folder.
+The geometry component is based on [pyGeo](https://github.com/mdolab/pygeo). pyGeo uses the free-form deformation (FFD) approach to manipulate the design surface geometry. Here, pyGeo takes the baseline surface mesh and the shape variables as input and outputs the deformed surface mesh x_aero0, as well as all the geometry constraints (defined later in this script). The FFD point file (wingFFD.xyz) is loaded to the geometry (pyGeo) component. NOTE: The FFD volume should completely contain the design surface (see the red dots from [this page](mydoc_get_started_run.html)). The FFD file wingFFD.xyz is generated by running "python genFFD.py" in the FFD folder.
 
-We also add an aerodynamic scenario called "cruise", which is essentially a pre-defined OpenMDAO group (a group of components defined in Mphys). Refer to the above N2 diagram. We pass the dafoam_builder to the cruise scenario and allows it to manipulate the variables in the OpenFOAM layer to compute flow and derivatives.
+We also add an aerodynamic scenario called "cruise", which is essentially a pre-defined OpenMDAO group (a group of components defined in Mphys). Refer to the above N2 diagram. We pass the dafoam_builder to the cruise scenario and allow it to manipulate the variables in the OpenFOAM layer to compute flow and derivatives.
 
-In the cruise group, we have the aero_pre component which is based on [IDWarp](https://github.com/mdolab/idwarp). IDWarp uses an inverse-distance weighted algorithm to deform the volume mesh coordinates based on the surface mesh deformation, computed by pyGeo. Once the volume mesh is deformed, IDWarp outputs it as dafoam_vol_coords.
+In the cruise group, we have the aero_pre component, which is based on [IDWarp](https://github.com/mdolab/idwarp). IDWarp uses an inverse-distance weighted algorithm to deform the volume mesh coordinates based on the surface mesh deformation, computed by pyGeo. Once the volume mesh is deformed, IDWarp outputs it as dafoam_vol_coords.
 
 Then, the dafoam_vol_coords is passed to the solver component, along with the aoa from the dvs component. The solver (DAFoam) will compute the state variables dafoam_states. 
 
@@ -277,7 +277,7 @@ tri_points = self.mesh.mphys_get_triangulated_surface()
 self.geometry.nom_setConstraintSurface(tri_points)
 ```
 
-Next, we define a angle of attack (aoa) function to update the boundary velocity defined in daOptions. Note that before each primal solution, the OpenFOAM solver will use the values defined in "primalBC" and overwrite the values in the OpenFOAM flow boundaries. So by changing the "primalBC" in the aoa function, we can change the flow angle. Once the aoa function is defined, we need to pass it to the cruise group such that it will be called every time the primal solver is run.
+Next, we define an angle of attack (aoa) function to update the boundary velocity defined in daOptions. Note that before each primal solution, the OpenFOAM solver will use the values defined in "primalBC" and overwrite the values in the OpenFOAM flow boundaries. So by changing the "primalBC" in the aoa function, we can change the flow angle. Once the aoa function is defined, we need to pass it to the cruise group such that it will be called every time the primal solver is run.
 
 ```python
 # define an angle of attack function to change the U direction at the far field
@@ -321,13 +321,13 @@ self.geometry.nom_addLinearConstraintsShape("linearcon", indSetA, indSetB, facto
 
 We can also add the volume/thickness constraints. We need to first define the leading ("leList") and trailing ("teList") edges. For example, the leList includes two points that defines a straight line that is parallel to the leading edge. The straight line in leList should be close to the leading edge and completely within the wing surface mesh. 
 
-Then we call "nom_addVolumeConstraint" to add a volume constraint with bounds [1.0:3.0]. Here we use relative upper and lower bound values with respect to the initial volume (default). To compute the volume, pyGeo first constructs a 2D mesh from the "leList" and "teList". Here "nSpan = 2" and "nChord = 10" mean we use two points in the spanwise (z) and 10 points in the chordwise (x) to construct the 2D mesh. Then pyGeo projects this 2D mesh upward and downward to the wing surface mesh and form 3D trapezoid volumes to approximate the wing volume. The more the leList and teList are close to the actual leading and trailing edges of the airfoil mesh, the better the volume approximation will be. Also, increasing the nSpan and nChord gives a better volume approximation. We recommend nSpan and nChord be similar to the number of FFD points in the spanwise and chordwise directions.
+Then we call "nom_addVolumeConstraint" to add a volume constraint with bounds [1.0:3.0]. Here we use relative upper and lower bound values with respect to the initial volume (default). To compute the volume, pyGeo first constructs a 2D mesh from the "leList" and "teList". Here "nSpan = 2" and "nChord = 10" mean we use two points in the spanwise (z) and 10 points in the chordwise (x) to construct the 2D mesh. Then pyGeo projects this 2D mesh upward and downward to the wing surface mesh and forms 3D trapezoid volumes to approximate the wing volume. The more the leList and teList are close to the actual leading and trailing edges of the airfoil mesh, the better the volume approximation will be. Also, increasing the nSpan and nChord gives a better volume approximation. We recommend nSpan and nChord be similar to the number of FFD points in the spanwise and chordwise directions.
 
-Similarly, we call "nom_addThicknessConstraints2D" to add thickness constraints with bounds [0.8:3.0]. Again we use relative value with respect to the initial thickness (default). Similar to the volume constraint, pyGeo first construct a 2 by 10 mesh from the leList and teList and and projects the 2D mesh points upward and downward to the wing surface to compute the thickness at these 20 locations; we have 20 thickness constraints in total.
+Similarly, we call "nom_addThicknessConstraints2D" to add thickness constraints with bounds [0.8:3.0]. Again we use relative value with respect to the initial thickness (default). Similar to the volume constraint, pyGeo first constructs a 2 by 10 mesh from the leList and teList and projects the 2D mesh points upward and downward to the wing surface to compute the thickness at these 20 locations; we have 20 thickness constraints in total.
 
-We can also add the LE/TE constraint.  This is done by requiring the upper and lower FFD point on the leading and trailing edges to move in opposite directions. This constraint is needed because we do not want the shape variable to change the pitch and therefore the angle of attack. Instead, we want to change the far field velocity direction for the angle of attack. Here we have only one FFD block so volID=0. We also need to set the topID, which is the direction for the spanwise. This is needed only for airfoil case. For wing case, topID is automatically determined so no input is needed. "iLow" means i=0 (leading edge), and "iHigh" means i=max (trailing edge).
+We can also add the LE/TE constraint.  This is done by requiring the upper and lower FFD points on the leading and trailing edges to move in opposite directions. This constraint is needed because we do not want the shape variable to change the pitch and, therefore, the angle of attack. Instead, we want to change the far field velocity direction for the angle of attack. Here we have only one FFD block, so volID=0. We also need to set the topID, which is the direction for the spanwise. This is needed only for the airfoil case. For the wing case, topID is automatically determined, so no input is needed. "iLow" means i=0 (leading edge), and "iHigh" means i=max (trailing edge).
 
-For more detailed explanation of constraint setup, refer to [MACH-Aero-Tutorials](https://mdolab-mach-aero.readthedocs-hosted.com/en/latest/).
+For a more detailed explanation of constraint setup, refer to [MACH-Aero-Tutorials](https://mdolab-mach-aero.readthedocs-hosted.com/en/latest/).
 
 ```python
 # setup the volume and thickness constraints
@@ -340,7 +340,7 @@ self.geometry.nom_add_LETEConstraint("lecon", volID=0, faceID="iLow", topID="k")
 self.geometry.nom_add_LETEConstraint("tecon", volID=0, faceID="iHigh", topID="k")
 ```
 
-Next, we set the outputs for the dvs component and use them as the design variables. We also need to connect the output of dvs component to the cruise and geometry component. Check the above N2. Once done, we can choose the shape and aoa in the dvs component as the design variables with proper lower and upper bounds. Note that the outputs for the dvs component has been "promoted" so we can directly use without the dvs. prefix, i.e., no need to use "dvs.shape". Check the OpenMDAO's documentation for promoting variable names.
+Next, we set the outputs for the dvs component and use them as the design variables. We also need to connect the output of dvs component to the cruise and geometry components. Check the above N2. Once done, we can choose the shape and aoa in the dvs component as the design variables with proper lower and upper bounds. Note that the outputs for the dvs component have been "promoted" so we can directly use them without the dvs. prefix, i.e., no need to use "dvs.shape". Check the OpenMDAO's documentation for promoting variable names.
 
 ```python
 # add the design variables to the dvs component's output
@@ -447,6 +447,6 @@ else:
 
 ```
 
-In the [next section](mydoc_get_started_faq.html), we will elaborate on some common modification for this case.
+In the [next section](mydoc_get_started_faq.html), we will elaborate on some common modifications for this case.
 
 {% include links.html %}
