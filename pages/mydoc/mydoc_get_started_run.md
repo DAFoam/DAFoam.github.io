@@ -32,7 +32,7 @@ Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar/extract it. Since we use the pre-compiled DAFoam Docker image, we need to first start the Docker container (a light-weight virtual machine). If you use **Linux**, use the commands on [this page](mydoc_get_started_start_docker_linux.html). If you use **MacOS**, use the commands on [this page](mydoc_get_started_start_docker_mac.html). If you use **Windows 10**, use the commands on [this page](mydoc_get_started_start_docker_windows10.html), If you use **Windows 11**, use the commands on [this page](mydoc_get_started_start_docker_windows11.html).
 
-The above command will start a docker container, mount the **current directory** on your local OS (tutorials-main/NACA0012_Airfoil/incompressible) to the container's **mount** directory, login to the container's mount directory as dafoamuser, and set the relevant DAFoam environmental variables. You may see something like this on your terminal: `dafoamuser@00fb6ceac4da:~/mount$`. 
+The above command will start a Docker container, mount the **current directory** on your local OS (tutorials-main/NACA0012_Airfoil/incompressible) to the container's **mount** directory, log in to the container's mount directory as dafoamuser, and set the relevant DAFoam environmental variables. You may see something like this on your terminal: `dafoamuser@00fb6ceac4da:~/mount$`. 
 
 **Now you are on the DAFoam Docker container**, run the preProcessing.sh script to generate the mesh:
 
@@ -46,11 +46,11 @@ Then, use the following command to run the optimization with 4 CPU cores:
 mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-The optimization progress will be printed to the screen and also written to logOpt.txt (we will elaborate on logOpt.txt later on [this page](mydoc_get_started_runscript.html)). This case ran for 18 optimization iterations and took about 15 minutes with Intel 3.0 GHz CPU.
+The optimization progress will be printed to the screen and also written to logOpt.txt (we will elaborate on logOpt.txt later on [this page](mydoc_get_started_runscript.html)). This case ran for 18 optimization iterations and took about 15 minutes with an Intel 3.0 GHz CPU.
 
 {% include note.html content="For MacOS and Windows, make sure you open the Docker Desktop app before running Docker commands." %}
 
-{% include note.html content="Treat the Docker container as disposable, i.e., start one container for one optimization run. If the optimization is running and you want to kill it, press `ctr+c` or `ctr+\`. After the optimization is done, type `exit` to exit the docker container and free up the occupied memory." %}
+{% include note.html content="Treat the Docker container as disposable, i.e., start one container for one optimization run. If the optimization is running and you want to kill it, press `ctr+c` or `ctr+\`. After the optimization is done, type `exit` to exit the Docker container and free up the occupied memory." %}
 
 {% include note.html content="Before re-running a case, run `./Allclean.sh` to clean up the previous optimization results." %}
 

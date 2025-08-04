@@ -11,7 +11,7 @@ The following are some frequently asked questions (FAQ) for DAFoam. If you have 
 
 ## Where can I find all supported parameters and their default values for the daOption dictionary in runScript.py?
 
-The documentation for all the supported parameters in daOption is available at [here](https://dafoam.github.io/doxygen/html/classdafoam_1_1pyDAFoam_1_1DAOPTION.html). Note that, we typically set essential parameters for daOption, and use the default values for other parameters. Their defaults values can be found in dafoam/pyDAFoam.py. In addition, all the values for daOption will be printed to the screen when the optimization runs.
+The documentation for all the supported parameters in daOption is available at [here](https://dafoam.github.io/doxygen/html/classdafoam_1_1pyDAFoam_1_1DAOPTION.html). Note that, we typically set essential parameters for daOption, and use the default values for other parameters. Their default values can be found in dafoam/pyDAFoam.py. In addition, all the values for daOption will be printed to the screen when the optimization runs.
 
 ## How to use a finer mesh?
 
@@ -23,7 +23,7 @@ To increase the number of FFD points, one needs to increase "nx" (number of FFD 
 
 ## How to visualize the FFD points?
 
-You can open a FFD file (*.xyz; plot3D format) in Paraview and choose "PLOT3D Reader" in the pop-up window. Then, on the left panel, uncheck "Binary File", check "Multi Grid", and then hit "Apply". NOTE: Paraview sometime crashes when loading Plot3D files with a small number of points (it is a bug in Paraview). To avoid this, you can convert a Plot3D file to the Tecplot format. First load the DAFoam environment, and run `dafoam_plot3d2tecplot.py yourFFDFileName.xyz newFFDFileName.dat`. Once done, a new file newFFDFileName.dat will be generated in the Tecplot format. You can then use Paraview to load this new file.
+You can open a FFD file (*.xyz; plot3D format) in Paraview and choose "PLOT3D Reader" in the pop-up window. Then, on the left panel, uncheck "Binary File", check "Multi Grid", and then hit "Apply". NOTE: Paraview sometimes crashes when loading Plot3D files with a small number of points (it is a bug in Paraview). To avoid this, you can convert a Plot3D file to the Tecplot format. First, load the DAFoam environment, and run `dafoam_plot3d2tecplot.py yourFFDFileName.xyz newFFDFileName.dat`. Once done, a new file newFFDFileName.dat will be generated in the Tecplot format. You can then use Paraview to load this new file.
 
 ## How to generate body-fitted FFDs?
 
@@ -39,11 +39,11 @@ To run the optimization using 8 cores, first clean up previous results `./Allcle
 
 ## How to optimize a different airfoil?
 
-To run optimization for a different airfoil, one needs to create two new files in the "profiles" folder and put the new airfoil x-y coordinates in these files. The airfoil data should be separated into upper and lower surfaces, they should start from the leading edge and ends at trailing edge. We use blunt trailing edge, so one needs to truncate the lower and upper surface data at about 99.8% of the chord. In other words, the profile data shouldn't end at x=1.0, delete a few points from the end. 
+To run optimization for a different airfoil, one needs to create two new files in the "profiles" folder and put the new airfoil x-y coordinates in these files. The airfoil data should be separated into upper and lower surfaces, they should start from the leading edge and end at the trailing edge. We use a blunt trailing edge, so one needs to truncate the lower and upper surface data at about 99.8% of the chord. In other words, the profile data shouldn't end at x=1.0, delete a few points from the end. 
 
 Once the new airfoil data are ready, modify the file names to load for "airfoilProfilePS" and "airfoilProfileSS" in "genAirFoilMesh.py". 
 
-In addition, one may need to change the parameters for "corners" in FFD/genFFD.py to make sure the FFD points fully contains the new airfoil. Once done, in the "FFD" folder, run "python genFFD.py" to generate a new FFD file "wingFFD.xyz".
+In addition, one may need to change the parameters for "corners" in FFD/genFFD.py to make sure the FFD points fully contain the new airfoil. Once done, in the "FFD" folder, run "python genFFD.py" to generate a new FFD file "wingFFD.xyz".
 
 ## How to change the flow conditions?
 
@@ -59,7 +59,7 @@ To use the kOmegaSST or kEpsilon model, change the `RASModel` parameter to `kOme
 
 ## How many CPU cores to use and how much memory does it need?
 
-We recommend using one CPU core and reserve 2 GB memory per 10,000 cells. That being said, for a one million cell case, we recommend using 100 CPU cores and reserve 200 GB memory.
+We recommend using one CPU core and reserving 2 GB of memory per 10,000 cells. That being said, for a one-million-cell case, we recommend using 100 CPU cores and reserving 200 GB of memory.
 
 ## How to extract the optimized geometry?
 
@@ -75,11 +75,11 @@ If you run the optimization in parallel using 4 cores, run this:
 mpirun -np 4 surfaceMeshTriangulate -patches '(wing)' -latestTime -parallel optShape.stl
 </pre>
 
-The above command will extract the patch "wing" to a stl file called "optShape.stl". If you have multiple patches to extract, modify the "-patches" flag, e.g., -patches '(wing body)'. Also, the "-lastTime" flag extracts stl files for the last optimization step. If you don't add the "-lastTime" flag, it will extract stl files for all optimization steps.
+The above command will extract the patch "wing" to an stl file called "optShape.stl". If you have multiple patches to extract, modify the "-patches" flag, e.g., -patches '(wing body)'. Also, the "-lastTime" flag extracts stl files for the last optimization step. If you don't add the "-lastTime" flag, it will extract stl files for all optimization steps.
 
 An alternative way to output the optimized geometry is to load it in ParaView, go to the last time step for the optimized shape, select the surfaces you want to output, choose Files-Save Data, and save it as STL files.
 
-If you want to get the optimized geometry from the original STL file instead of the OpenFOAM mesh (e.g., for 3D printing), you can use this [script](https://github.com/DAFoam/tutorials/tree/main/Prowim_Wing_Propeller/deformSTL). It will read the optimized design variables from file and use pyGeo to deform a STL file to its optimal shape. 
+If you want to get the optimized geometry from the original STL file instead of the OpenFOAM mesh (e.g., for 3D printing), you can use this [script](https://github.com/DAFoam/tutorials/tree/main/Prowim_Wing_Propeller/deformSTL). It will read the optimized design variables from a file and use pyGeo to deform an STL file to its optimal shape. 
 
 ## Can I get the optimized geometry in a CAD format?
 
@@ -91,11 +91,11 @@ The latest version of DAFoam can output sensitivity maps during optimization. Yo
 
 ## How to reduce the size of parallel optimization results?
 
-When running in parallel, OpenFOAM will generate folders for each decomposed domain, e.g., processor0, processor1. This feature takes a lot of space and is slow to transfer and post-process. To fix this issue, wait until the parallel optimization is done, then go to the optimization folder, load the OpenFOAM environment, and run this command `reconstructPar` to combine all the decomposed flow fields that are stored in processor0, processor1, etc. You will see a bunch of new folders called 0.00000001, 0.00000002, etc. These are the combined flow solutions for each optimization step. So once the reconstructPar command is done, one can delete all the processor0, processor1, etc. folders. When visualizing the flow fields in Paraview, there is no need to choose "Decomposed Case" for "Case Type" because the cases have been reconstructed. This will increase the speed for visualization.  
+When running in parallel, OpenFOAM will generate folders for each decomposed domain, e.g., processor0, processor1. This feature takes up a lot of space and is slow to transfer and post-process. To fix this issue, wait until the parallel optimization is done, then go to the optimization folder, load the OpenFOAM environment, and run this command `reconstructPar` to combine all the decomposed flow fields that are stored in processor0, processor1, etc. You will see a bunch of new folders called 0.00000001, 0.00000002, etc. These are the combined flow solutions for each optimization step. So once the reconstructPar command is done, one can delete all the processor0, processor1, etc. folders. When visualizing the flow fields in Paraview, there is no need to choose "Decomposed Case" for "Case Type" because the cases have been reconstructed. This will increase the speed for visualization.  
 
 ## Does DAFoam support optimization for pure 2D problems?
 
-No, DAFoam does **NOT** support pure 2D optimization. In OpenFOAM, there is an option to do pure 2D simulation, which is setting a patch type to **empty** in constant/polyMesh/boundary. This feature is **NOT** supported in DAFoam. So, one need to change the **empty** patch type to **symmetry** instead, and use one cell in the symmetry direction to mimic a 2D simulation. Refer to the case setup in the [NACA0012 case](https://github.com/DAFoam/tutorials/tree/main/NACA0012_Airfoil/incompressible).
+No, DAFoam does **NOT** support pure 2D optimization. In OpenFOAM, there is an option to do pure 2D simulation, which is setting a patch type to **empty** in constant/polyMesh/boundary. This feature is **NOT** supported in DAFoam. So, one needs to change the **empty** patch type to **symmetry** instead, and use one cell in the symmetry direction to mimic a 2D simulation. Refer to the case setup in the [NACA0012 case](https://github.com/DAFoam/tutorials/tree/main/NACA0012_Airfoil/incompressible).
 
 ## Can I use my own mesh?
 
@@ -112,13 +112,13 @@ No. These OpenFOAM features are NOT supported in DAFoam. **Note**: the configura
 
 - Unsteady solvers
 - AMI boundary condition
-- fvOptions and MRF are implemented for only some of primal solvers
+- fvOptions and MRF are implemented for only some of the primal solvers
 - empty boundary condition
 - Limited schemes such as `Gauss linear limited corrected 0.33` for laplacianSchemes and `limited corrected 0.33` for snGradSchemes in system/fvSchemes may cause inaccurate adjoint gradients. Don't use them!
 
 ## How to fix the "Primal solution failed for the baseline design!" error?
 
-This error basically says the first primal solution does not converge to the prescribed tolerance (`primalMinResTol`, default 1e-8), so the optimization aborts. There are two ways to fix it. 1. Increase the primal tolerance `primalMinResTol`, or 2. Increase how much difference (`primalMinResTolDiff`, default 1e2) between the prescribed and actual tolerances is considered as a failed primal solution. By default, if the actual tolerance does not drop to at least two order of magnitude higher than the prescribed one, the primal solution is considered to be a failed one.
+This error basically says the first primal solution does not converge to the prescribed tolerance (`primalMinResTol`, default 1e-8), so the optimization aborts. There are two ways to fix it. 1. Increase the primal tolerance `primalMinResTol`, or 2. Increase how much of a difference (`primalMinResTolDiff`, default 1e2) between the prescribed and actual tolerances is considered as a failed primal solution. By default, if the actual tolerance does not drop to at least two orders of magnitude higher than the prescribed one, the primal solution is considered to be a failed one.
 
 ## How to fix "-> Warning: xx point(s) not projected to tolerance: 1e-12. Max Error:  xxx ; RMS Error: xxx. List of Points is: (pt, delta):"?
 
@@ -132,7 +132,7 @@ This usually happens when you regenerate the mesh but forget to delete the old c
 
 This usually happens if you have a highly skewed FFD box. To fix this warning, add `raySize=5` to the "nom_addRefAxis" call. Refer to the interface from [here](https://github.com/mdolab/pygeo/blob/c417b0fea7d534458871aac8721a0c452a47eaae/pygeo/parameterization/DVGeo.py#L240)
 
-## Why the adjoint equation is not converging?
+## Why is the adjoint equation not converging?
 
 If your adjoint equation is not converging well. First, please make sure you run `renumberMesh -overwrite` to renumber the mesh and minimize the matrix bandwidth, which is found to help adjoint convergence. 
 
@@ -160,14 +160,14 @@ If you keep getting failed mesh checks throughout the optimization, first check 
 
 You need to increase these default values, e.g., set `"maxSkewness": 6.0,`. If you want to ignore just a few incorrectly oriented faces, set maxIncorrectlyOrientedFaces to be greater than 0. 
 
-Another way to fix the issue is setting mesh quality constraints in optimization. Check the runScript_meshQualityConstraint.py script from the [UBend](https://github.com/DAFoam/tutorials/blob/main/UBend_Channel/runScript_meshQualityConstraint.py) tutorial.
+Another way to fix the issue is to set mesh quality constraints in optimization. Check the runScript_meshQualityConstraint.py script from the [UBend](https://github.com/DAFoam/tutorials/blob/main/UBend_Channel/runScript_meshQualityConstraint.py) tutorial.
 
 If you need to visualize which part of the mesh has poor quality, you can set `"writeMinorIterations": True`. DAFoam will write the mesh to the disk every time it tries to run the flow (even the checkMesh fails). You can then load the failed mesh in ParaView to visualize it.
 
 
 ## How to know the detailed description for a function's input parameters defined in runScript.py?
 
-In runScript.py, we call multiple functions from other modules, e.g., pyGeo, IDWarp, pyOptSparse. To learn the detailed description for a function's input parameters, we take the function: `DVGeo.addGeoDVLocal` as an example. One can go to the `dafoam/packages/miniconda3/lib/python3.6/site-packages` directory and run this command `grep -r addGeoDVLocal *`. Then, one can find this function is defined in `pygeo/DVGeometry.py` with detailed description of its input parameters.
+In runScript.py, we call multiple functions from other modules, e.g., pyGeo, IDWarp, pyOptSparse. To learn the detailed description for a function's input parameters, we take the function: `DVGeo.addGeoDVLocal` as an example. One can go to the `dafoam/packages/miniconda3/lib/python3.6/site-packages` directory and run this command `grep -r addGeoDVLocal *`. Then, one can find that this function is defined in `pygeo/DVGeometry.py` with a detailed description of its input parameters.
 
 ## What are the commands to start the DAFoam Docker image?
 
@@ -177,7 +177,7 @@ For your convenient, here are the commands for [Linux](mydoc_get_started_start_d
 
 The Docker image is mostly for regression tests and for first-time users. However, it is also useful for code development, especially for non-Linux system users. Here is what we can do: 1. Download the latest docker image `docker pull dafoam/opt-packages:latest`. 2. Go to the DAFoam folder that has your own development. 3. Create a Docker container using the command from [here](https://dafoam.github.io/mydoc_get_started_faq.html#what-are-the-commands-to-start-the-dafoam-docker-image). 4. Compile DAFoam in the Docker container and test your code. 
 
-NOTE: Because we use the `--rm` flag to start the container, everything you create in the container will be deleted after exiting. To avoid this, you can remove the `--rm` flag. So after exiting, the container will be still running in the background. You can re-login to the container by using the command: `docker exec -it your_container_name bash`. You can run `docker ps -a` to get the container name. Make sure you stop and remove the container (`docker stop your_container_name && docker rm your_container_name`) after everything is done to save memory. 
+NOTE: Because we use the `--rm` flag to start the container, everything you create in the container will be deleted after exiting. To avoid this, you can remove the `--rm` flag. So after exiting, the container will still be running in the background. You can re-login to the container by using the command: `docker exec -it your_container_name bash`. You can run `docker ps -a` to get the container name. Make sure you stop and remove the container (`docker stop your_container_name && docker rm your_container_name`) after everything is done to save memory. 
 
 ## Why I keep getting a "Permission Denied" error when using the DAFoam Docker image?
 
@@ -193,11 +193,11 @@ This error is likely caused by not running `Allclean` before running `Allmake` f
 
 ## How to fix the "No module named dafoam.pyDASolver" error?
 
-This error is likely caused by using different Python versions to compile DAFoam and run DAFoam cases. **Make sure you DO NOT close the terminal before all the installation steps are done!** For example, one may forget to load the DAFoam environment and use the system built-in Python 2.7 to run a case, while DAFoam was compiled with Python 3.8. To fix this, first check if you can find some compiled DAFoam libraries in the dafoam/dafoam folder, e.g., pyDASolverIncompressible.cpython-38-x86_64-linux-gnu.so. The Python version is in the library name (cpython-38). So make sure your current Python environment (type `python -V` to check) matches the version in the library name. They do not match, we suggest you recompile DAFoam following the **exact** steps from [here](https://dafoam.github.io/mydoc_installation_source.html#dafoam)
+This error is likely caused by using different Python versions to compile DAFoam and run DAFoam cases. **Make sure you DO NOT close the terminal before all the installation steps are done!** For example, one may forget to load the DAFoam environment and use the system's built-in Python 2.7 to run a case, while DAFoam was compiled with Python 3.8. To fix this, first check if you can find some compiled DAFoam libraries in the dafoam/dafoam folder, e.g., pyDASolverIncompressible.cpython-38-x86_64-linux-gnu.so. The Python version is in the library name (cpython-38). So make sure your current Python environment (type `python -V` to check) matches the version in the library name. They do not match, we suggest you recompile DAFoam following the **exact** steps from [here](https://dafoam.github.io/mydoc_installation_source.html#dafoam)
 
 ## How to speed up DAFoam repo compilation speed for code development?
 
-Compiling the DAFoam repo may make take up 30 minutes, depending on your PC performance. If you are modifying the DAFoam source code and need to quickly test your changes, you don't need to compile all the DAFoam components. To speed up the DAFoam repo compilation, you can use the command `Allmake incompressible` to compile only the incompressible libraries and solvers. This will significantly speed up the process because all the compressible and solid libraries and solvers will not be compiled. To further speed up the compilation process, you can open dafoam/src/adjoint/Make/files_Incompressible and delete the solvers, turbulence models, and other stuff you don't need to compile. For example, if you want to test a new change for DASimpleFoam with the SA turbulence model and force objective, you can use this simplified [files_Incompressible](mydoc_get_started_files_incompressible_simplefoam.html).
+Compiling the DAFoam repo may take up 30 minutes, depending on your PC performance. If you are modifying the DAFoam source code and need to quickly test your changes, you don't need to compile all the DAFoam components. To speed up the DAFoam repo compilation, you can use the command `Allmake incompressible` to compile only the incompressible libraries and solvers. This will significantly speed up the process because all the compressible and solid libraries and solvers will not be compiled. To further speed up the compilation process, you can open dafoam/src/adjoint/Make/files_Incompressible and delete the solvers, turbulence models, and other stuff you don't need to compile. For example, if you want to test a new change for DASimpleFoam with the SA turbulence model and force objective, you can use this simplified [files_Incompressible](mydoc_get_started_files_incompressible_simplefoam.html).
 
 ## How to run a multipoint optimization?
 
