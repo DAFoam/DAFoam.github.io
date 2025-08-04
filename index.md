@@ -25,7 +25,7 @@ DAFoam develops an efficient discrete adjoint method to perform high-fidelity mu
 
 DAFoam is distributed using the [GPL-v3 license](https://www.gnu.org/licenses/gpl-3.0.en.html), and its source code is available from [Github](https://github.com/mdolab/dafoam)
 
-Download the [DAFoam image](mydoc_get_started_download_docker.html) and follow the rest of steps in **Get started** to run your first DAFoam optimization!
+Download the [DAFoam image](mydoc_get_started_download_docker.html) and follow the rest of the steps in **Get started** to run your first DAFoam optimization!
 
 <div markdown="0" id="carousel" class="carousel slide" data-ride="carousel" data-interval="2000" data-pause="hover" >
     <!-- Menu -->
