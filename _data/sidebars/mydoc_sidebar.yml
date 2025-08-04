@@ -145,11 +145,11 @@ entries:
         output: web, pdf
         subfolderitems:
 
-        - title: U bend channel
+        - title: U-bend channel
           url: /mydoc_tutorials_heat_ubend.html
           output: web, pdf
         
-        - title: U bend channel (circular)
+        - title: U-bend pipe CHT
           url: /mydoc_tutorials_heat_ubend_circular.html
           output: web, pdf
 
