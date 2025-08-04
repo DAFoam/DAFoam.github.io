@@ -73,7 +73,7 @@ As mentioned above, we need to solve a set of governing equations, $\vec{R}(\vec
 Taking the following figure as an example. We divide the simulation domain into smaller pieces, called mesh cells. Then, we solve for the state variables, such as velocity, pressure, and density, only for these discrete mesh cells. By doing this, the original continuous problems become discrete, and solving the states for these discrete mesh cells becomes computationally feasible. For example, we can approximate the first-order spatial derivative, defined in continuous space, by using the information from discrete space (mesh cells): 
 
 $$
-\frac{\partial u}{\partial x}_i = \frac{u_{i+1} - u_{i-1}}{\Delta x}
+\frac{\partial u}{\partial x}_i = \frac{u_{i+1} - u_{i-1}}{2\Delta x}
 $$
 
 Here, the subscript i denotes the mesh cell index, and $\Delta x$ is the mesh size.
