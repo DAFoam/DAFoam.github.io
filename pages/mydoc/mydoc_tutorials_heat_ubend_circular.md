@@ -22,7 +22,7 @@ Mesh cells: 670,000 (fluid), 118,000 (solid)
 Solver: DASimpleFoam (fluid), DAHeatTransferFoam (solid)
 </pre>
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/CHT_ubend_ffd.png" width="300" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/CHT_ubend_ffd.png" style="width:600px !important;" />
 
 Fig. 1. Mesh and FFD points for the CHT U bend channel case
 
