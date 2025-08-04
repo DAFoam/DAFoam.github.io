@@ -70,13 +70,13 @@ At the optimal point, the first-order necessary condition states that the gradie
 
 As mentioned above, we need to solve a set of governing equations, $\vec{R}(\vec{w}, \vec{x}) = 0$, to obtain the state variables and evaluate the objective function. This process is called the primal solution in the context of design optimization. For many engineering problems, such as those governed by the Navier–Stokes equations, analytical solutions are infeasible due to the complexity of the equations. To address this, we can use numerical methods that approximate the solution over a finite number of spatial (mesh) and temporal (time step) intervals, a process also known as discretization.
 
-Taking the following figure as an example. We divide the simulation domain into smaller piece, called mesh cells. Then, we solve for the state variables, such as velocity, pressure, and density, only for these discrete mesh cells. By doing this, the original continuous problems become discrete, and solving the states for these discrete mesh cells become computationally feasible. For example, we can approximate the first-order spatial derivative, defined in continuous space, by using the information from discrete space (mesh cells): 
+Taking the following figure as an example. We divide the simulation domain into smaller pieces, called mesh cells. Then, we solve for the state variables, such as velocity, pressure, and density, only for these discrete mesh cells. By doing this, the original continuous problems become discrete, and solving the states for these discrete mesh cells becomes computationally feasible. For example, we can approximate the first-order spatial derivative, defined in continuous space, by using the information from discrete space (mesh cells): 
 
 $$
 \frac{\partial u}{\partial x}_i = \frac{u_{i+1} - u_{i-1}}{\Delta x}
 $$
 
-Here the subscript i denotes the mesh cell index and $\Delta x$ is the mesh size.
+Here, the subscript i denotes the mesh cell index, and $\Delta x$ is the mesh size.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/analysis_discretization.png" style="width:700px !important;" />
 
@@ -84,9 +84,11 @@ Fig. 3. A schematic of spatial discretization for a 2D simulation domain
 
 ### 2.2 Initial and boundary conditions
 
-Although the above numerical analysis makes the solution of complex governing equations feasible, there are infinite number of discrete solutions that satisfy the governing equations. To make the solution unique and relevant to the specific problem we are interested in, we need to prescribe proper initial and boundary condition to the problem. The initial conditions are the initial values for all state variables, before the simulation starts. The boundary conditions are the state variable values at the outer boundary of the simulation domain. In general, we can set two types of boundary conditions: Dirichlet (fixed-value) and Neumann (fixed-gradient). Refer to the figure above.
+Although the above numerical analysis makes the solution of complex governing equations feasible, there are an infinite number of discrete solutions that satisfy the governing equations. To make the solution unique and relevant to the specific problem we are interested in, we need to prescribe proper initial and boundary conditions to the problem. The initial conditions are the initial values for all state variables, before the simulation starts. The boundary conditions are the state variable values at the outer boundary of the simulation domain. In general, we can set two types of boundary conditions: Dirichlet (fixed-value) and Neumann (fixed-gradient). Refer to the figure above.
 
-### 2.3 Solution of discretized governing equation
+### 2.3 Solution of the discretized governing equations
+
+After discretizing the simulation domain and setting proper initial and boundary conditions, we will get a set of discretized governing equations. These equations can often be written as $\mathbf{A}\vec{w}=\vec{b}$, where $A$ is a matrix that contains all the discretization operators, $\vec{w}$ is the state variables (solutions), and $\vec{b}$ is the right-hand side (constant) operators from the discretization. Then, the primal solver will solve the above equation in an iterative manner. To monitor the convergence, we often print out the **residuals** during the primal solution process. Here the primal residuals are defined as $\vec{R}_\textrm{primal} = \mathbf{A}\vec{w} - \vec{b}$.
 
 ## 3. Gradient computation using the discrete adjoint method
 
