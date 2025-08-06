@@ -13,7 +13,7 @@ The following is an unsteady aerodynamic shape optimization case for a cylinder
 <pre>
 Case: Unsteady flow over a cylinder
 Geometry: Cylinder
-Objective function: CD
+Objective function: Time-averaged CD
 Design variables: 16 FFD points moving in the x direction
 Constraints: Cylinder volume does not decrease; FFD symmetry wrt z=0 and y=0
 Inlet velocity: 10 m/s
