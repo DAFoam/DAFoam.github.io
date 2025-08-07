@@ -44,3 +44,7 @@ The case in this tutorial ran for 42 iterations, and the optimality dropped by o
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/UAV_Prop_Baseline_Optimized_Design" style="width:500px !important;" />
 
 Figure 2. Comparison of the baseline and optimized designs for case where twist, shape, and chord are design variables. 
+
+
+
+{% include links.html %}
