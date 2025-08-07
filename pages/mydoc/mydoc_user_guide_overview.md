@@ -13,7 +13,7 @@ The objective of this user guide is to serve as a comprehensive, stand-alone res
 
 - [Chapter 1. Background ](mydoc_user_guide_background.html)
 
-- Chapter 2. OpenFOAM and DAFoam basics
+- [Chapter 2. OpenFOAM and DAFoam basics](mydoc_user_guide_openfoam_dafoam.html)
 
 - Chapter 3. NACA0012 airfoil: 2D aerodynamic shape optimization
 

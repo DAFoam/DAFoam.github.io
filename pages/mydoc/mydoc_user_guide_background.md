@@ -1,5 +1,5 @@
 ---
-title: DAFoam User Guide - Background
+title: Background
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
