@@ -221,8 +221,40 @@ entries:
       url: /mydoc_user_guide_background.html
       output: web, pdf
     
-    - title: Chapter 2 OpenFOAM and DAFoam basics
+    - title: Chapter 2 OpenFOAM and DAFoam
       url: /mydoc_user_guide_openfoam_dafoam.html
+      output: web, pdf
+    
+    - title: Chapter 3 NACA0012 2D airfoil
+      url: /mydoc_user_guide_naca0012.html
+      output: web, pdf
+
+    - title: Chapter 4 NACA0012 variations
+      url: /mydoc_user_guide_naca0012_variations.html
+      output: web, pdf
+    
+    - title: Chapter 5 ADODG3 3D wing
+      url: /mydoc_user_guide_adodg3.html
+      output: web, pdf
+    
+    - title: Chapter 6 UAV propeller
+      url: /mydoc_user_guide_uav_prop.html
+      output: web, pdf
+    
+    - title: Chapter 7 Cylinder unsteady
+      url: /mydoc_user_guide_cylinder.html
+      output: web, pdf
+    
+    - title: Chapter 8 Ramp FIML
+      url: /mydoc_user_guide_ramp.html
+      output: web, pdf
+    
+    - title: Chapter 9 Aerostructural
+      url: /mydoc_user_guide_mach_aerostruct.html
+      output: web, pdf
+    
+    - title: Chapter 10 Aerothermal (CHT)
+      url: /mydoc_user_guide_ubend_aerothermal.html
       output: web, pdf
 
   - title: Developer Guide
