@@ -79,6 +79,26 @@ elif args.task == "deformGeo":
 When using this function, it is important to provide an initial geometry that exactly matches the initial geometry used in the optimization.
 Additionally, the quality of the deformation and it's representation of the optimized geometry will greatly depend on how refined its surfaces are; if the output geometry does not match the optimized geometry, provide a more refined initial geometry or increase the values of the parameters `nRefU` and `nRefV`.
 
+```python
+self.geometry.nom_addCurvatureConstraint1D(
+            "curvature1",
+            start=[0.12, 0, 0.02],
+            end=[0.12, 0, 0.6],
+            nPts=20,
+            axis=[0, 1, 0],
+            curvatureType="mean",
+            scaled=False,
+        )
+```
+
+The optimized wing shape might have articial wavy distribution in the spanwise direction, to prevent this a spanwise curvature constraint is imposed on on the wing surfaces. `start` and `end` are two endpoints of the reference line, `nPts` is the number of nodes on the reference line, `axis` is the direction used to project the reference line on the desired surface, `curvatureType` it the calculation method of the curvature, and `scaled` scales calculated curvatures during the optimization with initial curvature i `True` .
+
+```python
+self.add_constraint("geometry.curvature1", lower=0.0, upper=0.1, scaler=1.0)
+```
+
+Above line pass curvature constraints to the top level. `lower` is the lower boundary, `upper` is the upper boundary, `scaler` scales the constraint with the given number.
+
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Prowim_optimization_animation.gif" width="500" />
 
 Fig. 2. Animation of the Prowim wing-propeller case optimization
