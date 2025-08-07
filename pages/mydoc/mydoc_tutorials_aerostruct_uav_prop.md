@@ -23,6 +23,14 @@ Mesh cells: ~1.5 million
 Solver: DARhoSimpleFoam
 </pre>
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Prop_Solid_Mesh.png" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AeroStruct_Propeller_Mesh" style="width:500px !important" />
 
-Figure 1. Propeller solid FEM mesh. The blue and red dots are the FFD points, where the blue dots are the only ones that move during the optimization.
+Figure 1. Simulation domain, propeller meshes, and FFD points. The blue and red squares are the FFD points. Only the blue FFD points move during the optimization.
+
+The case in this tutorial ran for 42 iterations, and the optimality dropped by one order of magnitude. In total, we saw an 18.3% reduction in power, while the thrust, mass, and stress constraints were met. 
+
+To run this case, first download tutorials and untar it. Then go to tutorials-main/UAV_Prop and run the “myJob.sh” script to run the optimization using the following command:
+
+<pre>
+mpirun -np 144 python runScript_AeroStruct.py 2>&1 | tee logOpt.txt
+</pre>
