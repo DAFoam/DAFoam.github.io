@@ -23,7 +23,7 @@ Mesh cells: ~1.5 million
 Solver: DARhoSimpleFoam
 </pre>
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AeroStruct_Propeller_Mesh.png" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AeroStruct_Propeller_Mesh.png" style="width:800px !important;" />
 
 Figure 1. Simulation domain, propeller meshes, and FFD points. The blue and red squares are the FFD points. Only the blue FFD points move during the optimization.
 
@@ -33,7 +33,7 @@ To run this case, first download [tutorials](https://github.com/DAFoam/tutorials
 ./preProcessing.sh
 </pre>
 
-Then, use the code below to run the optimization usign 144 CPU cores:
+Then, use the code below to run the optimization using 144 CPU cores:
   
 <pre>
 mpirun -np 144 python runScript_AeroStruct.py 2>&1 | tee logOpt.txt
