@@ -41,7 +41,7 @@ mpirun -np 144 python runScript_AeroStruct.py 2>&1 | tee logOpt.txt
 
 The case in this tutorial ran for 42 iterations, and the optimality dropped by one order of magnitude. In total, we saw an 18.3% reduction in power, while the thrust, mass, and stress constraints were met. 
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/UAV_PropAnimation" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/UAV_PropAnimation.gif" style="width:500px !important;" />
 
 Figure 2. Comparison of the baseline and optimized designs for case where twist, shape, and chord are design variables. 
 
