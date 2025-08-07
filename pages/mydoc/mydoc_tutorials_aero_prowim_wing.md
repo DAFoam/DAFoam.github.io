@@ -79,7 +79,7 @@ elif args.task == "deformGeo":
 When using this function, it is important to provide an initial geometry that exactly matches the initial geometry used in the optimization.
 Additionally, the quality of the deformation and it's representation of the optimized geometry will greatly depend on how refined its surfaces are; if the output geometry does not match the optimized geometry, provide a more refined initial geometry or increase the values of the parameters `nRefU` and `nRefV`.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Optimization_animation.gif" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Prowim_optimization_animation.gif" width="500" />
 
 Fig. 2. Animation of the Prowim wing-propeller case optimization
 
