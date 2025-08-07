@@ -23,7 +23,7 @@ Mesh cells: ~1.5 million
 Solver: DARhoSimpleFoam
 </pre>
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AeroStruct_Propeller_Mesh" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AeroStruct_Propeller_Mesh.png" style="width:500px !important;" />
 
 Figure 1. Simulation domain, propeller meshes, and FFD points. The blue and red squares are the FFD points. Only the blue FFD points move during the optimization.
 
@@ -41,7 +41,7 @@ mpirun -np 144 python runScript_AeroStruct.py 2>&1 | tee logOpt.txt
 
 The case in this tutorial ran for 42 iterations, and the optimality dropped by one order of magnitude. In total, we saw an 18.3% reduction in power, while the thrust, mass, and stress constraints were met. 
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/UAV_Prop_Baseline_Optimized_Design" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/UAV_Prop_Baseline_Optimized_Design.png" style="width:500px !important;" />
 
 Figure 2. Comparison of the baseline and optimized designs for case where twist, shape, and chord are design variables. 
 
