@@ -22,7 +22,7 @@ Mesh cells: 670,000 (fluid), 118,000 (solid)
 Solver: DASimpleFoam (fluid), DAHeatTransferFoam (solid)
 </pre>
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/CHT_ubend_ffd.png" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/CHT_ubend_ffd.png" style="width:500px !important;" />
 
 Fig. 1. Mesh and FFD points for the CHT U bend channel case
 
@@ -97,7 +97,7 @@ mpirun -np 72 python runScript.py 2>&1 | tee logOpt.txt
 
 This case ran for 20 iterations, enhancing the total heat flux by 2.29% and decreasing pressure loss by 52.71%.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/UBend_movie.gif" width="640" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/CHT_ubend.gif" width="640" />
 
 Fig. 2. Evolution of wall heat flux and velocity during the optimization
 

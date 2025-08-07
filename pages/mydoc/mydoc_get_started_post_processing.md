@@ -39,7 +39,7 @@ iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
   18  1.7802058e-02 5.87e-09 2.90e-06 -11.0 1.17e-03    -  1.00e+00 1.00e+00h  1
 ```
 
-The objective (CD) is 0.02082 for the baseline design and drops to 0.01780 for the 18th optimization iteration with a drag reduction of **14.5%**. The optimality (inf_du) and feasibility (inf_pr) decrease to be less than 1e-5.
+The objective (CD) is 0.02082 for the baseline design and drops to 0.01780 for the 18th optimization iteration with a drag reduction of **14.5%**. The optimality (inf_du) and feasibility (inf_pr) decrease to less than 1e-5.
 
 ## Visualize the flow fields using Paraview
 
@@ -57,7 +57,7 @@ Fig. 2. Open the paraview.foam file
 
 Then at the left panel, select "**Decomposed Case**" for "Case Type". 
 
-{% include note.html content="The **Decomposed Case** type tells Paraview to load data from processor* folders since we ran this case in parallel using 4 CPU cores. If one runs a serial run with one CPU core, or you have reconstruct the intermediate result using the **reconstructPar** command, select **Reconstructed Case**." %}
+{% include note.html content="The **Decomposed Case** type tells Paraview to load data from processor* folders since we ran this case in parallel using 4 CPU cores. If one runs a serial run with one CPU core, or you have reconstructed the intermediate result using the **reconstructPar** command, select **Reconstructed Case**." %}
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Decomposed_Case.png" width="300" />
 
@@ -93,11 +93,11 @@ Fig. 6. Pressure contour and mesh for the NACA0012 case
 
 |
 
-Finally, you can hit the play button at the top panel to play a movie of evolution of pressure field and shape during the optimization (see the movie at the beginning of this page).
+Finally, you can hit the play button at the top panel to play a movie of the evolution of the pressure field and shape during the optimization (see the movie at the beginning of this page).
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Play.png" width="300" />
 
-Fig. 7. Hit play to visualize a movie of optimization process
+Fig. 7. Hit play to visualize a movie of the optimization process
 
 |
 
@@ -111,9 +111,11 @@ Then, on the top menu, click "Sources-Search.." and search for the keyword "slic
 
 Then, right click "Slice1" from the "Pipeline Browser" and select "Add Filter-Data Analysis-Plot On Sorted Lines", and then click "Apply". 
 
-After that, you should see the plot on the right. By default, the plot is not for pressure profile. You need to go to the left properties panel and choose "Points_X" for "X Array Name", and then in the "Select Parameters" windows, select "p" and unselect all other variables. NOTE: make sure you click the plot on the right to see its properties panel.
+After that, you should see the plot on the right. By default, the plot is not for a pressure profile. You need to go to the left properties panel and choose "Points_X" for "X Array Name", and then in the "Select Parameters" window, select "p" and unselect all other variables. NOTE: make sure you click the plot on the right to see its properties panel.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Pressure_Profile.png" width="350" />
+To save the raw data for the pressure profile, you can select the plotOnSortedLine1 on the left, and then click "Save Data" under the "File" menu.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Paraview_Pressure_Profile.png" style="width:900px !important;" />
 
 Fig. 7. Surface pressure distribution for the NACA0012 airfoil
 

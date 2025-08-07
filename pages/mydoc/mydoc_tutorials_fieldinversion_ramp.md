@@ -91,18 +91,18 @@ First, generate the mesh and data for the c1 and c2 cases:
 Then, use the following command to run FI for case c1:
 
 <pre>
-mpirun -np 4 python runScript_FI.py -index=0 2>&1 | tee logOpt.txt
+mpirun -np 4 python runScript_FI.py -index=0 2>&1 | tee logOpt1.txt
 </pre>
 
 After that, use the following command to run FI for case c2:
 
 <pre>
-mpirun -np 4 python runScript_FI.py -index=1 2>&1 | tee logOpt.txt
+mpirun -np 4 python runScript_FI.py -index=1 2>&1 | tee logOpt2.txt
 </pre>
 
-Once the above two FI cases converge, reconstruct the data for the last optimization iteration (it should be 0.0050). Copy c1/0.0050 to tf_training/c1_data. Copy c2/0.0050 to tf_training/c2_data.
+Once the above two FI cases converge, reconstruct the data for the last optimization iteration (for example, the last optimization iteration for case c1 is 0.0015, the last optimization iteration for case c2 is 0.0016). Copy c1/0.0015 to tf_training/c1_data. Copy c2/0.0016 to tf_training/c2_data.
 
-Then, go to tf_training and run TensorFlow training:
+Then, go to tf_training and run TensorFlow training (should output the flow features first):
 
 <pre>
 python trainModel.py
