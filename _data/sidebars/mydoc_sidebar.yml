@@ -141,7 +141,7 @@ entries:
           url: /mydoc_tutorials_aerostruct_uav_prop.html
           output: web, pdf
       
-      - title: Heat transfer
+      - title: Aerothermal
         output: web, pdf
         subfolderitems:
 
