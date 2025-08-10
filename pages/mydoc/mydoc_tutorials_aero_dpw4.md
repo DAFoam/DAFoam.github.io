@@ -69,6 +69,8 @@ selected is “reconstructed”. Then select all mesh regions except “internal
 view a colored pressure gradient on the DPW4 Aircraft. For more details related to post
 processing, refer to the [post-processing](mydoc_get_started_post_processing.html) page in Get Started. 
 
+|
+
 This optimization was completed with a goal of minimizing the CD while maintaining the CL. 
 This case ran for 295 optimization iterations, completed over 51 hours with 108 
 cores on the Nova HPC. According to “opt_SNOPT_summary.txt”, the original CD was 
@@ -78,6 +80,8 @@ reduction is significant and comes as a direct result of shaping improvements.
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Updated_GIF.gif" width="500" />
 
 Fig. 2. Complete optimization animation with Cp gradient, iterations, drag reduction, lift coefficient, and moment coefficient visible. 
+
+|
 
 Since the body, wings, and tail are mirrored over the central axis, a view of one half of the 
 airplane provides the simplest look at the changes to the shape over time. In Figures 3, 4, 
@@ -96,7 +100,9 @@ Fig. 4. Side view of baseline shape (top) and optimized shape (bottom)
 
 Fig. 5. Top view of baseline shape (left) and optimized shape (right)
 
-As is evident in the figures provided, many of the improvements to the CD are a direct result of 
+|
+
+As evident in the figures provided, many of the improvements to the CD are a direct result of 
 an improved angle of the wing and tail. While there are certainly changes to the thickness of the 
 airfoils, the outline of the wing as seen from above is barely affected. Rather, as seen in the 
 side view, the main wing and front portion of the tail seem to have been rotated slightly downward.
@@ -110,6 +116,8 @@ low pressure contribute directly to CL and CD.
 
 Fig. 6. Top-down view of baseline (left) and optimized pressure field (right)
 
+|
+
 Figure 6 provides a clear view of the change in pressure distribution. In the baseline shape, 
 shown on the left, a large area of low pressure is present near the leading edge of the wing, 
 tapering off near the trailing edge and increasing in pressure near both the outer and inner 
@@ -120,6 +128,8 @@ demonstrating a cleaner airflow over the wing.
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Bottom_Pressure.png" width="500" />
 
 Fig. 7. Bottom-up view of baseline (left) and optimized pressure field (right) 
+
+|
 
 Figure 7 has a less pronounced change in the pressure gradient than Figure 6, but the 
 differences are relevant. In the baseline view, the trailing edge of the wing has a distinctly 
@@ -142,13 +152,15 @@ high pressure applied on the front nose of the main aircraft body, making the di
 wing pressure less pronounced. Still, the improvements noted above are visible, which is a 
 testament to the overall improvement of this optimization.
 
-Note an analysis of the pressure helps give a general idea of the improvements in CD, but 
+Also note an analysis of the pressure helps give a general idea of the improvements in CD, but 
 visualizing the velocity streamlines allows for a much more direct view of the improved 
 airflow.  
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Streamline.png" width="500" />
 
 Fig. 8. Side view of baseline (top) and optimized streamline velocities (bottom)
+
+|
 
 The primary differences between the baseline and optimized streamlines become clearer 
 when compared to an “optimal” airflow. Ideally, airflow over the top of the wing should be of 
@@ -167,6 +179,8 @@ overall major iterations of the optimization.
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_CDgraph.png" width="500" />
 
 Fig. 9.  Line plot of CD versus Major Iterations of the optimization (0-63) 
+
+|
 
 The plot in Figure 9 begins at major iteration 0, indicating the first CD value of 4.1765362 by the short horizontal starting line. This is followed by a sharp decrease in the following major iterations, as is typical with these optimizations. As the tenth major iteration is approached (CD of 3.97E-02), the steep slope evens out into what almost resembles a linear downward path, steadily decreasing until nearly iteration 45 (CD of 3.83E-02). At that point, the curve begins to flatten, representing the final decrease from 3.83E-02 to ~3.81E-02.
 
