@@ -80,34 +80,37 @@ reduction is significant and comes as a direct result of shaping improvements.
 Fig. 2. Complete optimization animation with Cp gradient, iterations, drag reduction, lift coefficient, and moment coefficient visible. 
 
 Since the body, wings, and tail are mirrored over the central axis, a view of one half of the 
-airplane provides the simplest look at the changes to the shape over time. In Figures 1, 2, 
-and 3 below, we can see several views of the original versus final shapes of the wing, body, 
+airplane provides the simplest look at the changes to the shape over time. In Figures 3, 4, 
+and 5 below, we can see several views of the original versus final shapes of the wing, body, 
 and tail.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Front_View.png" width="500" />
 
-Fig. 2. Front view of baseline shape (left) and optimized shape (right)
+Fig. 3. Front view of baseline shape (left) and optimized shape (right)
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Side_View.png" width="500" />
 
-Fig. 3. Side view of baseline shape (top) and optimized shape (bottom)
+Fig. 4. Side view of baseline shape (top) and optimized shape (bottom)
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Top_View.png" width="500" />
 
-Fig. 4. Top view of baseline shape (left) and optimized shape (right)
+Fig. 5. Top view of baseline shape (left) and optimized shape (right)
 
-As is evident in the figures provided, many of the improvements to the CD are a direct result 
-of an improved angle of the wing and tail. While there are certainly changes to the thickness 
-of the airfoils, the outline of the wing as seen from above is barely affected. Rather, as seen in the side view, the main wing and front portion of the tail seem to have been rotated 
-slightly downward.
+As is evident in the figures provided, many of the improvements to the CD are a direct result of 
+an improved angle of the wing and tail. While there are certainly changes to the thickness of the 
+airfoils, the outline of the wing as seen from above is barely affected. Rather, as seen in the 
+side view, the main wing and front portion of the tail seem to have been rotated slightly downward.
 
-In addition to these visuals indicating the changes to the shape of the aircraft, an analysis of variables affected by the optimization can help identify the strongest points of improvement. A primary variable to be examined is pressure, where the location and overall areas of high and low pressure contribute directly to CL and CD. 
+In addition to these visuals indicating the changes to the shape of the aircraft, an analysis 
+of variables affected by the optimization can help identify the strongest points of improvement. 
+A primary variable to be examined is pressure, where the location and overall areas of high and 
+low pressure contribute directly to CL and CD. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Top_Pressure.png" width="500" />
 
-Fig. 5. Top-down view of baseline (left) and optimized pressure field (right)
+Fig. 6. Top-down view of baseline (left) and optimized pressure field (right)
 
-Figure 5 provides a clear view of the change in pressure distribution. In the baseline shape, 
+Figure 6 provides a clear view of the change in pressure distribution. In the baseline shape, 
 shown on the left, a large area of low pressure is present near the leading edge of the wing, 
 tapering off near the trailing edge and increasing in pressure near both the outer and inner 
 sections of the wing. In the optimized shape, we can see the pressure gradient is much 
@@ -116,10 +119,15 @@ demonstrating a cleaner airflow over the wing.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Bottom_Pressure.png" width="500" />
 
-Fig. 6. Bottom-up view of baseline (left) and optimized pressure field (right) 
+Fig. 7. Bottom-up view of baseline (left) and optimized pressure field (right) 
 
-Figure 6 has a less pronounced change in the pressure gradient than Figure 5, but the 
-differences are relevant. In the baseline view, the trailing edge of the wing has a distinctly higher pressure, which fades near both the inner and outer edges of the wing. Additionally, the low-pressure area in the center of the wing takes up a significant amount of the surface area, with the lowest pressure center spreading out over the inner wing area. Besides the wing itself, changes in the tail are more visible in this figure, too. The baseline tail has a strong low-pressure area spanning almost the entire leading edge, which is not optimal.
+Figure 7 has a less pronounced change in the pressure gradient than Figure 6, but the 
+differences are relevant. In the baseline view, the trailing edge of the wing has a distinctly 
+higher pressure, which fades near both the inner and outer edges of the wing. Additionally, the 
+low-pressure area in the center of the wing takes up a significant amount of the surface area, 
+with the lowest pressure center spreading out over the inner wing area. Besides the wing itself, 
+changes in the tail are more visible in this figure, too. The baseline tail has a strong low-pressure 
+area spanning almost the entire leading edge, which is not optimal.
 
 The optimized pressure gradient for both the wing and tail improves many of these issues 
 noted in the baseline shape. The leading edge of the wing now has a slightly more 
@@ -140,14 +148,14 @@ airflow.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Streamline.png" width="500" />
 
-Fig. 7. Side view of baseline (top) and optimized streamline velocities (bottom)
+Fig. 8. Side view of baseline (top) and optimized streamline velocities (bottom)
 
 The primary differences between the baseline and optimized streamlines become clearer 
 when compared to an “optimal” airflow. Ideally, airflow over the top of the wing should be of 
 a higher velocity than that of the bottom of the wing, creating the low-pressure area seen 
 earlier. In the baseline view, the higher velocity is present, but is visible only near the 
 leading edge of the wing. This is the reason the low-pressure area is much more 
-concentrated near the leading edge of the wing in Figure 5, resulting in an increased CD. 
+concentrated near the leading edge of the wing in Figure 6, resulting in an increased CD. 
 However, in the optimized view, we can see the higher velocity streamlines continue over 
 much more of the wing area, and are less pronounced near the leading edge. This 
 contributes directly to the more evenly distributed pressure gradient, additionally improving 
@@ -158,8 +166,8 @@ overall major iterations of the optimization.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_CDgraph.png" width="500" />
 
-Fig. 8.  Line plot of CD versus Major Iterations of the optimization (0-63) 
+Fig. 9.  Line plot of CD versus Major Iterations of the optimization (0-63) 
 
-The plot in Figure 7 begins at major iteration 0, indicating the first CD value of 4.1765362 by the short horizontal starting line. This is followed by a sharp decrease in the following major iterations, as is typical with these optimizations. As the tenth major iteration is approached (CD of 3.97E-02), the steep slope evens out into what almost resembles a linear downward path, steadily decreasing until nearly iteration 45 (CD of 3.83E-02). At that point, the curve begins to flatten, representing the final decrease from 3.83E-02 to ~3.81E-02.
+The plot in Figure 9 begins at major iteration 0, indicating the first CD value of 4.1765362 by the short horizontal starting line. This is followed by a sharp decrease in the following major iterations, as is typical with these optimizations. As the tenth major iteration is approached (CD of 3.97E-02), the steep slope evens out into what almost resembles a linear downward path, steadily decreasing until nearly iteration 45 (CD of 3.83E-02). At that point, the curve begins to flatten, representing the final decrease from 3.83E-02 to ~3.81E-02.
 
 {% include links.html %}
