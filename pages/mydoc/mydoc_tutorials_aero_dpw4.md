@@ -75,7 +75,7 @@ cores on the Nova HPC. According to “opt_SNOPT_summary.txt”, the original CD
 4.1765362 and the optimized CD was 3.8138414, which is an 8.7% drag reduction. This 
 reduction is significant and comes as a direct result of shaping improvements.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Updated_GIF.png" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Updated_GIF.gif" width="500" />
 
 Fig. 2. Complete optimization animation with Cp gradient, iterations, drag reduction, lift coefficient, and moment coefficient visible. 
 
