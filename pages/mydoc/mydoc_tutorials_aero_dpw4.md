@@ -41,16 +41,6 @@ We recommend running this case on an HPC system with 100 CPU cores:
 mpirun -np 100 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-The DPW4 Aircraft case utilizes a v4 runScript derived directly from the v2 version, with one 
-notable change. Due to an adjoint equation convergence failure, the following lines were 
-added to the “adjEqnOption” section of the script.
-
-<pre>
-"adjStateOrdering": "cell", 
-"adjEqnOption": {"gmresRelTol": 1.0e-6, "pcFillLevel": 1, "jacMatReOrdering": "natural", 
-"gmresMaxIters": 2000, "gmresRestart": 2000},
-</pre>
-
 To complete the post-processing for this case, first load the OpenFOAM environment. Next, run the following command:
 
 <pre>
