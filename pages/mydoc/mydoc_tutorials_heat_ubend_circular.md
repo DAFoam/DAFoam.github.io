@@ -89,7 +89,7 @@ The solid domain solver again has heat flux (from the solid side of the CHT inte
     },
 </pre>
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/UBend_CHT and run the "myJob.sh" script to run the optimization using the following command:
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/UBend_CHT and run the preProcessing.sh script to download the mesh. Once that completes, run the optimization using the following command:
 
 <pre>
 mpirun -np 72 python runScript.py 2>&1 | tee logOpt.txt
