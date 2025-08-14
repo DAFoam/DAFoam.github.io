@@ -79,6 +79,7 @@ The `wing` refers to the wing surface. We fixed the value with `type fixedValue;
 
 The `inout` boundary condition is common for wing simulations. Inout refers to the far field domain inlet condition and `wing` refers to the wing surface. The `value uniform (0 0 0);` for the airfoil provides a no slip boundary condition on the wall. The `"inout"` boundary condition is the patch name for the far field surface. The `"inletOutlet"` is a special condition for the far field velocity. Similar setups follow for the other field values (p, nuTilda, k etc.). 
 
+We use the `symmetry` boundary condition for the symmetry plane.
 
 ### 2.2 FFD
 The FFD folder contains two files: a genFFD.py script and a wingFFD.xyz file. The genFFD.py script is used to generate the FFD points and export their coordinates to the plot3D format needed in the simulation. It should be noted that this script generates a clean FFD box, not body fitted FFDs (which can be done using [ICEM CFD](https://github.com/mdolab/dafoam/discussions/652) amongst other methods). The FFD points can be easily adjusted using this file in terms of number of FFD points and their locations:
