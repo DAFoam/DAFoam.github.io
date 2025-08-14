@@ -75,6 +75,7 @@ boundaryField
 }
 </pre>
 
+The `wing` refers to the wing surface. We fixed the value with `type fixedValue;` to `value uniform (0 0 0);` for the wing to provide a no slip boundary condition on the wall.
 
 The `inout` boundary condition is common for wing simulations. Inout refers to the far field domain inlet condition and `wing` refers to the wing surface. The `value uniform (0 0 0);` for the airfoil provides a no slip boundary condition on the wall. The `"inout"` boundary condition is the patch name for the far field surface. The `"inletOutlet"` is a special condition for the far field velocity. Similar setups follow for the other field values (p, nuTilda, k etc.). 
 
