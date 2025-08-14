@@ -23,7 +23,7 @@ To help with clarity, below is the general file structure for OpenFOAM simulatio
 - paraview.foam        // dummy file used by Paraview to load results
 </pre>
 
-### 2.1 0
+### 2.1 The 0 folder
 The 0 folder contains the initial field values as well as the field boundary conditions of the simulation:
 
 <pre>
@@ -72,7 +72,7 @@ boundaryField
 }
 </pre>
 
-The `wing` refers to the wing surface. In OpenFOAM, we call a boundary surface a `patch`. We fixed the value with `type fixedValue;` to `value uniform (0 0 0);` for the wing to provide a no-slip boundary condition on the wall. We use the `symmetry` boundary condition for the wing symmetry plane. The boundary name `inout` refers to the far field domain, which uses the `inletOutlet` boundary condition type. This boundary condition type is common when dealing with wing cases or channel flows, for example. The `inletOutlet` boundary condition automatically applies `fixedValue` when the flow enters the simulation domain, and `zeroGradient` when the flow exits the domain.
+The `wing` refers to the wing surface. In OpenFOAM, we call a boundary surface a `patch`. We fixed the value with `type fixedValue;` to `value uniform (0 0 0);` for the wing to provide a no-slip boundary condition on the wall. We use the `symmetry` boundary condition for the wing symmetry plane. The boundary name `inout` refers to the far field patch, which uses the `inletOutlet` boundary condition type. This boundary condition type is common when dealing with wing cases or channel flows, for example. The `inletOutlet` boundary condition automatically applies `fixedValue` when the flow enters the simulation domain, and `zeroGradient` when the flow exits the domain.
 
 
 
