@@ -44,6 +44,7 @@ The 0.orig file contains the initial field values as well as the field boundary 
 The exact setup of the 0.orig file (which field values to include and what their initial values should be) depends on the case being setup. To serve as an example we can open the 0.orig/U file. The first line is the `dimensions [0 1 -1 0 0 0 0];` line. This line specifies the units used for the field value. For the NACA 0012 case the initial velocity condition is 10 m/s in the x direction, hence `internalField uniform (10 0 0);` is set. The following block (`boundaryField`) is where the actual boundary conditions are defined. Refer to the following figure for the setup of the internal and boundary fields.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/analysis_discretization.png" style="width:700px !important;" />
+
 Fig. 1. A schematic of description of the internal and boundary fields for a 2D simulation domain
 
 
