@@ -9,29 +9,21 @@ folder: mydoc
 
 {% include note.html content="This webpage is under construction." %}
 
-## 1. Overview of DAFoam and OpenFOAM
-
-### 1.1 What is DAFoam?
-DAFoam (Discrete Adjoint with OpenFOAM) is a high-fidelity multidisciplinary design optimization and analysis framework. DAFoam can be used to compute derivatives for a large amount of design variables, perform gradient based optimizations, and run OpenFOAM primal solvers to generate CFD samples.
-
-### 1.2 What is OpenFOAM?
+## 1. Overview of OpenFOAM
 OpenFOAM (Open-source Field Operation And Manipulation) is a free finite-volume open-source CFD solver. OpenFOAM is primarily written in C++ and comes with libraries to help facilitate numerical operations on field values. OpenFOAM also has a wide range of utilities for pre- and post- processing such as mesh generation/quality checks and paraview (for post-process visualization). There are three main branches of OpenFOAM: ESI OpenCFD, The OpenFOAM Foundation, and Extended Project. DAFoam only supports the ESI OpenCFD version.
 
 
 ## 2. Details of Configuration Files
-Since DAFoam uses OpenFOAM as the CFD solver, the file structure of a DAFoam simulation is very similar to that of an OpenFOAM simulation. To help with clarity, below is the file structure for the [NACA 0012 incompressible tutorial case]([http://github.com/dafoam/tutorials/](https://github.com/DAFoam/tutorials/tree/main/NACA0012_Airfoil/incompressible)) 
+To help with clarity, below is the general file structure for OpenFOAM simulations. As a general overview: `0.orig` containts boundary conditions and field values, constant handles flow properties (such as turbulence model and fluid modeling parameters), `system` controls the flow discretization. In this section we will discuss each entry below.
 
 <pre>
 - 0.orig               // initial fields and boundary conditions
-- FFD                  // folder that containts FFD file
 - constant             // flow and turbulence property information
-- profiles             // naca0012 profile coordinates for mesh generation
 - system               // flow discretization, setup, time step etc.
-- Allclean.sh          // script to clean up simulation results
-- genAirFoilMesh.py    // mesh generation script called by preProcessing
+- Allclean             // script to clean up simulation results
 - paraview.foam        // dummy file used by paraview to load results
-- preProcessing.sh     // script to generate the mesh
-- runScript.py         // main run script for optimization
+- Allrun.pre           // script to generate the mesh
+- Allrun               // main run script for optimization
 </pre>
 
 ### 2.1 0.orig
@@ -52,7 +44,7 @@ The 0.orig file contains the initial field values as well as the field boundary 
 The exact setup of the 0.orig file (which field values to include and what their initial values should be) depends on the case being setup. To serve as an example we can open the 0.orig/U file. The first line is the `dimensions [0 1 -1 0 0 0 0];` line. This line specifies the units used for the field value. For the NACA 0012 case the initial velocity condition is 10 m/s in the x direction, hence `internalField uniform (10 0 0);` is set. The following block (`boundaryField`) is where the actual boundary conditions are defined. Refer to the following figure for the setup of the internal and boundary fields.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/analysis_discretization.png" style="width:700px !important;" />
-Fig. 1. A schematic of description of the internal and boundar fields for a 2D simulation domain
+Fig. 1. A schematic of description of the internal and boundary fields for a 2D simulation domain
 
 
 <pre>
@@ -62,23 +54,18 @@ internalField uniform (10 0 0);
 
 boundaryField
 {
-    "(wing.*)"
+    wing                                   // boundary name
     {
-        type            fixedValue;
-        value           uniform (0 0 0);
+        type            fixedValue;        // type of boundary condition
+        value           uniform (0 0 0);   // value of boundary condition
     }
   
-    symmetry1
-    {
-        type            symmetry;
-    }
-  
-    symmetry2
+    symmetryPlane
     {
         type            symmetry;
     }
   
-    inout
+    inout                                  // far field
     {
         type            inletOutlet;
         inletValue      $internalField;
@@ -87,7 +74,9 @@ boundaryField
 }
 </pre>
 
-In this shape optimization of the airfoil, OpenFOAM does not support pure 2D cases so the airfoil is modeled as a 3D airfoil that is only 1 mesh cell thick, hence two symmetry boundary conditions. Inout refers to the far field domain inlet condition and `"(wing.*)"` refers to all boundaries defined by the airfoil. The `value uniform (0 0 0);` for the airfoil provides a no slip boundary condition on the wall. The `"inout"` boundary condition is the patch name for the far field surface. The `"inletOutlet"` is a special condition for the far field velocity. Similar setups follow for the other field values (p, nuTilda, k etc.). 
+
+The `inout` boundary condition is common for wing simulations. Inout refers to the far field domain inlet condition and `wing` refers to the wing surface. The `value uniform (0 0 0);` for the airfoil provides a no slip boundary condition on the wall. The `"inout"` boundary condition is the patch name for the far field surface. The `"inletOutlet"` is a special condition for the far field velocity. Similar setups follow for the other field values (p, nuTilda, k etc.). 
+
 
 ### 2.2 FFD
 The FFD folder contains two files: a genFFD.py script and a wingFFD.xyz file. The genFFD.py script is used to generate the FFD points and export their coordinates to the plot3D format needed in the simulation. It should be noted that this script generates a clean FFD box, not body fitted FFDs (which can be done using [ICEM CFD](https://github.com/mdolab/dafoam/discussions/652) amongst other methods). The FFD points can be easily adjusted using this file in terms of number of FFD points and their locations:
