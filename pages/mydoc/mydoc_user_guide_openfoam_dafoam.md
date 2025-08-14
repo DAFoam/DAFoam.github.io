@@ -81,6 +81,10 @@ The `inout` boundary condition is common for wing simulations. Inout refers to t
 
 We use the `symmetry` boundary condition for the symmetry plane.
 
+The boundary name `inout` refers to the far field domain which is using the `inletOutlet` boundary condition type. This boundary condition type is very common when dealing with wing cases or channel flows, for example. `inletOutlet` handles both the boundary value (in this case, the inlet value) by using `fixedValues` for the boundary and includes a `zeroGradient` boundary condition on the outlet for reverse flow.
+
+
+
 ### 2.2 FFD
 The FFD folder contains two files: a genFFD.py script and a wingFFD.xyz file. The genFFD.py script is used to generate the FFD points and export their coordinates to the plot3D format needed in the simulation. It should be noted that this script generates a clean FFD box, not body fitted FFDs (which can be done using [ICEM CFD](https://github.com/mdolab/dafoam/discussions/652) amongst other methods). The FFD points can be easily adjusted using this file in terms of number of FFD points and their locations:
 
