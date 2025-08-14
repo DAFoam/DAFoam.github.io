@@ -87,7 +87,7 @@ boundaryField
 }
 </pre>
 
-In this shape optimization of the airfoil, OpenFOAM does not support pure 2D cases so the airfoil is modeled as a 3D airfoil that is only 1 mesh cell thick, hence two symmetry boundary conditions. Inout refers to the far field domain inlet condition and `"(wing.*)"` refers to all boundaries defined by the airfoil. The `value uniform (0 0 0);` for the airfoil provides a no slip boundary condition on the wall. The inout boundary condition is standard for this type of case and usually does not need to be adjusted. Similar setups follow for the other field values (p, nuTilda, k etc.). 
+In this shape optimization of the airfoil, OpenFOAM does not support pure 2D cases so the airfoil is modeled as a 3D airfoil that is only 1 mesh cell thick, hence two symmetry boundary conditions. Inout refers to the far field domain inlet condition and `"(wing.*)"` refers to all boundaries defined by the airfoil. The `value uniform (0 0 0);` for the airfoil provides a no slip boundary condition on the wall. The `"inout"` boundary condition is the patch name for the far field surface. The `"inletOutlet"` is a special condition for the far field velocity. Similar setups follow for the other field values (p, nuTilda, k etc.). 
 
 ### 2.2 FFD
 The FFD folder contains two files: a genFFD.py script and a wingFFD.xyz file. The genFFD.py script is used to generate the FFD points and export their coordinates to the plot3D format needed in the simulation. It should be noted that this script generates a clean FFD box, not body fitted FFDs (which can be done using [ICEM CFD](https://github.com/mdolab/dafoam/discussions/652) amongst other methods). The FFD points can be easily adjusted using this file in terms of number of FFD points and their locations:
