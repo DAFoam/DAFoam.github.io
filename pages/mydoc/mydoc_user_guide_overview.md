@@ -15,20 +15,22 @@ The objective of this user guide is to serve as a comprehensive, stand-alone res
 
 - [Chapter 2. OpenFOAM and DAFoam basics](mydoc_user_guide_openfoam_dafoam.html)
 
-- [Chapter 3. NACA0012 airfoil: 2D aerodynamic shape optimization](mydoc_user_guide_naca0012.html)
+- [Chapter 3. OpenMDAO basics](mydoc_user_guide_openmdao.html)
 
-- [Chapter 4. NACA0012 variations: compressibility, multi-point, multi-cases](mydoc_user_guide_naca0012_variations.html)
+- [Chapter 4. NACA0012 airfoil: 2D aerodynamic shape optimization](mydoc_user_guide_naca0012.html)
 
-- [Chapter 5. ADODG3 wing: 3D aerodynamic shape optimization](mydoc_user_guide_adodg3.html)
+- [Chapter 5. NACA0012 variations: compressibility, multi-point, multi-cases](mydoc_user_guide_naca0012_variations.html)
 
-- [Chapter 6. UAV propeller: aerodynamic optimization of turbomachinery](mydoc_user_guide_uav_prop.html)
+- [Chapter 6. ADODG3 wing: 3D aerodynamic shape optimization](mydoc_user_guide_adodg3.html)
 
-- [Chapter 7. Cylinder: unsteady aerodynamic shape optimization](mydoc_user_guide_cylinder.html)
+- [Chapter 7. UAV propeller: aerodynamic optimization of turbomachinery](mydoc_user_guide_uav_prop.html)
 
-- [Chapter 8. Ramp: field inversion machine learning](mydoc_user_guide_ramp.html)
+- [Chapter 8. Cylinder: unsteady aerodynamic shape optimization](mydoc_user_guide_cylinder.html)
 
-- [Chapter 9. MACH Tutorial wing: aero-structural optimization](mydoc_user_guide_mach_aerostruct.html)
+- [Chapter 9. Ramp: field inversion machine learning](mydoc_user_guide_ramp.html)
 
-- [Chapter 10. U-bend pipe: aero-thermal optimization](mydoc_user_guide_ubend_aerothermal.html)
+- [Chapter 10. MACH Tutorial wing: aero-structural optimization](mydoc_user_guide_mach_aerostruct.html)
+
+- [Chapter 11. U-bend pipe: aero-thermal optimization](mydoc_user_guide_ubend_aerothermal.html)
 
 {% include links.html %}
