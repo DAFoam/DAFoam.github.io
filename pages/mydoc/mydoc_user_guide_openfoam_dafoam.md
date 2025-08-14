@@ -1,5 +1,5 @@
 ---
-title: OpenFOAM and DAFoam Basics
+title: OpenFOAM Basics
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
@@ -10,27 +10,24 @@ folder: mydoc
 {% include note.html content="This webpage is under construction." %}
 
 ## 1. Overview of OpenFOAM
-OpenFOAM (Open-source Field Operation And Manipulation) is a free finite-volume open-source CFD solver. OpenFOAM is primarily written in C++ and comes with libraries to help facilitate numerical operations on field values. OpenFOAM also has a wide range of utilities for pre- and post- processing such as mesh generation/quality checks and paraview (for post-process visualization). There are three main branches of OpenFOAM: ESI OpenCFD, The OpenFOAM Foundation, and Extended Project. DAFoam only supports the ESI OpenCFD version.
+OpenFOAM (Open-source Field Operation And Manipulation) is a free finite-volume open-source CFD solver. OpenFOAM is primarily written in C++ and comes with libraries to help facilitate numerical operations on field values. OpenFOAM also has a wide range of utilities for pre- and post-processing, such as mesh generation/quality checks and Paraview (for post-process visualization). There are three main branches of OpenFOAM: ESI OpenCFD, The OpenFOAM Foundation, and Extended Project. DAFoam only supports the ESI OpenCFD version.
 
 
 ## 2. Details of Configuration Files
-To help with clarity, below is the general file structure for OpenFOAM simulations. As a general overview: `0.orig` containts boundary conditions and field values, constant handles flow properties (such as turbulence model and fluid modeling parameters), `system` controls the flow discretization. In this section we will discuss each entry below.
+To help with clarity, below is the general file structure for OpenFOAM simulations. As a general overview: `0` contains boundary conditions and initial field values, `constant` handles flow properties (such as turbulence model and fluid modeling parameters), and `system` controls the numerical discretization, equation solutions, etc. In this section, we will discuss each entry below.
 
 <pre>
-- 0.orig               // initial fields and boundary conditions
+- 0                    // initial fields and boundary conditions
 - constant             // flow and turbulence property information
 - system               // flow discretization, setup, time step etc.
-- Allclean             // script to clean up simulation results
-- paraview.foam        // dummy file used by paraview to load results
-- Allrun.pre           // script to generate the mesh
-- Allrun               // main run script for optimization
+- paraview.foam        // dummy file used by Paraview to load results
 </pre>
 
-### 2.1 0.orig
-The 0.orig file contains the initial field values as well as the field boundary conditions of the simulation:
+### 2.1 0
+The 0 folder contains the initial field values as well as the field boundary conditions of the simulation:
 
 <pre>
-0.orig         
+0        
 |-- epsilon    // turbulent kinetic energy dissipation rate
 |-- k          // turbulent kinetic energy
 |-- nut        // turbulent viscosity
@@ -41,11 +38,11 @@ The 0.orig file contains the initial field values as well as the field boundary 
 </pre>
 
 
-The exact setup of the 0.orig file (which field values to include and what their initial values should be) depends on the case being setup. To serve as an example we can open the 0.orig/U file. The first line is the `dimensions [0 1 -1 0 0 0 0];` line. This line specifies the units used for the field value. For the NACA 0012 case the initial velocity condition is 10 m/s in the x direction, hence `internalField uniform (10 0 0);` is set. The following block (`boundaryField`) is where the actual boundary conditions are defined. Refer to the following figure for the setup of the internal and boundary fields.
+The exact setup of the 0 folder (which field values to include and what their initial values should be) depends on the case being setup. To serve as an example, we can open the 0/U file. The first line is the `dimensions [0 1 -1 0 0 0 0];` line. This line specifies the units used for the field value. For the wing case, the initial velocity condition is 10 m/s in the x direction, hence `internalField uniform (10 0 0);` is set. The following block (`boundaryField`) is where the actual boundary conditions are defined. Refer to the following figure for the setup of the internal and boundary fields.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/analysis_discretization.png" style="width:700px !important;" />
 
-Fig. 1. A schematic of description of the internal and boundary fields for a 2D simulation domain
+Fig. 1. A schematic description of the internal and boundary fields for a 2D simulation domain
 
 
 <pre>
@@ -55,7 +52,7 @@ internalField uniform (10 0 0);
 
 boundaryField
 {
-    wing                                   // boundary name
+    wing                                   // wing patch name
     {
         type            fixedValue;        // type of boundary condition
         value           uniform (0 0 0);   // value of boundary condition
@@ -66,7 +63,7 @@ boundaryField
         type            symmetry;
     }
   
-    inout                                  // far field
+    inout                                  // far field patch name
     {
         type            inletOutlet;
         inletValue      $internalField;
@@ -75,13 +72,7 @@ boundaryField
 }
 </pre>
 
-The `wing` refers to the wing surface. We fixed the value with `type fixedValue;` to `value uniform (0 0 0);` for the wing to provide a no slip boundary condition on the wall.
-
-The `inout` boundary condition is common for wing simulations. Inout refers to the far field domain inlet condition and `wing` refers to the wing surface. The `value uniform (0 0 0);` for the airfoil provides a no slip boundary condition on the wall. The `"inout"` boundary condition is the patch name for the far field surface. The `"inletOutlet"` is a special condition for the far field velocity. Similar setups follow for the other field values (p, nuTilda, k etc.). 
-
-We use the `symmetry` boundary condition for the symmetry plane.
-
-The boundary name `inout` refers to the far field domain which is using the `inletOutlet` boundary condition type. This boundary condition type is very common when dealing with wing cases or channel flows, for example. `inletOutlet` handles both the boundary value (in this case, the inlet value) by using `fixedValues` for the boundary and includes a `zeroGradient` boundary condition on the outlet for reverse flow.
+The `wing` refers to the wing surface. In OpenFOAM, we call a boundary surface a `patch`. We fixed the value with `type fixedValue;` to `value uniform (0 0 0);` for the wing to provide a no-slip boundary condition on the wall. We use the `symmetry` boundary condition for the wing symmetry plane. The boundary name `inout` refers to the far field domain, which uses the `inletOutlet` boundary condition type. This boundary condition type is common when dealing with wing cases or channel flows, for example. The `inletOutlet` boundary condition automatically applies `fixedValue` when the flow enters the simulation domain, and `zeroGradient` when the flow exits the domain.
 
 
 
