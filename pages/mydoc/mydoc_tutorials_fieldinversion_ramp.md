@@ -88,19 +88,19 @@ First, generate the mesh and data for the c1 and c2 cases:
 ./preProcessing.sh
 </pre>
 
-Then, use the following command to run FI for case c1 (ToDo: need to update the runScript_FI.py):
+Then, use the following command to run FI for case c1:
 
 <pre>
-mpirun -np 4 python runScript_FI.py -index=0 2>&1 | tee logOpt.txt
+mpirun -np 4 python runScript_FI.py -index=0 2>&1 | tee logOpt1.txt
 </pre>
 
 After that, use the following command to run FI for case c2:
 
 <pre>
-mpirun -np 4 python runScript_FI.py -index=1 2>&1 | tee logOpt.txt
+mpirun -np 4 python runScript_FI.py -index=1 2>&1 | tee logOpt2.txt
 </pre>
 
-Once the above two FI cases converge, reconstruct the data for the last optimization iteration (it should be 0.0050). Copy c1/0.0050 to tf_training/c1_data. Copy c2/0.0050 to tf_training/c2_data.
+Once the above two FI cases converge, reconstruct the data for the last optimization iteration (for example, the last optimization iteration for case c1 is 0.0015, the last optimization iteration for case c2 is 0.0016). Copy c1/0.0015 to tf_training/c1_data. Copy c2/0.0016 to tf_training/c2_data.
 
 Then, go to tf_training and run TensorFlow training:
 
@@ -113,7 +113,13 @@ After the training is done, it will save the model's coefficients in a "model" f
 Lastly, we can use the trained model for prediction. For example, you can go to the c1 folder and run:
 
 <pre>
-mpirun -np 4 python runPrimal.py -augmented=True 2>&1 | tee logOpt.txt
+mpirun -np 4 python runPrimal.py -augmented=True 2>&1 | tee logOpt1.txt
+</pre>
+
+Likewise, go to the c2 folder and run:
+
+<pre>
+mpirun -np 4 python runPrimal.py -augmented=True 2>&1 | tee logOpt2.txt
 </pre>
 
 DAFoam will read the trained tensorflow model, compute flow features, use the trained tensorflow model to compute the augmented fields, and run the primal flow solutions. In addition to runPrimal, you can also do an optimization using the trained model.

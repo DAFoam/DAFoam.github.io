@@ -23,6 +23,29 @@ Mesh cells: ~1.5 million
 Solver: DARhoSimpleFoam
 </pre>
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Prop_Solid_Mesh.png" width="500" />
 
-Figure 1. Propeller solid FEM mesh. The blue and red dots are the FFD points, where the blue dots are the only ones that move during the optimization.
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AeroStruct_Propeller_Mesh.png" style="width:800px !important;" />
+
+Figure 1. Simulation domain, propeller meshes, and FFD points. The blue and red squares are the FFD points. Only the blue FFD points move during the optimization.
+
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/UAV_Prop and run the “preProcessing.sh” script to generate the mesh:
+
+<pre>
+./preProcessing.sh
+</pre>
+
+Then, use the code below to run the optimization using 144 CPU cores:
+  
+<pre>
+mpirun -np 144 python runScript_AeroStruct.py 2>&1 | tee logOpt.txt
+</pre>
+
+The case in this tutorial ran for 42 iterations, and the optimality dropped by one order of magnitude. In total, we saw an 18.3% reduction in power, while the thrust, mass, and stress constraints were met. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/UAV_PropAnimation.gif" style="width:500px !important;" />
+
+Figure 2. Comparison of the baseline and optimized designs for case where twist, shape, and chord are design variables. 
+
+
+
+{% include links.html %}
