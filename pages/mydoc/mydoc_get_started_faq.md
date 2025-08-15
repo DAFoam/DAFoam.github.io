@@ -49,8 +49,6 @@ In addition, one may need to change the parameters for "corners" in FFD/genFFD.p
 
 To run optimization at different flow conditions, one needs to modify the boundary condition values "U0", "p0", and "nuTilda0" from the "runScript.py". 
 
-To run at a different lift coefficient, modify "CL_target", then run `mpirun -np 4 python runScript.py --task=solveCL`. Once the solveCL is done, note down the "alpha0" value that is printed to the screen, and replace the value in "runScript.py". 
-
 This tutorial uses an incompressible flow solver DASimpleFoam, so the Mach number should be less than 0.1. For subsonic flow conditions (e.g., ~0.1 < M < ~0.6), refer to the settings in tutorials-main/NACA0012_Airfoil/subsonic. For the transonic flow conditions, refer to tutorials-main/NACA0012_Airfoil/transonic. Note that both runScript.py and the OpenFOAM configuration files (e.g., fvSchemes, fvSolution) are modified for these flow conditions.
 
 ## How to use different turbulence models?
@@ -79,27 +77,27 @@ The above command will extract the patch "wing" to an stl file called "optShape.
 
 An alternative way to output the optimized geometry is to load it in ParaView, go to the last time step for the optimized shape, select the surfaces you want to output, choose Files-Save Data, and save it as STL files.
 
-If you want to get the optimized geometry from the original STL file instead of the OpenFOAM mesh (e.g., for 3D printing), you can use this [script](https://github.com/DAFoam/tutorials/tree/main/Prowim_Wing_Propeller/deformSTL). It will read the optimized design variables from a file and use pyGeo to deform an STL file to its optimal shape. 
+If you want to get the optimized geometry from the original STL file instead of the OpenFOAM mesh (e.g., for 3D printing), you can use this [example](https://github.com/DAFoam/tutorials/tree/main/Prowim_Wing_Propeller/deformSTL). It will read the optimized design variables from a file and use PyGeo to deform a baseline STL file to its optimal shape.
 
 ## Can I get the optimized geometry in a CAD format?
 
-Yes, you can get the optimized geometry in the IGES format through pyGeo. Follow the "deformGeo" section from [here](https://dafoam.github.io/mydoc_tutorials_aero_prowim_wing.html). Refer to the [pyGeo documentation](https://mdolab-pygeo.readthedocs-hosted.com/en/latest/update_pygeo.html) for more general instructions on how to deform the design surface geometry.
+Yes, you can get the optimized geometry in the IGES format through pyGeo. Check an example [here](https://github.com/DAFoam/tutorials/tree/main/Prowim_Wing_Propeller/deformIGS). Refer to the [pyGeo documentation](https://mdolab-pygeo.readthedocs-hosted.com/en/latest/update_pygeo.html) for more general instructions on how to deform the design surface geometry.
 
 ## How to get sensitivity maps?
 
-The latest version of DAFoam can output sensitivity maps during optimization. You need to set the names of the design variables to "writeSensMap" in runScript.py (check [this example](https://github.com/mdolab/dafoam/blob/c1c3ea12a49ceec7177238f7dc70a25ce260bba9/tests/runTests_DASimpleFoam.py#L46)). A more general description is [here](https://github.com/mdolab/dafoam/blob/c1c3ea12a49ceec7177238f7dc70a25ce260bba9/dafoam/pyDAFoam.py#L552). Now, we only support outputting sensitivity for FFD and Field designVarType.
+Refer to this [script](https://github.com/mdolab/dafoam/blob/main/tests/runSerialUnitTests_SensMap.py). Note that we can write sensitivity maps only in serial. The parallel sensitivity map feature is not fully tested.
 
 ## How to reduce the size of parallel optimization results?
 
-When running in parallel, OpenFOAM will generate folders for each decomposed domain, e.g., processor0, processor1. This feature takes up a lot of space and is slow to transfer and post-process. To fix this issue, wait until the parallel optimization is done, then go to the optimization folder, load the OpenFOAM environment, and run this command `reconstructPar` to combine all the decomposed flow fields that are stored in processor0, processor1, etc. You will see a bunch of new folders called 0.00000001, 0.00000002, etc. These are the combined flow solutions for each optimization step. So once the reconstructPar command is done, one can delete all the processor0, processor1, etc. folders. When visualizing the flow fields in Paraview, there is no need to choose "Decomposed Case" for "Case Type" because the cases have been reconstructed. This will increase the speed for visualization.  
+When running in parallel, OpenFOAM will generate folders for each decomposed domain, e.g., processor0, processor1. This feature takes up a lot of space and is slow to transfer and post-process. To fix this issue, wait until the parallel optimization is done, then go to the optimization folder, load the OpenFOAM environment, and run this command `reconstructPar` to combine all the decomposed flow fields that are stored in processor0, processor1, etc. You will see a bunch of new folders called 0.0001, 0.0002, etc. These are the combined flow solutions for each optimization step. So once the reconstructPar command is done, one can delete all the processor0, processor1, etc. folders. When visualizing the flow fields in Paraview, there is no need to choose "Decomposed Case" for "Case Type" because the cases have been reconstructed. This will increase the speed of visualization.  
 
 ## Does DAFoam support optimization for pure 2D problems?
 
-No, DAFoam does **NOT** support pure 2D optimization. In OpenFOAM, there is an option to do pure 2D simulation, which is setting a patch type to **empty** in constant/polyMesh/boundary. This feature is **NOT** supported in DAFoam. So, one needs to change the **empty** patch type to **symmetry** instead, and use one cell in the symmetry direction to mimic a 2D simulation. Refer to the case setup in the [NACA0012 case](https://github.com/DAFoam/tutorials/tree/main/NACA0012_Airfoil/incompressible).
+No, DAFoam does **NOT** support pure 2D optimization. In OpenFOAM, there is an option to do a pure 2D simulation, which is setting a patch type to **empty** in constant/polyMesh/boundary. This feature is **NOT** supported in DAFoam. So, one needs to change the **empty** patch type to **symmetry** instead, and use one cell in the symmetry direction to mimic a 2D simulation. Refer to the case setup in the [NACA0012 case](https://github.com/DAFoam/tutorials/tree/main/NACA0012_Airfoil/incompressible).
 
 ## Can I use my own mesh?
 
-Yes, DAFoam can run optimization with meshes generated by other software. Just put the mesh in constant/polyMesh. Then, you need to make sure the OpenFOAM configuration files are modified properly for the new mesh, e.g., change the patch name/type for the boundary conditions, change the fvSchemes and fvSolution. We suggest you run the built-in OpenFOAM solvers, e.g., simpleFoam, and make sure they run, before running a DAFoam optimization. Also, since you have generated your own meshes, there is NO need to run `./preProcessing.sh`. If your mesh runs without a problem with the OpneFOAM built-in solvers, but it fails when running the DAFoam solvers, it is likely your FFD does not contain your design surface. It is also possible that you have some unsupported patches, such as `empty`.
+Yes, DAFoam can run optimization with meshes generated by other software. Just put the mesh in constant/polyMesh. Then, you need to make sure the OpenFOAM configuration files are modified properly for the new mesh, e.g., change the patch name/type for the boundary conditions, change the fvSchemes and fvSolution. We suggest you run the built-in OpenFOAM solvers, e.g., simpleFoam, and make sure they run, before running a DAFoam optimization. Also, since you have generated your own meshes, there is NO need to run `./preProcessing.sh`. If your mesh runs without a problem with the OpenFOAM built-in solvers, but it fails when running the DAFoam solvers, it is likely that your FFD does not contain your design surface. It is also possible that you have some unsupported patches, such as `empty`.
 
 ## Does DAFoam use the exact same primal solvers in OpenFOAM?
 
@@ -108,9 +106,8 @@ Not exactly. DAFoam's primal solvers are slightly different from the ones in Ope
 
 ## Does DAFoam support all the OpenFOAM's configurations and boundary conditions?
 
-No. These OpenFOAM features are NOT supported in DAFoam. **Note**: the configurations and boundary conditions used in [DAFoam tutorials](https://github.com/dafoam/tutorials) are tested and working. Use caution if you want to add a new configuration that has not been used the tutorials.
+No. These OpenFOAM features are NOT supported in DAFoam. **Note**: the configurations and boundary conditions used in [DAFoam tutorials](https://github.com/dafoam/tutorials) are tested and working. Use caution if you want to add a new configuration that has not been used in the tutorials.
 
-- Unsteady solvers
 - AMI boundary condition
 - fvOptions and MRF are implemented for only some of the primal solvers
 - empty boundary condition
@@ -160,7 +157,7 @@ If you keep getting failed mesh checks throughout the optimization, first check 
 
 You need to increase these default values, e.g., set `"maxSkewness": 6.0,`. If you want to ignore just a few incorrectly oriented faces, set maxIncorrectlyOrientedFaces to be greater than 0. 
 
-Another way to fix the issue is to set mesh quality constraints in optimization. Check the runScript_meshQualityConstraint.py script from the [UBend](https://github.com/DAFoam/tutorials/blob/main/UBend_Channel/runScript_meshQualityConstraint.py) tutorial.
+Another way to fix the issue is to set mesh quality constraints in optimization. Check the runScript_meshQualityConstraint.py script from the [UBend](https://github.com/DAFoam/tutorials/blob/main/UBend_Channel/runScript_meshQualityConstraint_v2.py) tutorial.
 
 If you need to visualize which part of the mesh has poor quality, you can set `"writeMinorIterations": True`. DAFoam will write the mesh to the disk every time it tries to run the flow (even the checkMesh fails). You can then load the failed mesh in ParaView to visualize it.
 
@@ -187,17 +184,9 @@ If your OS system has more than one user, and you are not the first user and do 
 
 This error is likely caused by the incorrect leList and teList for the thickness and volume constraints. So double check the leList and teList in runScript.py and make sure they are completely within the wing geometry. Refer to [here](https://dafoam.github.io/mydoc_get_started_runscript.html#runscriptpy) for more details on how to setup leList and teList.
 
-## How to fix: "ImportError: dynamic module does not define module export function"?
-
-This error is likely caused by not running `Allclean` before running `Allmake` for DAFoam, especially between compiling the original, revere-AD, and forward-AD versions. So the solution is to recompile DAFoam and make sure you run `Allclean` before running `Allmake`.
-
 ## How to fix the "No module named dafoam.pyDASolver" error?
 
 This error is likely caused by using different Python versions to compile DAFoam and run DAFoam cases. **Make sure you DO NOT close the terminal before all the installation steps are done!** For example, one may forget to load the DAFoam environment and use the system's built-in Python 2.7 to run a case, while DAFoam was compiled with Python 3.8. To fix this, first check if you can find some compiled DAFoam libraries in the dafoam/dafoam folder, e.g., pyDASolverIncompressible.cpython-38-x86_64-linux-gnu.so. The Python version is in the library name (cpython-38). So make sure your current Python environment (type `python -V` to check) matches the version in the library name. They do not match, we suggest you recompile DAFoam following the **exact** steps from [here](https://dafoam.github.io/mydoc_installation_source.html#dafoam)
-
-## How to speed up DAFoam repo compilation speed for code development?
-
-Compiling the DAFoam repo may take up 30 minutes, depending on your PC performance. If you are modifying the DAFoam source code and need to quickly test your changes, you don't need to compile all the DAFoam components. To speed up the DAFoam repo compilation, you can use the command `Allmake incompressible` to compile only the incompressible libraries and solvers. This will significantly speed up the process because all the compressible and solid libraries and solvers will not be compiled. To further speed up the compilation process, you can open dafoam/src/adjoint/Make/files_Incompressible and delete the solvers, turbulence models, and other stuff you don't need to compile. For example, if you want to test a new change for DASimpleFoam with the SA turbulence model and force objective, you can use this simplified [files_Incompressible](mydoc_get_started_files_incompressible_simplefoam.html).
 
 ## How to run a multipoint optimization?
 
@@ -224,13 +213,7 @@ Finally, generate the mesh and run the new optimization using 4 CPU cores:
 
 ## How to create a new objective function?
 
-The objective functions for DAFoam are stored in the *src/adjoint/DAObjFunc* directory of [this repository](https://github.com/mdolab/dafoam). To create a new objective function, it is recommended to base it off of a similar existing function. You will need to first create yourObjFunc.H and yourObjFunc.C with your constructors, input/output definitions and implementation. Make sure you assign a new type name for your objective function by setting `TypeName("nameOfYourNewObjFunc");` in the yourObjFunc.H file. Then in runScript.py, you will need to use the same name for the "type" key in daOptions-objFunc.
-
-Then, you will need to add the paths to the files you created in *src/adjoint/Make/files_Compressible* and *files_Incompressible*. At this point you can attempt to re-compile DAFoam to test your code, follow [these instructions](https://dafoam.github.io/mydoc_installation_source.html) to build from source.
-
-Finally, you will need to add the objective function to one of the runTests_*.py located in the *tests* directory. Again, use the other objective functions as an example. 
-
-When making a pull request, the code coverage test will not pass unless the output from testing your objective function (the value itself and sensitivity values) is copied into the corresponding tests/refs/DAFoam_Test_*.txt file.
+Please refer to the detailed steps in the 2025 DAFoam workshop [Slides](https://github.com/DAFoam/workshops/blob/main/2025_Summer/slides/2025_Summer_Workshop.pdf).
 
 ## How can I contribute to this website?
 
