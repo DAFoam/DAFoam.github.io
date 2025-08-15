@@ -1,9 +1,9 @@
 ---
-title: OpenFOAM and DAFoam Basics
+title: OpenFOAM Basics
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_user_guide_openfoam_dafoam.html
+permalink: mydoc_user_guide_openfoam.html
 folder: mydoc
 ---
 

@@ -221,8 +221,8 @@ entries:
       url: /mydoc_user_guide_background.html
       output: web, pdf
     
-    - title: Chapter 2 OpenFOAM and DAFoam
-      url: /mydoc_user_guide_openfoam_dafoam.html
+    - title: Chapter 2 OpenFOAM
+      url: /mydoc_user_guide_openfoam.html
       output: web, pdf
     
     - title: Chapter 3 OpenMDAO
