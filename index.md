@@ -7,10 +7,6 @@ summary:
 ---
 
 <div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> 
-The 2025 DAFoam online workshop is open for registration! <a href="https://dafoam.github.io/dafoam_workshop_2025.html">Details.</a>    
-</div>
-
-<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> 
 <b>[Latest Announcements](news.html):</b>   
 {% for post in site.posts limit:3 %}
   {{ post.date | date: "%m/%d/%Y" }}. {{ post.title }}. <a href="{{ post.permalink }}">Details.</a>  
