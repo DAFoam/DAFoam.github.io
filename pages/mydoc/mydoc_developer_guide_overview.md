@@ -9,4 +9,8 @@ folder: mydoc
 
 {% include note.html content="This webpage is under construction." %}
 
+The objective of this develop guide is to help advanced users develop new DAFoam features, such as adding new design variables and objective functions.
+
+- Chapter 1. Background
+
 {% include links.html %}
