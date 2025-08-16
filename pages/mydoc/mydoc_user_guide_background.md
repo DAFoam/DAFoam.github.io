@@ -7,7 +7,7 @@ permalink: mydoc_user_guide_background.html
 folder: mydoc
 ---
 
-{% include note.html content="This webpage is under construction." %}
+After reading this chapter, you should be able to: (1) Explain the overall steps in a gradient-based design optimization, and (2) Identify and describe key terminology, including the objective function, design variables, constraints, and residuals.
 
 ## 1. Constrained gradient-based optimization
 
@@ -50,7 +50,7 @@ For simple optimization problems, the objective function ($f$) is an explicit fu
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/f_calculation.png" style="width:500px !important;" />
 
-Fig. 2. Schematic of objective function computation process
+Fig. 2. Schematic of the objective function computation process
 
 ### 1.4 Search direction computation
 
@@ -100,7 +100,7 @@ $$
 \frac{\partial \vec{R}}{\partial \vec{w}}^T \vec{\psi} = \frac{\partial f }{\partial \vec{w}}^T
 $$
 
-Here $\vec{\psi}$ is the adjoint vector, and the superscript $T$ denotes the transpose operator. The above adjoint equation is a large-scale linear equation, and DAFoam uses the generalized minimal residual method (GMRES) method to solve it. During the GMRES solution processes, the **adjoint residual** measures the difference between the left and right hand side of the above equation.
+Here $\vec{\psi}$ is the adjoint vector, and the superscript $T$ denotes the transpose operator. The above adjoint equation is a large-scale linear equation, and DAFoam uses the generalized minimal residual method (GMRES) to solve it. During the GMRES solution processes, the **adjoint residual** measures the difference between the left and right-hand side of the above equation.
 
 2 Computing the total derivative:
 
