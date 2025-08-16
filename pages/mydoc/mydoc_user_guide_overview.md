@@ -7,8 +7,6 @@ permalink: mydoc_user_guide_overview.html
 folder: mydoc
 ---
 
-{% include note.html content="This webpage is under construction." %}
-
 The objective of this user guide is to serve as a comprehensive, stand-alone resource to help new users onboard efficiently and become proficient in using DAFoam for a wide range of design optimization problems.
 
 - [Chapter 1. Background ](mydoc_user_guide_background.html)
