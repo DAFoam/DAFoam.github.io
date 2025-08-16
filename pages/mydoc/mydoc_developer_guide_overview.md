@@ -11,6 +11,6 @@ folder: mydoc
 
 The objective of this develop guide is to help advanced users develop new DAFoam features, such as adding new design variables and objective functions.
 
-- Chapter 1. Background
+- [Chapter 1. Background](mydoc_developer_guide_background.html)
 
 {% include links.html %}
