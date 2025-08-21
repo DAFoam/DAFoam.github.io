@@ -293,7 +293,7 @@ entries:
       url: /mydoc_validations_rae2822.html
       output: web, pdf
 
-  - title: Documents
+  - title: Misc
     output: web, pdf
     folderitems:
 
@@ -308,4 +308,7 @@ entries:
     - title: Workshops
       url: /mydoc_workshops.html
       output: web, pdf
-
+    
+    - title: Acknowledgement
+      url: /mydoc_acknowledgement.html
+      output: web, pdf
