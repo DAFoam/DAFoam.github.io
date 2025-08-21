@@ -22,6 +22,6 @@ In addition to the initial support from the Ford Motor Company, we acknowledge f
 - A NASA project under the EPSCoR R3 program for developing conjugate heat transfer optimization capability (2023 to 2025).
 - [An NSF project](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2223676) under the CMMI EDSE program for developing unsteady-adjoint based design optimization (2022 to 2026).
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/logo_NSF.png" style="width:100px !important;" />     <img src="{{ site.url }}{{ site.baseurl }}/images/logo_NASA.png" style="width:100px !important;" />     <img src="{{ site.url }}{{ site.baseurl }}/images/logo_Ford.png" style="width:100px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/logo_NSF.png" style="width:150px !important;" />         <img src="{{ site.url }}{{ site.baseurl }}/images/logo_NASA.png" style="width:150px !important;" />         <img src="{{ site.url }}{{ site.baseurl }}/images/logo_Ford.png" style="width:150px !important;" />
 
 {% include links.html %}
