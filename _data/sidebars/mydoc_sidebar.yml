@@ -188,27 +188,7 @@ entries:
         - title: Ramp
           url: /mydoc_tutorials_field_inversion_ramp.html
           output: web, pdf
-  
-  - title: GUI
-    output: web, pdf
-    folderitems:
 
-    - title: Overview
-      url: /mydoc_gui_overview.html
-      output: web, pdf
-      
-    - title: Mesh Generation
-      url: /mydoc_gui_pvoptumesh.html
-      output: web, pdf
-    
-    - title: Airfoil optimization
-      url: /mydoc_gui_pvoptairfoil.html
-      output: web, pdf
-      
-    - title: Post Processing
-      url: /mydoc_gui_postprocessing.html
-      output: web, pdf
-  
   - title: User Guide
     output: web, pdf
     folderitems:
@@ -296,6 +276,10 @@ entries:
   - title: Misc
     output: web, pdf
     folderitems:
+
+    - title: GUI
+      url: /mydoc_gui_overview.html
+      output: web, pdf
 
     - title: DAFoam publications
       url: /mydoc_docs_publications.html
