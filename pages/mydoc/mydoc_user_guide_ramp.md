@@ -54,7 +54,7 @@ The decoupled FIML optimization is formulated as:
 <pre>
 Objective function: Regulated prediction error for the bottom wall pressure, velocity at probe points and the CD values
 Design variables: Weights and biases for the built-in neural network
-Augmented variables: betaFIK and betaFIOmega for the k and omega equations, respectively
+Augmented variables: betaFIOmega for the omega equation
 Training configurations: c1: U0 = 10 m/s. c2: U0 = 20 m/s
 Prediction configuration: U0 = 15 m/s
 </pre>
@@ -64,6 +64,8 @@ First, generate the mesh and data for the c1 and c2 cases:
 <pre>
 ./preProcessing.sh
 </pre>
+
+Before we run the case, let us elaborate on the runScript_FI.py script that is tailored for the decoupled FIML. We have two training cases (cases = ["c1", "c2"]), i.e., c1 and c2, and with the initial velocity U0 = 10 m/s and U0 = 15, respectively. We also obtained the reference values for the drag (dragRefs = [0.1683459472347049, 0.7101215345814689]). In order save the augmented beta fields and flow features, we need to set "outputName": "dummy" and "writeFeatures": True in the "model". 
 
 Then, use the following command to run FI for case c1:
 
