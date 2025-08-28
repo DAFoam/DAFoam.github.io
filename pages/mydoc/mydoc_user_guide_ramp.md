@@ -65,7 +65,18 @@ First, generate the mesh and data for the c1 and c2 cases:
 ./preProcessing.sh
 </pre>
 
-Before we run the case, let us elaborate on the runScript_FI.py script that is tailored for the decoupled FIML. We have two training cases (cases = ["c1", "c2"]), i.e., c1 and c2, and with the initial velocity U0 = 10 m/s and U0 = 15, respectively. We also obtained the reference values for the drag (dragRefs = [0.1683459472347049, 0.7101215345814689]). In order save the augmented beta fields and flow features, we need to set "outputName": "dummy" and "writeFeatures": True in the "model". 
+```python
+cases = ["c1", "c2"]
+U0s = [10.0, 20.0]
+dragRefs = [0.1683459472347049, 0.7101215345814689]
+
+"outputName": "dummy",
+"writeFeatures": True,
+```
+
+|
+
+Before we run the case, let us elaborate on the runScript_FI.py script that is tailored for the decoupled FIML. We have two training cases (cases = ["c1", "c2"]), and with the initial velocities (U0s = [10.0, 20.0]) for the two cases. We also obtained the reference values for the drag (dragRefs = [0.1683459472347049, 0.7101215345814689]). In order to save the augmented beta fields and flow features, we need to set "outputName": "dummy" and "writeFeatures": True in the "model". 
 
 Then, use the following command to run FI for case c1:
 
