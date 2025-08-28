@@ -28,7 +28,41 @@ Solver: DASimpleFoam
 
 Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
+Below is the file and directory structure for the incompressible NACA0012 airfoil case in the DAFoam tutorial. We will explain in detail the files and directories that are unique to DAFoam.
+
+```bash
+NACA0012_Airfoil/incompressible
+|-- 0.orig            # initial fields and boundary conditions (OpenFOAM essentials)
+|-- FFD               # generate the FFD points
+|-- constant          # flow and turbulence property definition (OpenFOAM essentials)
+|-- profiles          # NACA0012 profile coordinate for mesh generation
+|-- system            # flow discretization, setup, time step, etc (OpenFOAM essentials)
+|-- Allclean.sh       # script to clean up the simulation and optimization results
+|-- preProcessing.sh  # generate mesh, copy the initial and boundary conditions to 0
+|-- genAirFoilMesh.py # mesh generation script called by preProcessing.sh
+|-- paraview.foam     # dummy file for paraview post-processing
+|-- runScript.py      # main run script for DAFoam
+```
+
+## 0.orig
+
+The 0.orig directory contains the initial condition for a DAFoam case. The preProcessing.sh script duplicates it as the 0 directory, and then it functions the same way as in OpenFoam.
+
 ## FFD points
+
+We use the free-form deformation (FFD) points to parameterize the design surface geometry and deform it during the optimization process. The FFD volume should completely contain the design surface (see the red dots in Fig.1).
+
+Under the FFD directory, the FFD file wingFFD.xyz contains the coordinates of the FFD points, and is generated from running genFFD.py. 
+
+To change the FFD points, we need to change some parameters in genFFD.py and rerun it. Below we explain genFFD.py in detail.
+
+<!-- 
+def writeFFDFile, no need to change
+def returnBlockPoints, no need to change
+nBlocks = 1
+Change nx, ny, nz,
+Corners are the FFD block coordinates
+-->
 
 ## Mesh generation through pyHyp
 
