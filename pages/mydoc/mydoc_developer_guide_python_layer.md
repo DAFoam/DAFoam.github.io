@@ -1,9 +1,9 @@
 ---
-title: Background
+title: Python Layer
 keywords: developer guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_developer_guide_background.html
+permalink: mydoc_developer_guide_python_layer.html
 folder: mydoc
 ---
 
@@ -11,11 +11,11 @@ folder: mydoc
 
 Things to cover:
 
-- C++ and Python coding basics
+- Overall structure of pyDAFoam.py and mphys_dafoam.py
 
-- Code formatting
+- pyDAFoam.py details
 
-- Github usage
+- mphys_dafoam.py details
 
 
 {% include links.html %}

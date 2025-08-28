@@ -252,6 +252,22 @@ entries:
     - title: Background
       url: /mydoc_developer_guide_background.html
       output: web, pdf
+    
+    - title: DAFoam Code Structure
+      url: /mydoc_developer_guide_code_structure.html
+      output: web, pdf
+    
+    - title: Python Layer
+      url: /mydoc_developer_guide_python_layer.html
+      output: web, pdf
+    
+    - title: OpenFOAM Layer
+      url: /mydoc_developer_guide_openfoam_layer.html
+      output: web, pdf
+    
+    - title: Add New Features
+      url: /mydoc_developer_guide_add_features.html
+      output: web, pdf
 
   - title: V&V
     output: web, pdf
