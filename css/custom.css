@@ -1,0 +1,8 @@
+/* Inline code (e.g., `text`) */
+p code, li code, td code {
+    color: #24292e;         /* GitHub default dark gray */
+    background-color: #f6f8fa; /* subtle gray background */
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 85%;
+  }
