@@ -1,0 +1,14 @@
+---
+---
+@import "{{ site.theme }}";
+
+/* Make comments green + italic */
+.highlight .c,
+.highlight .cm,
+.highlight .c1,
+.highlight .cs,
+.highlight .cp,
+.highlight .cpf {
+	  color: #6a9955 !important;
+	    font-style: italic;
+    }
