@@ -1242,11 +1242,15 @@ h4.panel-title {
     line-height: 14px /* Same as wrapper height */
   }
 
-  /* Inline code (e.g., `text`) */
-p code, li code, td code {
-    color: #24292e;         /* GitHub default dark gray */
-    background-color: #f6f8fa; /* subtle gray background */
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-    font-size: 85%;
-  }
+/* Inline code (`like this`) */
+.post-content code.highlighter-rouge,
+.post-content p code,
+.post-content li code,
+.post-content td code {
+  color: #24292e !important;          /* dark gray text */
+  background-color: #f6f8fa !important;/* light gray bg */
+  border: 1px solid rgba(27,31,36,0.15);
+  padding: 0.2em 0.4em;
+  border-radius: 6px;
+  font-size: 85%;
+}
