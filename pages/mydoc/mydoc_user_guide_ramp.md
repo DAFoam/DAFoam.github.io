@@ -65,18 +65,41 @@ First, generate the mesh and data for the c1 and c2 cases:
 ./preProcessing.sh
 </pre>
 
+Before we run the case, let us elaborate on the runScript_FI.py script that is tailored for the decoupled FIML. We have two training cases (cases = ["c1", "c2"]), and with the initial velocities (U0s = [10.0, 20.0]) for the two cases. We also obtained the reference values for the drag (dragRefs = [0.1683459472347049, 0.7101215345814689]). In order to save the augmented beta fields and flow features, we need to set "outputName": "dummy" and "writeFeatures": True in the "model". 
+
 ```python
+# =============================================================================
+# Input Parameters
+# =============================================================================
+
+idxI = args.index
 cases = ["c1", "c2"]
 U0s = [10.0, 20.0]
 dragRefs = [0.1683459472347049, 0.7101215345814689]
+dragRef = dragRefs[idxI]
+U0 = U0s[idxI]
+case = cases[idxI]
+nCells = 5000
 
-"outputName": "dummy",
-"writeFeatures": True,
+        "model": {
+            "modelType": "neuralNetwork",
+            "inputNames": ["PoD", "VoS", "PSoSS", "KoU2"],
+            "outputName": "dummy",
+            "hiddenLayerNeurons": [20, 20],
+            "inputShift": [0.0, 0.0, 0.0, 0.0],
+            "inputScale": [1.0, 1.0, 1.0, 1.0],
+            "outputShift": 1.0,
+            "outputScale": 1.0,
+            "activationFunction": "tanh",
+            "printInputInfo": True,
+            "defaultOutputValue": 1.0,
+            "outputUpperBound": 1e1,
+            "outputLowerBound": -1e1,
+            "writeFeatures": True,
+        }
 ```
 
 |
-
-Before we run the case, let us elaborate on the runScript_FI.py script that is tailored for the decoupled FIML. We have two training cases (cases = ["c1", "c2"]), and with the initial velocities (U0s = [10.0, 20.0]) for the two cases. We also obtained the reference values for the drag (dragRefs = [0.1683459472347049, 0.7101215345814689]). In order to save the augmented beta fields and flow features, we need to set "outputName": "dummy" and "writeFeatures": True in the "model". 
 
 Then, use the following command to run FI for case c1:
 
