@@ -65,7 +65,7 @@ First, generate the mesh and data for the c1 and c2 cases:
 ./preProcessing.sh
 </pre>
 
-Before we run the case, let us elaborate on the runScript_FI.py script that is tailored for the decoupled FIML. We have two training cases (cases = ["c1", "c2"]), and with the initial velocities (U0s = [10.0, 20.0]) for the two cases. We also obtained the reference values for the drag (dragRefs = [0.1683459472347049, 0.7101215345814689]). In order to save the augmented beta fields and flow features, we need to set "outputName": "dummy" and "writeFeatures": True in the "model". 
+Before we run the case, let us elaborate on the runScript_FI.py script that is tailored for the decoupled FIML. The idxI is the input parameter that we use to get access to the cases, inital velocities U0s, and dragRefs (e.g, when we run the command "mpirun -np 4 python runScript_FI.py -index=0 2>&1 | tee logOpt1.txt", the idxI will be set to 0). We have two training cases c1 and c2 (cases = ["c1", "c2"]), and with the initial velocities 10 m/s and 20 m/s (U0s = [10.0, 20.0]) for the two cases, respectively. We also obtained the reference values for the drag (dragRefs = [0.1683459472347049, 0.7101215345814689]). The parameter nCells is the number of cells for the mesh.
 
 ```python
 # =============================================================================
@@ -80,7 +80,13 @@ dragRef = dragRefs[idxI]
 U0 = U0s[idxI]
 case = cases[idxI]
 nCells = 5000
+```
 
+|
+
+In order to save the flow features, we need to set "outputName": "dummy" (dummy means you don't want to output the augmented beta fields, the neuralNetwork model will not be executed and only extract flow features) and "writeFeatures": True in the "model". In this case, we extract four flow features: "PoD" (production / destruction), "Vos" (vorticity / strain), "PSoSS" (pressure normal stress / shear stress), and "KoU2" (turbulence intensity / velocity square). We also have other flow features, for a exhaustive reference, you can refer to the file DARegression.C in the source code: "dafoam/src/adjoint/DARegression/DARegression.C".
+
+```python
         "model": {
             "modelType": "neuralNetwork",
             "inputNames": ["PoD", "VoS", "PSoSS", "KoU2"],
@@ -100,6 +106,41 @@ nCells = 5000
 ```
 
 |
+
+when we run the field inversion, we need obtain the optimized the beta fields ("betaFIOmega" for this case). The following the input setup and configuration for our design variable: beta fields. 
+
+```python
+    "inputInfo": {
+        "beta": {
+            "type": "field",
+            "fieldName": "betaFIOmega",
+            "fieldType": "scalar",
+            "distributed": False,
+            "components": ["solver", "function"],
+        },
+    },
+```
+
+|
+
+```python
+    def configure(self):
+
+        # add the design variables to the dvs component's output
+        beta0 = np.ones(nCells * nFields)
+
+        self.dvs.add_output("beta", val=beta0)
+
+        # define the design variables to the top level
+        self.add_design_var("beta", lower=-3.0, upper=3.0, scaler=1.0)
+
+        # add the objective
+        self.add_objective("obj", scaler=1.0)
+```
+
+|
+
+
 
 Then, use the following command to run FI for case c1:
 
