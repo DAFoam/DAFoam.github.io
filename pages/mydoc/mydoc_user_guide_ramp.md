@@ -67,6 +67,7 @@ First, generate the mesh and data for the c1 and c2 cases:
 
 Before we run the case, let us elaborate on the runScript_FI.py script that is tailored for the decoupled FIML. The idxI is the input parameter that we use to get access to the cases, inital velocities U0s, and dragRefs (e.g, when we run the command "mpirun -np 4 python runScript_FI.py -index=0 2>&1 | tee logOpt1.txt", the idxI will be set to 0). We have two training cases c1 and c2 (cases = ["c1", "c2"]), and with the initial velocities 10 m/s and 20 m/s (U0s = [10.0, 20.0]) for the two cases, respectively. We also obtained the reference values for the drag (dragRefs = [0.1683459472347049, 0.7101215345814689]). The parameter nCells is the number of cells for the mesh.
 
+
 ```python
 # =============================================================================
 # Input Parameters
