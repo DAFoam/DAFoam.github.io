@@ -23,10 +23,147 @@ To run this case, first download [tutorials](https://github.com/DAFoam/tutorials
 ./preProcessing.sh
 </pre>
 
+Before we run the case, let us elaborate on the runScript.py. We set the seed for NumPy's random number generator to the integer value 1 so that we can obtain the exact same random results for every run. We have two training cases c1 and c2 (cases = ["c1", "c2"]), and with the initial velocities 10 m/s and 20 m/s (U0s = [10.0, 20.0]), respectively. We also obtained the reference values for the drag (dragRefs = [0.1683, 0.7101]), their values can be obtained when we run the k-omega SST model. We also need to read the coordinated of the probe points from probePointCoords.json, which will be used by "UProbeVar" in the function component. 
+
+```python
+# =============================================================================
+# Input Parameters
+# =============================================================================
+
+np.random.seed(1)
+
+cases = ["c1", "c2"]
+U0 = [10, 20.0]
+CDData = np.array([0.1683, 0.7101])
+
+with open("./probePointCoords.json") as f:
+    probePointCoords = json.load(f)
+```
+
+In the "regressionModel" component, we need to set "active": True when we run the regression model. We have two models: model1 and model2, basically they are almost the same, except in model1 our design variable (beta) is in the k equation, while in model2 the design variable is in the omega equation. We set "modelType": "neuralNetwork", which indicates that we use the neural network model. The inputs for the neural network model are four flow features: "PoD" (production / destruction), "Vos" (vorticity / strain), "PSoSS" (pressure normal stress / shear stress), and "KoU2" (turbulence intensity / velocity square). The neural network model has two hidden layers, and each has 20 neurons ("hiddenLayerNeurons": [20, 20]). The four flow features have no input shift ("inputShift": [0.0, 0.0, 0.0, 0.0]), and they are all scaled to 1 ("inputScale": [1.0, 1.0, 1.0, 1.0]). We set both the outputShift and outputScale to 1 for the beta fields. And we select the "tanh" activation function for our neural network model. We set "writeFeatures": True, so we will write the flow features to the disk.
+
+```python
+    "regressionModel": {
+        "active": True,
+        "model1": {
+            "modelType": "neuralNetwork",
+            "inputNames": ["PoD", "VoS", "PSoSS", "KoU2"],
+            "outputName": "betaFIK",
+            "hiddenLayerNeurons": [20, 20],
+            "inputShift": [0.0, 0.0, 0.0, 0.0],
+            "inputScale": [1.0, 1.0, 1.0, 1.0],
+            "outputShift": 1.0,
+            "outputScale": 1.0,
+            "activationFunction": "tanh",
+            "printInputInfo": True,
+            "defaultOutputValue": 1.0,
+            "outputUpperBound": 1e1,
+            "outputLowerBound": -1e1,
+            "writeFeatures": True,
+        },
+        "model2": {
+            "modelType": "neuralNetwork",
+            "inputNames": ["PoD", "VoS", "PSoSS", "KoU2"],
+            "outputName": "betaFIOmega",
+            "hiddenLayerNeurons": [20, 20],
+            "inputShift": [0.0, 0.0, 0.0, 0.0],
+            "inputScale": [1.0, 1.0, 1.0, 1.0],
+            "outputShift": 1.0,
+            "outputScale": 1.0,
+            "activationFunction": "tanh",
+            "printInputInfo": True,
+            "defaultOutputValue": 1.0,
+            "outputUpperBound": 1e1,
+            "outputLowerBound": -1e1,
+            "writeFeatures": True,
+        },
+    },
+```
+
+Now let us elaborate on each entry in the function component.
+
+```python
+        "pVar": {
+            "type": "variance", # computes the variance of pressure between the original model and reference
+            "source": "patchToFace",
+            "patches": ["bot"], # extract from patch faces (patchToFace) on bottom patch ("bot")
+            "scale": 1.0, # no scaling
+            "mode": "surface", # surface variable 
+            "varName": "p",
+            "varType": "scalar", # pressure is a scalar
+            "timeDependentRefData": False, # not time dependent
+        },
+```
+
+```python
+        "UFieldVar": {
+            "type": "variance", # computes the variance of velocity field between the original model and reference
+            "source": "boxToCell",
+            "min": [-10.0, -10.0, -10.0],
+            "max": [10.0, 10.0, 10.0], # extracted the velocity from all cells inside a bounding box (min and max define coordinates).
+            "scale": 0.1, # scale down
+            "mode": "field", # field variable
+            "varName": "U",
+            "varType": "vector", # veolicty is a vector
+            "indices": [0, 1], # only x and y velocity components are considered
+            "timeDependentRefData": False, # not time dependent
+        },
+```  
+
+```python
+        "UProbeVar": {
+            "type": "variance", # computes the variance of velocity field at specific probe points between the original model and reference
+            "source": "allCells", 
+            "scale": 1.0, # no scaling
+            "mode": "probePoint", 
+            "probePointCoords": probePointCoords["probePointCoords"], # extract velocity at specific probe points (probePointCoords.json)
+            "varName": "U",
+            "varType": "vector", # veolicty is a vector
+            "indices": [0, 1],  # only x and y velocity components are considered
+            "timeDependentRefData": False, # not time dependent
+        },
+```  
+
+```python
+        "CDError": {
+            "type": "force",
+            "source": "patchToFace",
+            "patches": ["bot"], # extract drag force from bottom patch
+            "directionMode": "fixedDirection",
+            "direction": [1.0, 0.0, 0.0], # drag direction is in the x-direction
+            "scale": 1.0, # no scaling
+            "calcRefVar": True, #computes the variance of drag force between the original model and reference
+            "ref": [0.0],  # we will assign this later because each case has a different ref
+        },
+        
+```python
+        "betaKVar": {
+            "type": "variance",
+            "source": "allCells",
+            "scale": 0.01, # scale down
+            "mode": "field", # field variable
+            "varName": "betaFIK",
+            "varType": "scalar", # betaFIK is a scalar
+            "timeDependentRefData": False, # not time dependent
+        },
+```  
+
+```python
+        "betaOmegaVar": {
+            "type": "variance",
+            "source": "allCells",
+            "scale": 0.01, # scale down
+            "mode": "field", # field variable
+            "varName": "betaFIOmega",
+            "varType": "scalar", # betaFIOmega is a scalar
+            "timeDependentRefData": False, # not time dependent
+        },
+```     
+
 Then, use the following command to run the case:
 
 <pre>
-mpirun -np 4 python runScript_FIML.py 2>&1 | tee logOpt.txt
+mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
 This case uses our latest FIML interface, which incorporates a neural network model into the CFD solver to compute the augmented field variables (refer to the POF paper for details). We augment the k-omega model and make it match the k-omega SST model. The FIML optimization is formulated as:
@@ -65,7 +202,7 @@ First, generate the mesh and data for the c1 and c2 cases:
 ./preProcessing.sh
 </pre>
 
-Before we run the case, let us elaborate on the runScript_FI.py script that is tailored for the decoupled FIML. The idxI is the input parameter that we use to get access to the cases, inital velocities U0s, and dragRefs (e.g, when we run the command `mpirun -np 4 python runScript_FI.py -index=0 2>&1 | tee logOpt1.txt`, the idxI will be set to 0). We have two training cases c1 and c2 (cases = ["c1", "c2"]), and with the initial velocities 10 m/s and 20 m/s (U0s = [10.0, 20.0]) for the two cases, respectively. We also obtained the reference values for the drag (dragRefs = [0.1683459472347049, 0.7101215345814689]). The parameter nCells is the number of cells for the mesh.
+Before we run the case, let us elaborate on the runScript_FI.py, which is tailored for the decoupled FIML. The "idxI" is the input parameter that we use to get access to the cases, inital velocities U0s, and dragRefs (e.g, when we run the command `mpirun -np 4 python runScript_FI.py -index=0 2>&1 | tee logOpt1.txt`, the idxI will be set to 0). We have two training cases c1 and c2 (cases = ["c1", "c2"]), and with the initial velocities 10 m/s and 20 m/s (U0s = [10.0, 20.0]), respectively. We also obtained the reference values for the drag (dragRefs = [0.1683459472347049, 0.7101215345814689]), their values can be obtained when we run the k-omega SST model. The parameter nCells is the number of cells for the mesh.
 
 
 ```python
@@ -85,7 +222,7 @@ nCells = 5000
 
 |
 
-In order to save the flow features, we need to set "outputName": "dummy" (dummy means you don't want to output the augmented beta fields, the neuralNetwork model will not be executed and only extract flow features) and "writeFeatures": True in the "model". In this case, we extract four flow features: "PoD" (production / destruction), "Vos" (vorticity / strain), "PSoSS" (pressure normal stress / shear stress), and "KoU2" (turbulence intensity / velocity square). We also have other flow features, for a exhaustive reference, you can refer to the file DARegression.C in the source code: "dafoam/src/adjoint/DARegression/DARegression.C".
+In order to save the flow features, we need to set "outputName": "dummy" (dummy means the neuralNetwork model will not be executed and only extract flow features) and "writeFeatures": True in the "model". In this case, we extract four flow features: "PoD" (production / destruction), "Vos" (vorticity / strain), "PSoSS" (pressure normal stress / shear stress), and "KoU2" (turbulence intensity / velocity square). We also have other flow features, for a exhaustive reference, you can refer to the file DARegression.C in the source code: "dafoam/src/adjoint/DARegression/DARegression.C".
 
 ```python
         "model": {
@@ -108,7 +245,7 @@ In order to save the flow features, we need to set "outputName": "dummy" (dummy 
 
 |
 
-when we run the field inversion, we need obtain the optimized the beta fields ("betaFIOmega" for this case). The following the input setup and configuration for our design variable: beta fields. 
+The following is the input setup for our design variable (beta), the "type" of beta is "field", the "fieldName" of beta is "betaFIOmega" (when we want to augment the SA model, "betaFINutilda" should be choosen), the "fieldType" of beta is "scalar", and we treat beta as a global field variable, so we set "distributed": False, and the "components" key indicates that beta connect to the solver and function components.
 
 ```python
     "inputInfo": {
@@ -124,24 +261,26 @@ when we run the field inversion, we need obtain the optimized the beta fields ("
 
 |
 
+In the `configure(self)` function, we need to add the design variables (beta) to the outout component, define the design variables to the top level, add the objective and connect any function in daOption to obj's terms.
+
 ```python
     def configure(self):
-
         # add the design variables to the dvs component's output
-        beta0 = np.ones(nCells * nFields)
-
-        self.dvs.add_output("beta", val=beta0)
+        self.dvs.add_output("beta", val=np.ones(nCells), distributed=False)
+        self.connect("beta", "scenario1.beta")
 
         # define the design variables to the top level
-        self.add_design_var("beta", lower=-3.0, upper=3.0, scaler=1.0)
+        self.add_design_var("beta", lower=-5.0, upper=10.0, scaler=1.0)
 
-        # add the objective
-        self.add_objective("obj", scaler=1.0)
+        # add objective and constraints to the top level
+        # we can connect any function in daOption to obj's terms
+        self.connect("scenario1.aero_post.UFieldVar", "obj.error1")
+        self.connect("scenario1.aero_post.dragVar", "obj.error2")
+        self.connect("scenario1.aero_post.betaVar", "obj.regulation")
+        self.add_objective("obj.val", scaler=1.0)
 ```
 
 |
-
-
 
 Then, use the following command to run FI for case c1:
 
