@@ -22,6 +22,9 @@ Optimization terminated successfully    (Exit mode 0)
 Current function value: 0.0
 Iterations: 8
 ...
+```
+  </div> 
+</details>
 
 ## How to use a finer mesh?
 
