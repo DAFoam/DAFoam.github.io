@@ -62,9 +62,9 @@ processing, refer to the [post-processing](mydoc_get_started_post_processing.htm
 |
 
 This optimization was completed with a goal of minimizing the CD while maintaining the CL. 
-This case ran for 295 optimization iterations, completed over 51 hours with 108 
+This case ran for 63 major optimization iterations, completed over 51 hours with 108 
 cores on the Nova HPC. According to “opt_SNOPT_summary.txt”, the original CD was 
-4.1765362 and the optimized CD was 3.8138414, which is an 8.7% drag reduction. This 
+0.041765362 and the optimized CD was 0.038138414, which is an 8.7% drag reduction. This 
 reduction is significant and comes as a direct result of shaping improvements.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/DPW4_Updated_GIF.gif" width="500" />
@@ -172,6 +172,6 @@ Fig. 9.  Line plot of CD versus Major Iterations of the optimization (0-63)
 
 |
 
-The plot in Figure 9 begins at major iteration 0, indicating the first CD value of 4.1765362 by the short horizontal starting line. This is followed by a sharp decrease in the following major iterations, as is typical with these optimizations. As the tenth major iteration is approached (CD of 3.97E-02), the steep slope evens out into what almost resembles a linear downward path, steadily decreasing until nearly iteration 45 (CD of 3.83E-02). At that point, the curve begins to flatten, representing the final decrease from 3.83E-02 to ~3.81E-02.
+The plot in Figure 9 begins at major iteration 0, indicating the first CD value of 4.1765362E-02 by the short horizontal starting line. This is followed by a sharp decrease in the following major iterations, as is typical with these optimizations. As the tenth major iteration is approached (CD of 3.97E-02), the steep slope evens out into what almost resembles a linear downward path, steadily decreasing until nearly iteration 45 (CD of 3.83E-02). At that point, the curve begins to flatten, representing the final decrease from 3.83E-02 to ~3.81E-02.
 
 {% include links.html %}
