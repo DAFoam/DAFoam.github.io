@@ -188,6 +188,51 @@ Place holder text, don't change!
 
 ## Multi-point optimization
 
+With multipoint optimization, we make some subtle changes to the runScript. When defining the global parameters, we have now 
+
+```python
+# we have two flight conditions
+weights = [0.5, 0.5]
+U0 = [10.0, 5.0]
+p0 = 0.0
+nuTilda0 = 4.5e-5
+aoa0 = [5.0, 4.0]
+A0 = 0.1
+# rho is used for normalizing CD and CL
+rho0 = 1.0
+scalings = [1.0 / (0.5 * A0 * rho0 * U0[0] * U0[0]), 1.0 / (0.5 * A0 * rho0 * U0[1] * U0[1])]
+lift_target = [0.5 / scalings[0], 0.4 / scalings[1]]
+```
+
+Now, we set weights to each scenario (here, they are weighted the same). Since we have two scenarios, there are two sets of initial conditions and two targets for $C_L$. Most of the runScript is the same as the incompressible, low-speed NACA0012 case, but we make some changes in the Top class. In the setup, we make the following changes: 
+
+```python
+# add a scenario (flow condition) for optimization, we pass the builder
+# to the scenario to actually run the flow and adjoint
+self.mphys_add_scenario("scenario1", ScenarioAerodynamic(aero_builder=dafoam_builder))
+self.mphys_add_scenario("scenario2", ScenarioAerodynamic(aero_builder=dafoam_builder))
+
+# need to manually connect the x_aero0 between the mesh and geometry components
+# here x_aero0 means the surface coordinates of structurally undeformed mesh
+self.connect("mesh.x_aero0", "geometry.x_aero_in")
+# need to manually connect the x_aero0 between the geometry component and the cruise
+# scenario group
+self.connect("geometry.x_aero0", "scenario1.x_aero")
+self.connect("geometry.x_aero0", "scenario2.x_aero")
+
+# add an exec comp to average two drags, the weights are 0.5 and 0.5
+self.add_subsystem(
+    "obj",
+        om.ExecComp(
+            "val=w1*drag1+w2*drag2",
+            w1={"val": weights[0] * scalings[0], "constant": True},
+            w2={"val": weights[1] * scalings[1], "constant": True},
+        ),
+    )
+```
+
+Most importantly, we add two scenarios using `mphys_add_scenario`. Note that we use the same dafoam_builder. We also connect the geometry to each scenario, which implies that we use the same geometry and same mesh to run each scenario. Most importantly, we create the objective function as a weighted average of the drags from each scenario. 
+
 Place holder text, don't change!
 
 ## Multi-case optimization
