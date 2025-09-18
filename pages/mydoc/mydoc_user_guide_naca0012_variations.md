@@ -9,5 +9,11 @@ folder: mydoc
 
 {% include note.html content="This webpage is under construction." %}
 
+## Subsonic and transonic optimization
+
+## Multi-point optimization
+
+## Multi-case optimization
+
 
 {% include links.html %}
