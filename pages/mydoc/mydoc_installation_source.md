@@ -208,15 +208,15 @@ cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/multipoint/archive/v1.4.0.tar.gz -O multipoint.tar.gz && \
 tar -xvf multipoint.tar.gz && cd multipoint-1.4.0 && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/mdolab/cgnsutilities/archive/v2.6.0.tar.gz -O cgnsutilities.tar.gz && \
+tar -xvf cgnsutilities.tar.gz && cd cgnsutilities-2.6.0 && \
+cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
+make && pip install . && \
+cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/pyhyp/archive/v2.6.1.tar.gz -O pyhyp.tar.gz && \
 tar -xvf pyhyp.tar.gz && cd pyhyp-2.6.1 && \
 cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
 sed -i "s/mpifort/mpif90/g" config/config.mk && \
-make && pip install . && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/cgnsutilities/archive/v2.6.0.tar.gz -O cgnsutilities.tar.gz && \
-tar -xvf cgnsutilities.tar.gz && cd cgnsutilities-2.6.0 && \
-cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
 make && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/idwarp/archive/v2.6.2.tar.gz -O idwarp.tar.gz && \
