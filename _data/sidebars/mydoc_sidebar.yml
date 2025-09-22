@@ -60,7 +60,7 @@ entries:
       url: /mydoc_installation_source_hpc.html
       output: web, pdf
     
-    - title: Build a new Docker image
+    - title: Build Docker images
       url: /mydoc_installation_docker.html
       output: web, pdf
   
