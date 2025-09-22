@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<77> M. H. Negahban Development and optimization of novel morphing wings for the next-generation aircraft. PhD Thesis, University of Quebec, Montreal, 2025
+
 <76> A.A. Siddiqui. Data-Driven Correction Fields for Turbulence Modeling: A Priori and A Posteriori Study. M.S. Thesis, Delft University of Technology, 2025.
 
 <75> J. Beland. Bayesian Optimization Algorithms for High-Dimensional Problems and Robust Design. PhD Thesis, University of Toronto, 2025. 
