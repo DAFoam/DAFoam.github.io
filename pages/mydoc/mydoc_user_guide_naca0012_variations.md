@@ -195,7 +195,7 @@ Place holder text, don't change!
 
 The following is a multi-case aerodynamic shape optimization problem for the NACA0012 airfoil. This tutorial will show you how to use one runScript.py to run multiple cases within one folder. Go to the directory: /tutorials-master/NACA0012_Airfoil/multicase, we will see two subdirectories, SA and SST, which are the two cases we are going to run. To do that, we need create the builder to initialize the DASolvers for both cases In the `setup(self)` function.
 
-'''python
+```python
     def setup(self):
 
         # create the builder to initialize the DASolvers for both cases (they share the same mesh option)
@@ -204,7 +204,31 @@ The following is a multi-case aerodynamic shape optimization problem for the NAC
 
         dafoam_builder_sst = DAFoamBuilder(daOptionsSST, meshOptions, scenario="aerodynamic", run_directory="SST")
         dafoam_builder_sst.initialize(self.comm)
-'''
+```
+
+Then we can add the mesh and geometry components.
+```python
+        # add the mesh component
+        self.add_subsystem("mesh_sa", dafoam_builder_sa.get_mesh_coordinate_subsystem())
+        self.add_subsystem("mesh_sst", dafoam_builder_sst.get_mesh_coordinate_subsystem())
+
+        # add the geometry component (FFD)
+        self.add_subsystem("geometry_sa", OM_DVGEOCOMP(file="SA/FFD/wingFFD.xyz", type="ffd"))
+        self.add_subsystem("geometry_sst", OM_DVGEOCOMP(file="SST/FFD/wingFFD.xyz", type="ffd"))
+
+        # add a scenario (flow condition) for optimization, we pass the builder
+        # to the scenario to actually run the flow and adjoint
+        self.mphys_add_scenario("scenario_sa", ScenarioAerodynamic(aero_builder=dafoam_builder_sa))
+        self.mphys_add_scenario("scenario_sst", ScenarioAerodynamic(aero_builder=dafoam_builder_sst))
+```
+
+The N2 diagram will output as .html, which can be opened within a web browser. This is an interactive diagram can help you visualize your connections within your optimization framework. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/multi_case_n2.png" width="500" />
+
+Fig. 1. The N2 diagram for the multi-case optimization. 
+
+
 
 Place holder text, don't change!
 
