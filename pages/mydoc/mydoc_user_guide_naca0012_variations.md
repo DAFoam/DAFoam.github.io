@@ -282,7 +282,7 @@ The change we make is in the `optFuncs.findFeasibleDesign`. We have to add the $
 
 After running the optimization, we can see the N2 diagram below. 
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/N2_multipoint_NACA0012.png" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/n2_multipoint_NACA0012.png" width="500" />
 
 Examining the N2 diagram, we observe that there is only one geometry, and the `x_aero0` from the geometry is linked to `x_aero0` in both scenarios, which both are displayed on the N2 diagram. 
 
