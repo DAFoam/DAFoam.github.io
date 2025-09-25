@@ -144,7 +144,7 @@ Place holder text, don't change!
 
 ## Multi-point optimization
 
-With multipoint optimization, we make some subtle changes to the runScript. When defining the global parameters, we have now 
+With multipoint optimization, we make some subtle changes to the runScript (see /tutorials/NACA0012_Airfoil/Incompressible for the original runScript). When defining the global parameters, we have now 
 
 ```python
 # we have two flight conditions
@@ -187,8 +187,62 @@ self.add_subsystem(
     )
 ```
 
-Most importantly, we add two scenarios using `mphys_add_scenario`. Note that we use the same dafoam_builder. We also connect the geometry to each scenario, which implies that we use the same geometry and same mesh to run each scenario. Most importantly, we create the objective function as a weighted average of the drags from each scenario. 
+Most importantly, we add two scenarios using `mphys_add_scenario`. Note that we use the same dafoam_builder. We also connect the geometry to each scenario, which implies that we use the same geometry and same mesh to run each scenario. We then create the objective function as a weighted average of the drags from each scenario. At the end of the configuration setup in `def(configure)`, we make the following changes: 
 
+```python
+# add the design variables to the dvs component's output
+self.dvs.add_output("shape", val=np.array([0] * len(shapes)))
+# NOTE: we have two separated aoa variables for the two flight conditions
+self.dvs.add_output("patchV1", val=np.array([U0[0], aoa0[0]]))
+self.dvs.add_output("patchV2", val=np.array([U0[1], aoa0[1]]))
+# manually connect the dvs output to the geometry and cruise
+self.connect("patchV1", "scenario1.patchV")
+self.connect("patchV2", "scenario2.patchV")
+self.connect("shape", "geometry.shape")
+
+# define the design variables to the top level
+self.add_design_var("shape", lower=-1.0, upper=1.0, scaler=10.0)
+self.add_design_var("patchV1", lower=[U0[0], 0.0], upper=[U0[0], 10.0], scaler=0.1)
+self.add_design_var("patchV2", lower=[U0[1], 0.0], upper=[U0[1], 10.0], scaler=0.1)
+
+# add objective and constraints to the top level
+# we have two separated lift constraints for for the two flight conditions
+self.add_constraint("scenario1.aero_post.lift", equals=lift_target[0], scaler=1.0)
+self.add_constraint("scenario2.aero_post.lift", equals=lift_target[1], scaler=1.0)
+self.add_constraint("geometry.thickcon", lower=0.5, upper=3.0, scaler=1.0)
+self.add_constraint("geometry.volcon", lower=1.0, scaler=1.0)
+self.add_constraint("geometry.rcon", lower=0.8, scaler=1.0)
+
+# here we use the obj.val defined above as the obj func.
+self.add_objective("obj.val", scaler=1.0)
+self.connect("scenario1.aero_post.drag", "obj.drag1")
+self.connect("scenario2.aero_post.drag", "obj.drag2")
+```
+
+The main changes above that we make are adding two patches in the dvs, `patchV1` and `patchV2`. Note that the initial values that we assign for `U0` and `aoa0` are indexed to align with their respective scenario and patch. Then, we connect the `patchV` from each scenario to the respective `patchV1` and `patchV2`. Below, we then add design our design variables, again noting that there is now a design variable for each patch, labeled as such. Then , we need to add our constraints. Looking at the lift constraint, we add one for each scenario, and assign the constraint from the list, `list_target`. Finally, we add our objective function that was defined above. We add connections for each scenario once again, shown above. Finally, we need to make some changes for the optimization task: 
+
+```python
+if args.task == "run_driver":
+    # solve CL
+    optFuncs.findFeasibleDesign(
+        ["scenario1.aero_post.lift", "scenario2.aero_post.lift"],
+        ["patchV1", "patchV2"],
+        designVarsComp=[1, 1],
+        targets=lift_target,
+    )
+    # run the optimization
+    prob.run_driver()
+```
+
+The change we make is in the `optFuncs.findFeasibleDesign`. We have to add the $C_L$ target from each scenario, aligning the lift, patchV's, and designVarsComp from each case (note that lift_target is a 2-element array). 
+
+After running the optimization, we can see the N2 diagram below. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/n2_multipoint_NACA0012.png" width="500" />
+
+Examining the N2 diagram, we observe that there is only one geometry, and the `x_aero0` from the geometry is linked to `x_aero0` in both scenarios, which both are displayed on the N2 diagram. 
+
+Overall, multipoint optimization is used when relatively simple parameters are to be changed to run multiple cases at once, but the overall structure of the optimization setup remains the same. In this case, the only changes between cases were the initial velocity, angle of attack, and the $C_L$ target. The geometry, solver, turbulence model, etc. all remain the same, so multipoint is the ideal setup to use (rather than multicase, shown below). 
 Place holder text, don't change!
 
 ## Multi-case optimization
