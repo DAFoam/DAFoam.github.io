@@ -16,202 +16,38 @@ folder: mydoc
 ### Background
 OpenFOAM (Open-source Field Operation And Manipulation) is a free finite-volume open-source CFD solver. OpenFOAM is primarily written in C++ and comes with libraries to help facilitate numerical operations on field values. OpenFOAM also has a wide range of utilities for pre- and post-processing, such as mesh generation/quality checks and Paraview (for post-process visualization). There are three main branches of OpenFOAM: ESI OpenCFD, The OpenFOAM Foundation, and Extended Project. DAFoam only supports the ESI OpenCFD version, the OpenFOAM version discussed within this document.
 
-To help with clarity, below is the general file structure for OpenFOAM simulations. As a general overview: `0` contains boundary conditions and initial field values, `constant` handles flow properties (such as turbulence model and fluid modeling parameters), and `system` controls the numerical discretization, equation solutions, etc. This document serves as detailed documentation to these directories.
+### Follow Along
+This document contains basic information related to setting up an OpenFOAM simulation using the steady-state NACA0012 simulation. We will discuss every file within this case in an effort to clarify the various aspects of OpenFOAM.
+
+To help with clarity, below is the file structure for the NACA0012 case. As a general overview: `0` contains boundary conditions and initial field values, `constant` handles flow properties (such as turbulence model and fluid modeling parameters), and `system` controls the numerical discretization, equation solution parameters, etc. This document serves as detailed documentation to these directories.
 
 <pre>
 - 0.orig               // initial fields and boundary conditions
 - constant             // flow and turbulence property information
 - system               // flow discretization, setup, time step etc.
+- clean                // script to clean and reset case to default
 - paraview.foam        // dummy file used by Paraview to load results
+- run                  // script to execute simulation
 </pre>
 
-### Follow Along
-This document contains basic information related to setting up an OpenFOAM simulation (in a general sense). This is a live project: more will be added as time goes on. When setting up an OpenFOAM simulation there are a few basic steps to follow:
+These steps will be elaborated on in the coming sections with particlar emphasis on the `0.orig`, `constant`, and `system` directories. It is intended that the user reads this documentation carefully to gain a basic understanding of OpenFOAM. It is also recommended to follow along in the tutorial cases to recreate the simulation and post-process using Paraview (Dont have paraview? Download paraview for free [here!](https://www.paraview.org/download/)). 
 
-<pre>
-1. Select appropriate turbulence model and generate the required mesh
-2. Define boundary conditions
-3. Define fluid properties in constant/transportProperties and constant/thermophysicalProperties
-4. Define simulation parameters in system/controlDict
-5. Define solution parameters in system/fvSchemes and system/fvSolution
+## 1. Boundary and Initial Conditions
+The `0.orig` directory contains both the boundary conditions and the initial field values for the simulation. For clarity purposes it should be noted here that this simulation contains a `wing` boundary (wall), an `inout` boundary (far field domain), and two symmetry planes, one for either side of the airfoil. For this NACA0012 case, we can expand the `0.orig` directory to see which field values have specified boundary conditions:
+
+<pre>      
+|-- 0.orig        // directory containing BCs
+  |-- epsilon     // turbulent kinetic energy dissipation rate
+  |-- k           // turbulent kinetic energy
+  |-- nut         // turbulent viscosity
+  |-- nuTilda     // modified turbulent viscosity
+  |-- omega       // specific dissipation rate
+  |-- p           // pressure
+  |-- U           // velocity
 </pre>
 
-These steps will be elaborated on in the coming sections. To conclude this document there will be two simulation tutorial cases: a steady state airfoil simulation (using the simpleFoam solver) and an unsteady 2D vortex shedding simulation (using the pimpleFoam solver). It is intended that the user reads this documentation carefully to gain an understanding of OpenFOAM and how to properly set up a CFD simulation in the framework. The user should follow along in the tutorial cases to recreate the simulation and post-process using Paraview (Dont have paraview? Download paraview for free [here!](https://www.paraview.org/download/)). 
-
-As a final note, when setting up a new OpenFOAM simulation. the best practice, and easiest method, is to begin with one of the many OpenFOAM tutorial cases. Finding a similar tutorial simulation and modifying it to a new simulation is easier than starting from scratch.
-
-## 1. Selecting Turbulence Model & Mesh Requirements
-The focus on this section is to briefly go over the various turbulence models in OpenFOAM and list pertinent information on each model which will allow the reader to carefully select the model most suitable for their needs. The wall modelling (wall functions) will also be discussed as well as mesh requirements when using wall functions. The turbulence model is defined in `constant/turbulenceProperties`. The basic format for `turbulenceProperties` is the following:
-
-<pre>
-simulationType      RAS;               // which type of simulation to run
-
-RAS                                    // RAS sub-dictionary
-{
-    RASModel        SpalartAllmaras;   // which RANS model to use
-    turbulence      on;                // turn on/off turbulence modeling
-    printCoeffs     on;                // print turbulence model coefficients
-
-    SpalartAllmarasCoeffs              // model coefficients (only needed here if user wishes to change coefficient values)
-    {                                  
-        sigmaNut    0.66666;           // default values in SA
-        kappa       0.41;
-        Cb1         0.1355;
-        Cb2         0.622;
-        Cw2         0.3;
-        Cw3         2.0;
-        Cv1         7.1;
-        Cs          0.3;
-    }
-}
-</pre>
-
-OpenFOAM supports `laminar`, `RAS` (Reynolds Averaged Stress), `DES` (Detached Eddy Simulation), and `LES` (Large Eddy Simulation). It should be noted that `DES` is a sub-model of `LES`. If choosing `laminar`, the sub-dictionary is not needed (only needed for `LES` and `RAS`). Model coefficients do not need to be defined within `turbulenceProperties`. If the coefficients are not listed then OpenFOAM uses default values. If one or more of these coefficients needs to be changed then the value should be adjusted in `constant/turbulenceProperties`.
-
-In a general sense, `RAS` (`RANS`) is the industry workhorse for turbulence modelling. It is the most affordable, runs for steady and unsteady simulations, and is robust. `LES` and `DES` are far more computationally expensive and therefore are not used as often as `RAS`. For a majority of simulations, `RAS` can/will work just fine. `LES` and `DES` are better suited for capturing intricate flow details (eddies) on a refined mesh.
-
-The following sections contain a comprehensive list of available turbulence models in OpenFOAM v2206. It is intended that the user selects a model based on their particular needs (comparing `Good For` and `Bad For` columns). The `Requires Wall Functions` column signifies whether the turbulence model is expecting wall functions or not. If yes, a wall function *must* be used on the fields listed under `Required Boundary Conditions` for any `wall` boundaries within the simulation domain. The `Supports Wall Functions` column indicates whether the user has the option to use wall functions (yes) or if the user should not implement wall functions with the selected turbulence model (no). In `Sec. 1.4` the available wall functions are listed alongside yPlus and mesh refinement requirements. The final column, the minimum `Required Boundary Conditions` to run the simulation, serves as a starting point for `Sec. 2.0` where boundary conditions will be discussed in more detail. Please note that boundary conditions for pressure, velocity, temperature etc. are excluded from the below lists as those are case specific. The `Required Boundary Conditions` column *only* covers the boundary conditions needed for a particular turbulence model.
-
-### 1.1 RAS (Reynolds-Averaged Stress) Models
-| **Model** | **Good For** | **Bad For** | **Requires Wall Functions** | **Supports Wall Functions** | **Required Boundary Conditions** |
-|-----------|--------------|-------------|-----------------------------|-----------------------------|----------------------------------|
-| **laminar** | Laminar flow | Turbulent/transitional flow | No | No | Standard only (U, p, T etc.) |
-| **Spalart-Allmaras** | External aerodynamics, High speed flow, Turbomachinery, mildly complex internal/external flow, Wall bounded flow | Flows with high separation/transition | No | No | nuTilda |
-| **kEpsilon** | Free shear flow, Attached flow, Fully developed turbulence, General industrial flows, High Re | Complex flows with severe pressure gradient, flow separation, strong streamline curvature, Low Re, Rotating flow | Yes | - | k, epsilon |
-| **realizableKE** | Complex shear flow, Moderate swirls/vorticies, Vortex shedding, Flow separation, Near-wall behaviour (over kEpsilon), Jet impingmemnt, Recirculating flow | Adverse pressure gradients, Flow separation | Yes | - | k, epsilon |
-| **RNGkEpsilon** | High strain rate flow, Swirls/Vorticies, Flow Separation, Near-wall behaviour (over kEpsilon) | Adverse pressure gradients, Flow separation | Yes | - | k, epsilon |
-| **kEpsilonPhitF** | Laminar to turbulent flow transition | Not as robust as standard kEpsilon, Limited validation | Yes | - | k, epsilon, phit, f |
-| **kEpsilonLopesdaCosta** | Turbulence development in porous domains (modeled by the powerLawLopesdaCosta porosity model), Low Re | Non-porous media, High Re | No | No | k, epsilon |
-| **LaunderSharmaKE** | Low Re, Wall bounded flow | High Re with wall functions | No | No | k, epsilon |
-| **LamBremhorstKE** | Low Re, Near wall modeling | High Re | No | No | k, epsilon |
-| **LienCubicKE** | Anisotropic turbulence | Less robust, Sensitive to mesh/flow | No | No | k, epsilon |
-| **ShihQuadraticKE** | Flow separation, Flow curvature handling (both over standard kEpsilon) | Limited validation, less robust for industrial applications | No | No | k, epsilon |
-| **kOmega** | Free shear, Low Re, Complex boundary layer flows under adverse pressure gradient, Flow separation, Exernal aerodynamics, Turbomachinery | Free shear flow, Laminar to turbulent flow transition, Inlet sensitivity | No | Yes | k, omega |
-| **kOmegaSST** | *Most used RANS model*: Low Re, Flows with separation, adverse pressure gradients, external aerodynamics, turbomachinery, Heat transfer, Transitional flows (over standard kOmega) | Transitional and strong swirl not captured well, Rotational frames | No | Yes | k, omega |
-| **kOmegaSSTLM** | Laminar to turbulent flow transition, Turbomachinery | Complex setup requiring transition correlations | No | No | ReThetat, gammaInt, gammaIntEff, k, omega |
-| **kOmegaSSTSAS** | Hybrid RANS–LES-like modeling, Unsteady separated flows, Scale-Adaptive simulation variant | Costly, Grid-sensitive, Not for simple steady cases | No | No | k, omega |
-| **kkLOmega** | Blended kEpsilon/kOmega, Transitional boundary layers | More complex than SST with limited benefit | No | Yes | k, kL, kt, omega |
-| **EBRSM** | Complex anisotropic turbulence, Separation, Curvature, Swirling flows, Secondary flow in ducts, Jet impingmemnt | More expensive than eddy viscosity models, Less robust model, Simple attached flows (overkill) | No | No | k, epsilon, f |
-| **LRR** | Reynolds-stress anisotropy, Swirling flows, Curvature | Computationally expensive, Less robust than k–epsilon/omega | No | No | k, epsilon |
-| **SSG** | Same as LRR but improved stability/accuracy in complex flows | Computationally expensive, Requires fine mesh | No | No | k, epsilon |
-| **LienLeschziner** | Low Re, Near wall damping | Less general purpose than SST or realizableKE | No | No | k, epsilon |
-| **kL** | Transitional and low Re boundary layer modelling | Not widely validated | No | No | k, L, Rt |
-| **qZeta** | Low Re boundary layer modelling, Flow separation | Not as widely validated, Less robust than SST or IDDES | No | No | k, epsilon, q, zeta |
-
-### 1.2 Large Eddy Simulation (LES) Models
-| **Model** | **Good For** | **Bad For** | **Requires Wall Functions** | **Supports Wall Functions** | **Required Boundary Conditions** |
-|-----------|--------------|-------------|-----------------------------|-----------------------------|----------------------------------|
-| **DeardorffDiffStress** | Early LES model with prognostic SGS kinetic energy, Atmospheric boundary layers | Outdated, Poor accuracy in complex shear flows | No | Yes | nut |
-| **dynamicKEqn** | Inhomogeneous flows, Unsteady flows | More computationally expensive, Can be unstable on coarse grids | No | Yes | k |
-| **dynamicLagrangian** | Dynamic Smagorinsky with Lagrangian averaging, Accurate in complex (inhomogeneous) flows | Computationally heavier, Sensitive to averaging parameters | No | Yes | nut |
-| **kEqn** | Robust/Widely used, Good compromise between accuracy and cost | Transitional or strongly inhomogeneous turbulence | No | Yes | k |
-| **Smagorinsky** | Robust, Good for canonical LES (channel, shear flows, mixing layers), Homogenous isotropic turbulence | Overdamps turbulence, Near wall treatment, Transitional regions, Flow with backscatter, Complex geometry | No | Yes | nut |
-| **WALE** | Near-wall behavior (improved over Smagorinsky) good for wall-bounded flows, Laminar to turbulent flow transition, Rotating flow | Can underpredict in isotropic turbulence | No | Yes | nut |
-
-### 1.3 Detached Eddy Simulation (DES)
-| **Model** | **Good For** | **Bad For** | **Requires Wall Functions** | **Supports Wall Functions** | **Required Boundary Conditions** |
-|-----------|--------------|-------------|-----------------------------|-----------------------------|----------------------------------|
-| **kOmegaSSTDES** | External aerodynamics, Flows separation, Bluff body aerodynamics | Grid-induced separation ("grey area problem"), Sensitive to boundary layer mesh | Yes | - | k, omega, nut |
-| **kOmegaSSTDDES** | Improves DES by delaying switch from RANS→LES inside attached boundary layers, turbomachinery | Sensitive to mesh quality, Can underpredict small-scale turbulence | Yes | - | k, omega, nut |
-| **kOmegaSSTIDDES** | Reduces grey-area issue, Robust for complex industrial flow separation and wall-bounded turbulence | Requires fine LES mesh in separated regions | Yes | - | k, omega, nut, IDDESDelta |
-| **SpalartAllmarasDES** | Relatively cheap, Internal/external flow | Grid-induced separation if mesh not adequate, Not robust in massively separated flows | No | No | nuTilda |
-| **SpalartAllmarasDDES** | Reduces grey-area problem, Better boundary layer shielding | Limited accuracy for complex 3D separated flows compared to SST-based variants | No | No | nuTilda |
-| **SpalartAllmarasIDDES** | Robust and cheaper than SST-IDDES, used in aerospace and automotive LES/RANS hybrids | Free shear flows, Mesh sensitive | No | No | nuTilda, IDDESDelta |
-
-### 1.4 Wall Functions And Accompanying Mesh Requirements
-When running an OpenFOAM simulation (CFD simulations in general) the choice is up to the user as to fully resolve the boundary layer or to model the boundary layer (approximate the effects of the boundary layer but do not resolve the boundary layer). To model the boundary layer, OpenFOAM has a variety of wall functions to use. These wall functions and turbulence models go hand-in-hand: some of the above listed turbulence models support the use of wall functions while in some cases the implimentation is required. Other turbulence models should not have wall functions implemented as they fully resolve the boundary layer.
-
-When implementing wall functions it becomes imperative to mesh according to the yPlus requirements of the turbulence model/wall functions. Fig. 1 shows a schematic of a velocity boundary layer. A boundary layer is divided into two main parts: the `outer layer` (where flow re-joins the bulk fluid behaviour) and the `inner layer` (where the boundary layer develops). Within the inner layer, the boundary layer is further divided into three sub-categories: the `viscous sub-layer`, the `buffer layer`, and the `log-law` layer.
-
-<img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/BoundaryLayerDiagram.png" width="500" />
-
-Fig. 1. Velocity Boundary Layer Schematic ([source](https://en.wikipedia.org/wiki/Law_of_the_wall)). The red line is the velocity profile, the curved blue line is uPlus, and the straight blue line is the log-law line.
-
-yPlus is the non-dimensional distance from the first near-wall cell center to the wall boundary. It is used to determine to what extent the boundary layer is being resolved. If yPlus is about unity or less then the boundary layer is said to be fully resolved. Generally, though this can depend on the exact CFD setup, it is commonly accepted that the viscous sub-layer, buffer layer, and log-law layer can be found within the following yPlus ranges:
-
-<pre>
-Viscous sub-layer: (0 , 5)
-Buffer layer:      (5 , 30)
-Log-law layer:     (30 , 300)
-</pre>
-
-The `log-law` layer gets its name from a linear relationship: the `Law of The Wall` states that the bulk turbulent flow velocity at a certain point is proportional to the logarithm of the distance between the point and the wall boundary. This linear relationship can be seen in Fig. 1 where the velocity profile (red line) is near parallel to the log-law line. OpenFOAM supports `Log-law wall functions`. These are wall functions which use the `Law of The Wall` to predict or model the effects of the boundary layer. In light of this, log-law wall functions should be accompanied by an average yPlus value within the range `[30 , 300]`.
-
-If choosing to use wall functions, OpenFOAM organizes the supported wall functions into 6 main groups:
-
-<pre>
-1. nutWallFunctions
-2. epsilonWallFunctions
-3. kqRWallFunctions
-4. omegaWallFunctions
-5. alphatWallFunctions
-6. fWallFunctions
-7. v2WallFunctions
-</pre>
-
-The following table lists common wall functions in OpenFOAM. Due to the extensive list of supported wall functions, the following table is not exhaustive. Rather, the table contains the most commonly used/useful wall functions available within OpenFOAM. This table also shows other relevant information: the intended Reynolds number range under the `Used For` column (for high Re, low Re, or both high and low Re flow), the `Apply To` column indicates which field(s) to use the function on, `Flow Regime` denotes whether the function is intended for compressible, incompressible, or both compressible and incompressible flows. Finally, the `yPlus` column gives the ideal yPlus range to be in for that particular wall function.
-
-| **Wall Function** | **Used For** | **Apply To** | **Flow Regime** | **yPlus** |
-|-------------------|--------------|--------------|---------------|-----------|
-| **nutWallFunction** | High Re | nut | `compressible::` , `incompressible::` | Log-law: `3 - 300` |
-| **nutLowReWallFunction** | Low Re | nut | `compressible::` , `incompressible::` | Viscous sub-layer: `~1` |
-| **nutUWallFunction** | High Re | nut | `compressible::` , `incompressible::` | Log-law: `3 - 300` |
-| **nutkWallFunction** | High Re | nut | `compressible::` , `incompressible::` | Log-law: `3 - 300` |
-| **nutUSpaldingWallFunction** | High Re | nut | `compressible::` , `incompressible::` | Log-law: `3 - 300` |
-| **epsilonWallFunction** | High Re | epsilon | `compressible::` , `incompressible::` | Log-law: `3 - 300` |
-| **epsilonLowReWallFunction** | Low Re | epsilon | `incompressible::` | Viscous sub-layer: `~1` |
-| **kqRWallFunction** | High Re | k, q, R | `compressible::` , `incompressible::` | Log-law: `3 - 300` |
-| **kLowReWallFunction** | Low Re | k | `compressible::` | Viscous sub-layer: `~1` |
-| **omegaWallFunction** | High and low Re | omega | `compressible::` , `incompressible::` | Log-law: `3 - 300` if High Re, Viscous sub-layer: `~1` if Low Re |
-| **alphatWallFunction** | Thermal conductivity (High Re) | alphat | `compressible::` | Log-law: `3 - 300` |
-| **alphatJayatillekeWallFunction** | Thermal conductivity with Jayatilleke model (High Re) | alphat | `compressible::` , `incompressible::` | Log-law: `3 - 300` |
-| **fWallFunction** | High and low Re | f | `incompressible::` | Log-law: `3 - 300` |
-| **V2WallFunction** | High and low Re | v2 | `compressible::` | Log-law: `3 - 300` |
-
-Take note of the format of the `Flow Regime` column. The same format can be used when defining boundary conditions and specifying incompressible versus compressible. For example, if I have a wall boundary (named `wall`) and I want to ensure I use the `nutWallFunction` for compressible flow, I format `0.orig/nut` as such:
-
-<pre>
-wall                                        // boundary name
-{
-    type   compressible::nutWallFunction;   // function to use
-    value  uniform 0.0015;                  // value
-}
-</pre>
-
-Similarily, if an incompressible flow regime is desired then the flow regime key word can be swapped out with 'incompressible': `type incompressible::nutWallFunction;`. However, the flow regime key word is not required. OpenFOAM will default to using the compressible or incompressible version depending on the case setup. This key word is only required by the user if wanting to explicitly state which version (compressible or incompressible) to use or override OpenFOAMs default selection.
-
-After choosing a turbulence model that suits the needs of the simulation, the user should then decide whether to fully resolve the boundary layer or not. If not fully resolving the boundary layer (using a wall function from the above list) then the mesh yPlus requirements should be satisfied as outlined by the final column in the above table. If the user is fully resolving the boundary layer then the above table is not needed and yPlus should be about unity or less.
-
-
-## 2. Boundary Conditions
-The boundary conditions (and initial field values) are defined in the 0.orig folder. The name of this folder is not completely random/arbitrary. The `0` denotes simulation time (i.e. field values at time t=0s). The `orig` portion denotes that these are the *original* boundary conditions. These boundary conditions and corresponding field values will be copied into other time directories during the simulation which usually are deleted once the run is over and post processed. Hence a `0.orig` folder is made to preserve the initial and boundary condition settings (this is common practice, not a requirement by OpenFOAM). The logic of boundary conditions can best be described by Fig. 2 below where boundary conditions are set for outer domains:
-
-<img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/analysis_discretization.png" width="500" />
-
-Fig. 2. A schematic description of the internal and boundary fields for a 2D simulation domain
-
-Changes made to boundary conditions should occur within the `0.orig` directory. When running a simulation the user should copy the `0.orig` directory to the same location and rename it to `0` (this tells OpenFOAM to use these boundary conditions to start the simulation). Below is a list of field values used in OpenFOAM. The list contains some of the more commonly used field values in OpenFOAM, though is not exhaustive.
-
-<pre>
-0.orig      
-|-- epsilon    // turbulent kinetic energy dissipation rate
-|-- k          // turbulent kinetic energy
-|-- nut        // turbulent viscosity
-|-- nuTilda    // modified turbulent viscosity
-|-- omega      // specific dissipation rate
-|-- alphat     // turbulent thermal diffusivity
-|-- p          // pressure
-|-- U          // velocity
-|-- T          // temperature
-|-- h          // enthalpy
-|-- e          // internal energy
-|-- p_rgh      // absolute pressure minus hydrostatic pressure 
-|-- phi        // face flux
-|-- rho        // density
-|-- psi        // compressibility
-</pre>
-
-To understand the basic setup of a boundary condition file in `0.orig` the below `0.orig/U` file from the Sec. 6 airfoil tutorial case can be analyzed. Though this will be discussed in detail in Sec. 6, for clarity purposes it should be noted here that this simulation contains a `wing` boundary (wall), an `inout` boundary (far field domain), and two symmetry planes, one for either side of the airfoil. As a final note, the far field fluid flow is 10m/s in the positive x-direction.
+### Velocity (U)
+For the NACA0012, the fluid flow is 10 m/s in the positive x-direction as seen below:
 
 <pre>
 dimensions      [0 1 -1 0 0 0 0];          // units to use for velocity (m/s)
@@ -245,157 +81,5 @@ boundaryField
 </pre>
 
 The wing boundary takes on a `fixedValue uniform (0 0 0);` condition. This enforces a no slip boundary condition at the wall. This is also equivalent to using `type noSlip;` on the wing (either will work). The `symmetry` boundary condition will ensure an identical flow field over the two symmetry planes present. The `inletOutlet` boundary condition automatically applies `fixedValue` when the flow enters the simulation domain with the values given by the `inletValue` key, and `zeroGradient` when the flow exits the domain. Here, the user can use `$internalField` to specify the far field domain conditions: prescribe the same as the internalField value defined above (i.e., `uniform (10 0 0)`). The `value` key for the `inout` patch prescribes an initial value for this patch, and this value will be automatically updated (depending on whether the flow enters or leaves the domain) when the simulation starts. When adding the boundary conditions to a the simulation there are a few points to keep in mind: which field values need boundary conditions specified in `0.orig`, which type of boundary condition to use for eatch patch as well as the accompanying value, the `dimensions` key (specifying which units to use), and finally the `internalField` value.
-
-### 2.1 boundaryField - Common Boundary Condition Types
-The field values which need to have specified boundary conditions can be determined from the turbulence model used (this is the `Required Boundary Conditions` column from the turbulence model tables in Sec. 1) as well as the specific solver being used (reference the `Required Boundary Conditions` column from the solver table in Sec. 4.2). However, if a required field value is missing in `0.orig`, the simulation will terminate with an error message indicating which field value has a missing boundary condition.
-
-OpenFOAM supports a wide range of versatile boundary condition types but to keep the content manageable for this user guide a list of the most common/basic boundary condition types has been compiled:
-
-| **BC Type** | **Function** | **Additional Arguments** | **When To Use** |
-|-------------|--------------|---------------|---------------|
-| **empty** | 'empty' condition for reduced dimension simulation | `-` | Modeling 1D or 2D domains (no variation normal to the patch) |
-| **noSlip** | Enforces zero velocity on walls | `-` | modeling no slip (zero velocity) on walls |
-| **calculated** | Computes value from other field values | `-` | Used as a placeholder; lets OpenFOAM compute the patch field from the internal field (often for turbulence or derived fields) |
-| **fixedValue** | Sets fixed value to boundary (Dirichlet BC) | `value` | When boundary condition is known exactly (e.g., inlet velocity, temperature, or prescribed pressure) |
-| **fixedGradient** | Sets fixed gradient to boundary (Nuemann BC) | `gradient` | When flux across a boundary is known (such as heat flux) |
-| **zeroGradient** | Applies a zero-gradient condition to boundary | `-` | Common for outlets, free surfaces, or when you don’t want to constrain the variable explicitly |
-| **inletOutlet** | zeroGradient on outflow, fixedValue on reverse flow | `inletValue`, `value` | For outlets where backflow might occur — provides inflow values if needed, otherwise lets outflow be free |
-| **outletInlet** | zeroGradient on inflow, fixedValue on reverse flow | `outletValue`, `value` | For cases where you want to prescribe outflow values, but still allow inflow without overspecifying |
-| **symmetry** | Applies symmetry so flow is identical across plane | `-` | For symmetry planes (e.g., half or quarter domains) to reduce computational cost |
-
-The `Additional Arguments` column specifies the *required* arguments needed aside from only specifying the boundary condition type. For example, suppose I need to define a `noSlip` type boundary condition to my `wall` boundary and `outletInlet` to my my `outlet` boundary:
-
-<pre>
-wall
-{
-    type            noSlip;          // specify only type if 'Additional Arguments' is empty    
-}
-
-outlet
-{
-    type            outletInlet;     
-    outletValue     $internalField;  // additional required argument
-    value           $internalField;  // additional required argument
-}
-</pre>
-
-A full list of the boundary condition types supported by OpenFOAM as well as a description for each can be found in OpenFOAM's [documentation](https://www.openfoam.com/documentation/user-guide/a-reference/a.4-standard-boundary-conditions). The user should utilize the above boundary condition types table as well as the OpenFOAM documentation when deciding which boundary conditions to use as they can vary greatly from case to case (the `When To Use` column may help with this in particular). Fields such as velocity (U) and temperature (T) etc. should be set by the user to match the desired simulation configuration. Assigning values to derived/turbulence fields (nuTilda, epsilon, omega etc.) is slightly different and will be covered in the following section.
-
-### 2.2 The dimensions and internalField
-When entering values for both boundary conditions and `internalField`, it is important to be mindful of the units used as they are not all constant. Though OpenFOAM's default is SI units, the derived units are based on which solver is used. For example, if using the `simpleFoam` solver, pressure is expected to be the kinematic pressure which is measured in $`m^2/s^2`$. However, if using pimpleFoam, then pressure is measured as thermodynamic pressure, measured in Pascals ($N/m^2 = kg/(m*s^2)$). The exact units used are specified by the `dimensions` key in `0.orig/`. Using the same `0.orig/U` file as Sec. 2.1, we can see the dimensions used for velocity are `dimensions [0 1 -1 0 0 0 0];`. This is, as one would suspect, is $m/s$. But looking at solely the `dimensions` key, this may not be so obvious, however it is infact very simple: 
-
-<pre>
-dimensionsUsed  [Mass Meter Second Kelvin Mole Ampere Candela]   
-
-dimensions      [0 1 -1 0 0 0 0]; 
-</pre>
-
-The `dimensions` key is a list containing 7 numbers. Each (non-zero) number in `dimensions` denotes which unit is being used, corresponding to the entries in `dimensionsUsed` (this key is for an example, it is not an actual key used in OpenFOAM). A zero indicated that the unit is not being used. The value of the actual number gives an the exponent on the unit. So an entry of `[0 1 0 0 0 0 0]` gives meter ($m$). However, `[0 2 0 0 0 0 0]` indicates $m*m = m^2$ and so on. A negative sign before the number indicates division instead of multiplication. Knowing this, it becomes far more clear to see which units are expected. As an example, the kinematic pressure, $`m^2/s^2`$, would be `dimensions [0 2 -2 0 0 0 0]`.
-
-This leaves the final question of what the `internalField` key is used for and how to assign a value to it. This key is used as an initial condition to the problem and should be assigned with care. Field values such as pressure, temperature, velocity etc. can be easily assigned by the user and depend on what the user wants to simulate. Turbulent fields (such as `nuTilda`, `k`, `epsilon` etc.) may not be so obvious on how to assign values. Luckily, OpenFOAM includes in their documentation how to calculate these values. Here, we can define the caluclations for some of the more common turbulent fields: 
-
-| **Field** | **initialField Calculation** | **Notes** |
-|-----------|------------------------------|-----------|
-| **nuTilda** | $\tilde{\nu} \approx 10 \nu$ | For Spalart–Allmaras; $\nu$ = molecular kinematic viscosity. |
-| **nut** | k–ε: $\nu_t = C_\mu \dfrac{k^2}{\epsilon}$<br>k–ω: $\nu_t = \dfrac{k}{\omega}$ | Always kinematic eddy viscosity [m²/s]. |
-| **k** | $k = \tfrac{3}{2} (U I)^2$ | $U$ = reference velocity magnitude, $I$ = turbulence intensity. |
-| **epsilon** | $\epsilon = C_\mu^{3/4} \dfrac{k^{3/2}}{\ell}$ | $C_\mu = 0.09$, $\ell$ = turbulence length scale (≈ 0.07 × hydraulic diameter). |
-| **omega** | $\omega = \dfrac{\sqrt{k}}{C_\mu^{1/4}\,\ell}$ | Used in k–ω and k–ω SST models. |
-| **alphat** | $\alpha_t = \dfrac{\nu_t}{Pr_t}$ | $Pr_t$ = turbulent Prandtl number (~0.85–1). |
-
-## 3. Fluid Properties
-The fluid properties are defined in the `constant` folder, along with the mesh (`constant/polyMesh`). For clarity, the structure of the `constant` directory is defined below:
-
-<pre>
-constant         
-|-- polyMesh                   // directory containing the files
-|-- transportProperties        // transport model definition
-|-- turbulenceProperties       // turbulence model
-|-- thermophysicalProperties   // thermodynamic properties
-</pre>
-
-This section focuses specifically on fluid property definitions (`transportProperties`, `turbulenceProperties`, and `thermophysicalProperties`). The `polyMesh` directory should be left alone, only generated via various meshing programs and placed within the `constant` directory. An ellaboration of `polyMesh` can be found in Appendix A.
-
-### 3.1 transportProperties
-
-<pre>
-transportModel Newtonian;   // transport model to use
-
-nu 1.5e-5;                  // molecular viscosity
-Pr 0.7;                     // Prandtl number
-Prt 1.0;                    // turblent Prandtl number
-</pre>
-
-### 3.2 turbulenceProperties
-The turbulenceProperties file elects which turbulence model to use:
-
-<pre>
-simulationType RAS;
-RAS 
-{ 
-    RASModel             SpalartAllmaras;   // which RAS model to use
-    turbulence           on;                // model turbulence
-    printCoeffs          off;               // whether or not to print turbulence model coefficients
-} 
-</pre>
-
-### 3.3 thermophysicalProperties
-## 4. Simulation Parameters
-### 4.1 ControlDict Overview
-### 4.2 OpenFOAM Solvers
-## 5. Solution Parameters
-## 6. Tutorial Cases: 2D Steady Airfoil & 2D Vortex Shedding
-
-## Appendix
-### A
-
-Below is an overview of the contents of `polyMesh`. These 5 files define the simulation domain:
-<pre>
-constant         
-|-- polyMesh             // directory containing the files
-  |-- boundary           // mesh boundary patch names and types
-  |-- faces.gz           // mesh faces
-  |-- neighbour.gz       // face neighbour info
-  |-- owner.gz           // face owner info
-  |-- points.gz          // baseline mesh point coordinates
-</pre>
-
-As seen below, from the polyMesh/boundary file, are the same boundary names as seen in 0.orig/U. The boundary file can be lightly adjusted manually: users can change the name of boundaries (such as changing the `wing` boundary name to `airfoil` for example), the type of boundary present, and delete boundaries. However, though these values can be changed without destroying the mesh, mesh manipulation should not take place manually. Manually adjusting the other files in polyMesh/ or the other entries (nFaces, startFace, inGroups etc.) is a difficult and inefficient method of adjusting the mesh and will most likely destroy the mesh. If the mesh must be adjusted the best practice is to regenerate the mesh.
-
-<pre>
-4    // number of boundaries defined in file (modifiable)
-(
-    symmetry1                          // name of boundary (modifiable)
-    {
-        type            symmetry;      // type of boundary (modifiable)
-        inGroups        1(symmetry);   // group of boundary
-        nFaces          4032;          // number of faces in boundary
-        startFace       7938;          // starting face of boundary
-    }
-  
-    symmetry2
-    {
-        type            symmetry;
-        inGroups        1(symmetry);
-        nFaces          4032;
-        startFace       11970;
-    }
-  
-    wing
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          126;
-        startFace       16002;
-    }
-  
-    inout
-    {
-        type            patch;
-        nFaces          126;
-        startFace       16128;
-    }
-)
-</pre>
 
 {% include links.html %}
