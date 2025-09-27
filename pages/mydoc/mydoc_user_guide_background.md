@@ -9,7 +9,10 @@ folder: mydoc
 
 ## Learning Objectives:
 
-After reading this chapter, you should be able to: (1) Explain the overall steps in a gradient-based design optimization, and (2) Identify and describe key terminology, including the objective function, design variables, constraints, and residuals.
+After reading this chapter, you should be able to: 
+
+- Explain the overall steps in a gradient-based design optimization.
+- Identify and describe key terminology, including the objective function, design variables, constraints, and residuals.
 
 ## 1. Constrained gradient-based optimization
 
