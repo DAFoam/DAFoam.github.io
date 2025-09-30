@@ -119,6 +119,8 @@ In this step, the total derivative of the objective function with respect to the
 
 ## Questions
 
+- How to maximize the objective function?
+
 - How many primal and adjoint solutions are needed in one optimization iteration? Why?
 
 - Why do we need to use a baseline design with at least one active constraint? Give an example to justify this point.
@@ -128,6 +130,8 @@ In this step, the total derivative of the objective function with respect to the
 - Is it true that an optimizer will ensure all constraints to be satisfied at each optimization iteration?
 
 - What criteria we can use to evaluate whether an optimization is going well?
+
+- If you want the optimizer to change twist design variable more than the shape design variable, should you scale the twist design variable up or down? Why?
 
 
 {% include links.html %}
