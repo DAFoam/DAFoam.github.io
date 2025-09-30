@@ -9,6 +9,8 @@ folder: mydoc
 
 ## Learning Objectives:
 
+This chapter includes a very brief introduction to gradient-based optimization. For more detailed information, refer to Martins and Ning's [MDO book](https://mdobook.github.io).
+
 After reading this chapter, you should be able to: 
 
 - Explain the overall steps in a gradient-based design optimization.
@@ -29,7 +31,7 @@ $$
 \end{aligned}
 $$
 
-Here, $f$ is a scalar objective function to be minimized, and $\vec{x}$ is the vector of design variables, i.e., the variables we can modify in the design. $\vec{g}(\vec{x})$ and $\vec{h}(\vec{x})$ are the inequality and equality constraint functions, respectively. Here, we want to enforce $\vec{h}(\vec{x}) = 0$ and $\vec{g}(\vec{x}) \le 0$, thereby restricting the feasible design space. Note that $f$, $\vec{g}$, and $\vec{h}$ must be either explicit or implicit functions of the design variables $\vec{x}$. $f(\vec{x})$, $\vec{h}(\vec{x})$, and $\vec{g}(\vec{x})$ can be either linear or nonlinear functions.
+Here, $f$ is a scalar objective function to be minimized, and $\vec{x}$ is the vector of design variables, i.e., the variables we can modify in the design. $\vec{g}(\vec{x})$ and $\vec{h}(\vec{x})$ are the inequality and equality constraint functions, respectively. Here, we want to enforce $\vec{h}(\vec{x}) = 0$ and $\vec{g}(\vec{x}) \le 0$, thereby restricting the feasible design space. Note that $f$, $\vec{g}$, and $\vec{h}$ must be either explicit or implicit functions of the design variables $\vec{x}$. $f(\vec{x})$, $\vec{h}(\vec{x})$, and $\vec{g}(\vec{x})$ can be either linear or nonlinear functions. The inequality constraint is "active", if $\vec{g}(\vec{x}) = 0$; otherwise, it is "inactive" if $\vec{g}(\vec{x}) \lt 0$. All equality constraints are active because we need $\vec{h}(\vec{x}) = 0$.
 
 A typical example is airfoil aerodynamic shape optimization, where the objective function is the drag coefficient $C_d$, the design variables $\vec{x}$ are control points that change the airfoil shape, and the constraints include a lift (equality) constraint ($C_l=0.5$) and a moment (inequality) constraint $C_m \le b$. Here both the objective and constraint functions are implicit functions of the design variables.
 
@@ -67,7 +69,7 @@ Once the search direction $\vec{d}$ is computed, we need to take a step size to 
 
 ### 1.6 Convergence criteria
 
-At the optimal point, the first-order necessary condition states that the gradients need to be zero. Therefore, many optimizers print out the **optimality** value, which measures the magnitude of the gradient vector. If an optimization converges well, we should see a decrease in the objective function during the optimization process, along with a decrease in the optimality. In theory, we also need to verify the second-order sufficient condition (a positive definitive Hessian) for an optimal point; however, this is often ignored since computing accurate Hessians can be expensive. For constrained optimization problems, we also require that all constraints are satisfied at the optimal point. This can be measured by the **feasibility** metric, which measures the violation of all constraints. If the feasibility is small, we consider the design point to be a feasible optimal point. Note that **constrained optimization should start with a feasible, baseline design** to ensure fair comparisons,
+At the optimal point, the first-order necessary condition states that the gradients need to be zero. Therefore, many optimizers print out the **optimality** value, which measures the magnitude of the gradient vector. If an optimization converges well, we should see a decrease in the objective function during the optimization process, along with a decrease in the optimality. In theory, we also need to verify the second-order sufficient condition (a positive definitive Hessian) for an optimal point; however, this is often ignored since computing accurate Hessians can be expensive. For constrained optimization problems, we also require that all constraints are satisfied at the optimal point. This can be measured by the **feasibility** metric, which measures the violation of all constraints. If the feasibility is small, we consider the design point to be a feasible optimal point. Note that **constrained optimization should start with a feasible, baseline design with at least one active constraint** to ensure fair comparisons.
 
 ## 2. Primal simulation using numerical methods
 
@@ -114,5 +116,18 @@ $$
 $$
 
 In this step, the total derivative of the objective function with respect to the design variables $\vec{x}$ is computed explicitly, using the adjoint vector $\vec{\psi}$ computed from step 1. Since the design variables do not appear in the adjoint equation, only one adjoint solve per objective function is needed, regardless of the number of design variables. The second equation is non-iterative and computationally inexpensive. DAFoam computes all partial derivatives and matrix–vector products using automatic differentiation (AD) for accuracy and efficiency.
+
+## Questions
+
+- How many primal and adjoint solutions are needed in one optimization iteration? Why?
+
+- Why do we need to use a baseline design with at least one active constraint? Give an example to justify this point.
+
+- For a complex design problem, how to decide which variables are objective functions and which are constraints?
+
+- Is it true that an optimizer will ensure all constraints to be satisfied at each optimization iteration?
+
+- What criteria we can use to evaluate whether an optimization is going well?
+
 
 {% include links.html %}
