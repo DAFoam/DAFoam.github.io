@@ -127,11 +127,11 @@ In this step, the total derivative of the objective function with respect to the
 
 - For a complex design problem, how to decide which variables are objective functions and which are constraints?
 
-- Is it true that an optimizer will ensure all constraints to be satisfied at each optimization iteration?
+- Is it true that an optimizer will ensure all constraints are satisfied at each optimization iteration?
 
-- What criteria we can use to evaluate whether an optimization is going well?
+- What criteria can we use to evaluate whether an optimization is going well?
 
-- If you want the optimizer to change twist design variable more than the shape design variable, should you scale the twist design variable up or down? Why?
+- If you want the optimizer to change the twist design variable more than the shape design variable, should you scale the twist design variable up or down? Why?
 
 
 {% include links.html %}
