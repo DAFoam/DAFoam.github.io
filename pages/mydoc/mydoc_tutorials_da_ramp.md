@@ -38,6 +38,7 @@ mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 
 The case ran for 18 steps and took about 15 mins using Intel 3.0 GHz CPU with 4 cores. According to "logOpt.txt" and "opt_SNOPT_summary.txt", the initial and optimized objective functions are 5.2079934E+01 and 1.3298352E+00 with one order of reduction. 
 
+The animations of the optimization are as follows. We can see that the overall velocity and pressure fields agree with the reference, but there are some velocity oscillations at the inlet. We may need to tweak the regularization term "UVar" to improve the results.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Ramp_DA_U.gif" style="width:500px !important;" />
 
