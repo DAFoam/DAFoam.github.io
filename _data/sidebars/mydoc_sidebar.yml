@@ -173,8 +173,12 @@ entries:
         output: web, pdf
         subfolderitems:
   
-        - title: pitzDaily
+        - title: pitzDaily (flow only)
           url: /mydoc_tutorials_topo_pitzdaily.html
+          output: web, pdf
+        
+        - title: Channel (conjugate heat)
+          url: /mydoc_tutorials_topo_channel_cht.html
           output: web, pdf
       
       - title: Field inversion ML

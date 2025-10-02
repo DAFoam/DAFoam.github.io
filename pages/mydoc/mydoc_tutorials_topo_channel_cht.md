@@ -41,8 +41,8 @@ The case ran for 21 steps and took about one hour using Intel 3.0 GHz CPU with 4
 The following are the animations of the optimization. Notes: The **SNOPT** optimizer works better than **IPOPT** for this case.
 
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/TopoCHT_U.gif" width="640" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/TopoCHT_alpha.gif" width="640" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/TopoCHT_U.gif" style="width:300px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/TopoCHT_alpha.gif" style="width:300px !important;" />
 
 Fig. 1. Velocity and alpha porosity evolution during the optimization.
 
