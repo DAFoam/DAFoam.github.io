@@ -123,5 +123,80 @@ Below is an N2, or N-squared, diagram that OpenMDAO outputs when you run a probl
 
 Fig. 2. The N2 diagram for the two-component optimization. 
 
+## Questions
+
+A factory is designing a cooling system. The system has a controllable design parameter $x$ (for example, the level of power supplied to a fan). This parameter first influences an intermediate system property $z$. The intermediate property then determines the equilibrium value of the system’s temperature $y$, which must be solved implicitly from a nonlinear balance equation. Finally, the overall efficiency cost of the system is computed from the equilibrium temperature and the design parameter. The design goal is to choose the input $x$ that minimizes the cost while also meeting a performance relationship and a safety limit. 
+
+The system model is as follows: 
+
+**Explicit Pre-Process Relation:** 
+
+The intermediate property $z$ is computed from the design variable: 
+
+$$
+\begin{aligned}
+z = x^2 + 1
+\end{aligned}
+$$
+
+**Implicit Equilibrium Condition:**
+
+The equilibrium temperature $y$ must satisfy the nonlinear equation
+
+$$
+\begin{aligned}
+y^2 + zy - 4 = 0
+\end{aligned}
+$$
+
+**Explicit Objective Function:**
+
+The system cost function is 
+
+$$
+\begin{aligned}
+f(x,y)=(y-2)^2 + x
+\end{aligned}
+$$
+
+This design must satisfy the following constraints: 
+
+$$
+\begin{aligned}
+\text{equality constraint (performance condition): } & z-y=0 \\
+\text{inequality constraint (safety limit): } & y \leq 3
+\end{aligned}
+$$
+
+An optimization formulation is given below: 
+
+$$
+\begin{aligned}
+\text{minimize: } & f(x,y) = (y-2)^2 + x, \\
+\text{with respect to: } & x \\
+\text{subject to: } & z = x^2 + 1, \\
+& y^2 + zy -4 = 0, \\
+& z-y = 0, \\
+& y \leq 3.
+\end{aligned}
+$$
+
+a) Generate the XDSM diagram for the problem. Refer to [pyXDSM](https://mdolab-pyxdsm.readthedocs-hosted.com) for the installation and documentation pages. 
+
+b) Formulate the problem in OpenMDAO. Use Newton's method as the nonlinear solver and ScipyKrylov as the linear solver for the implicit system. Use the SLSQP optimizer. Provide the runScript. 
+
+c) Generate and show the $N^2$ diagram. 
+
+d) Run the optimization and report the optimized $x$, $y$, $z$, and $f$. Verify that the constraints were met. You should arrive that: 
+
+$$ 
+\begin{aligned}
+\text{Optimal x: } 0.64359425 \\
+\text{Optimal y: } 1.41421356 \\
+\text{Optimal z: } 1.41421356\\
+\text{Optimal f: } 0.98674\\
+\end{aligned}
+$$
+
 
 {% include links.html %}

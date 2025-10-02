@@ -7,6 +7,13 @@ permalink: mydoc_user_guide_ramp.html
 folder: mydoc
 ---
 
+## Learning Objectives:
+
+After reading this chapter, you should be able to: 
+
+- Run the coupled and decoupled field inversion (FI) machine learning (ML) for steady-state and time-resolved unsteady flow problems
+- Extend the FIML for new cases.
+
 ## Overview
 This tutorial elaborates on our latest field inversion machine learning (FIML) capability for steady-state and time-resolved unsteady flow problems. For more details, please refer to our [POF paper](https://doi.org/10.1063/5.0207704).
 
@@ -23,7 +30,7 @@ To run this case, first download [tutorials](https://github.com/DAFoam/tutorials
 ./preProcessing.sh
 </pre>
 
-Before we run the case, let us elaborate on the runScript.py. We set the seed for NumPy's random number generator to the integer value 1 so that we can obtain the exact same random results for every run. We have two training cases c1 and c2 (cases = ["c1", "c2"]), and with the initial velocities 10 m/s and 20 m/s (U0s = [10.0, 20.0]), respectively. We also obtained the reference values for the drag (dragRefs = [0.1683, 0.7101]), their values can be obtained when we run the k-omega SST model. We also need to read the coordinated of the probe points from probePointCoords.json, which will be used by "UProbeVar" in the function component. 
+Before we run the case, let us elaborate on the runScript.py. We set the seed for NumPy's random number generator to the integer value 1 so that we can obtain the exact same random results for every run. We have two training cases c1 and c2 (cases = ["c1", "c2"]), and with the initial velocities 10 m/s and 20 m/s (U0s = [10.0, 20.0]), respectively. We also obtained the reference values for the drag (dragRefs = [0.1683, 0.7101]), their values can be obtained when we run the k-omega SST model. We also need to read the coordinates of the probe points from probePointCoords.json, which will be used by "UProbeVar" in the function component. 
 
 ```python
 # =============================================================================
@@ -135,6 +142,7 @@ Now let us elaborate on each entry in the function component.
             "calcRefVar": True, #computes the variance of drag force between the original model and reference
             "ref": [0.0],  # we will assign this later because each case has a different ref
         },
+```  
         
 ```python
         "betaKVar": {
@@ -352,5 +360,8 @@ The following animation shows the comparison among these prediction case. The tr
 
 Fig. 2 Comparison among the reference, baseline, and trained models.
 
+## Questions
+
+- Run a decouple FI and ML case for the NACA0012 airfoil with SA model as the baseline and k-omega SST model as the reference.
 
 {% include links.html %}
