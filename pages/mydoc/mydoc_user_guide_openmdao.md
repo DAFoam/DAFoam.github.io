@@ -129,7 +129,7 @@ A factory is designing a cooling system. The system has a controllable design pa
 
 The system model is as follows: 
 
-### Explicit Pre-Process Relation: 
+**Explicit Pre-Process Relation:** 
 
 The intermediate property $z$ is computed from the design variable: 
 
@@ -139,7 +139,7 @@ z = x^2 + 1
 \end{aligned}
 $$
 
-### Implicit Equilibrium Condition:
+**Implicit Equilibrium Condition:**
 
 The equilibrium temperature $y$ must satisfy the nonlinear equation
 
@@ -149,7 +149,7 @@ y^2 + zy - 4 = 0
 \end{aligned}
 $$
 
-### Explicit Objective Function
+**Explicit Objective Function:**
 
 The system cost function is 
 
@@ -181,11 +181,22 @@ $$
 \end{aligned}
 $$
 
-a) Formulate the problem in OpenMDAO. Use Newton's method as the nonlinear solver and ScipyKrylov as the linear solver for the implicit system. Use the SLSQP optimizer. Provide the runScript. 
+a) Generate the XDSM diagram for the problem. Refer to [pyXDSM](https://mdolab-pyxdsm.readthedocs-hosted.com) for the installation and documentation pages. 
 
-b) Generate and show the $N^2$ diagram. 
+b) Formulate the problem in OpenMDAO. Use Newton's method as the nonlinear solver and ScipyKrylov as the linear solver for the implicit system. Use the SLSQP optimizer. Provide the runScript. 
 
-c) Run the optimization and report the optimized $x$, $y$, $z$, and $f$. Verify that the constraints were met. 
+c) Generate and show the $N^2$ diagram. 
+
+d) Run the optimization and report the optimized $x$, $y$, $z$, and $f$. Verify that the constraints were met. You should arrive that: 
+
+$$ 
+\begin{aligned}
+\text{Optimal x: } 0.64359425 \\
+\text{Optimal y: } 1.41421356 \\
+\text{Optimal z: } 1.41421356\\
+\text{Optimal f: } 0.98674\\
+\end{aligned}
+$$
 
 
 {% include links.html %}
