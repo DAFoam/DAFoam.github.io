@@ -11,8 +11,8 @@ folder: mydoc
 
 After reading this chapter, you should be able to: 
 
-- Run the field inversion machine learning (FIML) for steady-state and time-resolved unsteady flow problems
-- Setup the run scripts to solve both coupled field inversion (FI) and machine learning (ML) and decoupled FI and ML cases
+- Run the coupled and decoupled field inversion (FI) machine learning (ML) for steady-state and time-resolved unsteady flow problems
+- Extend the FIML for new cases.
 
 ## Overview
 This tutorial elaborates on our latest field inversion machine learning (FIML) capability for steady-state and time-resolved unsteady flow problems. For more details, please refer to our [POF paper](https://doi.org/10.1063/5.0207704).
@@ -363,6 +363,5 @@ Fig. 2 Comparison among the reference, baseline, and trained models.
 ## Questions
 
 - Run a decouple FI and ML case for the NACA0012 airfoil with SA model as the baseline and k-omega SST model as the reference.
-- The tutorial is only for incompressible case, can you run the FIML for a supersonic NACA0012 airfoil? 
 
 {% include links.html %}
