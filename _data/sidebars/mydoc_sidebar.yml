@@ -192,6 +192,15 @@ entries:
         - title: Ramp
           url: /mydoc_tutorials_field_inversion_ramp.html
           output: web, pdf
+      
+      - title: Data assimilation
+        output: web, pdf
+        subfolderitems:
+  
+        - title: Ramp (steady)
+          url: /mydoc_tutorials_da_ramp.html
+          output: web, pdf
+
 
   - title: User Guide
     output: web, pdf
