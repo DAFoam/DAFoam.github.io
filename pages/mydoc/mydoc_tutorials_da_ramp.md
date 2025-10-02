@@ -43,8 +43,8 @@ The case ran for 18 steps and took about 15 mins using Intel 3.0 GHz CPU with 4 
 
 Fig. 1. Velocity contour evolution during the optimization.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Ramp_DA_U_in.gif" style="width:300px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Ramp_DA_p_bot.gif" style="width:300px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Ramp_DA_U_in.gif" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Ramp_DA_p_bot.gif" style="width:500px !important;" />
 
 Fig. 2. Inlet velocity and bottom wall pressure distributions during the optimization.
 
