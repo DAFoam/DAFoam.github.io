@@ -362,6 +362,16 @@ Fig. 2 Comparison among the reference, baseline, and trained models.
 
 ## Questions
 
-- Run a decouple FI and ML case for the NACA0012 airfoil with SA model as the baseline and k-omega SST model as the reference.
+Run a decouple FI and ML steady case for a 2D NACA0012 airfoil:.
+
+- Augment the SA model to match the results of k-omega SST model
+- The Re = 1e6, the inlect velocity U = 10 m/s
+- The angle of attack (AoA) for the airfoil is 12 degree
+- Generate a mesh with ~10k cells
+- Using the Cl from the k-omega SST model as the reference value
+  
+After the case is done:
+- Compare the Cd and Cl differences between the baseline and reference, and the trained models and reference.
+- Plot the Cp for the baseline, reference, and trained model.
 
 {% include links.html %}
