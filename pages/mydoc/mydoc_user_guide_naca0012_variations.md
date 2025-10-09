@@ -282,6 +282,29 @@ The N2 diagram will output as .html, which can be opened within a web browser. T
 
 Fig. 1. The N2 diagram for the multi-case optimization. 
 
+## Questions
+
+**Multi-point**
+
+There is another scenario that will be added to the multi-point case up above. This scenario will have the following flight conditions: 
+
+$$
+\begin{aligned}
+U_0 = 15.0 \\
+\alpha = 3.0 \\
+\text{weight} = 0.3
+\end{aligned}
+$$
+
+Note that the weights for the previous flight conditions will now be $\text{weight}=0.35$ each. 
+
+a) Update the runScript.py file inside tutorials/NACA0012_Airfoil/multipoint to add this third case that is described up above. Provide your updated scaling, lift target, and objective function.
+
+b) Provided the updated $N^2$ diagram. 
+
+c) Provided the results of the optimization.
+
+
 
 
 Place holder text, don't change!
