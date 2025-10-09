@@ -47,6 +47,8 @@ Here $n$ is the optimization iteration number, $\alpha$ is a scalar step size, a
 
 An example of iterative optimization processes for a 2D optimization problem is illustrated in the following figure. Here, the x and y axes are the two design variables, and the contour denotes the value of the objective function. The baseline design $\vec{x}^0$ is located in the bottom left region of the 2D design space. The next design variables are computed using $\vec{x}^1=\vec{x}^0+\alpha^0 \vec{d}^0$. This process is repeated until the optimal design point ($\vec{x}^*$) is found.
 
+NOTE: During optimization, linear constraints will always be satisfied at each optimization iteration. However, nonlinear constraints may be violated in early iterations, and they will be eventually satisfied when the optimization converges.
+
 <img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/opt_process.png" style="width:500px !important;" />
 
 Fig. 1. Schematic of an iterative optimization process for a 2D problem
@@ -128,8 +130,6 @@ In this step, the total derivative of the objective function with respect to the
 - Why do we need to use a baseline design with at least one active constraint? Give an example to justify this point.
 
 - For a complex design problem, how to decide which variables are objective functions and which are constraints?
-
-- Is it true that an optimizer will ensure all constraints are satisfied at each optimization iteration?
 
 - What criteria can we use to evaluate whether an optimization is going well?
 
