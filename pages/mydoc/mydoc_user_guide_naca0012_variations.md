@@ -11,6 +11,16 @@ folder: mydoc
 
 This chapter was written by [Lean Fang](https://github.com//LeanFang), [Seth Zoppelt](https://github.com//szoppelt), and [Zilong Li](https://github.com//zilonglicfd) and reviewed by [Ping He](https://github.com/friedenhe).
 
+## Learning Objectives:
+
+After reading this chapter, you should be able to: 
+
+- Setup aerodynamic optimizations for subsonic and transonic conditions
+
+- Setup multi-point optimizations to consider multiple flow conditions
+
+- Setup multi-case optimizations where each case runs in a separate folder
+
 ## Subsonic optimization
 
 The following is the overview of an aerodynamic shape optimization case for the NACA0012 airfoil in subsonic conditions. 
