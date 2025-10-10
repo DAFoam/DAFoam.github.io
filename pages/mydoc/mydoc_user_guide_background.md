@@ -7,7 +7,7 @@ permalink: mydoc_user_guide_background.html
 folder: mydoc
 ---
 
-Page created by: [Ping He](https://github.com/friedenhe).
+This chapter was written by [Ping He](https://github.com/friedenhe).
 
 ## Learning Objectives:
 

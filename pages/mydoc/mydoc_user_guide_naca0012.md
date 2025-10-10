@@ -7,6 +7,8 @@ permalink: mydoc_user_guide_naca0012.html
 folder: mydoc
 ---
 
+This chapter was written by [Lean Fang](https://github.com//LeanFang) and reviewed by [Ping He](https://github.com/friedenhe).
+
 ## Learning Objectives:
 
 This chapter includes a detailed explaination for the relevant files such as the runScript for the incompressible NACA0012 airfoil tutorial case.

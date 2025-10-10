@@ -7,6 +7,8 @@ permalink: mydoc_user_guide_openmdao.html
 folder: mydoc
 ---
 
+This chapter was written by [Seth Zoppelt](https://github.com//szoppelt) and reviewed by [Ping He](https://github.com/friedenhe).
+
 ## Learning Objectives:
 
 After reading this chapter, you should be able to: 

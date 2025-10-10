@@ -9,6 +9,8 @@ folder: mydoc
 
 {% include note.html content="This webpage is under construction." %}
 
+This chapter was written by [Christian Psenica](https://github.com/ChrisPsenica) and reviewed by [Ping He](https://github.com/friedenhe).
+
 # OpenFOAM User Guide - NACA0012 Simulation Setup
 
 ## Introduction

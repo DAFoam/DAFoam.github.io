@@ -7,6 +7,8 @@ permalink: mydoc_user_guide_ramp.html
 folder: mydoc
 ---
 
+This chapter was written by [Zilong Li](https://github.com//zilonglicfd) and reviewed by [Ping He](https://github.com/friedenhe).
+
 ## Learning Objectives:
 
 After reading this chapter, you should be able to: 
