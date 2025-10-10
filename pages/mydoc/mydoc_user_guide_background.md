@@ -7,6 +7,8 @@ permalink: mydoc_user_guide_background.html
 folder: mydoc
 ---
 
+Page created by: [Ping He](https://github.com/friedenhe).
+
 ## Learning Objectives:
 
 This chapter includes a very brief introduction to gradient-based optimization. For more detailed information, refer to Martins and Ning's [MDO book](https://mdobook.github.io).
