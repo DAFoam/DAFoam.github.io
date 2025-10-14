@@ -196,6 +196,10 @@ entries:
       - title: Data assimilation
         output: web, pdf
         subfolderitems:
+      
+        - title: NACA0012
+          url: /mydoc_tutorials_da_naca0012.html
+          output: web, pdf
   
         - title: Ramp (steady)
           url: /mydoc_tutorials_da_ramp.html
