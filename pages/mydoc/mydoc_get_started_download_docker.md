@@ -12,6 +12,23 @@ The easiest way to run DAFoam optimizations is to use the **pre-compiled package
 Before downloading the pre-compiled package, you need to install **Docker**. Follow the installation instructions for [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu), [Fedora](https://docs.docker.com/install/linux/docker-ce/fedora), [CentOS](https://docs.docker.com/install/linux/docker-ce/centos), [MacOS](https://hub.docker.com/editions/community/docker-ce-desktop-mac/), and  [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). 
 
 Here we give examples for Ubuntu, MacOS, and Windows.
+
+<div class="tab-container" data-tab-group="platform">
+<div class="tab-buttons">
+<button class="tab-button">Windows</button>
+<button class="tab-button">MacOS</button>
+<button class="tab-button">Ubuntu</button>
+</div>
+<div class="tab-content">
+<pre>test1</pre>
+</div>
+<div class="tab-content">
+<pre>test2</pre>
+</div>
+<div class="tab-content">
+<pre>test3</pre>
+</div>
+</div>
  
 - If you use **Ubuntu 20.04**, install the latest Docker by running this command in the terminal:
 

@@ -43,7 +43,6 @@ Once you are in a tutorial case folder, use the following command to start the p
 <button class="tab-button">Win10</button>
 <button class="tab-button">Win11</button>
 <button class="tab-button">MacOS/Linux</button>
-<button class="tab-button">Linux</button>
 </div>
 <div class="tab-content">
 <pre><code>docker run -it --rm -u dafoamuser --mount "type=bind,src=%cd%,target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash</code></pre>
