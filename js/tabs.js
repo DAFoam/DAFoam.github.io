@@ -1,3 +1,11 @@
+console.log('tabs.js loaded!');
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOMContentLoaded fired!');
+  
+  const tabContainers = document.querySelectorAll('.tab-container');
+  console.log('Found tab containers:', tabContainers.length);
+  
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize all tab containers
   const tabContainers = document.querySelectorAll('.tab-container');
