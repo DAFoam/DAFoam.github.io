@@ -10,10 +10,13 @@
             <script src="{{ '/js/tabs.js' | relative_url }}"></script>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    // Find all pre elements
-                    const preElements = document.querySelectorAll('pre');
+                    // Find all pre elements that don't already have a copy button
+                    const preElements = document.querySelectorAll('pre:not(.has-copy-button)');
                     
                     preElements.forEach(function(pre) {
+                        // Mark this pre as processed
+                        pre.classList.add('has-copy-button');
+                        
                         // Make pre element positioned
                         pre.style.position = 'relative';
                         
@@ -26,9 +29,16 @@
                         pre.appendChild(button);
                         
                         // Add click handler
-                        button.addEventListener('click', function() {
-                            // Get text content but exclude the button text
-                            const code = pre.childNodes[0].textContent;
+                        button.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            // Clone the pre, remove the button, then get text
+                            const clone = pre.cloneNode(true);
+                            const cloneButton = clone.querySelector('.copy-button');
+                            if (cloneButton) {
+                                cloneButton.remove();
+                            }
+                            const code = clone.textContent.trim();
+                            
                             navigator.clipboard.writeText(code).then(function() {
                                 button.textContent = 'Copied!';
                                 setTimeout(function() {
