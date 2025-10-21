@@ -48,6 +48,29 @@ mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 
 The optimization progress will be printed to the screen and also written to logOpt.txt (we will elaborate on logOpt.txt later on [this page](mydoc_get_started_runscript.html)). This case ran for 18 optimization iterations and took about 15 minutes with an Intel 3.0 GHz CPU.
 
+<div class="tab-container" data-tab-group="platform">
+  <div class="tab-buttons">
+    <button class="tab-button">macOS</button>
+    <button class="tab-button">Windows</button>
+  </div>
+  
+  <div class="tab-content" markdown="1">
+
+```bash
+echo $HOME
+```
+
+  </div>
+  
+  <div class="tab-content" markdown="1">
+
+```powershell
+echo %USERPROFILE%
+```
+
+  </div>
+</div>
+
 {% include note.html content="For MacOS and Windows, make sure you open the Docker Desktop app before running Docker commands." %}
 
 {% include note.html content="Treat the Docker container as disposable, i.e., start one container for one optimization run. If the optimization is running and you want to kill it, press `ctr+c` or `ctr+\`. After the optimization is done, type `exit` to exit the Docker container and free up the occupied memory." %}

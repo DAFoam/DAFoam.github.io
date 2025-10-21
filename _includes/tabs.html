@@ -1,0 +1,24 @@
+{% assign tab_id = include.id | default: "default-tabs" %}
+
+  
+    {% assign tabs_array = include.tabs | split: '|' %}
+    {% for tab in tabs_array %}
+      {{ tab }}
+    {% endfor %}
+  
+  
+  
+    {{ include.content1 }}
+  
+  
+  {% if include.content2 %}
+  
+    {{ include.content2 }}
+  
+  {% endif %}
+  
+  {% if include.content3 %}
+  
+    {{ include.content3 }}
+  
+  {% endif %}
