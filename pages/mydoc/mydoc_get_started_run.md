@@ -30,7 +30,37 @@ Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
 |
 
-To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar/extract it. Since we use the pre-compiled DAFoam Docker image, we need to first start the Docker container (a light-weight virtual machine). If you use **Linux**, use the commands on [this page](mydoc_get_started_start_docker_linux.html). If you use **MacOS**, use the commands on [this page](mydoc_get_started_start_docker_mac.html). If you use **Windows 10**, use the commands on [this page](mydoc_get_started_start_docker_windows10.html), If you use **Windows 11**, use the commands on [this page](mydoc_get_started_start_docker_windows11.html).
+To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar/extract it. Open a **Terminal** (Linux/MacOS) or **Command Prompt** (Windows) and go to a tutorial folder. For example, if you download and extract the tutorial files to the Downloads folder and want to run the NACA0012 airfoil case with incompressible flow conditions, use this command:
+
+<pre>
+cd Downloads/tutorials-main/NACA0012_Airfoil/incompressible
+</pre>
+
+Once you are in a tutorial case folder, use the following command to start the pre-compiled DAFoam Docker container (a light-weight virtual machine).
+
+<div class="tab-container" data-tab-group="platform">
+<div class="tab-buttons">
+<button class="tab-button">Win10</button>
+<button class="tab-button">Win11</button>
+<button class="tab-button">MacOS/Linux</button>
+<button class="tab-button">Linux</button>
+</div>
+<div class="tab-content">
+<pre>
+docker run -it --rm -u dafoamuser --mount "type=bind,src=%cd%,target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
+</pre>
+</div>
+<div class="tab-content">
+<pre>
+docker run -it --rm -u dafoamuser --mount "type=bind,src=.,target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
+</pre>
+</div>
+<div class="tab-content">
+<pre>
+docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
+</pre>
+</div>
+</div>
 
 The above command will start a Docker container, mount the **current directory** on your local OS (tutorials-main/NACA0012_Airfoil/incompressible) to the container's **mount** directory, log in to the container's mount directory as dafoamuser, and set the relevant DAFoam environmental variables. You may see something like this on your terminal: `dafoamuser@00fb6ceac4da:~/mount$`. 
 
@@ -47,19 +77,6 @@ mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
 The optimization progress will be printed to the screen and also written to logOpt.txt (we will elaborate on logOpt.txt later on [this page](mydoc_get_started_runscript.html)). This case ran for 18 optimization iterations and took about 15 minutes with an Intel 3.0 GHz CPU.
-
-<div class="tab-container" data-tab-group="platform">
-<div class="tab-buttons">
-<button class="tab-button">macOS</button>
-<button class="tab-button">Windows</button>
-</div>
-<div class="tab-content">
-<pre><code>echo $HOME</code></pre>
-</div>
-<div class="tab-content">
-<pre><code>echo %USERPROFILE%</code></pre>
-</div>
-</div>
 
 {% include note.html content="For MacOS and Windows, make sure you open the Docker Desktop app before running Docker commands." %}
 
