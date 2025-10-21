@@ -1264,10 +1264,11 @@ pre {
     top: 8px;
     right: 8px;
     padding: 4px 8px;
+    background: none;
     background-color: transparent;
     color: #666;
-    border: 1px solid transparent;
-    border-radius: 3px;
+    border: none;
+    outline: none;
     cursor: pointer;
     font-size: 16px;
     opacity: 0.5;
@@ -1278,9 +1279,13 @@ pre {
 .copy-button:hover {
     opacity: 1;
     background-color: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
 }
 
 .copy-button:active {
     transform: scale(0.95);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.copy-button:focus {
+    outline: none;
 }
