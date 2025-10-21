@@ -14,7 +14,7 @@ The DAFoam package can be compiled with various dependency versions. Here we ela
 
 Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython
 | :------------------------------------------------------------------------------------------------ | 
-22.04.2 | gcc/11.4  | 4.1.2   | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.9    | 1.23.5 | 1.13.1 | 0.29.21
+22.04.2 | gcc/11.4  | 4.1.2   | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.10    | 1.23.5 | 1.13.1 | 0.29.21
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM.
 
@@ -54,9 +54,9 @@ Install Miniconda3 by running this command:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/packages && \
-wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh && \
-chmod 755 Miniconda3-py39_4.12.0-Linux-x86_64.sh && \
-./Miniconda3-py39_4.12.0-Linux-x86_64.sh -b -p $DAFOAM_ROOT_PATH/packages/miniconda3 && \
+wget https://repo.anaconda.com/miniconda/Miniconda3-py310_22.11.1-1-Linux-x86_64.sh && \
+chmod 755 Miniconda3-py310_22.11.1-1-Linux-x86_64.sh && \
+bash ./Miniconda3-py310_22.11.1-1-Linux-x86_64.sh -b -p $DAFOAM_ROOT_PATH/packages/miniconda3 && \
 echo '# Miniconda3' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -225,6 +225,10 @@ cp -r config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
 sed -i "s/mpifort/mpif90/g" config/config.mk && \
 make && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/mdolab/prefoil/archive/v2.0.1.tar.gz -O prefoil.tar.gz && \
+tar -xvf prefoil.tar.gz && cd prefoil-2.0.1 && \
+pip install . && \
+cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/pyoptsparse/archive/v2.10.1.tar.gz -O pyoptsparse.tar.gz && \
 tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.10.1 && \
 pip install .
@@ -354,6 +358,22 @@ wget https://github.com/mdolab/pyofm/archive/refs/tags/v1.2.3.tar.gz -O pyofm.ta
 tar -xvf pyofm.tar.gz && cd pyofm-* && \
 make && pip install .
 </pre>
+
+## **Hisa4DAFoam**
+
+DAFoam integrates a density-based, high-speed aerodynamic CFD solver [Hisa](https://hisa.gitlab.io/index.html). We have adopted the original Hisa solver into a DAFoam compatible lib called Hisa4DAFoam. Run the following command to install the Hisa4DAFoam dependency: 
+
+<pre>
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM && \
+git clone https://github.com/DAFoam/Hisa4DAFoam && \
+cd Hisa4DAFoam && \
+./Allmake
+</pre>
+
+You should see "Build Successful!" at the end of the compilation. Once Hisa4DAFoam is compiled, you need to recompile the DAFoam repo in repos/dafoam to make sure everything is up-to-date.
+
+***NOTE: The solver is called DAHisaFoam and is in a beta state.*** It is not supported by v4.0.2. Instead, you need to use the latest version of the DAFoam repo. We currently have two tutorials: supersonic, Euler flow optimization for a [cone](https://github.com/DAFoam/tutorials/tree/main/Cone_Supersonic) and a transonic, RANS flow optimization for [RAE2822 airfoil](https://github.com/DAFoam/tutorials/tree/main/RAE2822_Airfoil). Only the JST flux scheme is supported. Other schemes, such as AUSMPlusUp, may have adjoint convergence issues.
 
 ## **DAFoam**
 
@@ -508,24 +528,6 @@ source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc
 export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
 export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH
 </pre>
-
-## **Compile Hisa4DAFoam (optional)**
-
-DAFoam integrates a density-based, high-speed aerodynamic CFD solver [Hisa](https://hisa.gitlab.io/index.html). We have adopted the original Hisa solver into a DAFoam compatible lib called Hisa4DAFoam. Run the following command to install the Hisa4DAFoam dependency: 
-
-<pre>
-. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-cd $DAFOAM_ROOT_PATH/OpenFOAM && \
-wget https://github.com/DAFoam/Hisa4DAFoam/archive/refs/tags/v1.0.tar.gz -O Hisa4DAFoam.tar.gz && \
-tar -xvf Hisa4DAFoam.tar.gz && \
-mv Hisa4DAFoam-* Hisa4DAFoam && \
-cd Hisa4DAFoam && \
-./Allmake
-</pre>
-
-You should see "Build Successful!" at the end of the compilation. Once Hisa4DAFoam is compiled, you need to recompile the DAFoam repo in repos/dafoam to make sure everything is up-to-date.
-
-***NOTE: The solver is called DAHisaFoam and is in a beta state.*** It is not supported by v4.0.2. Instead, you need to use the latest version of the DAFoam repo. We currently have two tutorials: supersonic, Euler flow optimization for a [cone](https://github.com/DAFoam/tutorials/tree/main/Cone_Supersonic) and a transonic, RANS flow optimization for [RAE2822 airfoil](https://github.com/DAFoam/tutorials/tree/main/RAE2822_Airfoil). Only the JST flux scheme is supported. Other schemes, such as AUSMPlusUp, may have adjoint convergence issues.
 
 ## **Compile SNOPT for pyOptSparse (optional)**
 
