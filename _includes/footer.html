@@ -14,23 +14,21 @@
                     const preElements = document.querySelectorAll('pre');
                     
                     preElements.forEach(function(pre) {
-                        // Create a wrapper div
-                        const wrapper = document.createElement('div');
-                        wrapper.style.position = 'relative';
+                        // Make pre element positioned
+                        pre.style.position = 'relative';
                         
                         // Create copy button
                         const button = document.createElement('button');
                         button.className = 'copy-button';
                         button.textContent = 'Copy';
                         
-                        // Wrap the pre element
-                        pre.parentNode.insertBefore(wrapper, pre);
-                        wrapper.appendChild(pre);
-                        wrapper.appendChild(button);
+                        // Add button directly to pre element
+                        pre.appendChild(button);
                         
                         // Add click handler
                         button.addEventListener('click', function() {
-                            const code = pre.textContent;
+                            // Get text content but exclude the button text
+                            const code = pre.childNodes[0].textContent;
                             navigator.clipboard.writeText(code).then(function() {
                                 button.textContent = 'Copied!';
                                 setTimeout(function() {

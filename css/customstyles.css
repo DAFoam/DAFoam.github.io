@@ -1255,6 +1255,10 @@ h4.panel-title {
   font-size: 85%;
 }
 
+pre {
+    position: relative;
+}
+
 .copy-button {
     position: absolute;
     top: 8px;
