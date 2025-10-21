@@ -20,10 +20,11 @@
                         // Make pre element positioned
                         pre.style.position = 'relative';
                         
-                        // Create copy button
+                        // Create copy button with icon
                         const button = document.createElement('button');
                         button.className = 'copy-button';
-                        button.textContent = 'Copy';
+                        button.innerHTML = '📋'; // or use '⎘' or '📄'
+                        button.title = 'Copy to clipboard';
                         
                         // Add button directly to pre element
                         pre.appendChild(button);
@@ -40,9 +41,9 @@
                             const code = clone.textContent.trim();
                             
                             navigator.clipboard.writeText(code).then(function() {
-                                button.textContent = 'Copied!';
+                                button.innerHTML = '✓';
                                 setTimeout(function() {
-                                    button.textContent = 'Copy';
+                                    button.innerHTML = '📋';
                                 }, 2000);
                             }).catch(function(err) {
                                 console.error('Failed to copy: ', err);
