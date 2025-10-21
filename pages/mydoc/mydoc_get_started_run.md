@@ -71,13 +71,15 @@ mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 
 The optimization progress will be printed to the screen and also written to logOpt.txt (we will elaborate on logOpt.txt later on [this page](mydoc_get_started_runscript.html)). This case ran for 18 optimization iterations and took about 15 minutes with an Intel 3.0 GHz CPU.
 
-{% include note.html content="For MacOS and Windows, make sure you open the Docker Desktop app before running Docker commands." %}
+A few notes:
 
-{% include note.html content="Treat the Docker container as disposable, i.e., start one container for one optimization run. If the optimization is running and you want to kill it, press `ctr+c` or `ctr+\`. After the optimization is done, type `exit` to exit the Docker container and free up the occupied memory." %}
+- For MacOS and Windows, make sure you open the Docker Desktop app before running Docker commands.
 
-{% include note.html content="Before re-running a case, run `./Allclean.sh` to clean up the previous optimization results." %}
+- Treat the Docker container as disposable, i.e., start one container for one optimization run. If the optimization is running and you want to kill it, press `ctr+c` or `ctr+\`. After the optimization is done, type `exit` to exit the Docker container and free up the occupied memory.
 
-{% include note.html content="dafoamuser has the sudo privilege and its password is: dafoamuser." %}
+- Before re-running a case, run `./Allclean.sh` to clean up the previous optimization results.
+
+- dafoamuser has the sudo privilege and its password is: dafoamuser.
 
 Check [this page](mydoc_get_started_post_processing.html) for interpreting and post processing the optimization results.
 
