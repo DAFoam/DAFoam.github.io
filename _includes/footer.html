@@ -8,4 +8,39 @@
             </div>
 
             <script src="{{ '/js/tabs.js' | relative_url }}"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Find all pre elements
+                    const preElements = document.querySelectorAll('pre');
+                    
+                    preElements.forEach(function(pre) {
+                        // Create a wrapper div
+                        const wrapper = document.createElement('div');
+                        wrapper.style.position = 'relative';
+                        
+                        // Create copy button
+                        const button = document.createElement('button');
+                        button.className = 'copy-button';
+                        button.textContent = 'Copy';
+                        
+                        // Wrap the pre element
+                        pre.parentNode.insertBefore(wrapper, pre);
+                        wrapper.appendChild(pre);
+                        wrapper.appendChild(button);
+                        
+                        // Add click handler
+                        button.addEventListener('click', function() {
+                            const code = pre.textContent;
+                            navigator.clipboard.writeText(code).then(function() {
+                                button.textContent = 'Copied!';
+                                setTimeout(function() {
+                                    button.textContent = 'Copy';
+                                }, 2000);
+                            }).catch(function(err) {
+                                console.error('Failed to copy: ', err);
+                            });
+                        });
+                    });
+                });
+            </script>
 </footer>
