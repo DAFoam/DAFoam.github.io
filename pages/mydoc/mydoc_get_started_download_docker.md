@@ -11,46 +11,28 @@ The easiest way to run DAFoam optimizations is to use the **pre-compiled package
 
 Before downloading the pre-compiled package, you need to install **Docker**. Follow the installation instructions for [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu), [Fedora](https://docs.docker.com/install/linux/docker-ce/fedora), [CentOS](https://docs.docker.com/install/linux/docker-ce/centos), [MacOS](https://hub.docker.com/editions/community/docker-ce-desktop-mac/), and  [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). 
 
-Here we give examples for Ubuntu, MacOS, and Windows.
+Here we give examples for Windows, MacOS, and Ubuntu.
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
 <button class="tab-button">Windows</button>
 <button class="tab-button">MacOS</button>
-<button class="tab-button">Ubuntu</button>
+<button class="tab-button">Ubuntu-20.04</button>
 </div>
 <div class="tab-content">
-If you use Ubuntu 22.04, install the latest Docker by running this command in the terminal:
+Download the installer (Docker Desktop) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-windows). Double click Docker Desktop Installer.exe and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep it open when running Docker commands. If asked, update to the latest WSL2 Linux kernel following the instructions. If you use Windows 10 Home, follow the [instructions](https://docs.docker.com/docker-for-windows/install-windows-home) to enable Windows Subsystem for Linux (WSL) 2, before installing Docker.
+</div>
+<div class="tab-content">
+Download the installer (Docker Desktop) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-mac). Double click Docker.dmg and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep it open when running Docker commands.
+</div>
+<div class="tab-content">
+Install the latest Docker by running this command in the terminal:
 <pre>sudo apt-get remove docker docker-engine docker.io containerd runc && sudo apt-get update && sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent   software-properties-common -y && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && sudo add-apt-repository "deb [arch=amd64] https:// download. docker.com/linux/ubuntu $(lsb_release -cs) stable" && sudo apt-get update && sudo apt-get install docker docker.io -y</pre>
 Then you need to add your user name to the Docker group by running this command:
 <pre>sudo usermod -aG docker $USER</pre>
 After this, you need to logout and re-login your account to make the usermod command effective. 
 </div>
-<div class="tab-content">
-Click "Get Stable" to download the installer (Docker.dmg) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-mac). Double click Docker.dmg and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep it open when running Docker commands.
 </div>
-<div class="tab-content">
-click "Get Stable" to download the installer (Docker Desktop Installer.exe) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). Double click Docker Desktop Installer.exe and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep it open when running Docker commands. If asked, update to the latest WSL2 Linux kernel following the instructions. If you use **Windows 10 Home**, follow the [instructions](https://docs.docker.com/docker-for-windows/install-windows-home) to enable Windows Subsystem for Linux (WSL) 2, before installing Docker.
-</div>
-</div>
- 
-- If you use **Ubuntu 20.04**, install the latest Docker by running this command in the terminal:
-
-  <pre>
-  sudo apt-get remove docker docker-engine docker.io containerd runc && sudo apt-get update && sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent   software-properties-common -y && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && sudo add-apt-repository "deb [arch=amd64] https:// download. docker.com/linux/ubuntu $(lsb_release -cs) stable" && sudo apt-get update && sudo apt-get install docker docker.io -y
-  </pre>
-  
-  Then you need to add your user name to the Docker group by running this command:
-  
-  <pre>
-  sudo usermod -aG docker $USER
-  </pre>
-  
-  After this, you need to **logout and re-login your account** to make the usermod command effective. 
-
-- If you use **MacOS**, click "Get Stable" to download the installer (Docker.dmg) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-mac). Double click Docker.dmg and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep it open when running Docker commands.
-
-- If you use **Windows 10 Pro**, click "Get Stable" to download the installer (Docker Desktop Installer.exe) from [here](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). Double click Docker Desktop Installer.exe and follow the instructions to install. Once done, open the Docker Desktop app (no need to sign in) and keep it open when running Docker commands. If asked, update to the latest WSL2 Linux kernel following the instructions. If you use **Windows 10 Home**, follow the [instructions](https://docs.docker.com/docker-for-windows/install-windows-home) to enable Windows Subsystem for Linux (WSL) 2, before installing Docker.
 
 Once the above installation is done, open a **Terminal** (Linux and MacOS) or **Command Prompt** (Windows) and verify the Docker installation by running:
 
