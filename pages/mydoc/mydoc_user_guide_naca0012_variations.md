@@ -259,36 +259,163 @@ Place holder text, don't change!
 
 ## Multi-case optimization
 
-The following is a multi-case aerodynamic shape optimization problem for the NACA0012 airfoil. This tutorial will show you how to use one runScript.py to run multiple cases within one folder. Go to the directory: /tutorials-master/NACA0012_Airfoil/multicase, we will see two subdirectories, SA and SST, which are the two cases we are going to run. To do that, we need create the builder to initialize the DASolvers for both cases In the `setup(self)` function.
+The following is a multi-case aerodynamic shape optimization problem for the NACA0012 airfoil. This tutorial will show you how to use one runScript.py to run multiple cases within one folder. Go to the directory: /tutorials-master/NACA0012_Airfoil/multicase, and we will see two subdirectories, SA and SST, which are the two cases we are going to run. 
 
+The "runScript.py" for the multi-case is mostly like the NACA0012 incompressible case, except that we need to provide the parameters required for the SST model, such as "k0" and "omega0".
 ```python
-    def setup(self):
-
-        # create the builder to initialize the DASolvers for both cases (they share the same mesh option)
-        dafoam_builder_sa = DAFoamBuilder(daOptionsSA, meshOptions, scenario="aerodynamic", run_directory="SA")
-        dafoam_builder_sa.initialize(self.comm)
-
-        dafoam_builder_sst = DAFoamBuilder(daOptionsSST, meshOptions, scenario="aerodynamic", run_directory="SST")
-        dafoam_builder_sst.initialize(self.comm)
+# =============================================================================
+# Input Parameters
+# =============================================================================
+U0 = 10.0
+p0 = 0.0
+nuTilda0 = 4.5e-5
+k0 = 0.015
+omega0 = 100.0
+CL_target = 0.5
+aoa0 = 5.0
+A0 = 0.1
+rho0 = 1.0
 ```
 
-Then we can add the mesh and geometry components.
+Just like the SA model, we also need to provide the daOptions for the SST model.
 ```python
-        # add the mesh component
-        self.add_subsystem("mesh_sa", dafoam_builder_sa.get_mesh_coordinate_subsystem())
-        self.add_subsystem("mesh_sst", dafoam_builder_sst.get_mesh_coordinate_subsystem())
-
-        # add the geometry component (FFD)
-        self.add_subsystem("geometry_sa", OM_DVGEOCOMP(file="SA/FFD/wingFFD.xyz", type="ffd"))
-        self.add_subsystem("geometry_sst", OM_DVGEOCOMP(file="SST/FFD/wingFFD.xyz", type="ffd"))
-
-        # add a scenario (flow condition) for optimization, we pass the builder
-        # to the scenario to actually run the flow and adjoint
-        self.mphys_add_scenario("scenario_sa", ScenarioAerodynamic(aero_builder=dafoam_builder_sa))
-        self.mphys_add_scenario("scenario_sst", ScenarioAerodynamic(aero_builder=dafoam_builder_sst))
+daOptionsSST = {
+    "designSurfaces": ["wing"],
+    "solverName": "DASimpleFoam",
+    "primalMinResTol": 1.0e-8,
+    "primalBC": {
+        "U0": {"variable": "U", "patches": ["inout"], "value": [U0, 0.0, 0.0]},
+        "p0": {"variable": "p", "patches": ["inout"], "value": [p0]},
+        "k0": {"variable": "k", "patches": ["inout"], "value": [k0]},
+        "omega0": {"variable": "omega", "patches": ["inout"], "value": [omega0]},
+        "useWallFunction": True,
+    },
+    "function": {
+        "CD": {
+            "type": "force",
+            "source": "patchToFace",
+            "patches": ["wing"],
+            "directionMode": "parallelToFlow",
+            "patchVelocityInputName": "patchV",
+            "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
+        },
+        "CL": {
+            "type": "force",
+            "source": "patchToFace",
+            "patches": ["wing"],
+            "directionMode": "normalToFlow",
+            "patchVelocityInputName": "patchV",
+            "scale": 1.0 / (0.5 * U0 * U0 * A0 * rho0),
+        },
+    },
+    "adjEqnOption": {"gmresRelTol": 1.0e-6, "pcFillLevel": 1, "jacMatReOrdering": "rcm"},
+    "normalizeStates": {
+        "U": U0,
+        "p": U0 * U0 / 2.0,
+        "k": k0,
+        "omega": omega0,
+        "phi": 1.0,
+    },
+    "inputInfo": {
+        "aero_vol_coords": {"type": "volCoord", "components": ["solver", "function"]},
+        "patchV": {
+            "type": "patchVelocity",
+            "patches": ["inout"],
+            "flowAxis": "x",
+            "normalAxis": "y",
+            "components": ["solver", "function"],
+        },
+    },
+}
 ```
 
-The N2 diagram will output as .html, which can be opened within a web browser. This is an interactive diagram can help you visualize your connections within your optimization framework. 
+Then, we need to create the builder to initialize the DASolvers for both cases in the `setup(self)` function, and add the mesh, geometry, and scenario components.
+```python
+def setup(self):
+    # create the builder to initialize the DASolvers for both cases (they share the same mesh option)
+    dafoam_builder_sa = DAFoamBuilder(daOptionsSA, meshOptions, scenario="aerodynamic", run_directory="SA")
+    dafoam_builder_sa.initialize(self.comm)
+    dafoam_builder_sst = DAFoamBuilder(daOptionsSST, meshOptions, scenario="aerodynamic", run_directory="SST")
+    dafoam_builder_sst.initialize(self.comm)
+
+    # add the mesh component
+    self.add_subsystem("mesh_sa", dafoam_builder_sa.get_mesh_coordinate_subsystem())
+    self.add_subsystem("mesh_sst", dafoam_builder_sst.get_mesh_coordinate_subsystem())
+
+    # add the geometry component (FFD)
+    self.add_subsystem("geometry_sa", OM_DVGEOCOMP(file="SA/FFD/wingFFD.xyz", type="ffd"))
+    self.add_subsystem("geometry_sst", OM_DVGEOCOMP(file="SST/FFD/wingFFD.xyz", type="ffd"))
+
+    # add a scenario (flow condition) for optimization, we pass the builder
+    # to the scenario to actually run the flow and adjoint
+    self.mphys_add_scenario("scenario_sa", ScenarioAerodynamic(aero_builder=dafoam_builder_sa))
+    self.mphys_add_scenario("scenario_sst", ScenarioAerodynamic(aero_builder=dafoam_builder_sst))
+
+    # need to manually connect the x_aero0 between the mesh and geometry components
+    # here x_aero0 means the surface coordinates of structurally undeformed mesh
+    self.connect("mesh_sa.x_aero0", "geometry_sa.x_aero_in")
+    self.connect("geometry_sa.x_aero0", "scenario_sa.x_aero")
+
+    self.connect("mesh_sst.x_aero0", "geometry_sst.x_aero_in")
+    self.connect("geometry_sst.x_aero0", "scenario_sst.x_aero")
+```
+
+In the `configure(self)` function, we also need to provide the corresponding parameters for both the SA and SST models.
+```python
+def configure(self):
+    # get the surface coordinates from the mesh component
+    points_sa = self.mesh_sa.mphys_get_surface_mesh()
+    points_sst = self.mesh_sst.mphys_get_surface_mesh()
+
+    # add pointset to the geometry component
+    self.geometry_sa.nom_add_discipline_coords("aero", points_sa)
+    self.geometry_sst.nom_add_discipline_coords("aero", points_sst)
+
+    # set the triangular points to the geometry component for geometric constraints
+    tri_points_sa = self.mesh_sa.mphys_get_triangulated_surface()
+    self.geometry_sa.nom_setConstraintSurface(tri_points_sa)
+    tri_points_sst = self.mesh_sst.mphys_get_triangulated_surface()
+    self.geometry_sst.nom_setConstraintSurface(tri_points_sst)
+
+    self.geometry_sa.nom_addShapeFunctionDV(dvName="shape", shapes=shapes)
+    self.geometry_sst.nom_addShapeFunctionDV(dvName="shape", shapes=shapes)
+
+    # add the design variables to the dvs component's output
+    self.dvs.add_output("shape", val=np.array([0] * len(shapes)))
+    self.dvs.add_output("patchV_sa", val=np.array([U0, aoa0]))
+    self.dvs.add_output("patchV_sst", val=np.array([U0, aoa0]))
+
+    # manually connect the dvs output to the geometry and cruise
+    # sa and sst cases share the same shape
+    self.connect("patchV_sa", "scenario_sa.patchV")
+    self.connect("shape", "geometry_sa.shape")
+    self.connect("patchV_sst", "scenario_sst.patchV")
+    self.connect("shape", "geometry_sst.shape")
+
+    # define the design variables to the top level
+    self.add_design_var("shape", lower=-1.0, upper=1.0, scaler=10.0)
+    self.add_design_var("patchV_sa", lower=[U0, 0.0], upper=[U0, 10.0], scaler=0.1)
+    self.add_design_var("patchV_sst", lower=[U0, 0.0], upper=[U0, 10.0], scaler=0.1)
+
+    # add objective and constraints to the top level
+    self.connect("scenario_sa.aero_post.CD", "obj.cd_sa")
+    self.connect("scenario_sst.aero_post.CD", "obj.cd_sst")
+    self.add_constraint("scenario_sa.aero_post.CL", equals=CL_target, scaler=1.0)
+    self.add_constraint("scenario_sst.aero_post.CL", equals=CL_target, scaler=1.0)
+```        
+
+In this case, we optimize the case using both SA and SST models, and the objective function is the averaged drag between SA and SST. So we need to add an "obj" subsystem in the `setup(self)` function, and set the "value=(cd_sa+cd_sst)/2"). Then, in the `configure(self)` function, we can use the "obj.value" as the entry for the objective function.
+```python
+def setup(self):
+    self.add_subsystem("obj", om.ExecComp("value=(cd_sa+cd_sst)/2"))
+```
+
+```python
+def configure(self):
+    self.add_objective("obj.value", scaler=1.0)
+```
+
+The N2 diagram will output as .html, which can be opened within a web browser. This is an interactive diagram that can help you visualize your connections within your optimization framework. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/multi_case_n2.png" width="500" />
 
