@@ -54,20 +54,14 @@ The optimization progress will be printed to the screen and also written to logO
     <button class="tab-button">Windows</button>
   </div>
   
-  <div class="tab-content" markdown="1">
-
-```bash
-echo $HOME
-```
-
+  <div class="tab-content">
+    <p>macOS content:</p>
+    <pre><code>echo $HOME</code></pre>
   </div>
   
-  <div class="tab-content" markdown="1">
-
-```powershell
-echo %USERPROFILE%
-```
-
+  <div class="tab-content">
+    <p>Windows content:</p>
+    <pre><code>echo %USERPROFILE%</code></pre>
   </div>
 </div>
 
