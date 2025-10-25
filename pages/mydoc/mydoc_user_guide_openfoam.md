@@ -19,7 +19,7 @@ This chapter was written by [Christian Psenica](https://github.com/ChrisPsenica)
 OpenFOAM (Open-source Field Operation And Manipulation) is a free open-source finite-volume CFD solver. OpenFOAM is primarily written in C++ and comes with libraries to help facilitate numerical operations on field values. OpenFOAM also has a wide range of utilities for pre- and post-processing, such as mesh generation/quality checks and support for ParaView (for post-process visualization). There are three main branches of OpenFOAM: ESI OpenCFD, The OpenFOAM Foundation, and Extended Project. DAFoam only supports the ESI OpenCFD version, the OpenFOAM version discussed within this document.
 
 ### Follow Along
-This document contains basic information related to setting up an OpenFOAM simulation using the steady-state NACA0012 simulation. We will discuss every file within this case in an effort to clarify the various aspects of OpenFOAM.
+This document contains basic information related to setting up an OpenFOAM simulation using the steady-state [NACA0012 simulation](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM). We will discuss every file within this case in an effort to clarify the various aspects of OpenFOAM.
 
 To help with clarity, below is the file structure for the NACA0012 case. As a general overview: `0` contains boundary conditions and initial field values, `constant` handles flow properties (such as turbulence model and fluid modeling parameters), and `system` controls the numerical discretization, equation solution parameters, etc. This document serves as detailed documentation to these directories.
 
