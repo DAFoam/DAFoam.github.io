@@ -277,7 +277,7 @@ A0 = 0.1
 rho0 = 1.0
 ```
 
-Just like the SA model, we also need to provide the daOptions for the SST model.
+Just like the SA model, we also need to provide the daOptions for the SST model. For descriptions of the parameters, one can refer to the NACA0012 incompressible case.
 ```python
 daOptionsSST = {
     "designSurfaces": ["wing"],
@@ -329,7 +329,7 @@ daOptionsSST = {
 }
 ```
 
-Then, we need to create the builder to initialize the DASolvers for both cases in the `setup(self)` function, and add the mesh, geometry, and scenario components.
+Then, we need to create the builder to initialize the DASolvers for both cases in the `setup(self)` function, and the most important change we make here is that we need to use the "run_directory" entry, we need to specify one is for the SA model and the other is for the SST model (for new cases, such as when running a multi-case optimization problem for both subsonic and transonic cases, we may need to make corresponding changes to the "run_directory"), and after that, we can add the mesh, geometry, and scenario components for both cases. The primary benefit of a multi-case run is that within one folder, we can run the optimization across different cases. Note that within that folder, the SA subfolder and the SST subfolder should have their own "0", "constant", and "system" directories, etc.
 ```python
 def setup(self):
     # create the builder to initialize the DASolvers for both cases (they share the same mesh option)
@@ -360,7 +360,7 @@ def setup(self):
     self.connect("geometry_sst.x_aero0", "scenario_sst.x_aero")
 ```
 
-In the `configure(self)` function, we also need to provide the corresponding parameters for both the SA and SST models.
+In the `configure(self)` function, we also need to provide the corresponding parameters for both the SA and SST models. For descriptions of the parameters, one can refer to the NACA0012 incompressible case.
 ```python
 def configure(self):
     # get the surface coordinates from the mesh component
@@ -460,8 +460,20 @@ b) Provided the updated $N^2$ diagram.
 
 c) Provided the results of the optimization.
 
+**3. Multi-case**
+Set up a new multi-case (low-speed and transonic cases) optimization:
 
+- Use the NACA0012 as the baseline design (you can reuse the information in the existing multicase tutorial, such as mesh, FFD points, profiles, etc.)
+- The low-speed case Mach number is 0.3
+- The transonic case Mach number is 0.75
+- The target CL for the low-speed case is 0.5
+- The target CL for the transonic case is 0.6
 
+After this multi-case optimization is done:
+
+- Provide the N2 diagram
+- Report the optimized CD, and compute the CD reduction
+- Show the optimized airfoil shape.
 
 Place holder text, don't change!
 

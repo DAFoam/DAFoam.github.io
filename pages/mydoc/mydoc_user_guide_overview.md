@@ -7,7 +7,7 @@ permalink: mydoc_user_guide_overview.html
 folder: mydoc
 ---
 
-The objective of this user guide is to serve as a comprehensive, stand-alone resource to help new users onboard efficiently and become proficient in using DAFoam for a wide range of design optimization problems.
+The objective of this user guide is to serve as a comprehensive, stand-alone resource to help new users onboard efficiently and become proficient in using DAFoam for a wide range of design optimization problems. The case files for this user guide can be found [here](https://github.com/DAFoam/user_guide_files).
 
 - [Chapter 1. Background ](mydoc_user_guide_background.html)
 
