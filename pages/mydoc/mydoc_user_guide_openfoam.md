@@ -13,6 +13,13 @@ This chapter was written by [Christian Psenica](https://github.com/ChrisPsenica)
 
 # OpenFOAM v1812 NACA0012 Simulation Setup
 
+## Learning Objectives:
+After reading this chapter, you should be able to: 
+
+- Describe the basic file structure of an OpenFOAM simulation (which configuration files in which directories)
+- Describe the purpose of each configuration file
+- Setup and run the backward facing step case
+
 ## Introduction
 
 ### Background
@@ -35,7 +42,12 @@ To help with clarity, below is the file structure for the NACA0012 case. As a ge
 These steps will be elaborated on in the coming sections with particular emphasis on the `0.orig`, `constant`, and `system` directories. It is intended that the user reads this documentation carefully to gain a basic understanding of OpenFOAM. It is also recommended to follow along in the tutorial cases to recreate the simulation and post-process using ParaView (Don't have ParaView? Download ParaView for free, [here!](https://www.ParaView.org/download/)). 
 
 ## 1. Boundary and Initial Conditions - 0.orig
-The `0.orig` directory contains both the boundary conditions and the initial field values for the simulation. For clarity purposes it should be noted here that this simulation contains a `wing` boundary (wall), an `inout` boundary (far field domain), and two symmetry planes, one for either side of the airfoil. For this NACA0012 case, we can expand the `0.orig` directory to see which field values have specified boundary conditions:
+The `0.orig` directory contains both the boundary conditions and the initial field values for the simulation. For clarity purposes it should be noted here that this simulation contains a `wing` boundary (wall), an `inout` boundary (far field domain), and two symmetry planes (one for either side of the airfoil) as denoted by Fig.1. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/openfoam_naca_mesh.png" width="500" />
+Fig.1 Labeled boundaries of the OpenFOAM NACA0012 case
+
+For this NACA0012 case, we can expand the `0.orig` directory to see which field values have specified boundary conditions:
 
 <pre>      
 |-- 0.orig        // directory containing BCs
