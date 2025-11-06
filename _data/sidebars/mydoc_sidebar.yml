@@ -257,6 +257,10 @@ entries:
     - title: Chapter 11 Aerothermal (CHT)
       url: /mydoc_user_guide_ubend_aerothermal.html
       output: web, pdf
+    
+    - title: Appendix
+      url: /mydoc_user_guide_appendix.html
+      output: web, pdf
 
   - title: Developer Guide
     output: web, pdf

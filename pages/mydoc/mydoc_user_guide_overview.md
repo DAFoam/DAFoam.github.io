@@ -31,6 +31,8 @@ The objective of this user guide is to serve as a comprehensive, stand-alone res
 
 - [Chapter 11. U-bend pipe: aero-thermal optimization](mydoc_user_guide_ubend_aerothermal.html)
 
+- [Appendix](mydoc_user_guide_appendix.html)
+
 The user guide was written by [Ping He](https://github.com/friedenhe), [Lean Fang](https://github.com//LeanFang), [Zilong Li](https://github.com//zilonglicfd), [Seth Zoppelt](https://github.com/szoppelt), and [Christian Psenica](https://github.com/ChrisPsenica).
 
 {% include links.html %}
