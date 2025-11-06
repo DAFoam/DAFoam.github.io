@@ -45,6 +45,7 @@ These steps will be elaborated on in the coming sections with particular emphasi
 The `0.orig` directory contains both the boundary conditions and the initial field values for the simulation. For clarity purposes it should be noted here that this simulation contains a `wing` boundary (wall), an `inout` boundary (far field domain), and two symmetry planes (one for either side of the airfoil) as denoted by Fig.1. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/openfoam_naca_mesh.png" width="500" />
+
 Fig.1 Labeled boundaries of the OpenFOAM NACA0012 case
 
 For this NACA0012 case, we can expand the `0.orig` directory to see which field values have specified boundary conditions:
