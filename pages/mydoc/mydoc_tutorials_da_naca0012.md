@@ -42,9 +42,9 @@ The case ran for 20 steps and took about 10 mins using Intel 3.0 GHz CPU with 4 
 
 The results of the optimization are as follows. We can see that the overall pressure profile agree well with the reference.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_steady_pressure_ref.png" style="width:500px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_steady_pressure_baseline.png" style="width:500px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_steady_pressure_optimized.png" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_steady_pressure_ref.jpeg" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_steady_pressure_baseline.jpeg" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_steady_pressure_optimized.jpeg" style="width:500px !important;" />
 
 Fig. 1. Pressure contour for the reference (top), baseline (mid), and optimized (bot) designs.
 
@@ -85,13 +85,13 @@ The case ran for 100 steps and took about 8 hours using Intel 3.0 GHz CPU with 4
 
 The animations of the optimization are as follows. We can see that the overall pressure profile and velocity contours agree well with the reference.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/NACA0012_DA_unsteady_pressure.gif" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_unsteady_pressure.gif" style="width:500px !important;" />
 
 Fig. 3. Wall pressure distributions animation, comparing among the reference, baseline, and optimized designs.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_unsteady_U_ref.png" style="width:500px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_unsteady_U_baseline.png" style="width:500px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_unsteady_U_optimized.png" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_unsteady_U_ref.gif" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_unsteady_U_baseline.gif" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_unsteady_U_optimized.gif" style="width:500px !important;" />
 
 Fig. 4. Velocity contour for the reference (top), baseline (mid), and optimized (bot) designs.
 
