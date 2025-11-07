@@ -197,7 +197,7 @@ entries:
         output: web, pdf
         subfolderitems:
       
-        - title: NACA0012
+        - title: NACA0012 (steady/unsteady)
           url: /mydoc_tutorials_da_naca0012.html
           output: web, pdf
   
