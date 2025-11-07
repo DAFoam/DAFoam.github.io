@@ -91,7 +91,7 @@ Fig. 3. Wall pressure distributions animation, comparing among the reference, ba
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_unsteady_U_ref.gif" style="width:500px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_unsteady_U_baseline.gif" style="width:500px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_unsteady_U_optimized.gif" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_DA_unsteady_U_trained.gif" style="width:500px !important;" />
 
 Fig. 4. Velocity contour for the reference (top), baseline (mid), and optimized (bot) designs.
 
