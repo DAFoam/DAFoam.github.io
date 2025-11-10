@@ -675,4 +675,57 @@ This script sources OpenFOAM and its run functions to begin. `$WM_PROJECT_DIR` i
 
 It is recommended to run this NACA0012 case in parallel as that will speed up the time it takes for the simulation to complete. However, here we have included this as an option to show the user how a case can be run in parallel or in serial. If `parallel=true` then the case runs in parallel. If `false`, then we run the case in serial. Hence the use of the `if-else` statement. For our parallel run, we first run `runApplication decomposePar` (only after copying our boundary conditions with `cp -r 0.orig 0`) which decomposes the domain according to `decomposeParDict`. After the decomposition, we run the simulation via `runParallel $(getApplication)` which looks into `system/controlDict`, gets the application (from Sec. 3.1, this is `application simpleFoam;`), and begins the simulation. Once the simulation is over, we reconstruct the domain (the opposite of decomposing the domain) via `runApplication reconstructPar`. This is not absolutely necessary to run, but it will save a lot of disk space, especially for larger simulations. Finally, we end with `rm -rf processor*` which deletes all of the processor directories. These directories contain our solution. However, they have been reconstructed (`runApplication reconstructPar`) and are therefore redundant and no longer needed.
 
+## Questions
+
+Construct a new case of a [backward facing step](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM) and compute the drag along the bottom wall:
+
+- Use the `kOmegaSST` turbulence model
+
+- Add an `aeroForces` function in `system/controlDict` to compute the drag force on `lowerWall`
+
+- Use an inlet velocity of 44.2 $m/s$ (positive x-direction)
+
+For this case, the mesh generation is automatically handled within the `run` script which runs `system/blockMeshDict`. This `run` script and `system/blockMeshDict` have been included; you will not have to generate the mesh yourself. The `run` script only has the necessary line to generate the mesh. All other code will have to be manually added. Additionally, since `system/fvSchemes` and `system/fvSolution` were not covered in-depth in this guide, these files have been provided as well. 
+
+After running this case:
+
+- You should arrive at a drag value of $C_{d} = 0.0041$
+
+
+Hints: 
+
+- It may be useful to generate the mesh and open it in ParaView to see what each boundary is before creating `0.orig`. This can be done by creating the `paraview.foam` file and opening this file in ParaView after running the `blockMesh` command in the `run` script.
+
+- Treat the `lowerWallStartup` and `upperWallStartup` as symmetry planes and `front` and `back` as empty patches
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% include links.html %}
