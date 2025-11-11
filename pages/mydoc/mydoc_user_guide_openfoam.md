@@ -7,8 +7,6 @@ permalink: mydoc_user_guide_openfoam.html
 folder: mydoc
 ---
 
-{% include note.html content="This webpage is under construction." %}
-
 This chapter was written by [Christian Psenica](https://github.com/ChrisPsenica) and reviewed by [Ping He](https://github.com/friedenhe).
 
 ## Learning Objectives:
