@@ -71,7 +71,7 @@ dimensions      [0 1 -1 0 0 0 0];
 
 The `dimensions` key is a list containing 7 numbers. Each (non-zero) number in `dimensions` denotes which unit is being used, corresponding to the entries in `dimensionsUsed` (this key is for an example, it is not an actual key used in OpenFOAM). A zero indicates that the unit is not being used. The value of the actual (non-zero) numbers gives the exponent on the unit. So an entry of `[0 1 0 0 0 0 0]` gives meter ($m$). However, `[0 2 0 0 0 0 0]` indicates $m*m = m^2$ and so on. A negative sign before the number indicates a negative exponent. Knowing this, it becomes clearer to see which units are expected. As an example, the kinematic pressure, $m^2/s^2$, would be `dimensions [0 2 -2 0 0 0 0]`.
 
-Lastly, the `internalField` key is used as an initial condition to the problem and should be assigned with care. Field values such as pressure, temperature, velocity etc. can be easily assigned by the user and depend on what the user wants to simulate. The calculations for turbulent fields (such as `nuTilda`, `k`, `epsilon` etc.) are beyond the scope of this beginner user guide and we encourage the motivated reader to see the advanced user guide for a breakdown on these calculations.
+Lastly, the `internalField` key is used as an initial condition to the problem and should be assigned with care. Field values such as pressure, temperature, velocity etc. can be easily assigned by the user and depend on what the user wants to simulate. The calculations for turbulent fields (such as `nuTilda`, `k`, `epsilon` etc.) are beyond the scope of this beginner user guide and we encourage the motivated reader to see the [advanced OpenFOAM user guide](https://www.openfoam.com/documentation/user-guide) for a breakdown on these calculations.
 
 ### 1.2 Velocity (U)
 For the NACA0012, the fluid flow is 10 m/s in magnitude at an angle of attack of ~5.14 degrees:
@@ -147,7 +147,7 @@ boundaryField
 Wall boundaries (such as the wing) typically use a `zeroGradient` pressure boundary condition type. As mentioned previously, the symmetry planes always receive the `symmetry` type boundary condition (in the following sections, 1.4-1.8 we will omit discussion of this in an effort to reduce redundancy). The pressure far field domain uses an outletInlet boundary condition, where inlets are `zeroGradient` while outlets are `fixedValue`. 
 
 ### 1.4 Turbulent Kinematic Viscosity (nut)
-The following sections (1.4-1.5) are all turbulence field values. It is not uncommon, though not all the time necessary, to use wall functions for these values (mesh y+ > 30). For now, we will just state the use of wall functions and point the reader to the advanced user guide for in-depth details on wall functions and their applications within OpenFOAM. The discussion for these turbulent fields will also be brief, as the types of boundary conditions specified largely remain unchanged aside from the `wing` boundary. For the turbulent viscosity, we use the wall function `nutUSpaldingWallFunction`. Similar as before, this is a wall function specifically designed for the `nut` turbulent field. 
+The following sections (1.4-1.5) are all turbulence field values. It is not uncommon, though not all the time necessary, to use wall functions for these values (mesh y+ > 30). For now, we will just state the use of wall functions and point the reader to the [advanced OpenFOAM user guide](https://www.openfoam.com/documentation/user-guide) for in-depth details on wall functions and their applications within OpenFOAM. The discussion for these turbulent fields will also be brief, as the types of boundary conditions specified largely remain unchanged aside from the `wing` boundary. For the turbulent viscosity, we use the wall function `nutUSpaldingWallFunction`. Similar as before, this is a wall function specifically designed for the `nut` turbulent field. 
 
 <pre>
 dimensions      [0 2 -1 0 0 0 0];
@@ -226,21 +226,18 @@ The constant directory contains information related to turbulence and transport 
 |-- constant                 // directory containing mesh, turbulence model, and transport properties
   |-- polyMesh               // directory containing the mesh
     |-- boundary             // list of boundaries and associated mesh cells
-    |-- cellZones            // grouping of cells (user defined)
     |-- faces                // list of cell faces
-    |-- faceZones            // grouping of cell faces (user defined)
     |-- neighbour            // list of neighbour cell labels
     |-- owner                // list of owner cell labels
     |-- points               // vectors describing mesh cell verticies 
-    |-- pointZones           // grouping of point verticies (user defined)
   |-- transportProperties    // fluid transport parameters
   |-- turbulenceProperties   // turbulence parameters
 </pre>
 
 ### 2.1 Mesh Files (polyMesh)
-The mesh is user generated and can be generated using various methods/ tools. This can be done using third party programs or using OpenFOAM's built in tools (such as `snappyHexMesh`). For the NACA0012 case, the mesh is already generated and ready to use for the simulation. 
+The mesh is user-generated and can be generated using various methods/ tools. This can be done using third party programs or using OpenFOAM's built in tools (such as `snappyHexMesh`). For the NACA0012 case, the mesh is already generated and ready to use for the simulation. 
 
-For the discussion of the `polyMesh` directory, we will limit this section to showing the most pertinent file, `boundary`. This is the file most viewed in the `polyMesh` directory, and shows the various boundaries generated during the meshing process. The remaining files (`cellZones`, `faces`, `faceZones`, `neighbour`, `owner`, `points`, and `pointZones`) all contain organizational data on the mesh. Although it is possible to modify a few select entries within the `boundary` file without breaking the mesh (a topic left for the advanced user guide) it is highly recommended to never try and make manual adjustments to the remaining files. Although possible in theory to make modifications to these files successfully, it is very error prone and not an intended feature. If the physical mesh needs to be adjusted, the best practice is to always regenerate the mesh and have OpenFOAM modify these files for you. Below we can see the boundary file for our NACA0012 case:
+For the discussion of the `polyMesh` directory, we will limit this section to showing the most pertinent file, `boundary`. This is the file most viewed in the `polyMesh` directory, and shows the various boundaries generated during the meshing process. The remaining files (`faces`, `neighbour`, `owner`, and `points`) all contain organizational data on the mesh. Although it is possible to modify a few select entries within the `boundary` file without breaking the mesh (a topic left for the [advanced OpenFOAM user guide](https://www.openfoam.com/documentation/user-guide)) it is highly recommended to never try and make manual adjustments to the remaining files. Although possible in theory to make modifications to these files successfully, it is very error-prone and not an intended feature. If the physical mesh needs to be adjusted, the best practice is to always regenerate the mesh and have OpenFOAM modify these files for you. Below we can see the boundary file for our NACA0012 case:
 
 <pre>      
 4                                       // total number of boundaries in mesh
@@ -275,25 +272,25 @@ For the discussion of the `polyMesh` directory, we will limit this section to sh
 )
 </pre>
 
-From the `boundary` file we first notice the number `4`. This number indicates the total number of boundaries defined in our mesh. As we saw from Sec.1, we indeed have four boundaries: two symmetry planes, the wing itself, and the far field domain. Each one of these boundaries is defined here. Within each boundary entry there is an accompanying dictionary providing extra information for OpenFOAM regarding the boundary. The `type` key tells OpenFOAM what type of boundary we have. As expected, the symmetry planes are type `symmetry`, the wing itself is a `wall` boundary, and the far field is a `patch` (allowing fluid to flow through). Similar boundary types will be grouped together in OpenFOAM for organization, hence the `inGroups` key. `nFaces` tells OpenFOAM how many cell faces are contained within the given boundary. `startFace` tells OpenFOAM which cell is the first cell making up a boundary. All mesh cells in OpenFOAM are numbered, and these two keys help OpenFOAM identify boundaries.
+From the `boundary` file, we first notice the number `4`. This number indicates the total number of boundaries defined in our mesh. As we saw from Sec.1, we indeed have four boundaries: two symmetry planes, the wing itself, and the far field domain. Each one of these boundaries is defined here. Within each boundary entry, there is an accompanying dictionary providing extra information for OpenFOAM regarding the boundary. The `type` key tells OpenFOAM what type of boundary we have. As expected, the symmetry planes are type `symmetry`, the wing itself is a `wall` boundary, and the far field is a `patch` (allowing fluid to flow through). Similar boundary types will be grouped together in OpenFOAM for organization, hence the `inGroups` key. `nFaces` tells OpenFOAM how many cell faces are contained within the given boundary. `startFace` tells OpenFOAM which cell is the first cell making up a boundary. All mesh cells in OpenFOAM are numbered, and these two keys help OpenFOAM identify boundaries. NOTE: the patch names between the fields in the 0 folder (e.g., 0/U) and constant/polyMesh/boundary need to be consistent.
 
 ### 2.2 transportProperties
-The `transportProperties` file contains fluid specific properties which help define what kind of fluid is being simulated (most common air but of course other fluids can be modeled such as water or various gases). In a general sense, `transportProperties` is not the only file containing fluid parameters. For example, `thermophysicalProperties` also contains fluid parameters but is not included in our NACA0012 case as we do not simulate thermodynamic properties for this simulation. 
+The `transportProperties` file contains fluid specific properties which help define what kind of fluid is being simulated (most common air but of course other fluids can be modeled such as water or various gases). In a general sense, `transportProperties` is not the only file containing fluid parameters. For example, `thermophysicalProperties` also contains compressible fluid parameters but is not included in our NACA0012 case as this simulation considers only incompressible flow. 
 
 <pre>      
 transportModel Newtonian;  // transport model being used
 
 nu    1.5e-5;              // dynamic viscosity
 Pr    0.7;                 // Prandtl number
-Prt   1.0;                 // turbulent Prandtl number
+Prt   0.85;                 // turbulent Prandtl number
 </pre>
 
-The first entry tells OpenFOAM which transport model to use. The Newtonian transport model used in the NACA0012 case assumes a constant dynamic viscosity (nu). Hence the following entry, `nu`, where we give this constant value for OpenFOAM to use. The value used here, $1.5e-5$ is a typical value used for modeling air. 
+The first entry tells OpenFOAM which transport model to use. The Newtonian transport model used in the NACA0012 case assumes a constant dynamic viscosity (nu). Hence, the following entry, `nu`, where we give this constant value for OpenFOAM to use. The value used here, $1.5e-5$ is a typical value used for modeling air. 
 
-The following two entries are the Prandtl number and turbulent Prandtl number. The Prandtl number is a dimensionless quantity, a ratio of momentum diffusivity (kinematic viscosity, $\nu$) to thermal diffusivity ($\alpha$). The Prandtl number alone does not help describe fluid behavior for turbulent flow, hence the inclusion of the turbulent Prandtl number, `Prt`. Together, these quantities help identify if momentum diffusivity or thermal diffusivity dominates the fluid flow for both laminar and turbulent flow. Values for `Pr` `Prt` of 0.7 and 1.0, respectively are typical for modeling air.
+The following two entries are the Prandtl number and turbulent Prandtl number. The Prandtl number is a dimensionless quantity, a ratio of momentum diffusivity (kinematic viscosity, $\nu$) to thermal diffusivity ($\alpha$). The Prandtl number alone does not help describe fluid behavior for turbulent flow, hence the inclusion of the turbulent Prandtl number, `Prt`. Together, these quantities help identify if momentum diffusivity or thermal diffusivity dominates the fluid flow for both laminar and turbulent flow. Values for `Pr` `Prt` of 0.7 and 0.85, respectively are typical for modeling air.
 
 ### 2.3 turbulenceProperties
-The `turbulenceProperties` file informs OpenFOAM on how us, the user, wishes to model turbulence. We can see how turbulence modeling is defined below in this file:
+The `turbulenceProperties` file informs OpenFOAM of how users wish to model turbulence. We can see how turbulence modeling is defined below in this file:
 
 <pre>      
 simulationType RAS;                     // type of simulation to run
@@ -305,12 +302,12 @@ RAS                                     // dictionary containing turbulence mode
 } 
 </pre>
 
-For our NACA0012 case, we elect a Reynolds Averaged Simulation (`RAS`). There are other options available for the user which are outlined in the advanced user guide. Within the `RAS` dictionary we choose to use the `SpalartAllmaras` turbulence model. This is a very commonly used *one-equation* (solves a single transport equation) model using the 'Spalart-Allmaras variable', `nuTilda`. We elect this model typically due to it's simplicity and low computational cost. An exhaustive discussion on turbulence models in OpenFOAM can be found in the advanced user guide.
+For our NACA0012 case, we elect a Reynolds Averaged Simulation (`RAS`). There are other options available for the user which are outlined in the [advanced OpenFOAM user guide](https://www.openfoam.com/documentation/user-guide). Within the `RAS` dictionary we choose to use the `SpalartAllmaras` turbulence model. This is a very commonly used *one-equation* (solves a single transport equation) model using the 'Spalart-Allmaras variable', `nuTilda`. We elect this model typically due to it's simplicity and low computational cost. An exhaustive discussion on turbulence models in OpenFOAM can be found in the [advanced OpenFOAM user guide](https://www.openfoam.com/documentation/user-guide).
 
 The following entry, `turbulence  on;` tells OpenFOAM to model turbulent flow, not just laminar flow. `printCoeffs  off;` refers to the coefficients used in the Spalart-Allmaras turbulence model equation. These coefficients are beyond the scope of this user guide, and for the purposes of our NACA0012 case, we do not need to adjust these coefficients for this turbulence model hence we do not print these coefficients. For more advanced applications, these coefficients may need to be adjusted which would make `printCoeffs  on;` a sensible entry.
 
 ## 3. Flow Discretization, Simulation Run Parameters, and Solver Settings - system
-The `system` directory is home to most simulation parameters. Within this directory we specify things such as simulation run time, how to decompose the domain (only needed for running a simulation in parallel), as well as solver settings.
+The `system` directory is home to most simulation parameters. Within this directory, we specify things such as simulation run time, how to decompose the domain (only needed for running a simulation in parallel), as well as solver settings.
 
 <pre>      
 |-- system               // directory global simulation parameters
@@ -323,9 +320,9 @@ The `system` directory is home to most simulation parameters. Within this direct
 ### 3.1 Simulation Runtime Parameters (controlDict)
 Below we can see the various inputs in `controlDict`. The inputs from the `application` key to `runTimeModifiable` are required by OpenFOAM to run the simulation. The following block of code, the `functions` dictionary, is optional.
 
-Since we seek to run a steady-state case, we elect the `simpleFoam` solver for the `application` key. To specify how long we want the simulation to carry out (simulation time) we start the simulation at `startTime 0;` and tell OpenFOAM to start from this time (`startFrom startTime;`). We also need to tell OpenFOAM to stop at our specified end time. We use the `stopAt endTime;` entry for this and prescribe `endTime 1000;` (where this time is measured in seconds). The time step, `deltaT` is set to 1 second (this is fine and common practice for steady-state simulations, but for an unsteady simulation we would need a much smaller time step to maintain a stable simulation).
+Since we seek to run a steady-state, incompressible flow case, we elect the `simpleFoam` solver for the `application` key. To specify how long we want the simulation to carry out (simulation time), we start the simulation at `startTime 0;` and tell OpenFOAM to start from this time (`startFrom startTime;`). We also need to tell OpenFOAM to stop at our specified end time. We use the `stopAt endTime;` entry for this and prescribe `endTime 1000;` (where this time is measured in seconds). The time step, `deltaT` is set to 1 second (this is fine and common practice for steady-state simulations, but for an unsteady simulation we would need a much smaller time step to maintain a stable simulation).
 
-The `writeControl` key tells OpenFOAM how to measure when to write field values to the disk. Here we prescribe `timeStep`, effectively telling OpenFOAM we wish to write data at some increment based off the time step of the simulation. This is then a coupled entry with `writeInterval`; we only need the data at the end of the simulation so we set the `writeInterval` to 1000 seconds, matching our `endTime`. Combining `writeControl` and `writeInterval`, OpenFOAM understands this to be: "write the data every 1000 time steps".
+The `writeControl` key tells OpenFOAM how to measure when to write field values to the disk. Here we prescribe `timeStep`, effectively telling OpenFOAM we wish to write data at some increment based on the time step of the simulation. This is then a coupled entry with `writeInterval`; we only need the data at the end of the simulation so we set the `writeInterval` to 1000 seconds, matching our `endTime`. Combining `writeControl` and `writeInterval`, OpenFOAM understands this to be: "write the data every 1000 time steps".
 
 The `purgeWrite` key is an integer representing the limit on the number of time directories stored during a simulation. Here we disable this entry by passing a value of zero. If, for example, this entry were two, then only the latest two time directories will saved throughout the simulation (where old time directories are over written by new ones). For large cases, depending on the application, this can save a lot of storage. Additionally, we turn use `writeCompression on;` which tells OpenFOAM to store data in compressed files (gzip compression) rather than uncompressed (another method to save storage). We save our data in a human readable format, `writeFormat ascii;`, though we may also specify to store data as `binary`. When storing this data, we can choose how many decimal places to record. Here we choose 8: `writePrecision 8;`. This is the same where recording simulation time (`timePrecision 8;`). Lastly, we use `timeFormat general;` which instructs OpenFOAM to use general naming conventions for time directories.
 
@@ -372,20 +369,20 @@ functions
 }
 </pre>
 
-The next block of code is `functions`. In OpenFOAM, when the user wants to add some type of calculation, this is typically done within `controlDict`. As is typical with wing (airfoil for our NACA0012 simulation) cases, we want to simulate this wing in order to get aerodynamic data from it. One way we can do this is with the function `aeroForces`. The name `aeroForces` is specified by the user. For incompressible steady-state simulations, these entries can remain mostly unchanged from one case to another. However, there are a few pertinent entries to discuss. We must tell OpenFOAM which patch we want to calculate the aerodynamic forces for via `patches (wing);`. Additionally, we must prescribe the lift and drag direction in accordance with our global coordinate system. Here, we have lift in acting in the positive y-direction. Drag is in the positive x-direction (though multiplied by negative one to give the force acting on the wing). Our pitch axis is the z axis. As we are modeling an airfoil instead of a wing, we use `Aref = lRef = 0.1` which is our chord length. For a wing case, `Aref` should be the planform area whereas `lRef` is the mean aerodynamic chord.
+The next block of code is `functions`. In OpenFOAM, when the user wants to add some type of calculation, this is typically done within `controlDict`. As is typical with wing (airfoil for our NACA0012 simulation) cases, we want to simulate this wing in order to get aerodynamic data from it. One way we can do this is with the function `aeroForces`. The name `aeroForces` is specified by the user. For incompressible steady-state simulations, these entries can remain mostly unchanged from one case to another. However, there are a few pertinent entries to discuss. We must tell OpenFOAM which patch we want to calculate the aerodynamic forces for via `patches (wing);`. Additionally, we must prescribe the lift and drag direction in accordance with our global coordinate system. Here, we have a lift acting in the positive y-direction. Drag is in the positive x-direction (though multiplied by negative one to give the force acting on the wing). Our pitch axis is the z axis. As we are modeling an airfoil instead of a wing, we use `Aref = lRef = 0.1` which is our chord length. For a wing case, `Aref` should be the planform area whereas `lRef` is the mean aerodynamic chord.
 
 ### 3.2 Decomposition of Domain (decomposeParDict)
-Often times these CFD simulations last a very long time. To help speed up the process we can run the job in parallel, splitting up the simulation over multiple computer processors. This will greatly decrease the real-world run time of the simulation. To do this, we use `decomposeParDict`:
+Oftentimes these CFD simulations last a very long time. To help speed up the process, we can run the job in parallel, splitting up the simulation over multiple computer processors. This will greatly decrease the real-world run time of the simulation. To do this, we use `decomposeParDict`:
 
 <pre>      
-numberOfSubdomains  8;         // number of processors to split domain over
+numberOfSubdomains  4;         // number of processors to split domain over
 method              scotch;    // method for decomposition (splitting) domain
 </pre>
 
-As can be seen by the above block, there are very few inputs to this file. Since the NACA0012 case is very light weight (coarse mesh in a steady simulation) we choose to only split (decompose) the domain into 8 distinct parts. These parts will be distributed over 8 processor cores when running. To see this, when running the case, you will find directories `processor0 processor1 ... processor7` in your working directory. This is controlled by the `numberOfSubdomains` entry. For our NACA0012 case, and for most cases, we can choose a very simple and automatic decomposition algorithm, `method scotch;`. This method is very common to use as it is simple (requires no other entries), and handles everything automatically. There are other decomposition methods available, such as `hierarchical`, which will require a `coeffs` entry in `decomposeParDict`. This method is not needed for now, but for the motivated reader there are a few additional notes in `decomposeParDict` regarding this.
+As can be seen by the above block, there are very few inputs to this file. Since the NACA0012 case is very light weight (coarse mesh in a steady simulation) we choose to only split (decompose) the domain into 4 distinct parts. These parts will be distributed over 4 processor cores when running. To see this, when running the case, you will find directories `processor0 processor1 ... processor3` in your working directory. This is controlled by the `numberOfSubdomains` entry. For our NACA0012 case, and for most cases, we can choose a very simple and automatic decomposition algorithm, `method scotch;`. This method is very common to use as it is simple (requires no other entries), and handles everything automatically. There are other decomposition methods available, such as `hierarchical`, which will require a `coeffs` entry in `decomposeParDict`. This method is not needed for now, but for the motivated reader there are a few additional notes in `decomposeParDict` regarding this.
 
 ### 3.3 Numerical Schemes (fvSchemes)
-`fvSchemes` delves into the particular numerical schemes used to solve the Navier-Stokes equations, particularly how to handle derivatives. An in-depth analysis of the parameters found in `fvSchemes` is covered in the advanced user guide. For this user guide, we will mostly focus on the basic ideas and define the various dictionaries within `fvSchemes`. Below is the `fvSchemes` for our NACA0012 simulation:
+`fvSchemes` delves into the particular numerical schemes used to solve the Navier-Stokes equations, particularly how to handle derivatives. An in-depth analysis of the parameters found in `fvSchemes` is covered in the [advanced OpenFOAM user guide](https://www.openfoam.com/documentation/user-guide). For this user guide, we will mostly focus on the basic ideas and define the various dictionaries within `fvSchemes`. Below is the `fvSchemes` for our NACA0012 simulation:
 
 <pre>   
 // time derivative scheme   
@@ -438,15 +435,15 @@ wallDist
 }
 </pre>
 
-We first take note of `ddtSchemes`. As we are wanting a steady-state simulation, we elect `steadyState` for our time derivatives. In an unsteady case, it is common to use entries such as `euler` or `backward`. The `steadyState` entry will zero out time derivatives (will not compute them).
+We first take note of `ddtSchemes`. As we want a steady-state simulation, we select `steadyState` for our time derivatives. In an unsteady case, it is common to use entries such as `euler` or `backward`. The `steadyState` entry will zero out time derivatives (will not compute them).
 
 Following this, we specify our gradient schemes (how we interpolate values for the gradient terms). We specify using `default Gauss linear;`, which applies `Gauss linear` for all gradient terms. For some background, `Gauss` denotes the standard finite volume discretization using Gaussian integration which interpolates from cell centers to cell faces (at the center location on the face). `Gauss linear` is a second order accurate scheme.
 
 The `divSchemes` dictionary is used to calculate divergence terms. It is generally not recommended to use just one exact type of divergence scheme as different terms are best solved using different methods. Hence, we elect no default option: `default none;`. The following six terms, `div(phi,U)` to `div(phi,epsilon)` represent the divergence schemes for convective terms. In this case, phi represent $\phi=\rho U$. For these terms, with the exception of `div(phi,U)`, we use `bounded Gauss upwind;`, a first-order bounded accurate scheme which uses upwind differencing. For `div(phi,U)` we choose `bounded Gauss linearUpwindV grad(U);` which is second order accurate using linear upwind differencing. The `V` term denotes a specialized version of the scheme designed for vector fields and the `grad(U)` is used for correction. For these schemes, the `bounded` keyword helps prevent unphysical oscillations/overshoot in the solution. Lastly, we specify `div((nuEff*dev2(T(grad(U)))))` which is the viscous stress divergence term (the diffusive term in the momentum equation of the Navier-Stokes equations). For this term we apply `Gauss linear;` which uses central differencing (second order accurate). 
 
-The `interpolationSchemes` dictionary is used as a general setting for interpolating values, typically from cell centers to face centers. For this we use `linear` which is central differencing. The `laplacianSchemes` dictionary contains solution schemes for our Laplacian (divergence of gradient) terms. Here we apply a default setting of `Gauss linear corrected`. These terms tend to not be as tricky (in terms of stability) as our divergence terms (`divSchemes`). Hence, we are able to apply a default setting.
+The `interpolationSchemes` dictionary is used as a general setting for interpolating values, typically from cell centers to face centers. For this we use `linear` which is central differencing. The `laplacianSchemes` dictionary contains solution schemes for our Laplacian (divergence of gradient) terms. Here we apply a default setting of `Gauss linear corrected`. These terms tend not to be as tricky (in terms of stability) as our divergence terms (`divSchemes`). Hence, we are able to apply a default setting.
 
-The next dictionary, `snGradSchemes`, pertains to surface normal gradients. This dictionary computes surface normal gradients which are required to compute a Laplacian term using Gaussian integration. As this calculation requires orthogonality at the wall to maintain second order accuracy, we must be careful with our default setting. If the mesh maintains high orthogonality then we can specify `default orthogonal`. This is fairly uncommon, most applications will not have a very high orthogonality at the wall, such as our NACA0012 mesh. To circumvent this, we use `default corrected;` which applies a correction for orthogonality to help maintain second order accuracy. The final entry is the `wallDist` dictionary. This dictionary handles calculating the distance to the nearest patch for all cells and boundaries. For this we use `method meshWave;`. This method works best for regular, undistorted meshes (low skewness, high orthogonality). For most cases, however, this method works well and is employed here (there is an optional correction term that can be added `correctWalls true;` which can correct the calculation for skewed/distorted meshes but this option is not needed for our NACA0012 case).
+The next dictionary, `snGradSchemes`, pertains to surface normal gradients. This dictionary computes surface normal gradients which are required to compute a Laplacian term using Gaussian integration. As this calculation requires orthogonality at the wall to maintain second order accuracy, we must be careful with our default setting. If the mesh maintains high orthogonality, then we can specify `default orthogonal`. This is fairly uncommon, most applications will not have a very high orthogonality at the wall, such as our NACA0012 mesh. To circumvent this, we use `default corrected;` which applies a correction for orthogonality to help maintain second order accuracy. The final entry is the `wallDist` dictionary. This dictionary handles calculating the distance to the nearest patch for all cells and boundaries. For this we use `method meshWave;`. This method works best for regular, undistorted meshes (low skewness, high orthogonality). For most cases, however, this method works well and is employed here (there is an optional correction term that can be added `correctWalls true;` which can correct the calculation for skewed/distorted meshes but this option is not needed for our NACA0012 case).
 
 ### 3.4 Iterative Solution and Algorithm Parameters (fvSolution)
 In `fvSolution`, the equation solvers, their associated tolerances, and algorithms are defined. Below is the `fvSolution` for the NACA0012 case:
@@ -459,12 +456,6 @@ SIMPLE
     nNonOrthogonalCorrectors           0;
 }
 
-// potential flow orthogonality correction
-potentialFlow
-{
-    nNonOrthogonalCorrectors           20;
-}
-
 // solver settings and tolerances
 solvers
 {
@@ -475,13 +466,6 @@ solvers
         smoother                       GaussSeidel;
         relTol                         0.1;
         tolerance                      0;
-    }
-
-    Phi
-    {
-        $p;
-        relTol                         0;
-        tolerance                      1e-6;
     }
 
     "(U|T|e|h|nuTilda|k|omega|epsilon)"
@@ -509,13 +493,13 @@ relaxationFactors
 }
 </pre>
 
-Similar to `fvSchemes`, most higher level details of this file are best suited and covered in the advanced user guide. Here we define the dictionaries and discuss the main ideas behind them.
+Similar to `fvSchemes`, most higher level details of this file are best suited and covered in the [advanced OpenFOAM user guide](https://www.openfoam.com/documentation/user-guide). Here we define the dictionaries and discuss the main ideas behind them.
 
-The first dictionary, `SIMPLE`, where we define both `consistent` and `nNonOrthogonalCorrectors`. There are two variations of the SIMPLE algorithm in OpenFOAM: SIMPLE and SIMPLEC. The default algorithm, what we use for the NACA0012 case, is SIMPLE. We can specify SIMPLEC by setting `consistent yes;`. Additionally, we set `nNonOrthogonalCorrectors 0;`. This entry controls the extra amount of iterations performed in the SIMPLE algorithm to help account for non-orthogonal meshes. If the mesh is reasonably orthogonal (of good quality), then using zero correction is fine. However, in the following dictionary, `potentialFlow`, we set `nNonOrthogonalCorrectors 20;`. This dictionary relates to solving the potential flow equation (Laplace's equation for velocity potential), $\nabla \cdot (\nabla \phi)$. This is a single linear solve meaning we rely on specifying iterations (`nNonOrthogonalCorrectors`) to converge the equation. A value of 20 is very typical for most general applications but this can be adjusted as needed.
+The first dictionary, `SIMPLE`, where we define both `consistent` and `nNonOrthogonalCorrectors`. There are two variations of the SIMPLE algorithm in OpenFOAM: SIMPLE and SIMPLEC. The default algorithm, what we use for the NACA0012 case, is SIMPLE. We can specify SIMPLEC by setting `consistent yes;`. Additionally, we set `nNonOrthogonalCorrectors 0;`. This entry controls the extra amount of iterations performed in the unsteady version of SIMPLE algorithm to help account for non-orthogonal meshes. For steady-state simulations, using zero correction is fine.
 
-The following dictionary is the `solvers` dictionary. In all sub-dictionaries, we specify a `solver` and `smoother` to begin (the `Phi` subdictionary uses the same settings as the `"(p|p_rgh|G)"` sub-dictionary, denoted by the use of `$p`). The details for solvers and smoothers are beyond the scope of this user guide (reference the advanced user guide). The quantities here of most importance for now are the tolerances. For all sub-dictionaries we specify a tolerance that we wish OpenFOAM to reach in the solution. A tolerance of 0 is very tight, and difficult to meet (taking machine precision to be zero). We can relax this requirement by specifying `relTol`. A `relTol`, which stands for relative tolerance, gives how much we want our baseline residual to drop. So a relative tolerance of 0.1 gives that when the residual has dropped by a factor of 10, the solution has sufficiently converged. It should be noted at this point that we define different solver settings for various field values (i.e. not all field values use the same solvers/settings, we use 3 total sub-dictionaries to define different solvers/settings). As was the case with `fvSchemes`; simply put, different field values benefit from particular solvers/settings (this topic again, covered in the advanced user guide).
+The following dictionary is the `solvers` dictionary. In all sub-dictionaries, we specify a `solver` and `smoother` to begin. The details for solvers and smoothers are beyond the scope of this user guide (reference the [advanced OpenFOAM user guide](https://www.openfoam.com/documentation/user-guide)). The quantities here of most importance for now are the tolerances. For all sub-dictionaries, we specify a tolerance that we wish OpenFOAM to reach in the solution. A tolerance of 0 is very tight, and difficult to meet (taking machine precision to be zero). We can relax this requirement by specifying `relTol`. A `relTol`, which stands for relative tolerance, gives how much we want our baseline residual to drop. So a relative tolerance of 0.1 gives that when the residual has dropped by a factor of 10, the solution has sufficiently converged. Note that we need to only converge 1 order for each iteration because the flow solver is nonlinear; there is no need to converge very tightly for each inner linear equation solution. It should be noted at this point that we define different solver settings for various field values (i.e. not all field values use the same solvers/settings, we use 2 total sub-dictionaries to define different solvers/settings). As was the case with `fvSchemes`; simply put, different field values benefit from particular solvers/settings (this topic again, covered in the [advanced OpenFOAM user guide](https://www.openfoam.com/documentation/user-guide)).
 
-Lastly we define relaxation factors within the `relaxationFactors` dictionary. These factors can help converge the solution much faster. We define two sub-dictionaries: `fields` and `equations`. The `fields` relaxation factors help stabilize the pressure calculations after solving the equation for that field whereas the `equations` relaxation factors are applied to actual computation of that field. The values used, 0.3 and 0.7, are fairly typical/standard and can work well for most cases meaning that often times, these do not have to be adjusted.
+Lastly we define relaxation factors within the `relaxationFactors` dictionary. These factors can help converge the solution much faster and more robust. We define two sub-dictionaries: `fields` and `equations`. The `fields` relaxation factors help stabilize the pressure calculations after solving the equation for that field whereas the `equations` relaxation factors are applied to the actual linear equation solution of that field. The values used, 0.3 and 0.7, are fairly typical/standard and can work well for most cases meaning that often times, these do not have to be adjusted.
 
 ## 4. run, clean, and paraview.foam
 This final section pertains to the last 3 files that we are yet to cover: run, clean, and paraview.foam. These files are simple and pertain to running the case and post-processing.
@@ -564,8 +548,6 @@ It is recommended to run this NACA0012 case in parallel as that will speed up th
 ## Questions
 
 Construct a new case of a [backward facing step](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM) and compute the drag along the bottom wall:
-
-- Use the `kOmegaSST` turbulence model
 
 - Add an `aeroForces` function in `system/controlDict` to compute the drag force on `lowerWall`
 
