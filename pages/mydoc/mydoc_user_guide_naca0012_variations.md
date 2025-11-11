@@ -7,8 +7,6 @@ permalink: mydoc_user_guide_naca0012_variations.html
 folder: mydoc
 ---
 
-{% include note.html content="This webpage is under construction." %}
-
 This chapter was written by [Lean Fang](https://github.com//LeanFang), [Seth Zoppelt](https://github.com//szoppelt), and [Zilong Li](https://github.com//zilonglicfd) and reviewed by [Ping He](https://github.com/friedenhe).
 
 ## Learning Objectives:
