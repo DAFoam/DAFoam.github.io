@@ -50,11 +50,8 @@ For this NACA0012 case, we can expand the `0.orig` directory to see which field 
 
 <pre>      
 |-- 0.orig        // directory containing BCs
-  |-- epsilon     // turbulent kinetic energy dissipation rate
-  |-- k           // turbulent kinetic energy
   |-- nut         // turbulent kinematic viscosity
   |-- nuTilda     // modified turbulent viscosity
-  |-- omega       // specific dissipation rate
   |-- p           // pressure
   |-- U           // velocity
 </pre>
@@ -72,7 +69,7 @@ dimensionsUsed  [Mass Meter Second Kelvin Mole Ampere Candela]
 dimensions      [0 1 -1 0 0 0 0]; 
 </pre>
 
-The `dimensions` key is a list containing 7 numbers. Each (non-zero) number in `dimensions` denotes which unit is being used, corresponding to the entries in `dimensionsUsed` (this key is for an example, it is not an actual key used in OpenFOAM). A zero indicates that the unit is not being used. The value of the actual (non-zero) numbers gives the exponent on the unit. So an entry of `[0 1 0 0 0 0 0]` gives meter ($m$). However, `[0 2 0 0 0 0 0]` indicates $m*m = m^2$ and so on. A negative sign before the number indicates a negative exponent. Knowing this, it becomes far more clear to see which units are expected. As an example, the kinematic pressure, $m^2/s^2$, would be `dimensions [0 2 -2 0 0 0 0]`.
+The `dimensions` key is a list containing 7 numbers. Each (non-zero) number in `dimensions` denotes which unit is being used, corresponding to the entries in `dimensionsUsed` (this key is for an example, it is not an actual key used in OpenFOAM). A zero indicates that the unit is not being used. The value of the actual (non-zero) numbers gives the exponent on the unit. So an entry of `[0 1 0 0 0 0 0]` gives meter ($m$). However, `[0 2 0 0 0 0 0]` indicates $m*m = m^2$ and so on. A negative sign before the number indicates a negative exponent. Knowing this, it becomes clearer to see which units are expected. As an example, the kinematic pressure, $m^2/s^2$, would be `dimensions [0 2 -2 0 0 0 0]`.
 
 Lastly, the `internalField` key is used as an initial condition to the problem and should be assigned with care. Field values such as pressure, temperature, velocity etc. can be easily assigned by the user and depend on what the user wants to simulate. The calculations for turbulent fields (such as `nuTilda`, `k`, `epsilon` etc.) are beyond the scope of this beginner user guide and we encourage the motivated reader to see the advanced user guide for a breakdown on these calculations.
 
@@ -111,10 +108,10 @@ boundaryField
 }
 </pre>
 
-The wing boundary takes on a `fixedValue uniform (0 0 0);` condition. This enforces a no slip boundary condition at the wall. This is also equivalent to using `type noSlip;` on the wing (either will work). The `symmetry` boundary condition will ensure an identical flow field over the two symmetry planes present (this is consistent for all field values specified in this section). The `inletOutlet` boundary condition automatically applies `fixedValue` when the flow enters the simulation domain with the values given by the `inletValue` key, and `zeroGradient` when the flow exits the domain. Here, the user can use `$internalField` to specify the far field domain conditions: prescribe the same as the internalField value defined above (i.e., `uniform (9.9598 0.89575 0)`). The `value` key for the `inout` patch prescribes an initial value for this patch, and this value will be automatically updated (depending on whether the flow enters or leaves the domain) when the simulation starts.
+The wing boundary takes on a `fixedValue uniform (0 0 0);` condition. This enforces a no-slip boundary condition at the wall. This is also equivalent to using `type noSlip;` on the wing (either will work). The `symmetry` boundary condition will ensure an identical flow field over the two symmetry planes present (this is consistent for all field values specified in this section). The `inletOutlet` boundary condition automatically applies `fixedValue` when the flow enters the simulation domain with the values given by the `inletValue` key, and `zeroGradient` when the flow exits the domain. Here, the user can use `$internalField` to specify the far field domain conditions: prescribe the same as the internalField value defined above (i.e., `uniform (9.9598 0.89575 0)`). The `value` key for the `inout` patch prescribes an initial value for this patch, and this value will be automatically updated (depending on whether the flow enters or leaves the domain) when the simulation starts.
 
 ### 1.3 Pressure (p)
-Since this is a steady-state simulation, the pressure is given as the kinematic pressure ($m^2/s^2$). For this solver we use a reference pressure of 0 (`internalField  uniform 0;`).
+Since this is an incompressible flow simulation, the pressure is given as the kinematic pressure ($m^2/s^2$). For incompressible flow solvers, the pressure value is calculated as the relative pressure with respect to a reference value (e.g., 101325 Pa), so here we prescribe 0 (`internalField  uniform 0;`). NOTE: for compressible flow solvers, the pressure value is the absolute pressure value, so we would need to prescribe 101325 instead.
 
 <pre>
 dimensions      [0 2 -2 0 0 0 0];
@@ -140,88 +137,17 @@ boundaryField
     
     inout
     {
-        type            fixedValue;
+        type            outletInlet;
+        outletValue     $internalField;
         value           $internalField;
     }
 }
 </pre>
 
-Wall boundaries (such as the wing) receive a `zeroGradient` boundary condition type. As mentioned previously, the symmetry planes always receive the `symmetry` type boundary condition (in the following sections, 1.4-1.8 we will omit discussion of this in an effort to reduce redundancy). The far field domain, `inout`, takes on a fixed value consistent with the `internalField` entry. In a typical setup, inlets (far field domain here) are `fixedValue` while all other physical domains will be `zeroGradient`.
+Wall boundaries (such as the wing) typically use a `zeroGradient` pressure boundary condition type. As mentioned previously, the symmetry planes always receive the `symmetry` type boundary condition (in the following sections, 1.4-1.8 we will omit discussion of this in an effort to reduce redundancy). The pressure far field domain uses an outletInlet boundary condition, where inlets are `zeroGradient` while outlets are `fixedValue`. 
 
-### 1.4 Turbulent Kinetic Energy Dissipation Rate (epsilon)
-The following sections (1.4-1.8) are all turbulence field values. It is not uncommon, though not all the time necessary, to use wall functions for these values. For now we will just state the use of wall functions and point the reader to the advanced user guide for in-depth details on wall functions and their applications within OpenFOAM. The discussion for these turbulent fields will also be brief as the types of boundary conditions specified largely remain unchanged aside from the `wing` boundary.
-
-<pre>
-dimensions      [0 2 -3 0 0 0 0];
-
-internalField   uniform 0.14;
-
-boundaryField
-{
-    wing
-    {
-        type            epsilonWallFunction;
-        value           $internalField;
-    }
-
-    symmetry1
-    {
-        type            symmetry;
-    }
-
-    symmetry2
-    {
-        type            symmetry;
-    }
-    
-    inout
-    {
-        type            inletOutlet;
-        inletValue      $internalField;
-        value           $internalField;
-    }
-}
-</pre>
-
-Here we apply a wall function to the `wing` boundary. As the name implies, wall functions are only applicable to wall boundaries and should not/ cannot be used for other types of boundaries. Additionally, we treat `inout` the same as for velocity (U): apply `fixedValue` when the flow enters the simulation domain, and `zeroGradient` when the flow exits the domain.
-
-### 1.5 Turbulent Kinetic Energy (k)
-As noted previously, the boundary conditions applied for these turbulent field values are mostly the same. The one change here is the type of wall function used, now being `kqRWallFunction`. There is no universal wall function applicable to all boundaries. In OpenFOAM we use different wall functions for different field values. Typically the name of the particular wall function being used indicates which field values it may be applied to. As we have the turbulent kinetic energy (k), we use the `kqRWallFunction`. As the name implies, this wall function may be used for the `q` and `R` field values as well (though these values will not be discussed in the basic user guide, but defined in the advanced user guide).
-
-<pre>
-dimensions      [0 2 -2 0 0 0 0];
-
-internalField   uniform 0.015;
-
-boundaryField
-{
-    wing
-    {
-        type            kqRWallFunction;
-        value           $internalField;
-    }
-
-    symmetry1
-    {
-        type            symmetry;
-    }
-
-    symmetry2
-    {
-        type            symmetry;
-    }
-    
-    inout
-    {
-        type            inletOutlet;
-        inletValue      $internalField;
-        value           $internalField;
-    }
-}
-</pre>
-
-### 1.6 Turbulent Kinematic Viscosity (nut)
-For the turbulent viscosity, note the change of the wall function to `nutUSpaldingWallFunction`. Similar as before, this is a wall function specifically designed for the `nut` turbulent field. 
+### 1.4 Turbulent Kinematic Viscosity (nut)
+The following sections (1.4-1.5) are all turbulence field values. It is not uncommon, though not all the time necessary, to use wall functions for these values (mesh y+ > 30). For now, we will just state the use of wall functions and point the reader to the advanced user guide for in-depth details on wall functions and their applications within OpenFOAM. The discussion for these turbulent fields will also be brief, as the types of boundary conditions specified largely remain unchanged aside from the `wing` boundary. For the turbulent viscosity, we use the wall function `nutUSpaldingWallFunction`. Similar as before, this is a wall function specifically designed for the `nut` turbulent field. 
 
 <pre>
 dimensions      [0 2 -1 0 0 0 0];
@@ -256,10 +182,10 @@ boundaryField
 
 For this field however, we switch the `inout` boundary condition type to `calculated`. This naturally raises two questions: what is a `calculated` boundary condition type, and why use this type versus `inletOutlet` such as the other turbulent fields? 
 
-Put simply, `nut` is a turbulent field which is not solved for directly, its value depends on (calculated from) other field values. Due to this, we do not want to assign a value to this field. We want OpenFOAM to solve for it throughout the simulation process. Therefore, we apply the `calculated` boundary condition type to tell OpenFOAM to solve for this field value rather than read in a user prescribed value on the boundary.
+Put simply, `nut` is a turbulent field which is not solved for directly, its value depends on (calculated from) other field values. Due to this, we do not want to assign a value to this field. We want OpenFOAM to solve for it throughout the simulation process. Therefore, we apply the `calculated` boundary condition type to tell OpenFOAM to solve for this field value rather than read in a user-prescribed value on the boundary.
 
-### 1.7 Modified Turbulent Viscosity (nuTilda)
-The modified turbulent viscosity is not a calculated field, meaning OpenFOAM solved for it directly, hence the `inout` boundary uses `inletOutlet` again. This field is specific to the Spalart-Allmaras turbulence model (which we use for the NACA0012 case) and is, in some cases, referred to as the Spalart-Allmaras variable.
+### 1.5 Modified Turbulent Viscosity (nuTilda)
+The modified turbulent viscosity is not a calculated field, meaning OpenFOAM solved for it directly, hence the `inout` boundary uses `inletOutlet` again. This field is specific to the Spalart-Allmaras turbulence model (which we use for the NACA0012 case) and is, in some cases, referred to as the Spalart-Allmaras variable. However, a wall function is not used for this field value on our wall boundary, `wing`. Rather, we always assign a zero value to the wall for nuTilda.
 
 <pre>
 dimensions      [0 2 -1 0 0 0 0];
@@ -272,44 +198,6 @@ boundaryField
     {
         type            fixedValue;
         value           uniform 0.0;
-    }
-
-    symmetry1
-    {
-        type            symmetry;
-    }
-
-    symmetry2
-    {
-        type            symmetry;
-    }
-    
-    inout
-    {
-        type            inletOutlet;
-        inletValue      $internalField;
-        value           $internalField;
-    }
-}
-</pre>
-
-However, a wall function is not used for this field value on our wall boundary, `wing`. Rather we assign a zero value to the wall. for clarity’s sake we provide the definition for nuTilda, but leave the in-depth discussion for the advanced user guide: $\tilde{\nu} = \sqrt{\tfrac{3}{2}} (U I \ell)$, where $U$ = reference velocity magnitude, $I$ = turbulence intensity, and $\ell$ = turbulence length scale. Here we can see that nuTilda is based on the velocity which at the wall, is zero. Hence, nuTilda is zero at the wall as well. 
-
-### 1.8 Specific Dissipation Rate (omega)
-The final value to discuss is the specific dissipation rate, omega. The treatment for omega is largely the same as the other turbulent field values. We use a wall function on the `wing` boundary and `inletOutlet` on the far field domain. The key difference here is the `blended  true;` entry for the wall function. This delves deeper into wall modeling (a subject left for the advanced user guide), however to clarify for this guide: the blended key blends the physics of different viscous layers near the wall. Here we implement this blending, but the need for this blending is case dependent.
-
-<pre>
-dimensions      [0 0 -1 0 0 0 0];
-
-internalField   uniform 100;
-
-boundaryField
-{
-    wing
-    {
-        type            omegaWallFunction;
-        value           $internalField;
-        blended         true;
     }
 
     symmetry1
