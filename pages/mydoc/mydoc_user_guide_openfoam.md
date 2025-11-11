@@ -11,14 +11,12 @@ folder: mydoc
 
 This chapter was written by [Christian Psenica](https://github.com/ChrisPsenica) and reviewed by [Ping He](https://github.com/friedenhe).
 
-# OpenFOAM v1812 NACA0012 Simulation Setup
-
 ## Learning Objectives:
 After reading this chapter, you should be able to: 
 
 - Describe the basic file structure of an OpenFOAM simulation (which configuration files in which directories)
 - Describe the purpose of each configuration file
-- Setup and run the backward facing step case
+- Setup and run a new OpenFOAM simulation
 
 ## Introduction
 
@@ -26,9 +24,9 @@ After reading this chapter, you should be able to:
 OpenFOAM (Open-source Field Operation And Manipulation) is a free open-source finite-volume CFD solver. OpenFOAM is primarily written in C++ and comes with libraries to help facilitate numerical operations on field values. OpenFOAM also has a wide range of utilities for pre- and post-processing, such as mesh generation/quality checks and support for ParaView (for post-process visualization). There are three main branches of OpenFOAM: ESI OpenCFD, The OpenFOAM Foundation, and Extended Project. DAFoam only supports the ESI OpenCFD version, the OpenFOAM version discussed within this document.
 
 ### Follow Along
-This document contains basic information related to setting up an OpenFOAM simulation using the steady-state [NACA0012 simulation](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM). We will discuss every file within this case in an effort to clarify the various aspects of OpenFOAM.
+This document contains basic information related to setting up OpenFOAM for the steady-state [NACA0012 simulation](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM). We will discuss every file within this case in an effort to clarify the various aspects of OpenFOAM.
 
-To help with clarity, below is the file structure for the NACA0012 case. As a general overview: `0` contains boundary conditions and initial field values, `constant` handles flow properties (such as turbulence model and fluid modeling parameters), and `system` controls the numerical discretization, equation solution parameters, etc. This document serves as detailed documentation to these directories.
+To help with clarity, below is the file/folder structure for the NACA0012 case. As a general overview: `0.orig` contains boundary conditions and initial field values, `constant` handles flow properties (such as turbulence model and fluid modeling parameters), and `system` controls the numerical discretization, equation solution parameters, etc. This document serves as detailed documentation for these directories.
 
 <pre>
 - 0.orig               // initial fields and boundary conditions
@@ -39,10 +37,10 @@ To help with clarity, below is the file structure for the NACA0012 case. As a ge
 - run                  // script to execute simulation
 </pre>
 
-These steps will be elaborated on in the coming sections with particular emphasis on the `0.orig`, `constant`, and `system` directories. It is intended that the user reads this documentation carefully to gain a basic understanding of OpenFOAM. It is also recommended to follow along in the tutorial cases to recreate the simulation and post-process using ParaView (Don't have ParaView? Download ParaView for free, [here!](https://www.ParaView.org/download/)). 
+These steps will be elaborated on in the coming sections with particular emphasis on the `0.orig`, `constant`, and `system` directories. It is intended that the user read this documentation carefully to gain a basic understanding of OpenFOAM. It is also recommended to follow along in the tutorial cases to recreate the simulation and post-process using ParaView (Don't have ParaView? Download it [here!](https://www.ParaView.org/download)). 
 
 ## 1. Boundary and Initial Conditions - 0.orig
-The `0.orig` directory contains both the boundary conditions and the initial field values for the simulation. For clarity purposes it should be noted here that this simulation contains a `wing` boundary (wall), an `inout` boundary (far field domain), and two symmetry planes (one for either side of the airfoil) as denoted by Fig.1. 
+The `0.orig` directory contains both the boundary conditions and the initial field values for the simulation. For clarity purposes, it should be noted here that this simulation contains a `wing` boundary (wall), an `inout` boundary (far field domain), and two symmetry planes (one for either side of the airfoil) as denoted by Fig.1. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/user_guide/openfoam_naca_mesh.png" width="500" />
 
@@ -61,7 +59,7 @@ For this NACA0012 case, we can expand the `0.orig` directory to see which field 
   |-- U           // velocity
 </pre>
 
-As a note: we name this folder `0.orig`. This is not a necessity; OpenFOAM needs this file to be named `0` at the start of the simulation. Hence in the `run` script we have the line `cp -r 0.orig 0`. This is simply for preservation and is common practice. To avoid confusion, as a motivated reader may notice that various sources use either `0` or `0.orig` naming conventions, we leave the name of this folder as `0.orig` and note the distinction here.
+As a note: we name this folder `0.orig`. This is not a necessity; OpenFOAM needs this file to be named `0` at the start of the simulation. Hence, in the `run` script, we have the line `cp -r 0.orig 0`. Since we may modify the files in the 0 folder later in simulations/optimizations, having a 0.orig backup folder will ensure reproducibility. To avoid confusion, as a motivated reader may notice that various sources use either `0` or `0.orig` naming conventions, we leave the name of this folder as `0.orig` and note the distinction here.
 
 ### 1.1 The dimensions and internalField
 As a preface to the following boundary conditions discussed, we will clarify a couple entries found in all boundary condition files: `dimensions` and  `internalField`.
