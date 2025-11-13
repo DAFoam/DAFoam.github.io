@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<79> Z. Zhang, G. Karniadakis. Effect of Turbulence-Closure Consistency on Airfoil Identification. arXiv.2511.08341, 2025 
+
 <78> C. Wu, S. Zhang. Y. Zhang. Data-driven Augmentation of Turbulence Model in Three dimensional Flows Via Sequential Correction. arXiv.2510.22469, 2025
 
 <77> M. H. Negahban Development and optimization of novel morphing wings for the next-generation aircraft. PhD Thesis, University of Quebec, Montreal, 2025
