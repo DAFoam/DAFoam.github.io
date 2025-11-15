@@ -7,7 +7,7 @@ permalink: mydoc_ai_assistant_overview.html
 folder: mydoc
 ---
 
-The DAFoam MCP server enables the conversational pre-processing, simulations, optimization, and post-processing of various DAFoam cases. Currently, we support only airfoil cases with the Claude LLM. The DAFoam MCP server is in the beta state.
+The DAFoam AI Assistant enables the conversational pre-processing, simulations, optimization, and post-processing of various DAFoam cases. Currently, we support only airfoil cases with the Claude LLM. The DAFoam MCP server is in the beta state.
 
 ## Installation
 
