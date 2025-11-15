@@ -7,11 +7,11 @@ permalink: mydoc_ai_assistant_overview.html
 folder: mydoc
 ---
 
-The DAFoam MCP server enables the pre-processing, simulations, optimization, and post-processing of various DAFoam-based optimization cases. Currently, we support only airfoil cases and the DAFoam MCP server is in the first beta version.
+The DAFoam MCP server enables the conversational pre-processing, simulations, optimization, and post-processing of various DAFoam cases. Currently, we support only airfoil cases with the Claude LLM. The DAFoam MCP server is in the beta state.
 
 ## Installation
 
-Install the MCP server (airfoils)
+Install the MCP server
 
 - Download and install the Docker Desktop for [MacOS](https://docs.docker.com/desktop/setup/install/mac-install) or [Windows](https://docs.docker.com/desktop/setup/install/windows-install/). Open Docker Desktop and keep it open.
 - Open a Terminal (MacOS) or Command Prompt (Windows). Run the following command to download the DAFoam Docker image:
@@ -57,8 +57,6 @@ Connect the DAFoam MCP server to a client (Claude).
   </pre>
 
 - IMPORTANT! You need to close and re-open Claude Desktop to make the new MCP effective.
-
-- The airfoil MCP is ready to use in Claude Desktop. To run your first case. Ask Claude: "Generate a mesh for the NACA0012 airfoil". Once Claude generates the mesh, you can click the provided link to view the mesh in your browser. Then, ask: "Run a CFD simulation with aoa=3". Claude will run the CFD simulation in the background. Then, you can ask "View the CFD convergence" and click the provided link to visualize the residual and function convergence history.
 
 For developers: If you see an error, the logs file are in ~/Library/Logs/Claude/mcp-server-dafoam_mcp_server.log 
 
