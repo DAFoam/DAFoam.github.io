@@ -310,6 +310,18 @@ entries:
       url: /mydoc_validations_rae2822.html
       output: web, pdf
 
+  - title: AI Assistant
+    output: web, pdf
+    folderitems:
+
+    - title: Overview
+      url: /mydoc_ai_assistant_overview.html
+      output: web, pdf
+
+    - title: Airfoils
+      url: /mydoc_ai_assistant_airfoil.html
+      output: web, pdf
+
   - title: Misc
     output: web, pdf
     folderitems:
