@@ -74,6 +74,8 @@ Under the FFD directory, the FFD file wingFFD.xyz contains the coordinates of th
 
 To increase the number of FFD points, one needs to increase “nx” (number of FFD points in the x direction) in “FFD/genFFD.py”. Then run “python genFFD.py” in the FFD folder to generate a new “wingFFD.xyz” file. Note that the plot3D file we generate is a 3D mesh, and any internal points can be moved. Therefore, it is not necessary to use more than two points in the vertical (y) direction. Similarly, because it is a 2D case, there is no need to use more than two points in the z direction either. Also note that the “genFFD.py” script supports only uniform FFD points. We recommend using ICEM-CFD to generate more complex FFD points.
 
+**Notes:** Please load the FFD points and the mesh in Paraview and check visually to ensure that the FFD volume actually contains the design surface. Please refer to the [FAQ](https://dafoam.github.io/mydoc_get_started_faq.html#how-to-visualize-the-ffd-points) for how to visualize the FFD points.
+
 
 ## Airfoil profiles
 
