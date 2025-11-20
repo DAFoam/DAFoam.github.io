@@ -33,7 +33,7 @@ Install the MCP server
 Connect the DAFoam MCP server to a client (Claude).
 
 - Download and install the Claude Desktop from [here](https://www.claude.com/download). Open Claude Desktop (you may need to sign up for an account).
-- In Claude Desktop, locate to the bottom left and click: "Your Account->Settings->Developer". If you don't see this in Claude Desktop, go to the top left and lick "Toggle Sidebar". Then, click "Edit Config", this will open a directory where Claude saves your claude_desktop_config.json file. **NOTE:** If there is an empty bracket when you open the .json file (something like "{}"), this MUST be deleted.  
+- In Claude Desktop, locate to the top left and click "Toggle sidebar", and then locate to the bottom left and click: "Your Account->Settings->Developer". Then, click "Edit Config", this will open a directory where Claude saves your claude_desktop_config.json file. **NOTE:** If there is an empty bracket when you open the .json file (something like "{}"), this MUST be deleted.  
 - Open claude_desktop_config.json and add the following lines into it. **NOTE:** you need to replace `abs_path_to_your_dafoam_mcp_server` with the absolute path of the dafoam_mcp_server folder on your local system. For example, you may use `/Users/phe/Desktop/dafoam_mcp_server:/home/dafoamuser/mount` for MacOS and `C:\\Users\\phe\\Desktop\\dafoam_mcp_server:/home/dafoamuser/mount` for Windows (we need to use double slash in the path for Windows!). The DAFoam MCP will make modifications ONLY in this dafoam_mcp_server folder. 
 
   <pre>
@@ -58,9 +58,9 @@ Connect the DAFoam MCP server to a client (Claude).
   }
   </pre>
 
-- IMPORTANT! You need to close and re-open Claude Desktop to make the new MCP effective. **NOTE:** On Mac, you may need to Force Quit the Claude desktop application before you re-open it.
+- IMPORTANT! You need to close and re-open Claude Desktop to make the new MCP effective. **NOTE:** On Mac, you may need to Force Quit the Claude desktop application before you re-open it. Once the Claude Desktop is re-open, you can click the "Search and Tools" button to verify if the DAFoam MCP server is running. See the picture below. For developers: If you see an error, the logs file are in ~/Library/Logs/Claude/mcp-server-dafoam_mcp_server.log 
 
-For developers: If you see an error, the logs file are in ~/Library/Logs/Claude/mcp-server-dafoam_mcp_server.log 
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI_Check_DAFoam_MCP_Server.png" width="300" />
 
 
 {% include links.html %}
