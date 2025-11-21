@@ -64,7 +64,7 @@ Design variables: Angle of attack at the far field and the shape of the airfoil
 Constraints: None
 Reynolds number: 0.6667 million
 Mesh cells: 4000
-Solver: DASimpleFoam
+Solver: DAPimpleFoam
 </pre>
 
 |
