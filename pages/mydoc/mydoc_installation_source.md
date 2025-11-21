@@ -116,7 +116,7 @@ Finally, install petsc4py-3.15:
 
 <pre>
 cd $PETSC_DIR/src/binding/petsc4py && \
-pip install . --no-build-isolation -v
+pip install . --no-build-isolation
 </pre>
 
 ## **CGNS**
