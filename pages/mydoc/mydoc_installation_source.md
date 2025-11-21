@@ -449,7 +449,8 @@ cd ../../ && \
 cp Makefile.in.info Makefile.in && \
 ls && \
 sed -i "s/TACS_DIR\ =.*/TACS_DIR=\$\{DAFOAM_ROOT_PATH\}\/repos\/tacs/g" Makefile.in && \
-make && pip install -e . && \
+sed -i "s/LAPACK_LIBS\ =.*/LAPACK_LIBS=-L\$\{PETSC_LIB\}\ -lf2clapack -lf2cblas -lpthread/g" Makefile.in && \
+make && pip install -e . --no-build-isolation && \
 cd extern/f5tovtk && make && cp f5tovtk $DAFOAM_ROOT_PATH/OpenFOAM/sharedBins
 </pre>
 
