@@ -427,6 +427,7 @@ wget https://github.com/smdogroup/funtofem/archive/refs/tags/v0.3.tar.gz -O funt
 tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
 cd funtofem && cp Makefile.in.info Makefile.in && \
 sed -i "s/F2F_DIR=.*/F2F_DIR=\$\{DAFOAM_ROOT_PATH\}\/repos\/funtofem/g" Makefile.in && \
+sed -i "s/LAPACK_LIBS\ =.*/LAPACK_LIBS=-L\$\{PETSC_LIB\}\ -lf2clapack -lf2cblas/g" Makefile.in && \
 make && pip install -e . --no-build-isolation
 </pre>
 
