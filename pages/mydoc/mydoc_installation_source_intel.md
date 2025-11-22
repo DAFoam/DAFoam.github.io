@@ -99,7 +99,7 @@ cd $DAFOAM_ROOT_PATH/packages && \
 wget https://www.mcs.anl.gov/petsc/mirror/release-snapshots/petsc-3.15.5.tar.gz  && \
 tar -xvf petsc-3.15.5.tar.gz && \
 cd petsc-3.15.5 && \
-./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --download-f2cblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 --with-cc=mpicc --with-cxx=mpicxx --with-fc=mpif90 && \
+./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --download-f2cblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 --with-cc=mpiicc --with-cxx=mpiicpc --with-fc=mpiifort && \
 make PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.15.5 PETSC_ARCH=real-opt all
 </pre>
 
