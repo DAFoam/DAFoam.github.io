@@ -167,21 +167,21 @@ cd $IPOPT_DIR && \
 git clone --depth 1 -b stable/1.3 https://github.com/coin-or-tools/ThirdParty-Blas.git && \
 cd ThirdParty-Blas && ./get.Blas && \
 ./configure --prefix=$IPOPT_DIR && \
-make -j && make install && cd .. && \
+make && make install && cd .. && \
 git clone --depth 1 -b stable/1.5 https://github.com/coin-or-tools/ThirdParty-Lapack.git && \
 cd ThirdParty-Lapack && ./get.Lapack && \
 ./configure --prefix=$IPOPT_DIR --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" && \
-make -j && make install && cd .. && \
+make && make install && cd .. && \
 git clone --depth 1 -b stable/1.3 https://github.com/coin-or-tools/ThirdParty-Metis.git && \
 cd ThirdParty-Metis && ./get.Metis && \
-./configure --prefix=$IPOPT_DIR && make -j ${MAKE_JOBS} && make install && cd .. && \
+./configure --prefix=$IPOPT_DIR && make && make install && cd .. && \
 git clone --depth 1 -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
 cd ThirdParty-Mumps && ./get.Mumps && \
 ./configure --prefix=$IPOPT_DIR --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" \
              --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
              --with-metis-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" \
              --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
-make -j && make install && \
+make && make install && \
 cd $IPOPT_DIR && mkdir -p build && cd build && \
 ../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps \
              --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" \
@@ -190,7 +190,7 @@ cd $IPOPT_DIR && mkdir -p build && cd build && \
              --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
              --with-metis-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" \
              --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
-make -j && make install
+make && make install
 </pre>
 
 ## **MACH-Aero framework**
