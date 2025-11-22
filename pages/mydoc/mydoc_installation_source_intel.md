@@ -1,53 +1,32 @@
 ---
-title: Compile from source (Gcc)
+title: Compile from source (Intel)
 keywords: dafoam, installation, compile
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_installation_source.html
+permalink: mydoc_installation_source_intel.html
 folder: mydoc
 ---
 
-{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](mydoc_installation_source_2210.html), [v2.2.0-](mydoc_installation_source_220.html), and [v1.0.0](mydoc_installation_source_100.html)." %}
-
-The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 22.04 and an HPC cluster.
-
-**Ubuntu 22.04** using the following dependencies.
-
-Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython | Cmake |
-| :-------------------------------------------------------------------------------------------------------- | 
-22.04.2 | gcc/11.4  | 4.1.2   | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.10    | 1.23.5 | 1.13.1 | 0.29.21 | 3.22
-
-**TACC-Stampede3 HPC** uses the following modules:
+The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on the **TACC-Stampede3 HPC** cluster using the following modules:
 
 <pre>
 Currently Loaded Modules:
-  1) autotools/1.4   2) xalt/3.1.1   3) TACC   4) gcc/13.2.0   5) openmpi/5.0.8   6) cmake/3.28.1
+  1) autotools/1.4   2) xalt/3.1.1   3) TACC   4) cmake/3.28.1   5) intel/23.1   6) impi/21.9
 </pre>
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours; the most time-consuming part is compiling OpenFOAM.
 
-## **Prerequisites (Ubuntu only)**
-
-If you use Ubuntu, run this on the terminal to install prerequisites. If you install DAFoam on an HPC, skip this step.
-
-<pre>
-sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin --no-install-recommends
-</pre>
-
-The following installation steps should work for both Ubuntu 22.04 and the TACC-Stampede3 HPC.
-
 ## **Root folder**
 
-First, we need to create a "dafoam" folder in your home directory (you can also install DAFoam into a different folder). Then create a "loadDAFoam.sh" bash script to set up the root path $DAFOAM_ROOT_PATH, and load the loadDAFoam.sh script:
+First, we need to create a "dafoam" folder in your WORK directory (you can also install DAFoam into a different folder). Then create a "loadDAFoam.sh" bash script to set up the root path $DAFOAM_ROOT_PATH, and load the loadDAFoam.sh script:
 
 <pre>
-mkdir -p $HOME/dafoam && \
-echo '#!/bin/bash' > $HOME/dafoam/loadDAFoam.sh && \
-echo '# DAFoam root path' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export DAFOAM_ROOT_PATH=$HOME/dafoam' >> $HOME/dafoam/loadDAFoam.sh && \
-chmod 755 $HOME/dafoam/loadDAFoam.sh && \
-. $HOME/dafoam/loadDAFoam.sh
+mkdir -p $WORK/dafoam && \
+echo '#!/bin/bash' > $WORK/dafoam/loadDAFoam.sh && \
+echo '# DAFoam root path' >> $WORK/dafoam/loadDAFoam.sh && \
+echo 'export DAFOAM_ROOT_PATH=$WORK/dafoam' >> $WORK/dafoam/loadDAFoam.sh && \
+chmod 755 $WORK/dafoam/loadDAFoam.sh && \
+. $WORK/dafoam/loadDAFoam.sh
 </pre>
 
 {% include note.html content="You need to complete the following steps on the same terminal session. If you start a new terminal session, you need to load the loadDAFoam.sh script before installing DAFoam packages!" %}
@@ -76,7 +55,7 @@ echo 'export PYTHONUSERBASE=no-local-libs' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh &&
 
 In the above, we use "export PYTHONUSERBASE=no-local-libs" to bypass the site-packages in your `.local` directory, as they may conflict with the DAFoam packages. 
 
-The miniconda's built-in libstdc++ and libtinfo libs may conflict with the Ubuntu system libs. Also, the new miniconda's compiler_compat ld may conflict with the system ld. So we need to rename the miniconda's libs and exes by running:
+The miniconda's built-in libstdc++ and libtinfo libs may conflict with the system libs. Also, the new miniconda's compiler_compat ld may conflict with the system ld. So we need to rename the miniconda's libs and exes by running:
 
 <pre>
 mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6.backup && \
@@ -120,7 +99,7 @@ cd $DAFOAM_ROOT_PATH/packages && \
 wget https://www.mcs.anl.gov/petsc/mirror/release-snapshots/petsc-3.15.5.tar.gz  && \
 tar -xvf petsc-3.15.5.tar.gz && \
 cd petsc-3.15.5 && \
-./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --download-f2cblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 && \
+./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --download-f2cblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 --with-cc=mpiicc --with-cxx=mpiicpc --with-fc=mpiifort && \
 make PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.15.5 PETSC_ARCH=real-opt all
 </pre>
 
@@ -152,7 +131,7 @@ tar -xvaf v4.5.0.tar.gz && \
 cd CGNS-4.5.0 && \
 mkdir -p build && \
 cd build && \
-cmake .. -DCGNS_ENABLE_FORTRAN=1 -DCMAKE_INSTALL_PREFIX=$CGNS_HOME -DCGNS_BUILD_CGNSTOOLS=0 -DCGNS_ENABLE_HDF5=OFF -DCGNS_ENABLE_64BIT=OFF -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_Fortran_FLAGS="-fPIC"
+cmake .. -DCGNS_ENABLE_FORTRAN=1 -DCMAKE_INSTALL_PREFIX=$CGNS_HOME -DCGNS_BUILD_CGNSTOOLS=0 -DCGNS_ENABLE_HDF5=OFF -DCGNS_ENABLE_64BIT=OFF -DCMAKE_C_COMPILER=$(which icc) -DCMAKE_Fortran_COMPILER=$(which ifort)
 && \
 make all install
 </pre>

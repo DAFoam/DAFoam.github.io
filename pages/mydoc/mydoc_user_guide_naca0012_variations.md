@@ -122,6 +122,8 @@ Similarly, some files under the constant folder are also different.
 
 - DARhoSimpleFoam uses "thermophysicalProperties" while DASimpleFoam uses "transportProperties".
 
+**Note:** the fvSchemes and fvSolution files under system are also different for a subsonic case using DARhoSimpleFoam. When setting up your own subsonic case, please use the fvSchemes and fvSolution files [linked here](https://github.com/DAFoam/user_guide_files/tree/main/Chapter5_NACA0012_Variations/subsonic/system) as the template.
+
 
 ## Transonic optimization
 
@@ -149,8 +151,8 @@ The "runScript.py" is similar to the one used in the NACA0012 subsonic case ment
 
 - We use special treatment for the preconditioner matrix to improve the convergence of adjoint linear equation by setting "transonicPCOption": 1. This option is only needed for transonic conditions.
 
+**Note:** the fvSchemes and fvSolution files under system are also different for a transonic case using DARhoSimpleCFoam. When setting up your own transonic case, please use the fvSchemes and fvSolution files [linked here](https://github.com/DAFoam/user_guide_files/tree/main/Chapter5_NACA0012_Variations/transonic/system) as the template.
 
-Place holder text, don't change!
 
 ## Multi-point optimization
 
