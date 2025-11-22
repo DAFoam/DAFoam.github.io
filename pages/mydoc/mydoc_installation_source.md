@@ -9,7 +9,7 @@ folder: mydoc
 
 {% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](mydoc_installation_source_2210.html), [v2.2.0-](mydoc_installation_source_220.html), and [v1.0.0](mydoc_installation_source_100.html)." %}
 
-The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on **Ubuntu 22.04** using the dependencies shown in the following table. Note: the following installation steps (minus the sudo apt-get commands) have also been tested on the Stampede 3 HPC with gcc-13, openmpi-5.
+The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on **Ubuntu 22.04** using the dependencies shown in the following table. Note: the following installation steps (minus the sudo apt-get commands) have also been tested on the Stampede 3 HPC with gcc-13.2, openmpi-5.0.8, and cmake-3.28.
 
 
 Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython | Cmake |
