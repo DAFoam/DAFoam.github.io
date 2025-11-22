@@ -71,7 +71,9 @@ The miniconda's built-in libstdc++ and libtinfo libs may conflict with the Ubunt
 <pre>
 mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6.backup && \
 mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6.backup && \
-mv $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld.backup
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld.backup && \
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libgcc_s.so.1 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libgcc_s.so.1.backup && \
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libquadmath.so.0 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libquadmath.so.0.backup
 </pre>
 
 Next, we need to upgrade the pip utility and install Python packages:
@@ -156,29 +158,39 @@ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib' >> $DAFOAM_ROOT_PA
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh
 </pre>
 
-Next, compile the ThirdParty dependencies Metis and Mumps by running:
+Next, compile the ThirdParty dependencies and IPOPT by running:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/packages && \
-git clone -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
+git clone --depth 1 -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
 cd $IPOPT_DIR && \
-git clone -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
-cd ThirdParty-Mumps && \
-./get.Mumps && \
+git clone --depth 1 -b stable/1.3 https://github.com/coin-or-tools/ThirdParty-Blas.git && \
+cd ThirdParty-Blas && ./get.Blas && \
 ./configure --prefix=$IPOPT_DIR && \
-make && \
-make install
-</pre>
-
-Finally, compile Ipopt by running:
-
-<pre>
-cd $IPOPT_DIR && \
-mkdir build && \
-cd build && \
-../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" && \
-make && \
-make install
+make -j && make install && cd .. && \
+git clone --depth 1 -b stable/1.5 https://github.com/coin-or-tools/ThirdParty-Lapack.git && \
+cd ThirdParty-Lapack && ./get.Lapack && \
+./configure --prefix=$IPOPT_DIR --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" && \
+make -j && make install && cd .. && \
+git clone --depth 1 -b stable/1.3 https://github.com/coin-or-tools/ThirdParty-Metis.git && \
+cd ThirdParty-Metis && ./get.Metis && \
+./configure --prefix=$IPOPT_DIR && make -j ${MAKE_JOBS} && make install && cd .. && \
+git clone --depth 1 -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
+cd ThirdParty-Mumps && ./get.Mumps && \
+./configure --prefix=$IPOPT_DIR --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" \
+             --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
+             --with-metis-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" \
+             --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+make -j && make install && \
+cd $IPOPT_DIR && mkdir -p build && cd build && \
+../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps \
+             --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" \
+             --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" \
+             --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" \
+             --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
+             --with-metis-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" \
+             --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+make -j && make install
 </pre>
 
 ## **MACH-Aero framework**
