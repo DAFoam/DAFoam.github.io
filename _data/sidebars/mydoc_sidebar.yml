@@ -52,12 +52,12 @@ entries:
     output: web, pdf
     folderitems:
   
-    - title: Compile from source (Ubuntu)
+    - title: Compile from source (Gcc)
       url: /mydoc_installation_source.html
       output: web, pdf
     
-    - title: Compile from source (HPC)
-      url: /mydoc_installation_source_hpc.html
+    - title: Compile from source (Intel)
+      url: /mydoc_installation_source_intel.html
       output: web, pdf
     
     - title: Build Docker images
