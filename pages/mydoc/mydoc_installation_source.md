@@ -383,9 +383,7 @@ cd Hisa4DAFoam && \
 ./Allmake
 </pre>
 
-You should see "Build Successful!" at the end of the compilation. Once Hisa4DAFoam is compiled, you need to recompile the DAFoam repo in repos/dafoam to make sure everything is up-to-date.
-
-***NOTE: The solver is called DAHisaFoam and is in a beta state.*** It is not supported by v4.0.2. Instead, you need to use the latest version of the DAFoam repo. We currently have two tutorials: supersonic, Euler flow optimization for a [cone](https://github.com/DAFoam/tutorials/tree/main/Cone_Supersonic) and a transonic, RANS flow optimization for [RAE2822 airfoil](https://github.com/DAFoam/tutorials/tree/main/RAE2822_Airfoil). Only the JST flux scheme is supported. Other schemes, such as AUSMPlusUp, may have adjoint convergence issues.
+You should see "Build Successful!" at the end of the compilation. ***NOTE: The solver is called DAHisaFoam and is in a beta state.***
 
 ## **DAFoam**
 
