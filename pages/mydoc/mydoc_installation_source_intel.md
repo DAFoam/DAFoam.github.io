@@ -18,7 +18,7 @@ To compile, you can just copy the code blocks in the following steps and run the
 
 ## **Root folder**
 
-First, we need to create a "dafoam" folder in your $WORK directory (you can also install DAFoam into a different folder). Then create a "loadDAFoam.sh" bash script to set up the root path $DAFOAM_ROOT_PATH, and load the loadDAFoam.sh script:
+First, we need to create a "dafoam" folder in your WORK directory (you can also install DAFoam into a different folder). Then create a "loadDAFoam.sh" bash script to set up the root path $DAFOAM_ROOT_PATH, and load the loadDAFoam.sh script:
 
 <pre>
 mkdir -p $WORK/dafoam && \
