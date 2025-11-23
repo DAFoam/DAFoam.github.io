@@ -256,6 +256,11 @@ tar -xvf OpenFOAM-v1812-patch-files.tar.gz && \
 cd OpenFOAM-v1812-patch-files && \
 ./runPatch.sh && \
 cd .. && \
+sed -i "s/export\ WM_COMPILER=Gcc/export\ WM_COMPILER=Icc/g" etc/bashrc && \
+sed -i "s/export\ WM_MPLIB=SYSTEMOPENMPI/export| WM_MPLIB=INTELMPI/g" etc/bashrc && \
+cp wmake/rules/linux64Icc/mplibINTELMPI wmake/rules/General/mplibINTELMPI && \
+sed -i "s/=\ icpc/=\ mpiicpc/g" wmake/rules/linux64Icc/c++ && \
+sed -i "s/=\ icc/=\ mpiicc/g" wmake/rules/linux64Icc/c && \
 echo '# OpenFOAM-v1812' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
