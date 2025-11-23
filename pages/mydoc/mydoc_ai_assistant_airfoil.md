@@ -34,15 +34,15 @@ Once the DAFoam MCP server is installed and connected to Claude, you can open th
 
 - View pressure profile. If the CFD finishes, you can ask Claude to plot the pressure profile.
 
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-view-pressure.png" style="width:700px !important;" />
+  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-cfd-view-pressure.png" style="width:700px !important;" />
 
 - View flow field. You can say "View the velocity field" to see velocity profile. You can also ask Claude to "View the turbulence field and zoom in to the trailing edge". Click the provided link to see the contours in your browser.
 
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-view-nut.png" style="width:700px !important;" />
+  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-cfd-view-nut.png" style="width:700px !important;" />
 
 ## Airfoil aerodynamic optimization. 
 
-- Run optimization. You can ask Claude: "Run an optimization with CL constraint 0.5, Ma=0.3, Re=1e6". Claude will run the optimization in the background. 
+- Run optimization. You can ask Claude: "Run an optimization with CL constraint 0.5, Ma=0.1, Re=1e6". Claude will run the optimization in the background. 
 
 - Ask optimization run status. You can say "Check run status" to see if the optimization finishes.
 
