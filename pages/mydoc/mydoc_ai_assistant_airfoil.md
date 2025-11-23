@@ -1,5 +1,5 @@
 ---
-title: Airfoil
+title: Airfoil agent
 keywords: ai assistant
 summary: 
 sidebar: mydoc_sidebar
@@ -48,6 +48,10 @@ Once the DAFoam MCP server is installed and connected to Claude, you can open th
 
 - Monitor convergence. If the optimization is running in the background, you can ask "View the optimization convergence history" and click the provided link to visualize the convergence history of CD, CL, CM, etc.
 
-- View pressure profile or variable. You can ask Claude to plot the pressure profile or any flow fields.
+  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-opt-history.png" style="width:700px !important;" />
+
+- View pressure profile or variable. You can ask Claude to plot the pressure profile or any flow fields. For example "View the pressure profile at the last optimization iteration"
+
+  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-opt-pressure.png" style="width:700px !important;" />
 
 {% include links.html %}

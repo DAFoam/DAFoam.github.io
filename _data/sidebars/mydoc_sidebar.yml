@@ -322,7 +322,7 @@ entries:
       url: /mydoc_ai_assistant_overview.html
       output: web, pdf
 
-    - title: Airfoils
+    - title: Airfoil Agent
       url: /mydoc_ai_assistant_airfoil.html
       output: web, pdf
 
