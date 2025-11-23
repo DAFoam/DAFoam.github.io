@@ -47,8 +47,5 @@ Fig. 2. Time series of CL
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Airfoil_Dynamic_Stall_P.gif" width="500" />
 
-Fig. 3. Temporal evolution of the surface pressure profile
-
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Airfoil_Dynamic_Stall_U_profile.gif" width="500" />
 
 Fig. 4. Temporal evolution of the velocity profile in the downstream
