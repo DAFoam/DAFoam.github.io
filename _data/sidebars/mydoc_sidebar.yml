@@ -192,6 +192,10 @@ entries:
         - title: Ramp
           url: /mydoc_tutorials_field_inversion_ramp.html
           output: web, pdf
+        
+        - title: Airfoil Dynamic Stall
+          url: /mydoc_tutorials_field_inversion_dynamic.html
+          output: web, pdf
       
       - title: Data assimilation
         output: web, pdf
