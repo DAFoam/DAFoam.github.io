@@ -257,7 +257,7 @@ cd OpenFOAM-v1812-patch-files && \
 ./runPatch.sh && \
 cd .. && \
 sed -i "s/export\ WM_COMPILER=Gcc/export\ WM_COMPILER=Icc/g" etc/bashrc && \
-sed -i "s/export\ WM_MPLIB=SYSTEMOPENMPI/export| WM_MPLIB=INTELMPI/g" etc/bashrc && \
+sed -i "s/export\ WM_MPLIB=SYSTEMOPENMPI/export\ WM_MPLIB=INTELMPI/g" etc/bashrc && \
 cp wmake/rules/linux64Icc/mplibINTELMPI wmake/rules/General/mplibINTELMPI && \
 sed -i "s/=\ icpc/=\ mpiicpc/g" wmake/rules/linux64Icc/c++ && \
 sed -i "s/=\ icc/=\ mpiicc/g" wmake/rules/linux64Icc/c && \
@@ -295,7 +295,7 @@ cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-ADR && \
 sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADR/g' etc/bashrc && \
 sed -i 's/export WM_CODI_AD_LIB_POSTFIX=ADF/export WM_CODI_AD_LIB_POSTFIX=ADR/g' etc/bashrc && \
 sed -i "s/export\ WM_COMPILER=Gcc/export\ WM_COMPILER=Icc/g" etc/bashrc && \
-sed -i "s/export\ WM_MPLIB=SYSTEMOPENMPI/export| WM_MPLIB=INTELMPI/g" etc/bashrc && \
+sed -i "s/export\ WM_MPLIB=SYSTEMOPENMPI/export\ WM_MPLIB=INTELMPI/g" etc/bashrc && \
 cp wmake/rules/linux64Icc/mplibINTELMPI wmake/rules/General/mplibINTELMPI && \
 sed -i "s/=\ icpc/=\ mpiicpc/g" wmake/rules/linux64Icc/c++ && \
 sed -i "s/=\ icc/=\ mpiicc/g" wmake/rules/linux64Icc/c && \
@@ -337,7 +337,7 @@ tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADF && \
 cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-ADF && \
 sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADF/g' etc/bashrc && \
 sed -i "s/export\ WM_COMPILER=Gcc/export\ WM_COMPILER=Icc/g" etc/bashrc && \
-sed -i "s/export\ WM_MPLIB=SYSTEMOPENMPI/export| WM_MPLIB=INTELMPI/g" etc/bashrc && \
+sed -i "s/export\ WM_MPLIB=SYSTEMOPENMPI/export\ WM_MPLIB=INTELMPI/g" etc/bashrc && \
 cp wmake/rules/linux64Icc/mplibINTELMPI wmake/rules/General/mplibINTELMPI && \
 sed -i "s/=\ icpc/=\ mpiicpc/g" wmake/rules/linux64Icc/c++ && \
 sed -i "s/=\ icc/=\ mpiicc/g" wmake/rules/linux64Icc/c && \
