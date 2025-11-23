@@ -458,7 +458,7 @@ rm -rf metis-4.0.3* && \
 wget https://github.com/DAFoam/files/releases/download/TACS_Extern/metis-5.1.0.tar.gz && \
 tar -czvf TACS_extern.tar.gz metis*.tar.gz UFconfig*.tar.gz  AMD*.tar.gz &&\
 tar -xzf metis*.tar.gz && \
-cd metis-5.1.0 && make config prefix=$DAFOAM_ROOT_PATH/repos/tacs/extern/metis/ CFLAGS="-fPIC" && make install && \
+cd metis-5.1.0 && make config prefix=$DAFOAM_ROOT_PATH/repos/tacs/extern/metis/ CFLAGS="-fPIC" CC=icc CXX=icpc && make install && \
 cd ../../ && \
 cp Makefile.in.info Makefile.in && \
 ls && \
