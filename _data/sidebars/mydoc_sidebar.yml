@@ -314,7 +314,7 @@ entries:
       url: /mydoc_validations_rae2822.html
       output: web, pdf
 
-  - title: AI Assistant
+  - title: AI Agent
     output: web, pdf
     folderitems:
 
