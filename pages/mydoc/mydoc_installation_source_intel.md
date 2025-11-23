@@ -200,7 +200,7 @@ tar -xvf baseclasses.tar.gz && cd baseclasses-1.6.1 && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/pyspline/archive/v1.5.2.tar.gz -O pyspline.tar.gz && \
 tar -xvf pyspline.tar.gz && cd pyspline-1.5.2 && \
-cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
+cp config/defaults/config.LINUX_INTEL.mk config/config.mk && \
 make && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/pygeo/archive/v1.13.0.tar.gz -O pygeo.tar.gz && \
@@ -211,19 +211,19 @@ tar -xvf multipoint.tar.gz && cd multipoint-1.4.0 && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/cgnsutilities/archive/v2.6.0.tar.gz -O cgnsutilities.tar.gz && \
 tar -xvf cgnsutilities.tar.gz && cd cgnsutilities-2.6.0 && \
-cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
+cp config/defaults/config.LINUX_INTEL.mk config/config.mk && \
 make && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/pyhyp/archive/v2.6.1.tar.gz -O pyhyp.tar.gz && \
 tar -xvf pyhyp.tar.gz && cd pyhyp-2.6.1 && \
-cp -r config/defaults/config.LINUX_GFORTRAN_OPENMPI.mk config/config.mk && \
-sed -i "s/mpifort/mpif90/g" config/config.mk && \
+cp -r config/defaults/config.LINUX_INTEL_OPENMPI.mk config/config.mk && \
+sed -i "s/CC\_GEN\_FLAGS.*/CC\_GEN\_FLAGS=-fPIC\ -Wno-incompatible-function-pointer-types/g" config/config.mk && \
 make && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/idwarp/archive/v2.6.2.tar.gz -O idwarp.tar.gz && \
 tar -xvf idwarp.tar.gz && cd idwarp-2.6.2 && \
-cp -r config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
-sed -i "s/mpifort/mpif90/g" config/config.mk && \
+cp -r config/defaults/config.LINUX_INTEL.mk config/config.mk && \
+sed -i "s/C\_FLAGS.*/C\_FLAGS=-fPIC\ -O2\ -Wno-incompatible-function-pointer-types/g" config/config.mk && \
 make && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/mdolab/prefoil/archive/v2.0.1.tar.gz -O prefoil.tar.gz && \
