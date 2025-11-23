@@ -11,7 +11,7 @@ This tutorial showcases DAFoam's FIML capability in augmenting RANS turbulence m
 
 This work is currently under review in the AIAA Journal. "Zilong Li, Lean Fang, Anupam Sharma, Ping He. Field Inversion Machine Learning for Time-Resolved Unsteady Flows in Airfoil Dynamic Stall". A preview is available from arxiv.org.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Airfoil_Dynamic_Stall_U.gif" style="width:600px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Airfoil_Dynamic_Stall_U.gif" style="width:700px !important;" />
 
 Fig. 1. Velocity contour of the airfoil dynamic stall
 
@@ -41,11 +41,11 @@ After the machine learning procedure is done, we are ready to run the prediction
 
 The FIML prediction results are as follows. As we can see that, the trained SA model matches the reference SST model very well.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Airfoil_Dynamic_Stall_CL.gif" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Airfoil_Dynamic_Stall_CL.gif" style="width:500px !important;" />
 
 Fig. 2. Time series of CL
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Airfoil_Dynamic_Stall_P.gif" width="500" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Airfoil_Dynamic_Stall_P.gif" style="width:500px !important;" />
 
 
 Fig. 4. Temporal evolution of the velocity profile in the downstream
