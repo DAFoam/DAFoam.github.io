@@ -39,7 +39,7 @@ The following installation steps should work for both Ubuntu 22.04 and the TACC-
 
 ## **Root folder**
 
-Run the following commands to create a root folder where DAFoam will be installed to. The default is \$HOME/dafoam, and you can change to a different path by modifying the first line. We suggest you reserve at least 5 Gb hard disk space for the DAFoam installation. Here "loadDAFoam.sh" is a bash script to load the DAFoam environment, and we will add more modules into loadDAFoam.sh later.
+Run the following commands to create a root folder and a few subfolders where DAFoam's modules will be installed into. The default is \$HOME/dafoam, and you can change to a different path by modifying the first line. We suggest you reserve at least 5 Gb hard disk space for the DAFoam installation. Here "loadDAFoam.sh" is a bash script to load the DAFoam environment, and we will add more modules into loadDAFoam.sh later. 
 
 <pre>
 export DAFOAM_ROOT_PATH=$HOME/dafoam
@@ -49,16 +49,11 @@ echo '#!/bin/bash' > loadDAFoam.sh && \
 echo '# DAFoam root path' >> loadDAFoam.sh && \
 echo "export DAFOAM_ROOT_PATH=$DAFOAM_ROOT_PATH" >> loadDAFoam.sh && \
 chmod 755 loadDAFoam.sh && \
-. ./loadDAFoam.sh
+. ./loadDAFoam.sh && \
+mkdir -p $DAFOAM_ROOT_PATH/packages $DAFOAM_ROOT_PATH/OpenFOAM $DAFOAM_ROOT_PATH/OpenFOAM/sharedBins $DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs $DAFOAM_ROOT_PATH/repos
 </pre>
 
 {% include note.html content="You need to complete the following steps on the same terminal session. If you start a new terminal session, you need to load the loadDAFoam.sh script before installing DAFoam packages!" %}
-
-Next, we will create the "packages", "OpenFOAM", and "repos" folders in $DAFOAM_ROOT_PATH.
-
-<pre>
-mkdir -p $DAFOAM_ROOT_PATH/packages $DAFOAM_ROOT_PATH/OpenFOAM $DAFOAM_ROOT_PATH/OpenFOAM/sharedBins $DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs $DAFOAM_ROOT_PATH/repos
-</pre>
 
 ## **Python**
 
