@@ -18,15 +18,17 @@ To compile, you can just copy the code blocks in the following steps and run the
 
 ## **Root folder**
 
-First, we need to create a "dafoam" folder in your WORK directory (you can also install DAFoam into a different folder). Then create a "loadDAFoam.sh" bash script to set up the root path $DAFOAM_ROOT_PATH, and load the loadDAFoam.sh script:
+First, we need to create a root folder where DAFoam will be installed to. The default is $HOME/dafoam, and you can change to a different path by modifying the first line. We suggest you reserve at least 5 Gb hard disk space for the DAFoam installation. Then create a "loadDAFoam.sh" bash script to set up the root path $DAFOAM_ROOT_PATH, and load the loadDAFoam.sh script:
 
 <pre>
-mkdir -p $WORK/dafoam && \
-echo '#!/bin/bash' > $WORK/dafoam/loadDAFoam.sh && \
-echo '# DAFoam root path' >> $WORK/dafoam/loadDAFoam.sh && \
-echo 'export DAFOAM_ROOT_PATH=$WORK/dafoam' >> $WORK/dafoam/loadDAFoam.sh && \
-chmod 755 $WORK/dafoam/loadDAFoam.sh && \
-. $WORK/dafoam/loadDAFoam.sh
+export DAFOAM_ROOT_PATH=$HOME/dafoam
+mkdir -p "$DAFOAM_ROOT_PATH" && \
+cd "$DAFOAM_ROOT_PATH" && \
+echo '#!/bin/bash' > loadDAFoam.sh && \
+echo '# DAFoam root path' >> loadDAFoam.sh && \
+echo "export DAFOAM_ROOT_PATH=$DAFOAM_ROOT_PATH" >> loadDAFoam.sh && \
+chmod 755 loadDAFoam.sh && \
+. ./loadDAFoam.sh
 </pre>
 
 {% include note.html content="You need to complete the following steps on the same terminal session. If you start a new terminal session, you need to load the loadDAFoam.sh script before installing DAFoam packages!" %}
