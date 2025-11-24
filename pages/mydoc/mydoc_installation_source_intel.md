@@ -7,11 +7,11 @@ permalink: mydoc_installation_source_intel.html
 folder: mydoc
 ---
 
-The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on the **TACC-Stampede3 HPC** cluster using the following modules:
+The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on the **ISU's Nova HPC** cluster using the following modules. Note: DAFoam DOES NOT support newer versions of Intel compilers!
 
 <pre>
 Currently Loaded Modules:
-  1) autotools/1.4   2) xalt/3.1.1   3) TACC   4) cmake/3.28.1   5) intel/23.1   6) impi/21.9
+  1) intel/18.2  2) impi/18.2
 </pre>
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours; the most time-consuming part is compiling OpenFOAM.
