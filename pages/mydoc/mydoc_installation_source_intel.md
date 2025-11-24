@@ -34,10 +34,6 @@ mkdir -p $DAFOAM_ROOT_PATH/packages $DAFOAM_ROOT_PATH/OpenFOAM $DAFOAM_ROOT_PATH
 
 {% include note.html content="You need to complete the following steps on the same terminal session. If you start a new terminal session, you need to load the loadDAFoam.sh script before installing DAFoam packages!" %}
 
-<pre>
-
-</pre>
-
 ## **Python**
 
 Install Miniconda3 by running this command:
