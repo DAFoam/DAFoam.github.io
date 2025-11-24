@@ -21,14 +21,14 @@ Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Nump
 
 <pre>
 Currently Loaded Modules:
-  1) autotools/1.4   2) xalt/3.1.1   3) TACC   4) gcc/13.2.0   5) openmpi/5.0.8   6) cmake/3.28.1
+  1) TACC   2) gcc/13.2.0   3) openmpi/5.0.8   4) cmake/3.28.1
 </pre>
 
 **ISU Nova HPC** uses the following modules:
 
 <pre>
 Currently Loaded Modules:
-  1) gcc/12.2.0   5) openmpi/4.1.5   6) cmake/3.26.2
+  1) gcc/12.2.0   2) openmpi/4.1.5   3) cmake/3.26.2
 </pre>
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours; the most time-consuming part is compiling OpenFOAM.

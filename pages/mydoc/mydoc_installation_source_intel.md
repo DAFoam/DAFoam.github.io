@@ -11,7 +11,7 @@ The DAFoam package can be compiled with various versions of its dependencies. He
 
 <pre>
 Currently Loaded Modules:
-  1) intel/18.2  2) impi/18.2 (as part of intel/18.2)  3) cmake/3.27.4
+  1) intel/18.2    2) impi/18.2 (as part of intel/18.2)    3) cmake/3.27.4
 </pre>
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours; the most time-consuming part is compiling OpenFOAM.
