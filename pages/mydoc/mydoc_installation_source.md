@@ -9,7 +9,7 @@ folder: mydoc
 
 {% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](mydoc_installation_source_2210.html), [v2.2.0-](mydoc_installation_source_220.html), and [v1.0.0](mydoc_installation_source_100.html)." %}
 
-The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 22.04 and an HPC cluster.
+The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 22.04 and HPC clusters.
 
 **Ubuntu 22.04** using the following dependencies.
 
@@ -22,6 +22,13 @@ Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Nump
 <pre>
 Currently Loaded Modules:
   1) autotools/1.4   2) xalt/3.1.1   3) TACC   4) gcc/13.2.0   5) openmpi/5.0.8   6) cmake/3.28.1
+</pre>
+
+**ISU Nova HPC** uses the following modules:
+
+<pre>
+Currently Loaded Modules:
+  1) gcc/12.2.0   5) openmpi/4.1.5   6) cmake/3.26.2
 </pre>
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours; the most time-consuming part is compiling OpenFOAM.
