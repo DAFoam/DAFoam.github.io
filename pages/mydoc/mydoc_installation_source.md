@@ -11,25 +11,23 @@ folder: mydoc
 
 The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 22.04 and HPC clusters.
 
-**Ubuntu 22.04** using the following dependencies.
+**Workstation** uses the Ubuntu 22.04 system with the following dependencies.
 
-Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython | Cmake |
-| :-------------------------------------------------------------------------------------------------------- | 
-22.04.2 | gcc/11.4  | 4.1.2   | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.10    | 1.23.5 | 1.13.1 | 0.29.21 | 3.22
+Compiler | OpenMPI | Cmake | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy  | Cython  |
+| :--------------------------------------------------------------------------------------------------| 
+gcc/11.4 | 4.1.2   | 3.22. | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.10   | 1.23.5 | 1.13.1 | 0.29.21 |
 
-**TACC-Stampede3 HPC** uses the following modules:
+**TACC-Stampede3 HPC** uses the Rocky Linux 9.5 system with the following dependencies:
 
-<pre>
-Currently Loaded Modules:
-  1) TACC   2) gcc/13.2.0   3) openmpi/5.0.8   4) cmake/3.28.1
-</pre>
+Compiler | OpenMPI | Cmake | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy  | Cython  |
+| :--------------------------------------------------------------------------------------------------| 
+gcc/13.2 | 5.0.8   |  3.22 | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.10   | 1.23.5 | 1.13.1 | 0.29.21 |
 
-**ISU Nova HPC** uses the following modules:
+**ISU Nova HPC** uses the RedHat Linux 9.4 system with the following dependencies:
 
-<pre>
-Currently Loaded Modules:
-  1) gcc/12.2.0   2) openmpi/4.1.5   3) cmake/3.26.2
-</pre>
+Compiler | OpenMPI | Cmake | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy  | Cython  |
+| :--------------------------------------------------------------------------------------------------| 
+gcc/12.2 | 4.1.5   |  3.26 | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.10   | 1.23.5 | 1.13.1 | 0.29.21 |
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours; the most time-consuming part is compiling OpenFOAM.
 

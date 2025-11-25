@@ -9,10 +9,11 @@ folder: mydoc
 
 The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on the **ISU's Nova HPC** cluster using the following modules. Note: DAFoam MAY NOT support newer versions of Intel compilers!
 
-<pre>
-Currently Loaded Modules:
-  1) intel/18.2    2) impi/18.2 (as part of intel/18.2)    3) cmake/3.27.4
-</pre>
+**ISU Nova HPC** uses the RedHat Linux 9.4 system with the following dependencies:
+
+Compiler   | IntelMPI | Cmake | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy  | Cython  |
+| :-----------------------------------------------------------------------------------------------------| 
+Intel/18.2 | 18.2.    |  3.27 | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.10   | 1.23.5 | 1.13.1 | 0.29.21 |
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours; the most time-consuming part is compiling OpenFOAM.
 
