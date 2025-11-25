@@ -9,7 +9,7 @@ folder: mydoc
 ## Overview
 This tutorial showcases DAFoam's FIML capability in augmenting RANS turbulence models in predicting time-resolved unsteady flow with a moving boundary. Here we use the unsteady flow in the NACA0012 airfoil dynamic stall as an example. The airfoil is pitching up with 0.5 rad/s. We use only the Cd time-series from the k-omega SST as the training data. We then augment the SA model to match the spatial-temporal distribution of the flow fields from the SST model.
 
-This work is currently under review in the AIAA Journal. "Zilong Li, Lean Fang, Anupam Sharma, Ping He. Field Inversion Machine Learning for Time-Resolved Unsteady Flows in Airfoil Dynamic Stall". A preview is available from arxiv.org.
+This work is currently under review in the AIAA Journal. "Zilong Li, Lean Fang, Anupam Sharma, Ping He. Field Inversion Machine Learning for Time-Resolved Unsteady Flows in Airfoil Dynamic Stall". A preview is available from [here](https://arxiv.org/pdf/2511.18276).
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/Airfoil_Dynamic_Stall_U.gif" style="width:700px !important;" />
 
