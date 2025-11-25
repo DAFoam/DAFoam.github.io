@@ -16,7 +16,7 @@ Install the MCP server
 - Download and install the Docker Desktop for [MacOS](https://docs.docker.com/desktop/setup/install/mac-install) or [Windows](https://docs.docker.com/desktop/setup/install/windows-install/). Open Docker Desktop and keep it open.
 - Open a Terminal (MacOS) or Command Prompt (Windows). Run the following command to download the DAFoam Docker image:
   <pre>
-  docker pull dafoam/opt-packages:latest
+  docker pull dafoam/opt-packages:mcp
   </pre>
 - Run the following command to download the dafoam_mcp_server repo from GitHub
 
