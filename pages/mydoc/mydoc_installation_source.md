@@ -9,7 +9,7 @@ folder: mydoc
 
 {% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](mydoc_installation_source_2210.html), [v2.2.0-](mydoc_installation_source_220.html), and [v1.0.0](mydoc_installation_source_100.html)." %}
 
-The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 22.04 and HPC clusters.
+The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 22.04 and two different HPC clusters.
 
 **Workstation** uses the Ubuntu 22.04 system with the following dependencies.
 
@@ -40,7 +40,7 @@ sudo apt-get update && \
 sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin --no-install-recommends
 </pre>
 
-The following installation steps should work for both Ubuntu 22.04 and the TACC-Stampede3 HPC.
+The following installation steps should work for both Ubuntu 22.04 and the HPC clusters.
 
 ## **Root folder**
 
@@ -78,7 +78,7 @@ echo 'export PYTHONUSERBASE=no-local-libs' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh &&
 
 In the above, we use "export PYTHONUSERBASE=no-local-libs" to bypass the site-packages in your `.local` directory, as they may conflict with the DAFoam packages. 
 
-The miniconda's built-in libstdc++ and libtinfo libs may conflict with the Ubuntu system libs. Also, the new miniconda's compiler_compat ld may conflict with the system ld. So we need to rename the miniconda's libs and exes by running:
+The miniconda's built-in libstdc++ and libtinfo libs may conflict with the system libs. Also, the new miniconda's compiler_compat ld may conflict with the system ld. So we need to rename the miniconda's libs and exes by running:
 
 <pre>
 mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6.backup && \
