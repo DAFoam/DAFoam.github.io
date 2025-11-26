@@ -41,9 +41,9 @@ Install Miniconda3 by running this command:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/packages && \
-wget https://repo.anaconda.com/miniconda/Miniconda3-py310_23.5.2-0-Linux-x86_64.sh && \
-chmod 755 Miniconda3-py310_23.5.2-0-Linux-x86_64.sh && \
-./Miniconda3-py310_23.5.2-0-Linux-x86_64.sh -b -p $DAFOAM_ROOT_PATH/packages/miniconda3 && \
+wget https://repo.anaconda.com/miniconda/Miniconda3-py310_22.11.1-1-Linux-x86_64.sh && \
+chmod 755 Miniconda3-py310_22.11.1-1-Linux-x86_64.sh && \
+bash ./Miniconda3-py310_22.11.1-1-Linux-x86_64.sh -b -p $DAFOAM_ROOT_PATH/packages/miniconda3 && \
 echo '# Miniconda3' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \

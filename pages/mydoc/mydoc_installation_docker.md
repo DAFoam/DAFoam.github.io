@@ -99,9 +99,9 @@ RUN mkdir -p /home/dafoamuser/dafoam && \
 # ---------------------------
 RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     cd $DAFOAM_ROOT_PATH/packages && \
-    wget https://repo.anaconda.com/miniconda/Miniconda3-py310_23.5.2-0-Linux-x86_64.sh && \
-    chmod 755 Miniconda3-py310_23.5.2-0-Linux-x86_64.sh && \
-    ./Miniconda3-py310_23.5.2-0-Linux-x86_64.sh -b -p $DAFOAM_ROOT_PATH/packages/miniconda3 && \
+    wget https://repo.anaconda.com/miniconda/Miniconda3-py310_22.11.1-1-Linux-x86_64.sh && \
+    chmod 755 Miniconda3-py310_22.11.1-1-Linux-x86_64.sh && \
+    bash ./Miniconda3-py310_22.11.1-1-Linux-x86_64.sh -b -p $DAFOAM_ROOT_PATH/packages/miniconda3 && \
     echo '# Miniconda3' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
     echo 'export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
     echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -136,7 +136,7 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
                 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes \
                 --download-fblaslapack=yes --download-f2cblaslapack=yes --with-shared-libraries=yes \
                 --with-fortran-bindings=1 --with-cxx-dialect=C++11 && \
-    make PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-${PETSC_VER} PETSC_ARCH=real-opt all -j ${MAKE_JOBS} && \
+    make PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-${PETSC_VER} PETSC_ARCH=real-opt all && \
     cd $PETSC_DIR/src/binding/petsc4py && pip install . --no-build-isolation
 
 # -----
