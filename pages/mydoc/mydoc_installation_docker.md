@@ -20,6 +20,7 @@ USER dafoamuser
 # compile
 RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     cd $DAFOAM_ROOT_PATH/repos && \
+    rm -rf dafoam && \
     git clone https://github.com/mdolab/dafoam && \
     cd dafoam && \
     export export COMPILE_DAFOAM_ADF=1 && \
@@ -36,10 +37,10 @@ FROM ubuntu:22.04
 ARG DEBIAN_FRONTEND=noninteractive
 ARG TZ=UTC
 
-# Tunable versions (match the DAFoam docs v4.0.2)
+# Tunable versions (match the DAFoam docs v4.0.3)
+ARG DAFOAM_VER=4.0.3
 ARG PETSC_VER=3.15.5
 ARG CGNS_VER=4.5.0
-ARG DAFOAM_VER=4.0.2
 ARG BASECLASSES_VER=1.6.1
 ARG PY_SPLINE_VER=1.5.2
 ARG PY_GEO_VER=1.13.0
@@ -49,6 +50,7 @@ ARG CGNS_UTILS_VER=2.6.0
 ARG IDWARP_VER=2.6.2
 ARG PYOPTSPARSE_VER=2.10.1
 ARG PYOFM_VER=1.2.3
+ARG PREFOIL_VER=2.0.1
 ARG OPENFOAM_AD_TAG=1.3.2
 ARG OPENMDAO_VER=3.26
 ARG MPHYS_HASH=b6db107d05937d95a46b392b6f5759677a93e46d
@@ -59,11 +61,12 @@ ARG TACS_VER=3.4.0
 ARG MAKE_JOBS=4
 ARG BUILD_ADF=false   # set to true to also build ADF
 ARG BUILD_IPOPT=true  # set to false if providing your own IPOPT
+ARG BUILD_HISA=true   # set to true to build Hisa4DAFoam high-speed solver
 
 # Use bash for RUN steps (we need `source`)
 SHELL ["/bin/bash", "-lc"]
 
-# System prerequisites (from docs)
+# System prerequisites (from docs - Ubuntu 22.04)
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     tzdata ca-certificates apt-utils \
@@ -92,13 +95,13 @@ RUN mkdir -p /home/dafoamuser/dafoam && \
              $DAFOAM_ROOT_PATH/repos
 
 # ---------------------------
-# Python (Miniconda, pinned)
+# Python (Miniconda, pinned to py310 per docs)
 # ---------------------------
 RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     cd $DAFOAM_ROOT_PATH/packages && \
-    wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh && \
-    chmod 755 Miniconda3-py39_4.12.0-Linux-x86_64.sh && \
-    ./Miniconda3-py39_4.12.0-Linux-x86_64.sh -b -p $DAFOAM_ROOT_PATH/packages/miniconda3 && \
+    wget https://repo.anaconda.com/miniconda/Miniconda3-py310_22.11.1-1-Linux-x86_64.sh && \
+    chmod 755 Miniconda3-py310_22.11.1-1-Linux-x86_64.sh && \
+    ./Miniconda3-py310_22.11.1-1-Linux-x86_64.sh -b -p $DAFOAM_ROOT_PATH/packages/miniconda3 && \
     echo '# Miniconda3' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
     echo 'export PATH=$DAFOAM_ROOT_PATH/packages/miniconda3/bin:$PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
     echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DAFOAM_ROOT_PATH/packages/miniconda3/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -108,6 +111,8 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6.backup && \
     mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6.backup && \
     mv $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld.backup && \
+    mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libgcc_s.so.1 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libgcc_s.so.1.backup && \
+    mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libquadmath.so.0 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libquadmath.so.0.backup && \
     # Python pkgs (pin exact versions from docs)
     pip install --upgrade pip && \
     pip install numpy==1.23.5 scipy==1.13.1 mpi4py==3.1.5 cython==0.29.21 \
@@ -129,10 +134,10 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     cd petsc-${PETSC_VER} && \
     ./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 \
                 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes \
-                --download-fblaslapack=yes --with-shared-libraries=yes \
+                --download-fblaslapack=yes --download-f2cblaslapack=yes --with-shared-libraries=yes \
                 --with-fortran-bindings=1 --with-cxx-dialect=C++11 && \
     make PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-${PETSC_VER} PETSC_ARCH=real-opt all -j ${MAKE_JOBS} && \
-    cd $PETSC_DIR/src/binding/petsc4py && pip install .
+    cd $PETSC_DIR/src/binding/petsc4py && pip install . --no-build-isolation
 
 # -----
 # CGNS
@@ -162,16 +167,35 @@ RUN if [ "${BUILD_IPOPT}" = "true" ]; then \
       echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
       . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
       cd $DAFOAM_ROOT_PATH/packages && \
-      git clone -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
+      git clone --depth 1 -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
       cd $IPOPT_DIR && \
-      git clone -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
+      git clone --depth 1 -b stable/1.3 https://github.com/coin-or-tools/ThirdParty-Blas.git && \
+      cd ThirdParty-Blas && ./get.Blas && \
+      ./configure --prefix=$IPOPT_DIR && \
+      make && make install && cd .. && \
+      git clone --depth 1 -b stable/1.5 https://github.com/coin-or-tools/ThirdParty-Lapack.git && \
+      cd ThirdParty-Lapack && ./get.Lapack && \
+      ./configure --prefix=$IPOPT_DIR --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" && \
+      make && make install && cd .. && \
+      git clone --depth 1 -b stable/1.3 https://github.com/coin-or-tools/ThirdParty-Metis.git && \
+      cd ThirdParty-Metis && ./get.Metis && \
+      ./configure --prefix=$IPOPT_DIR && make && make install && cd .. && \
+      git clone --depth 1 -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
       cd ThirdParty-Mumps && ./get.Mumps && \
-      ./configure --prefix=$IPOPT_DIR && make -j ${MAKE_JOBS} && make install && \
+      ./configure --prefix=$IPOPT_DIR --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" \
+                   --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
+                   --with-metis-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" \
+                   --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+      make && make install && \
       cd $IPOPT_DIR && mkdir -p build && cd build && \
       ../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps \
                    --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" \
-                   --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" && \
-      make -j ${MAKE_JOBS} && make install ; \
+                   --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" \
+                   --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" \
+                   --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
+                   --with-metis-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" \
+                   --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+      make && make install ; \
     fi
 
 # ----------------------------
@@ -210,6 +234,10 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     sed -i "s/mpifort/mpif90/g" config/config.mk && \
     make -j ${MAKE_JOBS} && pip install . && \
     cd $DAFOAM_ROOT_PATH/repos && \
+    wget https://github.com/mdolab/prefoil/archive/v${PREFOIL_VER}.tar.gz -O prefoil.tar.gz && \
+    tar -xf prefoil.tar.gz && cd prefoil-${PREFOIL_VER} && \
+    pip install . && \
+    cd $DAFOAM_ROOT_PATH/repos && \
     wget https://github.com/mdolab/pyoptsparse/archive/v${PYOPTSPARSE_VER}.tar.gz -O pyoptsparse.tar.gz && \
     tar -xf pyoptsparse.tar.gz && cd pyoptsparse-${PYOPTSPARSE_VER} && \
     pip install .
@@ -221,11 +249,13 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     cd $DAFOAM_ROOT_PATH/OpenFOAM && \
     wget https://sourceforge.net/projects/openfoam/files/v1812/OpenFOAM-v1812.tgz/download -O OpenFOAM-v1812.tgz && \
     wget https://sourceforge.net/projects/openfoam/files/v1812/ThirdParty-v1812.tgz/download -O ThirdParty-v1812.tgz && \
-    tar -xf OpenFOAM-v1812.tgz && tar -xf ThirdParty-v1812.tgz && \
+    tar -xvf OpenFOAM-v1812.tgz && \
+    tar -xvf ThirdParty-v1812.tgz && \
     cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812 && \
     wget https://github.com/DAFoam/files/releases/download/v1.0.0/OpenFOAM-v1812-patch-files.tar.gz && \
-    tar -xf OpenFOAM-v1812-patch-files.tar.gz && \
-    cd OpenFOAM-v1812-patch-files && ./runPatch.sh && \
+    tar -xvf OpenFOAM-v1812-patch-files.tar.gz && \
+    cd OpenFOAM-v1812-patch-files && \
+    ./runPatch.sh && \
     cd .. && \
     echo '# OpenFOAM-v1812' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
     echo 'source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -233,8 +263,7 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     echo 'export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
     . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
     export WM_NCOMPPROCS=${MAKE_JOBS} && \
-    ./Allwmake -j ${MAKE_JOBS} && \
-    simpleFoam -help >/dev/null
+    ./Allwmake
 
 # ------------------------
 # OpenFOAM Reverse-mode AD
@@ -248,7 +277,7 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     sed -i 's/export WM_CODI_AD_LIB_POSTFIX=ADF/export WM_CODI_AD_LIB_POSTFIX=ADR/g' etc/bashrc && \
     . $DAFOAM_ROOT_PATH/loadDAFoam.sh && source etc/bashrc && \
     export WM_NCOMPPROCS=${MAKE_JOBS} && \
-    ./Allwmake -j ${MAKE_JOBS} && \
+    ./Allwmake && \
     DASimpleFoamReverseAD -help >/dev/null && \
     # link ADR libs into original OpenFOAM-v1812 (relative symlinks for portability)
     cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib && \
@@ -270,7 +299,7 @@ RUN if [ "${BUILD_ADF}" = "true" ]; then \
       sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADF/g' etc/bashrc && \
       . $DAFOAM_ROOT_PATH/loadDAFoam.sh && source etc/bashrc && \
       export WM_NCOMPPROCS=${MAKE_JOBS} && \
-      ./Allwmake -j ${MAKE_JOBS} && \
+      ./Allwmake && \
       cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib && \
       ln -s ../../../../OpenFOAM-v1812-ADF/platforms/*/lib/*.so . && \
       cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy && \
@@ -287,6 +316,17 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     wget https://github.com/mdolab/pyofm/archive/refs/tags/v${PYOFM_VER}.tar.gz -O pyofm.tar.gz && \
     tar -xf pyofm.tar.gz && cd pyofm-* && make -j ${MAKE_JOBS} && pip install .
 
+# ----------------------
+# Hisa4DAFoam (Optional)
+# ----------------------
+RUN if [ "${BUILD_HISA}" = "true" ]; then \
+      . /home/dafoamuser/dafoam/loadDAFoam.sh && \
+      cd $DAFOAM_ROOT_PATH/OpenFOAM && \
+      git clone https://github.com/DAFoam/Hisa4DAFoam && \
+      cd Hisa4DAFoam && \
+      ./Allmake ; \
+    fi
+
 # -------
 # DAFoam
 # -------
@@ -297,6 +337,14 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     ./Allmake && \
     echo "" && echo "DAFoam build complete."
 
+# (Optional) Compile DAFoam ADF if BUILD_ADF is true
+RUN if [ "${BUILD_ADF}" = "true" ]; then \
+      . /home/dafoamuser/dafoam/loadDAFoam.sh && \
+      cd $DAFOAM_ROOT_PATH/repos/dafoam-* && \
+      export COMPILE_DAFOAM_ADF=1 && \
+      ./Allmake ; \
+    fi
+
 # -------
 # OpenMDAO
 # -------
@@ -304,7 +352,7 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     pip install openmdao==${OPENMDAO_VER}
 
 # -------
-# MPhycs
+# MPhys
 # -------
 RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     cd $DAFOAM_ROOT_PATH/repos && \
@@ -313,7 +361,7 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     cd mphys && pip install .
 
 # -------
-# FUNTOFEM
+# FUNtoFEM
 # -------
 RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     cd $DAFOAM_ROOT_PATH/repos && \
@@ -321,11 +369,12 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
     cd funtofem && cp Makefile.in.info Makefile.in && \
     sed -i "s/F2F_DIR=.*/F2F_DIR=\$\{DAFOAM_ROOT_PATH\}\/repos\/funtofem/g" Makefile.in && \
-    make && pip install -e .
+    sed -i "s/LAPACK_LIBS\ =.*/LAPACK_LIBS=-L\$\{PETSC_LIB\}\ -lf2clapack -lf2cblas/g" Makefile.in && \
+    make && pip install -e . --no-build-isolation
 
-# --------
-# FUNTOFEM
-# --------
+# -------
+# TACS
+# -------
 RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     cd $DAFOAM_ROOT_PATH/repos && \
     wget https://github.com/smdogroup/tacs/archive/refs/tags/v${TACS_VER}.tar.gz -O tacs.tar.gz && \
@@ -334,14 +383,14 @@ RUN . /home/dafoamuser/dafoam/loadDAFoam.sh && \
     wget https://github.com/DAFoam/files/releases/download/TACS_Extern/TACS_extern.tar.gz && tar -xzf TACS_extern.tar.gz && \
     rm -rf metis-4.0.3* && \
     wget https://github.com/DAFoam/files/releases/download/TACS_Extern/metis-5.1.0.tar.gz && \
-    tar -czvf TACS_extern.tar.gz metis*.tar.gz UFconfig*.tar.gz  AMD*.tar.gz &&\
+    tar -czvf TACS_extern.tar.gz metis*.tar.gz UFconfig*.tar.gz AMD*.tar.gz && \
     tar -xzf metis*.tar.gz && \
     cd metis-5.1.0 && make config prefix=$DAFOAM_ROOT_PATH/repos/tacs/extern/metis/ CFLAGS="-fPIC" && make install && \
     cd ../../ && \
     cp Makefile.in.info Makefile.in && \
-    ls && \
     sed -i "s/TACS_DIR\ =.*/TACS_DIR=\$\{DAFOAM_ROOT_PATH\}\/repos\/tacs/g" Makefile.in && \
-    make && pip install -e . && \
+    sed -i "s/LAPACK_LIBS\ =.*/LAPACK_LIBS=-L\$\{PETSC_LIB\}\ -lf2clapack -lf2cblas -lpthread/g" Makefile.in && \
+    make && pip install -e . --no-build-isolation && \
     cd extern/f5tovtk && make && cp f5tovtk $DAFOAM_ROOT_PATH/OpenFOAM/sharedBins
 
 # Default env on container start
