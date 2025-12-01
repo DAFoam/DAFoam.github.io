@@ -45,6 +45,8 @@ Connect the DAFoam MCP server to a client (Claude).
           "run", 
           "-i", 
           "--rm",
+          "--name",
+          "dafoam_mcp_server",
           "--platform",
           "linux/amd64",
           "-p",
