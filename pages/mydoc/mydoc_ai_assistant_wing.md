@@ -7,7 +7,7 @@ permalink: mydoc_ai_assistant_wing.html
 folder: mydoc
 ---
 
-Once the DAFoam MCP server is installed and connected to Claude, you can open the Docker Desktop and the Claude Desktop app, and start using it to analyze and optimize wing cases. We support the following functionalities.
+Once the DAFoam MCP server is installed and connected to Claude, you can open the Docker Desktop and the Claude Desktop app, and start using it to analyze wing cases. We support the following functionalities.
 
 ## Wing geometry and mesh generation. 
 
