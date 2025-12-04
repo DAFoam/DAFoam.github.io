@@ -325,6 +325,10 @@ entries:
     - title: Airfoil Agent
       url: /mydoc_ai_assistant_airfoil.html
       output: web, pdf
+    
+    - title: Wing Agent
+      url: /mydoc_ai_assistant_wing.html
+      output: web, pdf
 
   - title: Misc
     output: web, pdf
