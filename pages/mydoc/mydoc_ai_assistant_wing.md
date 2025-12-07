@@ -20,6 +20,10 @@ Once the DAFoam MCP server is installed and connected to Claude, you can open th
 
   <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-mesh.png" style="width:700px !important;" />
 
+  You can also click the provided link "Interactive 3D View" to open a web brower to view the mesh using Trame. In Trame, you can zoom, rotate, traslate the view to visualize more details of the mesh.
+
+  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-mesh-trame.png" style="width:700px !important;" /> 
+
 ## Wing aerodynamic analysis.
 
 - Run CFD simulations. You can ask Claude: "Run a CFD with Ma=0.5, Re=1e6, and aoa=1.5 deg". Claude will run the CFD simulation in the background. 

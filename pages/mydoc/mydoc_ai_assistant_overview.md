@@ -64,5 +64,9 @@ Connect the DAFoam MCP server to a client (Claude).
 
   <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI_Check_DAFoam_MCP_Server.png" style="width:500px !important;" />
 
+- Occasionally, you may see the error shown below when opening the Claude Desktop app. If this happens, the DAFoam MCP server is not loading properly. You can simply force-quit Claude and reopen it. The error should disappear.
+
+  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-claude-error.png" style="width:400px !important;" />
+
 
 {% include links.html %}
