@@ -49,6 +49,8 @@ Connect the DAFoam MCP server to a client (Claude).
           "linux/amd64",
           "-p",
           "8001:8001",
+          "-p",
+          "8002:8002",
           "-v", 
           "/abs_path_to_your_dafoam_mcp_server:/home/dafoamuser/mount",
           "dafoam_mcp_server"
