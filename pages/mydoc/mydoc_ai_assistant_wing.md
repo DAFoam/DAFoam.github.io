@@ -32,7 +32,7 @@ Once the DAFoam MCP server is installed and connected to Claude, you can open th
 
 - Monitor convergence. If the CFD is running in the background, you can ask "View the CFD convergence" and click the provided link to visualize the residual and function convergence history.
 
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-convergence.png" style="width:700px !important;" />
+  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-convergence.png" style="width:700px !important;" />
 
 - View pressure profile. If the CFD finishes, you can ask Claude to plot the pressure profile.
 
