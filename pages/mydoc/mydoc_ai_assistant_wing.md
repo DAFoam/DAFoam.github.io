@@ -3,7 +3,7 @@ title: Wing agent
 keywords: ai assistant
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_ai_assistant_wing.html
+permalink: ai-agent-wing.html
 folder: mydoc
 ---
 

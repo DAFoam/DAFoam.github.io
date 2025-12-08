@@ -3,7 +3,7 @@ title: Airfoil agent
 keywords: ai assistant
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_ai_assistant_airfoil.html
+permalink: ai-agent-airfoil.html
 folder: mydoc
 ---
 

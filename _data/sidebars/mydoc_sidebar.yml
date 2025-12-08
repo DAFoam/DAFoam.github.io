@@ -319,15 +319,15 @@ entries:
     folderitems:
 
     - title: Overview
-      url: /mydoc_ai_assistant_overview.html
+      url: /ai-agent-overview.html
       output: web, pdf
 
     - title: Airfoil Agent
-      url: /mydoc_ai_assistant_airfoil.html
+      url: /ai-agent-airfoil.html
       output: web, pdf
     
     - title: Wing Agent
-      url: /mydoc_ai_assistant_wing.html
+      url: /ai-agent-wing.html
       output: web, pdf
 
   - title: Misc

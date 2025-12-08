@@ -3,7 +3,7 @@ title: Overview
 keywords: ai assistant
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_ai_assistant_overview.html
+permalink: ai-agent-overview.html
 folder: mydoc
 ---
 
