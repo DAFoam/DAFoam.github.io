@@ -543,6 +543,22 @@ export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
 export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH
 </pre>
 
+## **Install MCP depedneicies (optional)**
+
+This step is needed if you want to use the DAFoam MCP server. Here we need to install fastmcp, trame, and ParaView.
+
+<pre>
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+cd $DAFOAM_ROOT_PATH/packages && \
+pip install fastmcp=2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0 && \
+wget https://www.paraview.org/files/v5.12/ParaView-5.12.1-osmesa-MPI-Linux-Python3.10-x86_64.tar.gz && \
+tar -xf ParaView-5.12.1-osmesa-MPI-Linux-Python3.10-x86_64.tar.gz && \
+mv ParaView-5.12.1-osmesa-MPI-Linux-Python3.10-x86_64 ParaView-5.12.1 && \
+mv ParaView-5.12.1/bin/mpiexec  ParaView-5.12.1/bin/mpiexec_bk && \
+echo "# ParaView" >> /home/dafoamuser/dafoam/loadDAFoam.sh && \
+echo "export PATH=\$DAFOAM_ROOT_PATH/packages/ParaView-5.12.1/bin:\$PATH" >> /home/dafoamuser/dafoam/loadDAFoam.sh
+</pre>
+
 ## **Compile SNOPT for pyOptSparse (optional)**
 
 This step is needed if you want to use the SNOPT optimizer. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com).
@@ -553,32 +569,5 @@ SNOPT is a commercial package, and you can purchase it from [here](http://www.sb
 cd $DAFOAM_ROOT_PATH/repos/pyoptsparse-2.10.1 && \
 pip install .
 </pre>
-
-
-## **Make the DAFoam package portable (optional)**
-
-This step is only needed if you want to change the root path of your installation, e.g., copy your compiled DAFoam packages to another directory.
-
-The only thing you need to do is to modify the interpreter lines "#!" for files in $DAFOAM_ROOT_PATH/packages/miniconda3/. This is because Miniconda hard codes the Python path, so we need to change it to "#!/usr/bin/env python"
-
-First find an example of the hard-coded interpreter line from $DAFOAM_ROOT_PATH/packages/miniconda3/bin/conda. Run this command
-
-<pre>
-head -1 $DAFOAM_ROOT_PATH/packages/miniconda3/bin/conda
-</pre>
-
-You may see an output like this:
-
-<pre>
-#!/home/replace_this_with_your_username/dafoam/packages/miniconda3/bin/python
-</pre>
-
-Then run this command to replace all the hard-coded interpreter lines:
-
-<pre>
-sed -i 's,^#\!/home/replace_this_with_your_username/dafoam/packages/miniconda3/bin/python,#!/usr/bin/env python,g' $DAFOAM_ROOT_PATH/packages/miniconda3/*/*
-</pre>
-
-Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
 
 {% include links.html %}
