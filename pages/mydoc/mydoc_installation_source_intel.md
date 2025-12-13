@@ -550,7 +550,7 @@ This step is needed if you want to use the DAFoam MCP server. Here we need to in
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 cd $DAFOAM_ROOT_PATH/packages && \
-pip install fastmcp=2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0 && \
+pip install fastmcp==2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0 && \
 wget https://www.paraview.org/files/v5.13/ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
 tar -xf ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
 mv ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64 ParaView-5.13.3 && \
