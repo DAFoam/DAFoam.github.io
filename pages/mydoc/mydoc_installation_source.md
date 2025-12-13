@@ -37,7 +37,7 @@ If you use Ubuntu, run this on the terminal to install prerequisites. If you ins
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin lsof libxft2 --no-install-recommends
+sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin lsof --no-install-recommends
 </pre>
 
 The following installation steps should work for both Ubuntu 22.04 and the HPC clusters.
@@ -561,7 +561,7 @@ This step is needed if you want to use the DAFoam MCP server. Here we need to in
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 cd $DAFOAM_ROOT_PATH/packages && \
-pip install fastmcp=2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0 gmsh==4.15.0 && \
+pip install fastmcp=2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0 && \
 wget https://www.paraview.org/files/v5.13/ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
 tar -xf ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
 mv ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64 ParaView-5.13.3 && \
