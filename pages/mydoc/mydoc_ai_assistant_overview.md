@@ -75,9 +75,26 @@ The local installation works for Linux, Windows, and MacOS and consist of the fo
 
 ## HPC Installation
 
-The HPC installation works for Linux only and consist of the following steps.
+### Connecting to the HPC Using VS Code Remote SSH
 
-- Login into your HPC through ssh or VSCode Remote SSH. cd into your \$HOME directory (e.g., `/home/my_user_name`). Here we use the \$HOME directory installation as an example, you can also install DAFoam MCP server and DAFoam packages into a different directory.
+The recommended way to connect to an HPC when using the DAFoam MCP server is via the **VS Code Remote SSH** extension. This approach is supported on Windows, macOS, and Linux.
+
+- First, download VS Code 1.100.3 from [here](https://code.visualstudio.com/updates/v1_100).  
+  **NOTE:** Some newer versions of VS Code may experience issues when connecting to HPC systems.
+
+- Open VS Code. From the left panel, click `Extensions`, then search for `Remote SSH` by Microsoft and click `Install`.
+
+- After installing Remote SSH, set up the SSH connection: (1) Click the blue `Open a Remote Window` button in the lower-left corner of VS Code. (2) In the pop-up window on the top, select `Connect to Host`, then choose `+ Add New SSH Host`. (3) In the pop-up window, enter your SSH command, for example: `ssh my_user_name@nova.its.iastate.edu`. (4) When prompted, select the SSH configuration file to update (choose `~/.ssh/config` or similar).
+
+- Once the SSH configuration is complete, click `Connect to Host` again and select your newly added host (e.g., `nova.its.iastate.edu`). You will be prompted to enter your password and, if applicable, a verification code to log in to the HPC.
+
+- After successfully logging in, click `Open Folder` in the left panel and navigate to the path of your `dafoam_mcp_server` repository. This enables: (1) Access to an integrated terminal on the HPC, (2) Browsing and editing all files in the repository, and (3) Viewing any opened files within VS Code. If the terminal is not visible after opening the folder, click `Toggle Panel` in the top-right corner of VS Code. An example of VS Code Remote SSH connected to the Nova HPC is shown below.
+
+  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-vscode-hpc-login.png" style="width:700px !important;" />
+
+### Setup DAFoam, Claude Code, and MCP Server
+
+- Login into your HPC through VS Code Remote SSH. cd into your \$HOME directory (e.g., `/home/my_user_name`). Here we use the \$HOME directory installation as an example, you can also install DAFoam MCP server and DAFoam packages into a different directory.
 
 - Compile DAFoam from source, follow the instructions from [here](https://dafoam.github.io/mydoc_installation_source.html). Here we assume DAFoam is compiled in /home/my_user_name/dafoam.
 

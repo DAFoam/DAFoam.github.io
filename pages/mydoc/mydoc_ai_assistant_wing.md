@@ -7,24 +7,7 @@ permalink: ai-agent-wing.html
 folder: mydoc
 ---
 
-Here we demonstrate how to use the AI agent for wing aerodynamic design on an HPC system. Please follow the instructions in Overview–>HPC Installation to set up the DAFoam MCP server and Claude Code. In this example, we use Iowa State University’s Nova HPC as the reference system.
-
-## Connecting to the HPC Using VS Code Remote SSH
-
-The recommended way to connect to an HPC when using the DAFoam MCP server is via the **VS Code Remote SSH** extension. This approach is supported on Windows, macOS, and Linux.
-
-- First, download VS Code 1.100.3 from [here](https://code.visualstudio.com/updates/v1_100).  
-  **NOTE:** Some newer versions of VS Code may experience issues when connecting to HPC systems.
-
-- Open VS Code. From the left panel, click `Extensions`, then search for `Remote SSH` by Microsoft and click `Install`.
-
-- After installing Remote SSH, set up the SSH connection: (1) Click the blue `Open a Remote Window` button in the lower-left corner of VS Code. (2) In the pop-up window on the top, select `Connect to Host`, then choose `+ Add New SSH Host`. (3) In the pop-up window, enter your SSH command, for example: `ssh my_user_name@nova.its.iastate.edu`. (4) When prompted, select the SSH configuration file to update (choose `~/.ssh/config` or similar).
-
-- Once the SSH configuration is complete, click `Connect to Host` again and select your newly added host (e.g., `nova.its.iastate.edu`). You will be prompted to enter your password and, if applicable, a verification code to log in to the HPC.
-
-- After successfully logging in, click `Open Folder` in the left panel and navigate to the path of your `dafoam_mcp_server` repository. This enables: (1) Access to an integrated terminal on the HPC, (2) Browsing and editing all files in the repository, and (3) Viewing any opened files within VS Code. If the terminal is not visible after opening the folder, click `Toggle Panel` in the top-right corner of VS Code. An example of VS Code Remote SSH connected to the Nova HPC is shown below.
-
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-vscode-hpc-login.png" style="width:700px !important;" />
+Here we demonstrate how to use the AI agent for wing aerodynamic design on an HPC system. Please follow the instructions in Overview–>HPC Installation to set up the DAFoam MCP server and Claude Code. 
 
 ## Wing geometry and mesh generation. 
 
