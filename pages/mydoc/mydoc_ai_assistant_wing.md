@@ -11,18 +11,13 @@ Here we demonstrate how to use the AI agent for wing aerodynamic design on an HP
 
 ## Wing geometry and mesh generation. 
 
-- Geometry generation. To generate the CAD wing geometry mesh, you can ask Claude: "Generate a wing with the NACA0012 at the root and NACA4412 at the tip. The span is 3 m. The root chord is 1 m, and the tip chord is 0.7 m. The root has a twist of 2 degs.". When asked you need to click "Yes" to allow Claude code to execute the MCP functions. You can also click "Yes, and don't ask again". Once Claude generates the mesh, you can click the provided links to view the pngs or the html of the wing geometry. You may see a pop-up window on the bottom right saying "Your application running on port 8002 is available". You can click "Preview in Editor" to enable interactive visualization of the iges wing geometry. 
+- Geometry generation. To generate the CAD wing geometry mesh, you can ask Claude: "Generate a wing with the NACA0012 at the root and NACA4412 at the tip. The span is 3 m. The root chord is 1 m, and the tip chord is 0.7 m. The root has a twist of 2 degs.". When asked you need to click "Yes" to allow Claude code to execute the MCP functions. You can also click "Yes, and don't ask again". Once Claude generates the mesh, you can click the provided links to view the pngs or the html of the wing geometry. You may see a pop-up window on the bottom right saying "Your application running on port 8002 is available". You can click "Preview in Editor" to enable interactive visualization of the iges wing geometry in Trame. Or you can manually click "Interactive 3D View" link to open a web browser to view the geometry. In Trame, you can zoom, rotate, pan the view to visualize more details of the wing geometry.
 
   <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-geometry.png" style="width:800px !important;" />
 
+- Mesh generation. To generate the wing mesh, you can ask Claude: "Generate a mesh for the wing". Once Claude generates the mesh, you can click the provided link to view the mesh in your browser. To adjust the mesh density, you can change the mesh refinement level, number of boundary layer mesh, and far field mesh size. You can also ask Claude to "View the wing mesh" to visualize the mesh at anytime.
 
-- Mesh generation. To generate the wing mesh, you can ask Claude: "Generate a mesh for the wing". Once Claude generates the mesh, you can click the provided link to view the mesh in your browser. To adjust the mesh density, you can change the mesh refinement level, number of boundary layer mesh, and far field mesh size.
-
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-mesh.png" style="width:700px !important;" />
-
-  You can also click the provided link "Interactive 3D View" to open a web brower to view the mesh using Trame. In Trame, you can zoom, rotate, traslate the view to visualize more details of the mesh.
-
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-mesh-trame.png" style="width:700px !important;" /> 
+  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-mesh.png" style="width:800px !important;" />
 
 ## Wing aerodynamic analysis.
 
