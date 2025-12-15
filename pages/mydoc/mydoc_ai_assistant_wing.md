@@ -21,21 +21,12 @@ Here we demonstrate how to use the AI agent for wing aerodynamic design on an HP
 
 ## Wing aerodynamic analysis.
 
-- Run CFD simulations. You can ask Claude: "Run a CFD with Ma=0.5, Re=1e6, and aoa=1.5 deg". Claude will run the CFD simulation in the background. 
+- Run CFD simulations. You can ask Claude: "Submit a job on the HPC to run a CFD simulation with Ma=0.5, Re=1e6, and aoa=1.5 deg. Use 36 cores.". Claude will submit a job on the HPC using the `sbatch myJob.sh` command. **NOTE:** the dafoam_mcp_server provides a template for myJob.sh and you MUST have modified it according to your HPC setup.
 
 - Ask CFD run status. You can say "Check run status" to see if the CFD finishes.
 
-- Monitor convergence. If the CFD is running in the background, you can ask "View the CFD convergence" and click the provided link to visualize the residual and function convergence history.
+- Monitor convergence. If the CFD is running on the HPC, you can ask "View the CFD convergence" and click the provided link to visualize the residual and function convergence history. If the CFD finishes, you can ask Claude to plot the pressure profile or pressure contour on the wing.
 
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-convergence.png" style="width:700px !important;" />
-
-- View pressure profile. If the CFD finishes, you can ask Claude to plot the pressure profile.
-
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-pressure-profile.png" style="width:700px !important;" />
-
-- View flow field. You can say "View the pressure field" to see the pressure profile. Click the provided link to see the contours in your browser.
-
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-pressure.png" style="width:700px !important;" />
-
+  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-convergence.png" style="width:800px !important;" />
 
 {% include links.html %}

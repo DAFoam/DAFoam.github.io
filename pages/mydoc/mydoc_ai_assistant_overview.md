@@ -107,6 +107,8 @@ The recommended way to connect to an HPC when using the DAFoam MCP server is via
   
 - cd into the /home/my_user_name/dafoam_mcp_server directory and change the base_path in dafoam_mcp_server.py to `/home/my_user_name/dafoam_mcp_server`
 
+- You also need to modify the job submission sbatch script `myJob.sh` in the airfoils and wings folder according to your HPC setup. You need to replace line 10 in `myJob.sh` with the absolute path of your DAFoam package's `loadDAFoam.sh` file on the HPC. 
+
 - Install the Claude code by running the following command. Here the install.sh will automatically detect your system and copy the claude code exe into your `~/.local/bin` directory. It will also add `~/.local/bin` to your \$PATH variable in `~/.bash_profile`. In some HPCs, you may need to manually add `~/.local/bin` to your \$PATH in your `~/.bashrc`.
 
   <pre>
