@@ -18,7 +18,7 @@ The recommended way to connect to an HPC when using the DAFoam MCP server is via
 
 - Open VS Code. From the left panel, click `Extensions`, then search for `Remote SSH` by Microsoft and click `Install`.
 
-- After installing Remote SSH, set up the SSH connection: (1) Click the blue `Open a Remote Window` button in the lower-left corner of VS Code. (2) In the pop up window on the top, select `Connect to Host`, then choose `+ Add New SSH Host`. (3) In the pop-up window, enter your SSH command, for example: `ssh my_user_name@nova.its.iastate.edu`. (4) When prompted, select the SSH configuration file to update (choose `~/.ssh/config` or similar).
+- After installing Remote SSH, set up the SSH connection: (1) Click the blue `Open a Remote Window` button in the lower-left corner of VS Code. (2) In the pop-up window on the top, select `Connect to Host`, then choose `+ Add New SSH Host`. (3) In the pop-up window, enter your SSH command, for example: `ssh my_user_name@nova.its.iastate.edu`. (4) When prompted, select the SSH configuration file to update (choose `~/.ssh/config` or similar).
 
 - Once the SSH configuration is complete, click `Connect to Host` again and select your newly added host (e.g., `nova.its.iastate.edu`). You will be prompted to enter your password and, if applicable, a verification code to log in to the HPC.
 
