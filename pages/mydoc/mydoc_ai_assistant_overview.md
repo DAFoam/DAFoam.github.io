@@ -96,13 +96,13 @@ The HPC installation works for Linux only and consist of the following steps.
   curl -fsSL https://claude.ai/install.sh | bash
   </pre>
 
-Important! You need to verify your claude installation by running this command from the terminal.
+  Important! You need to verify your claude installation by running this command from the terminal.
 
   <pre>
   claude -v
   </pre>
 
-You should see your claude version printed on the terminal.
+  You should see your claude version printed on the terminal.
 
 - After the claude code is installed, you need to add the DAFoam MCP server information by running the following command. Here we need to provide the absolute paths on the HPC for the loadDAFoam.sh script (this script should be generated after you compile DAFoam from source) and the dafoam_mcp_server.py file (this file should be in the dafoam_mcp_server folder).
 
