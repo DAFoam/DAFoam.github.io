@@ -77,7 +77,7 @@ The local installation works for Linux, Windows, and MacOS and consist of the fo
 
 The HPC installation works for Linux only and consist of the following steps.
 
-- Login into your HPC through ssh or VSCode Remote SSH. cd into your \$HOME directory (e.g., /home/my_user_name). Here we use the \$HOME directory installation as an example, you can also install DAFoam MCP server and DAFoam packages into a different directory.
+- Login into your HPC through ssh or VSCode Remote SSH. cd into your \$HOME directory (e.g., `/home/my_user_name`). Here we use the \$HOME directory installation as an example, you can also install DAFoam MCP server and DAFoam packages into a different directory.
 
 - Compile DAFoam from source, follow the instructions from [here](https://dafoam.github.io/mydoc_installation_source.html). Here we assume DAFoam is compiled in /home/my_user_name/dafoam.
 
@@ -110,7 +110,7 @@ The HPC installation works for Linux only and consist of the following steps.
   claude mcp add --transport stdio dafoam_mcp_server -- bash -c "source /home/my_user_name/dafoam/loadDAFoam.sh && python /home/my_user_name/dafoam_mcp_server/dafoam_mcp_server.py"
   </pre>
 
-The above command will add relevant MCP information into the claude code configuration file in `~/.claude.json`. You don't need to manually change `~/.claude.json`.
+  The above command will add relevant MCP information into the claude code configuration file in `~/.claude.json`. You don't need to manually change `~/.claude.json`.
 
 - Verify the MCP installation by running
 
