@@ -7,6 +7,10 @@ permalink: mydoc_ai_assistant_overview.html
 folder: mydoc
 ---
 
+[Airfoil Agent](https://dafoam.github.io/ai-agent-airfoil.html)
+
+[Wing Agent](https://dafoam.github.io/ai-agent-wing.html)
+
 The DAFoam AI Agent enables the conversational pre-processing, simulations, optimization, and post-processing of various DAFoam cases. Currently, we support only airfoil and wing cases with the Claude LLM. The AI agent can be installed locally or on the HPC.
 
 ## Local Installation
