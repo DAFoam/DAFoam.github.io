@@ -3,7 +3,7 @@ title: Background
 keywords: developer guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_developer_guide_background.html
+permalink: developer-guide-background.html
 folder: mydoc
 ---
 

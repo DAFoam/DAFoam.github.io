@@ -3,7 +3,7 @@ title: Compile from source (Intel)
 keywords: dafoam, installation, compile
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_installation_source_intel.html
+permalink: installation-source-intel.html
 folder: mydoc
 ---
 

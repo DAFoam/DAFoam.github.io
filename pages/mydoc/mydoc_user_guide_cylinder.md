@@ -3,7 +3,7 @@ title: Cylinder - unsteady aerodynamic shape optimization
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_user_guide_cylinder.html
+permalink: user-guide-cylinder.html
 folder: mydoc
 ---
 

@@ -3,7 +3,7 @@ title: Post-processing
 keywords: post-processing
 summary: "Check opt_IPOPT.txt for optimization progress and use Paraview to visualize flow fields."
 sidebar: mydoc_sidebar
-permalink: mydoc_get_started_post_processing.html
+permalink: get-started-post-processing.html
 folder: mydoc
 ---
 
@@ -125,6 +125,6 @@ Fig. 7. Surface pressure distribution for the NACA0012 airfoil
 
 Refer to the [Paraview User Guide](https://www.paraview.org/paraview-guide) for more advanced usage. 
 
-In the next [page](mydoc_get_started_runscript.html), we will elaborate on optimization run scripts and configuration files.
+In the next [page](get-started-runscript.html), we will elaborate on optimization run scripts and configuration files.
 
 {% include links.html %}

@@ -3,11 +3,10 @@ title: NACA0012 airfoil (subsonic)
 keywords: tutorial, NACA0012
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_naca0012_subsonic.html
+permalink: tutorials-aero-naca0012-subsonic.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an aerodynamic shape optimization case for the NACA0012 airfoil in subsonic conditions. 
 
@@ -30,7 +29,7 @@ Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
 |
 
-The "runScript.py" is similar to the one used in the NACA0012 [low speed case](mydoc_get_started_runscript.html) with the following exceptions:
+The "runScript.py" is similar to the one used in the NACA0012 [low speed case](get-started-runscript.html) with the following exceptions:
 
 - In the global parameters, we provide additional variable such as "T0" (far field temperature) and "rho0" (a reference density to normalize CD and CL). In addition, we provide the absolute value of pressure "p", instead of the relative value use in the low speed case.
 

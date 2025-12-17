@@ -3,11 +3,10 @@ title: NACA0012 airfoil (transonic)
 keywords: tutorial, NACA0012
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_naca0012_transonic.html
+permalink: tutorials-aero-naca0012-transonic.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an aerodynamic shape optimization case for the NACA0012 airfoil in transonic conditions.
 
@@ -30,7 +29,7 @@ Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
 |
 
-The "runScript.py" is similar to the one used in the NACA0012 [subsonic case](mydoc_tutorials_naca0012_subsonic.html) with the following exceptions:
+The "runScript.py" is similar to the one used in the NACA0012 [subsonic case](tutorials-aero-naca0012-subsonic.html) with the following exceptions:
 
 - We use "DARhoSimpleCFoam", which is an OpenFOAM built-in compressible flow solver with the "SIMPLEC" algorithm that is suitable for transonic conditions.
 

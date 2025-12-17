@@ -3,7 +3,7 @@ title: Prowim wing propeller
 keywords: validations, prowim
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_validations_prowim.html
+permalink: validations-prowim.html
 folder: mydoc
 ---
 

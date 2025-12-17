@@ -3,11 +3,10 @@ title: Plate hole
 keywords: tutorial, platehole
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_struct_platehole.html
+permalink: tutorials-struct-platehole.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is a structural optimization case for a plate with a hole in the middle.
 

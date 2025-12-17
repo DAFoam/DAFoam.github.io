@@ -3,11 +3,10 @@ title: ADODG3 Wing
 keywords: tutorial, adodg3
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_adodg3_wing.html
+permalink: tutorials-aero-adodg3-wing.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an aerodynamic shape optimization case for the ADODG3 wing configuration.
 
@@ -38,9 +37,9 @@ The shape-only case has volume, thickness, LE/TE, and lift constraints.<br>
 The planform case has only volume and lift constraints. The LE/TE and thickness constraints are redundant in the planform case.<br>
 The shape and planform case has volume, thickness, LE/TE, and lift constraints. 
 
-The "runScript.py" is similar to the one used in the NACA0012 [incompressible case](mydoc_tutorials_aero_naca0012_incompressible.html) with a few differences:
+The "runScript.py" is similar to the one used in the NACA0012 [incompressible case](tutorials-aero-naca0012-incompressible.html) with a few differences:
 
-- Similarly to the [Onera M6 case,](mydoc_tutorials_aero_m6.html), we set FFD points to “nTwist” and do not change the root twist. 
+- Similarly to the [Onera M6 case,](tutorials-aero-m6.html), we set FFD points to “nTwist” and do not change the root twist. 
 
   ```python
   def twist(val, geo):
@@ -126,7 +125,7 @@ Next, delete the processor folders.
 <pre>
 rm -r processor*
 </pre>
-Then, open Paraview and open the "paraview.foam" file. Make sure that the case type selected is "reconstructed", select "patch/wing" in Mesh Regions, and check the box that says "Camera Parallel Projection. Click "Apply" to view a colored pressure gradient on the ADODG3 Wing. For more details related to post-processing, refer to the [post-processing](mydoc_get_started_post_processing.html) page in Get Started.
+Then, open Paraview and open the "paraview.foam" file. Make sure that the case type selected is "reconstructed", select "patch/wing" in Mesh Regions, and check the box that says "Camera Parallel Projection. Click "Apply" to view a colored pressure gradient on the ADODG3 Wing. For more details related to post-processing, refer to the [post-processing](get-started-post-processing.html) page in Get Started.
 
 
 The following is a transonic optimization of the same wing as above

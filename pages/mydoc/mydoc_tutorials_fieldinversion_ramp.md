@@ -2,7 +2,7 @@
 title: Field inversion machine learning for a ramp
 keywords: field inversion, run script, optimization
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_field_inversion_ramp.html
+permalink: tutorials-fieldinversion-ramp.html
 folder: mydoc
 ---
 

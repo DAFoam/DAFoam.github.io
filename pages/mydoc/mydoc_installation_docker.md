@@ -3,7 +3,7 @@ title: Build Docker images
 keywords: dafoam, installation, docker
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_installation_docker.html
+permalink: installation-docker.html
 folder: mydoc
 ---
 

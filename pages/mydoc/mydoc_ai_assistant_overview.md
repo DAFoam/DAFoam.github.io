@@ -96,7 +96,7 @@ The recommended way to connect to an HPC when using the DAFoam MCP server is via
 
 - Login into your HPC through VS Code Remote SSH. cd into your \$HOME directory (e.g., `/home/my_user_name`). Here we use the \$HOME directory installation as an example, you can also install DAFoam MCP server and DAFoam packages into a different directory.
 
-- Compile DAFoam from source, follow the instructions from [here](https://dafoam.github.io/mydoc_installation_source.html). Here we assume DAFoam is compiled in /home/my_user_name/dafoam.
+- Compile DAFoam from source, follow the instructions from [here](https://dafoam.github.io/installation-source.html). Here we assume DAFoam is compiled in /home/my_user_name/dafoam.
 
 - Run the following command to download the dafoam_mcp_server repo into /home/my_user_name
 

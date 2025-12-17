@@ -3,11 +3,11 @@ title: Compile from source (Gcc)
 keywords: dafoam, installation, compile
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_installation_source.html
+permalink: installation-source.html
 folder: mydoc
 ---
 
-{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](mydoc_installation_source_2210.html), [v2.2.0-](mydoc_installation_source_220.html), and [v1.0.0](mydoc_installation_source_100.html)." %}
+{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/installation-source.html), [v2.2.10-](installation-source-2210.html), [v2.2.0-](installation-source-220.html), and [v1.0.0](installation-source-100.html)." %}
 
 The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 22.04 and two different HPC clusters.
 

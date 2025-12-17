@@ -3,7 +3,7 @@ title: How to Add a New Feature
 keywords: developer guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_developer_guide_add_features.html
+permalink: developer-guide-add-features.html
 folder: mydoc
 ---
 

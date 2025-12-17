@@ -3,7 +3,7 @@ title: NACA0012 variations - compressibility, multi-point, multi-cases
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_user_guide_naca0012_variations.html
+permalink: user-guide-naca0012-variations.html
 folder: mydoc
 ---
 
@@ -36,7 +36,7 @@ Mesh cells: ~4,500
 Solver: DARhoSimpleFoam
 </pre>
 
-The "runScript.py" is similar to the one used in the NACA0012 [incompressible case](mydoc_user_guide_naca0012.html) with the following exceptions:
+The "runScript.py" is similar to the one used in the NACA0012 [incompressible case](user-guide-naca0012.html) with the following exceptions:
 
 - In the global parameters, we provide additional variable such as "T0" (far field temperature) and "rho0" (a reference density to normalize CD and CL). In addition, we provide the absolute value of pressure "p", instead of the relative value use in the low speed case.
 

@@ -3,7 +3,7 @@ title: ADODG3 wing - 3D aerodynamic shape optimization
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_user_guide_adodg3.html
+permalink: user-guide-adodg3.html
 folder: mydoc
 ---
 
@@ -79,7 +79,7 @@ Then, we can run the rest of the commands to use snappyHexMesh to generate the m
 
 ## Differences in runScript.py
 
-The "runScript.py" is based on the one used in the [NACA0012-Subsonic](https://dafoam.github.io/mydoc_user_guide_naca0012_variations.html) case with the following modifications:
+The "runScript.py" is based on the one used in the [NACA0012-Subsonic](https://dafoam.github.io/user-guide-naca0012-variations.html) case with the following modifications:
 
 In "meshOptions", we set only one symmetry plane at z=0, instead of two symmetry planes used in the 2D airfoil case. Note: the purpose of setting the symmetry plane in runScript.py is to make sure the mesh deformation does not change the mesh in the direction that is normal to the symmetry plane. The symmetry plane defined in runScript.py->meshOptions does not need to be the same one defined in OpenFOAM's constant/polyMesh/boundary file. For example, if you don't want to deform the mesh at the inlet patch, you can set it as the symmetry plane in runScript.py->meshOptions.
 
@@ -114,7 +114,7 @@ self.geometry.nom_add_LETEConstraint("lecon", volID=0, faceID="iLow")
 self.geometry.nom_add_LETEConstraint("tecon", volID=0, faceID="iHigh")
 ```
 
-The rest of the runScript.py is similar to the one used in the [NACA0012-Subsonic](https://dafoam.github.io/mydoc_user_guide_naca0012_variations.html)
+The rest of the runScript.py is similar to the one used in the [NACA0012-Subsonic](https://dafoam.github.io/user-guide-naca0012-variations.html)
 
 ## Questions
 

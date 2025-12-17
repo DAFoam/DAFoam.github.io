@@ -3,7 +3,7 @@ title: OpenFOAM Basics
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_user_guide_openfoam.html
+permalink: user-guide-openfoam.html
 folder: mydoc
 ---
 

@@ -3,7 +3,7 @@ title: DAFoam publications
 keywords: Papers
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_docs_publications.html
+permalink: publications.html
 folder: mydoc
 ---
 

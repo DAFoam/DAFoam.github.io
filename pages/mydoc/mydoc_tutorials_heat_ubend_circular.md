@@ -3,11 +3,10 @@ title: U bend channel Conjugate Heat Transfer
 keywords: tutorial, ubend, conjugate heat transfer
 summary: Shape optimization of a circular cross section ubend for reducing pressure loss and enhancing total heat flux with conjugate heat transfer
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_heat_ubend_circular.html
+permalink: tutorials-heat-ubend-circular.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is a conjugate heat transfer (CHT) optimization case for circular cross section U bend channel. This channel represents a heat exchanger for an electric aircraft. 
 

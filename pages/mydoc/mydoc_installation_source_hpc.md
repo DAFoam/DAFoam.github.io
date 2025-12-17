@@ -3,7 +3,7 @@ title: Compile from source (HPC)
 keywords: dafoam, installation, compile
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_installation_source_hpc.html
+permalink: installation-source-hpc.html
 folder: mydoc
 ---
 

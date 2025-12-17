@@ -3,7 +3,7 @@ title: Mesh Generation GUI
 keywords: gui, mesh
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_gui_pvoptumesh.html
+permalink: gui-pvoptumesh.html
 folder: mydoc
 ---
 
@@ -11,7 +11,7 @@ pvOptUMesh is the second graphical user interface (GUI) plugin in the pvOptGUI s
 
 ## Load the case and plugin
 
-First, install and open ParaView following the instructions mentioned on [this page](mydoc_gui_overview.html).
+First, install and open ParaView following the instructions mentioned on [this page](gui-overview.html).
 
 Next, open the pvOptUMesh source, located by opening the *sources* tab of the toolbar then hovering over *pvOptGUI*.
 

@@ -3,13 +3,13 @@ title: Download DAFoam image
 keywords: docker
 summary: The pre-compiled DAFoam image is ready to use for various operating systems.
 sidebar: mydoc_sidebar
-permalink: mydoc_get_started_download_docker.html
+permalink: get-started-download-docker.html
 folder: mydoc
 ---
 
-The easiest way to run DAFoam optimizations is to use the **pre-compiled package** through Docker Hub. For advanced users, refer to [this page](mydoc_installation_source.html) on how to compile everything from scratch. The Get Started section assumes you use the pre-compiled package.
+The easiest way to run DAFoam optimizations is to use the **pre-compiled package** through Docker Hub. For advanced users, refer to [this page](installation-source.html) on how to compile everything from scratch. The Get Started section assumes you use the pre-compiled package.
 
-Before downloading the pre-compiled package, you need to install **Docker**. Follow the installation instructions for [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu), [Fedora](https://docs.docker.com/install/linux/docker-ce/fedora), [CentOS](https://docs.docker.com/install/linux/docker-ce/centos), [MacOS](https://hub.docker.com/editions/community/docker-ce-desktop-mac/), and  [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). 
+Before downloading the pre-compiled package, you need to install **Docker**. Follow the installation instructions for [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu), [MacOS](https://hub.docker.com/editions/community/docker-ce-desktop-mac/), and  [Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows/). 
 
 Here we give examples for Windows, MacOS, and Ubuntu.
 
@@ -48,7 +48,7 @@ Once Docker is installed and verified, run this command from the terminal to dow
 docker pull dafoam/opt-packages:{{ site.latest_version }}
 </pre>
 
-Now you are ready to [run DAFoam optimization](mydoc_get_started_run.html).
+Now you are ready to [run DAFoam optimization](get-started-run.html).
 
 
 {% include links.html %}

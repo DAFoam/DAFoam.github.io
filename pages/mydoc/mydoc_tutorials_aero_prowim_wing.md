@@ -3,11 +3,10 @@ title: Prowim wing
 keywords: tutorial, prowim
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_prowim_wing.html
+permalink: tutorials-aero-prowim-wing.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an aerodynamic shape optimization case for the Prowim wing-propeller configuration. Refer to [this paper](https://www.sciencedirect.com/science/article/abs/pii/S1270963822005508?via%3Dihub) for more simulations and optimization results.
 
