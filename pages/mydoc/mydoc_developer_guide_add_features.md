@@ -1,7 +1,7 @@
 ---
 title: How to Add a New Feature
 keywords: developer guide
-summary: 
+summary:
 sidebar: mydoc_sidebar
 permalink: developer-guide-add-features.html
 folder: mydoc

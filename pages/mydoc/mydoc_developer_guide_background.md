@@ -1,7 +1,7 @@
 ---
 title: Background
 keywords: developer guide
-summary: 
+summary:
 sidebar: mydoc_sidebar
 permalink: developer-guide-background.html
 folder: mydoc

@@ -1,7 +1,7 @@
 ---
 title: Python Layer
 keywords: developer guide
-summary: 
+summary:
 sidebar: mydoc_sidebar
 permalink: developer-guide-python-layer.html
 folder: mydoc
