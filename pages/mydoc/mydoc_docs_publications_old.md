@@ -7,6 +7,6 @@ permalink: mydoc_docs_publications.html
 folder: mydoc
 ---
 
-This page has been deprecated. Check our new AI Agent webpage from [here](https://dafoam.github.io/publications.html).
+NOTE: This page has been deprecated. Check the latest DAFoam publications from [HERE](https://dafoam.github.io/publications.html).
 
 {% include links.html %}
