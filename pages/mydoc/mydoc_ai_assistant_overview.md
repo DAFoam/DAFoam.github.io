@@ -16,9 +16,9 @@ The local installation works for Linux, Windows, and MacOS and consist of the fo
 ### Install the DAFoam MCP server using Docker
 
 - Download and install the Docker Desktop for [MacOS](https://docs.docker.com/desktop/setup/install/mac-install) or [Windows](https://docs.docker.com/desktop/setup/install/windows-install/). Open Docker Desktop and keep it open.
-- Open a Terminal (MacOS) or Command Prompt (Windows). Run the following command to download the DAFoam Docker image:
+- Open a Terminal (MacOS) or Command Prompt (Windows). Run the following command to download the DAFoam Docker image. NOTE: if you have preciously downloaded the `dafoam/opt-packages:latest` image, delete it and re-download to ensure you have the latest.
   <pre>
-  docker pull dafoam/opt-packages:mcp
+  docker pull dafoam/opt-packages:latest
   </pre>
 - Run the following command to download the dafoam_mcp_server repo from GitHub
 
