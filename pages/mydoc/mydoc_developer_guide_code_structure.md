@@ -1,9 +1,9 @@
 ---
 title: DAFoam Code Structure
 keywords: developer guide
-summary: 
+summary:
 sidebar: mydoc_sidebar
-permalink: mydoc_developer_guide_code_structure.html
+permalink: developer-guide-code-structure.html
 folder: mydoc
 ---
 

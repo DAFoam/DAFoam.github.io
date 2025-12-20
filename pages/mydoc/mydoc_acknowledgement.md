@@ -3,7 +3,7 @@ title: Acknowledgement
 keywords: Acknowledgement
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_acknowledgement.html
+permalink: acknowledgement.html
 folder: mydoc
 ---
 

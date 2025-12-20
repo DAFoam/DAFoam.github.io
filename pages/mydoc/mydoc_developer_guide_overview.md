@@ -3,7 +3,7 @@ title: DAFoam Developer Guide
 keywords: developer guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_developer_guide_overview.html
+permalink: developer-guide-overview.html
 folder: mydoc
 ---
 
@@ -11,14 +11,14 @@ folder: mydoc
 
 The objective of this develop guide is to help advanced users develop new DAFoam features, such as adding new design variables and objective functions.
 
-- [Chapter 1. Background](mydoc_developer_guide_background.html)
+- [Chapter 1. Background](developer-guide-background.html)
 
-- [Chapter 2. DAFoam Code Structure](mydoc_developer_guide_code_structure.html)
+- [Chapter 2. DAFoam Code Structure](developer-guide-code-structure.html)
 
-- [Chapter 3. Python layer](mydoc_developer_guide_python_layer.html)
+- [Chapter 3. Python layer](developer-guide-python-layer.html)
 
-- [Chapter 4. OpenFOAM layer](mydoc_developer_guide_openfoam_layer.html)
+- [Chapter 4. OpenFOAM layer](developer-guide-openfoam-layer.html)
 
-- [Chapter 5. How to add a new feature](mydoc_developer_guide_add_features.html)
+- [Chapter 5. How to add a new feature](developer-guide-add-features.html)
 
 {% include links.html %}

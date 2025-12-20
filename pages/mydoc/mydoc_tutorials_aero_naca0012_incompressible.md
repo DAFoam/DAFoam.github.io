@@ -3,11 +3,11 @@ title: NACA0012 airfoil (incompressible)
 keywords: tutorial, NACA0012
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_naca0012_incompressible.html
+permalink: tutorials-aero-naca0012-incompressible.html
 folder: mydoc
 ---
 
-{% include note.html content="This is the tutorial used in [Get started](mydoc_get_started_download_docker.html)." %}
+{% include note.html content="This is the tutorial used in [Get started](get-started-download-docker.html)." %}
 
 The following is an aerodynamic shape optimization case for the NACA0012 airfoil at low speed.
 
@@ -30,7 +30,7 @@ Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
 |
 
-The evoluation of pressure and shape during the optimization is as follows. Refer to [this page](mydoc_get_started_post_processing.html) for post-processing the optimization results.
+The evoluation of pressure and shape during the optimization is as follows. Refer to [this page](get-started-post-processing.html) for post-processing the optimization results.
 
 |
 

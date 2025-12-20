@@ -3,11 +3,10 @@ title: Onera M6 wing
 keywords: tutorial, m6
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_m6.html
+permalink: tutorials-aero-m6.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an aerodynamic shape optimization case for the Onera M6 wing in transonic conditions.
 
@@ -30,7 +29,7 @@ Fig. 1. Mesh and FFD points for the Onera M6 wing.
 
 |
 
-The "runScript.py" is based on the one used in the NACA0012 [transonic case](mydoc_tutorials_naca0012_transonic.html) with the following modifications:
+The "runScript.py" is based on the one used in the NACA0012 [transonic case](tutorials-aero-naca0012-transonic.html) with the following modifications:
 
 - In "meshOptions", we set only one symmetry plane, instead of two symmetry planes used in the 2D airfoil case.
 

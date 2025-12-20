@@ -3,7 +3,7 @@ title: UAV propeller - aerodynamic optimization of turbomachinery
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_user_guide_uav_prop.html
+permalink: user-guide-uav-prop.html
 folder: mydoc
 ---
 

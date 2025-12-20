@@ -3,7 +3,7 @@ title: U-bend pipe - aero-thermal optimization
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_user_guide_ubend_aerothermal.html
+permalink: user-guide-ubend-aerothermal.html
 folder: mydoc
 ---
 

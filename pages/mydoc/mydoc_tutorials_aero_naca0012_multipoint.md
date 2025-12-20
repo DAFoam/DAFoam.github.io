@@ -3,11 +3,10 @@ title: NACA0012 airfoil multipoint
 keywords: tutorial, multipoint
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_naca0012_multipoint.html
+permalink: tutorials-aero-naca0012-multipoint.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is a **multipoint** aerodynamic shape optimization case for the NACA0012 airfoil at low speed. We optimize the weighted drag coefficient considering three different flight conditions, i.e., CL=0.3, 0.7, and 0.5 (nominal). The weight of these three conditions are 0.25, 0.25, and 0.5, respectively.
 
@@ -31,7 +30,7 @@ Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
 |
 
-The `runScript.py` is based on the one used in the NACA0012 [low speed case](mydoc_get_started_runscript.html) with the following modifications:
+The `runScript.py` is based on the one used in the NACA0012 [low speed case](get-started-runscript.html) with the following modifications:
 
 - In the global parameters, we define the number of multipoint configurations `nMultiPoints = 3`, and set far field boundary conditions and flight conditios for all the three configurations. `MPWeights`, `U0`, `alpha0`, and `CL_target` are the weights, far field velocity, angle of attack, and target lift coefficient for the three configurations. Note that we set the nominal conditions `CL_target = 0.5` as the last element in the list such that the intermdiate flow fields will be saved for this condition, which facilitates the post-processing using Paraview.
 

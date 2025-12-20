@@ -3,7 +3,7 @@ title: Installation guide for DAFoam v2.2.0 and before
 keywords: dafoam, installation, compile
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_installation_source_220.html
+permalink: installation-source-220.html
 folder: mydoc
 ---
 

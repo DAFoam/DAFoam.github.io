@@ -3,11 +3,10 @@ title: 30N30P Multi-element Airfoil
 keywords: tutorial, pitzDaily
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_30n30p.html
+permalink: tutorials-aero-30n30p-multielement.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an aerodynamic optimization case for the MD 30N30P multi-element Airfoil 
 
@@ -110,7 +109,7 @@ mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 
 The case ran for 43 iterations. The initial lift coefficient is 3.416 and the optimized lift coefficient is 3.509 with an increase of **2.7%**. 
 
-NOTE: By default, this case uses the Jacobian free option in daOptions: "adjJacobianOption": "JacobianFree". This means that you need to compile the AD version of OpenFOAM and DAFoam (see [here](https://dafoam.github.io/mydoc_installation_source.html#compile-dafoam-with-automatic-differentiation-optional)). If you use the Docker image, they have been compiled so no additional action is needed. If you haven't compiled the AD version, set this: "adjJacobianOption": "JacobianFD". 
+NOTE: By default, this case uses the Jacobian free option in daOptions: "adjJacobianOption": "JacobianFree". This means that you need to compile the AD version of OpenFOAM and DAFoam (see [here](https://dafoam.github.io/installation-source.html#compile-dafoam-with-automatic-differentiation-optional)). If you use the Docker image, they have been compiled so no additional action is needed. If you haven't compiled the AD version, set this: "adjJacobianOption": "JacobianFD". 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/30N30P_movie.gif" width="640" />
 

@@ -3,7 +3,7 @@ title: Optimization Post Processing GUI
 keywords: gui, post, processing
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_gui_postprocessing.html
+permalink: gui-postprocessing.html
 folder: mydoc
 ---
 
@@ -11,7 +11,7 @@ PvOptPostProcessing and PvOptView are Paraview based graphical user interfaces i
 
 ---
 
-To post process data, first open ParaView with PvOptGUI following the instructions mentioned on [this page](mydoc_gui_overview.html).
+To post process data, first open ParaView with PvOptGUI following the instructions mentioned on [this page](gui-overview.html).
 
 ## PvOptPostProcessing
 

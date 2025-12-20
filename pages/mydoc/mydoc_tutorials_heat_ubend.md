@@ -3,11 +3,10 @@ title: U bend channel
 keywords: tutorial, ubend
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_heat_ubend.html
+permalink: tutorials-heat-ubend.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is a heat transfer optimization case for the von Karman U bend channel, representative of a internal cooling section in turbines.
 

@@ -3,11 +3,10 @@ title: Data assimilation to find inlet velocity field
 keywords: tutorial, ramp
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_da_ramp.html
+permalink: tutorials-da-ramp.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is a data-assimilation optimization case where we try to find the inlet velocity field based on pressure data on the bottom wall.
 

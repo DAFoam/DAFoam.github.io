@@ -1,9 +1,9 @@
 ---
 title: OpenFOAM Layer
 keywords: developer guide
-summary: 
+summary:
 sidebar: mydoc_sidebar
-permalink: mydoc_developer_guide_openfoam_layer.html
+permalink: developer-guide-openfoam-layer.html
 folder: mydoc
 ---
 

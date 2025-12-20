@@ -3,11 +3,10 @@ title: Common research model (CRM) wing
 keywords: tutorial, crm
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_crm.html
+permalink: tutorials-aero-crm.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an aerodynamic shape optimization case for the common research model (CRM) wing at transonic condition.
 
@@ -30,7 +29,7 @@ Fig. 1. Mesh and FFD points for the CRM wing.
 
 |
 
-The "runScript.py" is similar to that used in the [Onera M6 wing](mydoc_tutorials_aero_m6.html).
+The "runScript.py" is similar to that used in the [Onera M6 wing](tutorials-aero-m6.html).
 
 To run this case, first download [tutorials](https://github.com/DAFoam/tutorials/archive/main.tar.gz) and untar it. Then go to tutorials-main/CRM_Wing and run the "preProcessing.sh" script to generate the mesh:
 

@@ -3,7 +3,7 @@ title: Field inversion tutorial
 keywords: field inversion, run script, optimization
 summary: "An introduction to setting up and running field inversion for data-driven RANS modelling."
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_field_inversion_ph.html
+permalink: tutorials-fieldinversion-ph.html
 folder: mydoc
 ---
 
@@ -76,7 +76,7 @@ At present the following turbulence models are available for field inversion:
 - kOmegaFieldInversionOmega (based on OpenFOAM kOmega model with beta perturbing the omega equation).
 
 ## Details of the runScript.py
-{% include note.html content="If you are new to DAFoam, please go through the tutorial in [Get started](mydoc_get_started_download_docker.html) before working through the following." %}
+{% include note.html content="If you are new to DAFoam, please go through the tutorial in [Get started](get-started-download-docker.html) before working through the following." %}
 
 The "runScript.py" for a field inversion is similar to the one used for shape optimization. In other words, we still need to specify a dummy design surface (although we will not move it)
 

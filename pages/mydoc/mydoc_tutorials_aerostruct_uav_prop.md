@@ -3,11 +3,10 @@ title: UAV Propeller
 keywords: tutorial, uav propeller
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aerostruct_uav_prop.html
+permalink: tutorials-aerostruct-uav-prop.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an aerostructural shape optimization case for the UAV propeller in hover. The baseline design is an untwisted, untapered NACA 0012 propeller blade. The flow is solved using the DARhoSimpleFoam CFD solver and the structure is solved using an open-source FEM solver [TACS](https://github.com/smdogroup/tacs). The load and displacement transfer is computed using [FUNtoFEM](https://github.com/smdogroup/funtofem). The aerostructural coupling is implemented in the [OpenMDAO/Mphys](https://github.com/OpenMDAO/mphys) framework.
 

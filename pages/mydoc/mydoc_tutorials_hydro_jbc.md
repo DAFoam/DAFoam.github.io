@@ -3,11 +3,10 @@ title: JBC bulk carrier hull
 keywords: tutorial, jbc
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_hydro_jbc.html
+permalink: tutorials-hydro-jbc.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is a hydrodynamic optimization for the JBC bulk carrier hull.
 

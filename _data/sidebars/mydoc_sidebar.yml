@@ -29,23 +29,23 @@ entries:
       type: homepage
 
     - title: Download docker image 
-      url: /mydoc_get_started_download_docker.html
+      url: /get-started-download-docker.html
       output: web, pdf
     
     - title: Run optimization
-      url: /mydoc_get_started_run.html
+      url: /get-started-run.html
       output: web, pdf
     
     - title: Post-processing
-      url: /mydoc_get_started_post_processing.html
+      url: /get-started-post-processing.html
       output: web, pdf
     
     - title: Details of run scripts
-      url: /mydoc_get_started_runscript.html
+      url: /get-started-runscript.html
       output: web, pdf
     
     - title: FAQ
-      url: /mydoc_get_started_faq.html
+      url: /get-started-faq.html
       output: web, pdf
 
   - title: Installation
@@ -53,15 +53,15 @@ entries:
     folderitems:
   
     - title: Compile from source (Gcc)
-      url: /mydoc_installation_source.html
+      url: /installation-source.html
       output: web, pdf
     
     - title: Compile from source (Intel)
-      url: /mydoc_installation_source_intel.html
+      url: /installation-source-intel.html
       output: web, pdf
     
     - title: Build Docker images
-      url: /mydoc_installation_docker.html
+      url: /installation-docker.html
       output: web, pdf
   
   - title: Tutorials
@@ -69,7 +69,7 @@ entries:
     folderitems:
 
     - title: Overview
-      url: /mydoc_tutorials_overview.html
+      url: /tutorials-overview.html
       output: web, pdf
 
       subfolders:
@@ -78,55 +78,55 @@ entries:
         subfolderitems:
   
         - title: NACA0012 airfoil (low speed)
-          url: /mydoc_tutorials_aero_naca0012_incompressible.html
+          url: /tutorials-aero-naca0012-incompressible.html
           output: web, pdf
         
         - title: NACA0012 airfoil (subsonic)
-          url: /mydoc_tutorials_aero_naca0012_subsonic.html
+          url: /tutorials-aero-naca0012-subsonic.html
           output: web, pdf
         
         - title: NACA0012 airfoil (transonic)
-          url: /mydoc_tutorials_aero_naca0012_transonic.html
+          url: /tutorials-aero-naca0012-transonic.html
           output: web, pdf
         
         - title: NACA0012 airfoil (multipoint)
-          url: /mydoc_tutorials_aero_naca0012_multipoint.html
+          url: /tutorials-aero-naca0012-multipoint.html
           output: web, pdf
         
         - title: Cylinder (unsteady flow)
-          url: /mydoc_tutorials_aero_cylinder.html
+          url: /tutorials-aero-cylinder.html
           output: web, pdf
         
         - title: 30N30P multi-element airfoil
-          url: /mydoc_tutorials_aero_30n30p.html
+          url: /tutorials-aero-30n30p-multielement.html
           output: web, pdf
         
         - title: Onera M6 wing
-          url: /mydoc_tutorials_aero_m6.html
+          url: /tutorials-aero-m6.html
           output: web, pdf
         
         - title: ADODG3 wing
-          url: /mydoc_tutorials_aero_adodg3_wing.html
+          url: /tutorials-aero-adodg3-wing.html
           output: web, pdf
         
         - title: CRM wing
-          url: /mydoc_tutorials_aero_crm.html
+          url: /tutorials-aero-crm.html
           output: web, pdf
         
         - title: Prowim wing propeller
-          url: /mydoc_tutorials_aero_prowim_wing.html
+          url: /tutorials-aero-prowim-wing.html
           output: web, pdf
         
         - title: DPW4 aircraft
-          url: /mydoc_tutorials_aero_dpw4.html
+          url: /tutorials-aero-dpw4.html
           output: web, pdf
         
         - title: Rotor37 compressor
-          url: /mydoc_tutorials_aero_rotor37.html
+          url: /tutorials-aero-rotor37.html
           output: web, pdf
         
         - title: NREL6 wind turbine
-          url: /mydoc_tutorials_aero_nrel6.html
+          url: /tutorials-aero-nrel6.html
           output: web, pdf
       
       - title: Aerostructural
@@ -134,11 +134,11 @@ entries:
         subfolderitems:
   
         - title: MACH tutorial wing
-          url: /mydoc_tutorials_aerostruct_mach_wing.html
+          url: /tutorials-aerostruct-mach-wing.html
           output: web, pdf
         
         - title: UAV propeller
-          url: /mydoc_tutorials_aerostruct_uav_prop.html
+          url: /tutorials-aerostruct-uav-prop.html
           output: web, pdf
       
       - title: Aerothermal
@@ -146,11 +146,11 @@ entries:
         subfolderitems:
 
         - title: U-bend channel
-          url: /mydoc_tutorials_heat_ubend.html
+          url: /tutorials-heat-ubend.html
           output: web, pdf
         
         - title: U-bend pipe CHT
-          url: /mydoc_tutorials_heat_ubend_circular.html
+          url: /tutorials-heat-ubend-circular.html
           output: web, pdf
 
       - title: Solid mechanics
@@ -158,7 +158,7 @@ entries:
         subfolderitems:
   
         - title: Plate hole
-          url: /mydoc_tutorials_struct_platehole.html
+          url: /tutorials-struct-platehole.html
           output: web, pdf
 
       - title: Hydrodynamics
@@ -166,7 +166,7 @@ entries:
         subfolderitems:
   
         - title: JBC hull
-          url: /mydoc_tutorials_hydro_jbc.html
+          url: /tutorials-hydro-jbc.html
           output: web, pdf
       
       - title: Topology optimization
@@ -174,11 +174,11 @@ entries:
         subfolderitems:
   
         - title: pitzDaily (flow only)
-          url: /mydoc_tutorials_topo_pitzdaily.html
+          url: /tutorials-topo-pitzdaily.html
           output: web, pdf
         
         - title: Channel (conjugate heat)
-          url: /mydoc_tutorials_topo_channel_cht.html
+          url: /tutorials-topo-channel-cht.html
           output: web, pdf
       
       - title: Field inversion ML
@@ -186,15 +186,15 @@ entries:
         subfolderitems:
   
         - title: Periodic hill
-          url: /mydoc_tutorials_field_inversion_ph.html
+          url: /tutorials-fieldinversion-ph.html
           output: web, pdf
         
         - title: Ramp
-          url: /mydoc_tutorials_field_inversion_ramp.html
+          url: /tutorials-fieldinversion-ramp.html
           output: web, pdf
         
         - title: Airfoil Dynamic Stall
-          url: /mydoc_tutorials_field_inversion_dynamic.html
+          url: /tutorials-fieldinversion-dynamic.html
           output: web, pdf
       
       - title: Data assimilation
@@ -202,11 +202,11 @@ entries:
         subfolderitems:
       
         - title: NACA0012 (steady/unsteady)
-          url: /mydoc_tutorials_da_naca0012.html
+          url: /tutorials-da-naca0012.html
           output: web, pdf
   
         - title: Ramp (steady)
-          url: /mydoc_tutorials_da_ramp.html
+          url: /tutorials-da-ramp.html
           output: web, pdf
 
 
@@ -215,55 +215,55 @@ entries:
     folderitems:
   
     - title: Overview
-      url: /mydoc_user_guide_overview.html
+      url: /user-guide-overview.html
       output: web, pdf
     
     - title: Chapter 1 Background
-      url: /mydoc_user_guide_background.html
+      url: /user-guide-background.html
       output: web, pdf
     
     - title: Chapter 2 OpenFOAM
-      url: /mydoc_user_guide_openfoam.html
+      url: /user-guide-openfoam.html
       output: web, pdf
     
     - title: Chapter 3 OpenMDAO
-      url: /mydoc_user_guide_openmdao.html
+      url: /user-guide-openmdao.html
       output: web, pdf
     
     - title: Chapter 4 NACA0012 2D airfoil
-      url: /mydoc_user_guide_naca0012.html
+      url: /user-guide-naca0012.html
       output: web, pdf
 
     - title: Chapter 5 NACA0012 variations
-      url: /mydoc_user_guide_naca0012_variations.html
+      url: /user-guide-naca0012-variations.html
       output: web, pdf
     
     - title: Chapter 6 ADODG3 3D wing
-      url: /mydoc_user_guide_adodg3.html
+      url: /user-guide-adodg3.html
       output: web, pdf
     
     - title: Chapter 7 UAV propeller
-      url: /mydoc_user_guide_uav_prop.html
+      url: /user-guide-uav-prop.html
       output: web, pdf
     
     - title: Chapter 8 Cylinder unsteady
-      url: /mydoc_user_guide_cylinder.html
+      url: /user-guide-cylinder.html
       output: web, pdf
     
     - title: Chapter 9 Ramp FIML
-      url: /mydoc_user_guide_ramp.html
+      url: /user-guide-ramp.html
       output: web, pdf
     
     - title: Chapter 10 Aerostructural
-      url: /mydoc_user_guide_mach_aerostruct.html
+      url: /user-guide-mach-aerostruct.html
       output: web, pdf
     
     - title: Chapter 11 Aerothermal (CHT)
-      url: /mydoc_user_guide_ubend_aerothermal.html
+      url: /user-guide-ubend-aerothermal.html
       output: web, pdf
     
     - title: Appendix
-      url: /mydoc_user_guide_appendix.html
+      url: /user-guide-appendix.html
       output: web, pdf
 
   - title: Developer Guide
@@ -271,27 +271,27 @@ entries:
     folderitems:
   
     - title: Overview
-      url: /mydoc_developer_guide_overview.html
+      url: /developer-guide-overview.html
       output: web, pdf
     
     - title: Background
-      url: /mydoc_developer_guide_background.html
+      url: /developer-guide-background.html
       output: web, pdf
     
     - title: DAFoam Code Structure
-      url: /mydoc_developer_guide_code_structure.html
+      url: /developer-guide-code-structure.html
       output: web, pdf
     
     - title: Python Layer
-      url: /mydoc_developer_guide_python_layer.html
+      url: /developer-guide-python-layer.html
       output: web, pdf
     
     - title: OpenFOAM Layer
-      url: /mydoc_developer_guide_openfoam_layer.html
+      url: /developer-guide-openfoam-layer.html
       output: web, pdf
     
     - title: Add New Features
-      url: /mydoc_developer_guide_add_features.html
+      url: /developer-guide-add-features.html
       output: web, pdf
 
   - title: V&V
@@ -299,19 +299,19 @@ entries:
     folderitems:
   
     - title: Verification - Overview
-      url: /mydoc_verifications_overview.html
+      url: /verifications-overview.html
       output: web, pdf
 
     - title: Verification - DASimpleFoam
-      url: /mydoc_verifications_dasimplefoam.html
+      url: /verifications-dasimplefoam.html
       output: web, pdf
   
     - title: Validation - Overview
-      url: /mydoc_validations_overview.html
+      url: /validations-overview.html
       output: web, pdf
 
     - title: Validation - RAE2822 airfoil
-      url: /mydoc_validations_rae2822.html
+      url: /validations-rae2822.html
       output: web, pdf
 
   - title: AI Agent
@@ -319,15 +319,15 @@ entries:
     folderitems:
 
     - title: Overview
-      url: /mydoc_ai_assistant_overview.html
+      url: /ai-agent-overview.html
       output: web, pdf
 
     - title: Airfoil Agent
-      url: /mydoc_ai_assistant_airfoil.html
+      url: /ai-agent-airfoil.html
       output: web, pdf
     
     - title: Wing Agent
-      url: /mydoc_ai_assistant_wing.html
+      url: /ai-agent-wing.html
       output: web, pdf
 
   - title: Misc
@@ -335,21 +335,21 @@ entries:
     folderitems:
 
     - title: GUI
-      url: /mydoc_gui_overview.html
+      url: /gui-overview.html
       output: web, pdf
 
     - title: DAFoam publications
-      url: /mydoc_docs_publications.html
+      url: /publications.html
       output: web, pdf
 
     - title: DAFoam doxygen
-      url: /mydoc_doxygen.html
+      url: /doxygen.html
       output: web, pdf
     
     - title: Workshops
-      url: /mydoc_workshops.html
+      url: /workshops.html
       output: web, pdf
     
     - title: Acknowledgement
-      url: /mydoc_acknowledgement.html
+      url: /acknowledgement.html
       output: web, pdf

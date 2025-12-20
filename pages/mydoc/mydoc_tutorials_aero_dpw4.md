@@ -3,11 +3,10 @@ title: DPW4 aircraft
 keywords: tutorial, dpw4
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_dpw4.html
+permalink: tutorials-aero-dpw4.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an aerodynamic shape optimization case for the DPW4 aircraft (wing-body-tail configuration) at transonic conditions.
 
@@ -57,7 +56,7 @@ Then, open Paraview and open the “paraview.foam” file. First, make sure that
 selected is “reconstructed”. Then select all mesh regions except “internalMesh” and 
 “patch/inout”. Finally, check the box that says “Camera Parallel Projection”. Click “Apply” to 
 view a colored pressure gradient on the DPW4 Aircraft. For more details related to post
-processing, refer to the [post-processing](mydoc_get_started_post_processing.html) page in Get Started. 
+processing, refer to the [post-processing](get-started-post-processing.html) page in Get Started. 
 
 |
 

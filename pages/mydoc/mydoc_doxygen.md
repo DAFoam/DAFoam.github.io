@@ -3,7 +3,7 @@ title: DAFoam doxygen
 keywords: doxygen
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_doxygen.html
+permalink: doxygen.html
 folder: mydoc
 ---
 

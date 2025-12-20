@@ -3,11 +3,11 @@ title: Compile from source (Gcc)
 keywords: dafoam, installation, compile
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_installation_source.html
+permalink: installation-source.html
 folder: mydoc
 ---
 
-{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](mydoc_installation_source_2210.html), [v2.2.0-](mydoc_installation_source_220.html), and [v1.0.0](mydoc_installation_source_100.html)." %}
+{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](installation-source-2210.html), [v2.2.0-](installation-source-220.html), and [v1.0.0](installation-source-100.html)." %}
 
 The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 22.04 and two different HPC clusters.
 
@@ -37,7 +37,7 @@ If you use Ubuntu, run this on the terminal to install prerequisites. If you ins
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin --no-install-recommends
+sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin lsof --no-install-recommends
 </pre>
 
 The following installation steps should work for both Ubuntu 22.04 and the HPC clusters.
@@ -99,7 +99,8 @@ pip install cython==0.29.21 && \
 pip install numpy-stl==2.16.0 && \
 pip install pynastran==1.3.3 && \
 pip install nptyping==1.4.4 && \
-pip install tensorflow-cpu==2.12
+pip install tensorflow-cpu==2.12 && \
+pip install coverage==7.11.0
 </pre>
 
 ## **Petsc**
@@ -553,6 +554,23 @@ export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
 export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH
 </pre>
 
+## **Install MCP depedneicies (optional)**
+
+This step is needed if you want to use the DAFoam MCP server. Here we need to install fastmcp, trame, and ParaView.
+
+<pre>
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+cd $DAFOAM_ROOT_PATH/packages && \
+pip install fastmcp==2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0 && \
+wget https://www.paraview.org/files/v5.13/ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
+tar -xf ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
+mv ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64 ParaView-5.13.3 && \
+rm -rf ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
+mv ParaView-5.13.3/bin/mpiexec  ParaView-5.13.3/bin/mpiexec_bk && \
+echo "# ParaView" >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo "export PATH=\$DAFOAM_ROOT_PATH/packages/ParaView-5.13.3/bin:\$PATH" >> $DAFOAM_ROOT_PATH/loadDAFoam.sh
+</pre>
+
 ## **Compile SNOPT for pyOptSparse (optional)**
 
 This step is needed if you want to use the SNOPT optimizer. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com).
@@ -564,31 +582,5 @@ cd $DAFOAM_ROOT_PATH/repos/pyoptsparse-2.10.1 && \
 pip install .
 </pre>
 
-
-## **Make the DAFoam package portable (optional)**
-
-This step is only needed if you want to change the root path of your installation, e.g., copy your compiled DAFoam packages to another directory.
-
-The only thing you need to do is to modify the interpreter lines "#!" for files in $DAFOAM_ROOT_PATH/packages/miniconda3/. This is because Miniconda hard codes the Python path, so we need to change it to "#!/usr/bin/env python"
-
-First find an example of the hard-coded interpreter line from $DAFOAM_ROOT_PATH/packages/miniconda3/bin/conda. Run this command
-
-<pre>
-head -1 $DAFOAM_ROOT_PATH/packages/miniconda3/bin/conda
-</pre>
-
-You may see an output like this:
-
-<pre>
-#!/home/replace_this_with_your_username/dafoam/packages/miniconda3/bin/python
-</pre>
-
-Then run this command to replace all the hard-coded interpreter lines:
-
-<pre>
-sed -i 's,^#\!/home/replace_this_with_your_username/dafoam/packages/miniconda3/bin/python,#!/usr/bin/env python,g' $DAFOAM_ROOT_PATH/packages/miniconda3/*/*
-</pre>
-
-Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
 
 {% include links.html %}
