@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
 
+<80> M. Bashir, D. Gong, L. Sun, P. Duan. Aerodynamic shape optimization using the adjoint method combined with an inverse design approach for non-parameterized geometries. Physics of Fluids, 2025.
+
 <79> Z. Zhang, G. Karniadakis. Effect of Turbulence-Closure Consistency on Airfoil Identification. arXiv.2511.08341, 2025 
 
 <78> C. Wu, S. Zhang. Y. Zhang. Data-driven Augmentation of Turbulence Model in Three dimensional Flows Via Sequential Correction. arXiv.2510.22469, 2025
