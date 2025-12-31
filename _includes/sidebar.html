@@ -58,8 +58,8 @@
         <i class="fa fa-info-circle" style="display: inline-block; margin-right: 5px; background: transparent;"></i><b style="display: inline-block; background: transparent;"><a href="{{ site.baseurl }}/news.html" style="text-decoration: none; background: transparent;">Latest Announcements</a></b>
       </div>
       {% for post in site.posts limit:3 %}
-        <div style="margin-top: 8px; font-size: 0.9em; line-height: 1.5; white-space: normal; background: transparent;">
-          <span style="background: transparent;">{{ post.date | date: "%m/%d/%Y" }}.</span> <span style="background: transparent;">{{ post.title }}.</span> <a href="{{ post.permalink }}" style="text-decoration: none; background: transparent;">Details</a>
+        <div style="margin-top: 8px; font-size: 0.85em; line-height: 1.4; background: transparent;">
+          <span style="display: inline; background: transparent;">{{ post.date | date: "%m/%d/%Y" }}. {{ post.title }}. </span><a href="{{ post.permalink }}" style="display: inline; text-decoration: none; background: transparent;">Details</a>
         </div>
       {% endfor %}
     </div>
