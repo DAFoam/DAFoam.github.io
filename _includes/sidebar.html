@@ -54,5 +54,14 @@
          -->
 </ul>
 
+<!-- Latest Announcements -->
+<div markdown="span" class="alert alert-info" role="alert" style="margin-top: 20px;">
+  <i class="fa fa-info-circle"></i>
+  <b><a href="{{ site.baseurl }}/news.html">Latest Announcements</a>:</b>
+  {% for post in site.posts limit:3 %}
+    <div>{{ post.date | date: "%m/%d/%Y" }}. {{ post.title }}. <a href="{{ post.permalink }}">Details.</a></div>
+  {% endfor %}
+</div>
+
 <!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
 <script>$("li.active").parents('li').toggleClass("active");</script>
