@@ -7,31 +7,15 @@ permalink: test-home.html
 folder: mydoc
 ---
 
-DAFoam (Discrete Adjoint for OpenFOAM) is an open, versatile, and efficient platform for solving physics-based (PDE-constrained) engineering optimization and inverse problems.
+DAFoam (Discrete Adjoint for OpenFOAM) is an open, versatile, and efficient platform for solving physics-based (PDE-constrained) engineering optimization and inverse problems. DAFoam's salient features are as follows.
 
-### What Can DAFoam Do?
+- **High-Fidelity Multidisciplinary Design Optimization**. (1) Perform gradient-based aerodynamic, aero-structural, and aero-thermal optimization by coupling computational fluid dynamics (CFD) and finite-element analysis (FEA) solvers, (2) Enable shape, topology, and operating-condition optimization with thousands of design variables and constraints through discrete adjoint methods, and (3) Support AI-agent–enabled, fully conversational design workflows, including geometry generation, meshing, simulations, and post-processing
 
-- **High-Fidelity Multidisciplinary Design Optimization**
-  - Perform gradient-based aerodynamic, aero-structural, and aero-thermal optimization by coupling computational fluid dynamics (CFD) and finite-element analysis (FEA) solvers
-  - Enable shape, topology, and operating-condition optimization with thousands of design variables and constraints through discrete adjoint methods
-  - Support AI-agent–enabled, fully conversational design workflows, including geometry generation, meshing, simulations, and post-processing
+- **Machine Learning and Data Assimilation**. (1) Correct Reynolds-Averaged Navier-Stokes (RANS) turbulence model deficiencies using model-consistent field inversion and machine learning (FIML), (2) Infer initial and boundary conditions, geometries, material properties, and source terms using experimental or high-fidelity numerical data, and (3) Generate comprehensive simulation datasets and train accurate surrogate models for uncertainty quantification and interactive design-space exploration
 
-- **Machine Learning and Data Assimilation**
-  - Correct Reynolds-Averaged Navier-Stokes (RANS) turbulence model deficiencies using model-consistent field inversion and machine learning (FIML)
-  - Infer initial and boundary conditions, geometries, material properties, and source terms using experimental or high-fidelity numerical data
-  - Generate comprehensive simulation datasets and train accurate surrogate models for uncertainty quantification and interactive design-space exploration
+- **Open, Extensible, and Vibrant Ecosystem**. (1) Feature a modular architecture to add customized physical disciplines/solvers, design variables, objective functions, and constraints, (2) Provide long-term community support through the GitHub Discussions forum and one-on-one meetings for new user and developer onboarding, and (3) Offer comprehensive documentation and tutorials, along with hands-on workshops and user and developer guides
 
-### Why Should You Choose DAFoam?
-
-- **Open, Extensible, and Vibrant Ecosystem**
-  - Feature a modular architecture to add customized physical disciplines/solvers, design variables, objective functions, and constraints
-  - Provide long-term community support through the GitHub Discussions forum and one-on-one meetings for new user and developer onboarding
-  - Offer comprehensive documentation and tutorials, along with hands-on workshops and user and developer guides
-
-- **Demonstrated Breadth and Impact**
-  - DAFoam has been used to design a wide range of engineered systems, including aircraft, wind turbines, hydroturbines, automobiles, ships, heat exchangers, and medical devices
-  - Researchers from more than 10 countries have published over 40 peer-reviewed journal and conference papers using DAFoam
-  - DAFoam has received support from major funding agencies and industry partners, including NSF, NASA, and Ford
+- **Demonstrated Breadth and Impact**. (1) DAFoam has been used to design a wide range of engineered systems, including aircraft, wind turbines, hydroturbines, automobiles, ships, heat exchangers, and medical devices, (2)Researchers from more than 10 countries have published over 40 peer-reviewed journal and conference papers using DAFoam, (3) DAFoam has received support from major funding agencies and industry partners, including NSF, NASA, and Ford
 
 DAFoam source code is available on [GitHub](https://github.com/mdolab/dafoam), and it interfaces with several open-source tools, including [OpenFOAM](https://www.openfoam.com), [MACH-Aero](https://mdolab-mach-aero.readthedocs-hosted.com/en/latest/index.html), and [OpenMDAO](https://openmdao.org). Follow the rest of the steps in Get Started to run your first DAFoam case.
 
