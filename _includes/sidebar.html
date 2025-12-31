@@ -53,11 +53,13 @@
          </p>
          -->
   <li style="margin-top: 30px; border-top: 1px solid #ccc; padding-top: 15px; list-style: none;">
-    <div class="alert alert-info" role="alert" style="margin: 0; padding: 12px;">
-      <i class="fa fa-info-circle" style="margin-right: 5px; white-space: nowrap;"></i><b style="white-space: nowrap;"><a href="{{ site.baseurl }}/news.html" style="text-decoration: none;">Latest Announcements</a></b>
+    <div class="alert alert-info" role="alert" style="margin: 0; padding: 12px; background-color: #d9edf7 !important;">
+      <div style="white-space: nowrap; margin-bottom: 8px;">
+        <i class="fa fa-info-circle" style="margin-right: 5px; background: transparent;"></i><b style="background: transparent;"><a href="{{ site.baseurl }}/news.html" style="text-decoration: none; background: transparent;">Latest Announcements</a></b>
+      </div>
       {% for post in site.posts limit:3 %}
-        <div style="margin-top: 8px; font-size: 0.9em; line-height: 1.5; white-space: normal;">
-          {{ post.date | date: "%m/%d/%Y" }}. {{ post.title }}. <a href="{{ post.permalink }}" style="text-decoration: none;">Details</a>
+        <div style="margin-top: 8px; font-size: 0.9em; line-height: 1.5; white-space: normal; background: transparent;">
+          <span style="background: transparent;">{{ post.date | date: "%m/%d/%Y" }}.</span> <span style="background: transparent;">{{ post.title }}.</span> <a href="{{ post.permalink }}" style="text-decoration: none; background: transparent;">Details</a>
         </div>
       {% endfor %}
     </div>
