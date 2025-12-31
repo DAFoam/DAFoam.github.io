@@ -52,19 +52,18 @@
              <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
          </p>
          -->
-  <li style="list-style: none; margin-top: 20px; padding-top: 15px; border-top: 1px solid #ccc;">
-    <div class="alert alert-info" role="alert" style="margin: 0; padding: 12px; background-color: #d9edf7 !important;">
-      <div style="margin-bottom: 8px;">
-        <i class="fa fa-info-circle" style="display: inline-block; margin-right: 5px; background: transparent;"></i><b style="display: inline-block; background: transparent;"><a href="{{ site.baseurl }}/news.html" style="text-decoration: none; background: transparent;">Latest Announcements</a></b>
-      </div>
-      {% for post in site.posts limit:3 %}
-        <div style="margin-top: 8px; font-size: 0.85em; line-height: 1.4; background: transparent;">
-          <span style="display: inline; background: transparent;">{{ post.date | date: "%m/%d/%Y" }}. {{ post.title }}. </span><a href="{{ post.permalink }}" style="display: inline; text-decoration: none; background: transparent;">Details</a>
-        </div>
-      {% endfor %}
-    </div>
-  </li>
 </ul>
+
+<div class="alert alert-info" role="alert" style="margin: 20px 0 0 0; padding: 12px; background-color: #d9edf7 !important; border-top: 1px solid #ccc;">
+  <div style="margin-bottom: 8px;">
+    <i class="fa fa-info-circle" style="display: inline-block; margin-right: 5px; background: transparent;"></i><b style="display: inline-block; background: transparent;"><a href="{{ site.baseurl }}/news.html" style="text-decoration: none; background: transparent;">Latest Announcements</a></b>
+  </div>
+  {% for post in site.posts limit:3 %}
+    <div style="margin-top: 8px; font-size: 0.85em; line-height: 1.4; background: transparent;">
+      <span style="display: inline; background: transparent;">{{ post.date | date: "%m/%d/%Y" }}. {{ post.title }}. </span><a href="{{ post.permalink }}" style="display: inline; text-decoration: none; background: transparent;">Details</a>
+    </div>
+  {% endfor %}
+</div>
 
 <!-- this highlights the active parent class in the navgoco sidebar. this is critical so that the parent expands when you're viewing a page. This must appear below the sidebar code above. Otherwise, if placed inside customscripts.js, the script runs before the sidebar code runs and the class never gets inserted.-->
 <script>$("li.active").parents('li').toggleClass("active");</script>
