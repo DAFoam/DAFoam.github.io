@@ -1,20 +1,23 @@
 ---
-title: "DAFoam: Discrete Adjoint with OpenFOAM for High-fidelity Multidisciplinary Design Optimization"
-keywords: sample homepage
+title: "DAFoam: An Open-Source Platform for Physics-Based Engineering Optimization"
+keywords: DAFoam, OpenFOAM, adjoint, CFD, optimization, inverse problems, machine learning, AI, surrogate
 sidebar: mydoc_sidebar
 permalink: index.html
 summary:
 ---
 
-DAFoam develops an efficient discrete adjoint method to perform high-fidelity multidisciplinary design optimization. DAFoam has the following features:
+DAFoam (Discrete Adjoint for OpenFOAM) is an open, versatile, and efficient platform for solving physics-based (PDE-constrained) engineering optimization and inverse problems. DAFoam's salient features are as follows.
 
-- It uses a popular open-source package [OpenFOAM](https://www.openfoam.com) for multiphysics analysis.
-- It implements a [Jacobian-free discrete adjoint](https://www.sciencedirect.com/science/article/abs/pii/S0376042119300120) approach with competitive speed, scalability, and accuracy.
-- It has a convenient Python interface to couple with [OpenMDAO](https://openmdao.org) for multidisciplinary design optimization.
+- **High-Fidelity Multidisciplinary Design Optimization**. (1) Adjoint-based aerodynamic, aero-structural, and aero-thermal optimization using high-fidelity CFD and FEA solvers, (2) Shape, topology, and operating-condition optimization with thousands of design variables and constraints, and (3) AI-agent–enabled, fully conversational design workflows, including geometry generation, meshing, simulations, and post-processing.
 
-DAFoam is distributed using the [GPL-v3 license](https://www.gnu.org/licenses/gpl-3.0.en.html), and its source code is available from [Github](https://github.com/mdolab/dafoam)
+- **Machine Learning and Data Assimilation**. (1) RANS turbulence model defect corrections using field inversion machine learning (FIML), (2) Inference of initial and boundary conditions, geometries, material properties, and source terms using high-fidelity data, and (3) Accurate surrogate modeling for uncertainty quantification and interactive design-space exploration.
 
-Download the [DAFoam image](mydoc_get_started_download_docker.html) and follow the rest of the steps in **Get started** to run your first DAFoam optimization!
+- **Open, Extensible, and Vibrant Ecosystem**. (1) A modular architecture to add customized disciplines/solvers, design variables, objective functions, and constraints, (2) Long-term community support through the GitHub Discussions forum and one-on-one meetings for new user and developer onboarding, and (3) Comprehensive documentation and tutorials, hands-on workshops, and user and developer guides.
+
+- **Demonstrated Breadth and Impact**. (1) DAFoam has been used to design various engineered systems, including aircraft, wind turbines, hydroturbines, automobiles, ships, heat exchangers, and medical devices, (2) External researchers from 10+ countries use DAFoam in their research, resulting in about 20 DAFoam-publications per year, and (3) DAFoam has received support from major funding agencies and industry partners, including NSF, NASA, and Ford
+
+DAFoam source code is available on [GitHub](https://github.com/mdolab/dafoam), and it interfaces with several open-source tools, including [OpenFOAM](https://www.openfoam.com), [MACH-Aero](https://mdolab-mach-aero.readthedocs-hosted.com/en/latest/index.html), and [OpenMDAO](https://openmdao.org). Follow the rest of the steps in Get Started to run your first DAFoam case.
+
 
 <div markdown="0" id="carousel" class="carousel slide" data-ride="carousel" data-interval="2000" data-pause="hover" >
     <!-- Menu -->
