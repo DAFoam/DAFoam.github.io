@@ -10,7 +10,7 @@ DAFoam (Discrete Adjoint for OpenFOAM) is an open, versatile, and efficient plat
 
 - **High-Fidelity Multidisciplinary Design Optimization**. (1) Adjoint-based aerodynamic, aero-structural, and aero-thermal optimization using high-fidelity CFD and FEA solvers, (2) Shape, topology, and operating-condition optimization with thousands of design variables and constraints, and (3) AI-agent–enabled, fully conversational design workflows, including geometry generation, meshing, simulations, and post-processing.
 
-- **Machine Learning and Data Assimilation**. (1) RANS turbulence model defect corrections using field inversion machine learning (FIML), (2) Inference of initial and boundary conditions, geometries, material properties, and source terms using high-fidelity data, and (3) Accurate surrogate modeling for uncertainty quantification and interactive design-space exploration.
+- **Machine Learning and Data Assimilation**. (1) RANS turbulence model defect corrections using field inversion machine learning (FIML), (2) Inference of initial/boundary conditions, geometries, and model parameters/terms using high-fidelity data, and (3) Accurate surrogate modeling for uncertainty quantification and digital twins.
 
 - **Open, Extensible, and Vibrant Ecosystem**. (1) A modular architecture to add customized disciplines/solvers, design variables, objective functions, and constraints, (2) Long-term community support through the GitHub Discussions forum and one-on-one meetings for new user and developer onboarding, and (3) Comprehensive documentation and tutorials, hands-on workshops, and user and developer guides.
 
