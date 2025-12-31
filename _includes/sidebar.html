@@ -52,12 +52,16 @@
              <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
          </p>
          -->
-  <li style="margin-top: 30px; border-top: 1px solid #ccc; padding-top: 15px;">
-    <div markdown="span" class="alert alert-info" role="alert" style="margin: 0;">
+  <li style="margin-top: 30px; border-top: 1px solid #ccc; padding-top: 15px; list-style: none;">
+    <div class="alert alert-info" role="alert" style="margin: 0; padding: 10px; border-radius: 4px;">
       <i class="fa fa-info-circle"></i>
-      <b><a href="{{ site.baseurl }}/news.html">Announcements</a></b>
+      <b><a href="{{ site.baseurl }}/news.html" style="color: #004085; text-decoration: none;">Latest Announcements</a></b>
       {% for post in site.posts limit:3 %}
-        <div style="margin-top: 8px;">{{ post.date | date: "%m/%d/%Y" }}. {{ post.title }}. <a href="{{ post.permalink }}">Details.</a></div>
+        <div style="margin-top: 10px; font-size: 0.9em; line-height: 1.4;">
+          <span style="color: #666;">{{ post.date | date: "%m/%d/%Y" }}.</span>
+          <span style="color: #333;">{{ post.title }}.</span>
+          <a href="{{ post.permalink }}" style="color: #0066cc; text-decoration: none;">Details</a>
+        </div>
       {% endfor %}
     </div>
   </li>
