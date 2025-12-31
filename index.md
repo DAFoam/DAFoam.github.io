@@ -6,13 +6,6 @@ permalink: index.html
 summary:
 ---
 
-<div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> 
-<b>[Latest Announcements](news.html):</b>   
-{% for post in site.posts limit:3 %}
-  {{ post.date | date: "%m/%d/%Y" }}. {{ post.title }}. <a href="{{ post.permalink }}">Details.</a>  
-{% endfor %}
-</div>
-
 DAFoam develops an efficient discrete adjoint method to perform high-fidelity multidisciplinary design optimization. DAFoam has the following features:
 
 - It uses a popular open-source package [OpenFOAM](https://www.openfoam.com) for multiphysics analysis.
