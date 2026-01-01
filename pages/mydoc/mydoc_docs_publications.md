@@ -7,7 +7,7 @@ permalink: publications.html
 folder: mydoc
 ---
 
-The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
+The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
 <80> M. Bashir, D. Gong, L. Sun, P. Duan. Aerodynamic shape optimization using the adjoint method combined with an inverse design approach for non-parameterized geometries. Physics of Fluids, 2025.
 
