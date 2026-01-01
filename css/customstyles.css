@@ -1290,11 +1290,3 @@ pre {
 .copy-button:focus {
     outline: none;
 }
-
-/* Make container full-width to eliminate white space */
-.container {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding-left: 15px;
-    padding-right: 15px;
-}
