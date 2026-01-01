@@ -16,7 +16,7 @@ DAFoam (Discrete Adjoint for OpenFOAM) is an open, versatile, and efficient plat
 
 - **Demonstrated Breadth and Impact**. (1) DAFoam has been used to design various engineered systems, including aircraft, wind turbines, hydro-turbines, automobiles, ships, heat exchangers, and medical devices, (2) External researchers from 10+ countries use DAFoam in their research, resulting in about 20 [DAFoam-publications](https://dafoam.github.io/publications.html) per year, and (3) DAFoam has received [funding support](https://dafoam.github.io/acknowledgement.html) from federal agencies and industry partners, including NSF, NASA, and Ford
 
-DAFoam source code is available on [GitHub](https://github.com/mdolab/dafoam), and it interfaces with several open-source tools, including [OpenFOAM](https://www.openfoam.com), [MACH-Aero](https://mdolab-mach-aero.readthedocs-hosted.com/en/latest/index.html), and [OpenMDAO](https://openmdao.org). Follow the rest of the steps in Get Started to run your first DAFoam case.
+DAFoam source code is available on [GitHub](https://github.com/mdolab/dafoam), and it interfaces with several open-source tools, including [OpenFOAM](https://www.openfoam.com), [MACH-Aero](https://mdolab-mach-aero.readthedocs-hosted.com/en/latest/index.html), and [OpenMDAO](https://openmdao.org). You can follow the remaining steps in "Get Started" to run your first DAFoam optimization.
 
 
 <div markdown="0" id="carousel" class="carousel slide" data-ride="carousel" data-interval="2000" data-pause="hover" >
