@@ -1,7 +1,7 @@
 ---
 title:  "DAFoam Workshop 2024 Slides and Videos"
 categories: jekyll update
-permalink: dafoam_workshop_2024_videos.html
+permalink: news-dafoam-workshop-2024-videos.html
 ---
 
 We are glad to have you in the 2024 DAFoam workshop on July 25. 
