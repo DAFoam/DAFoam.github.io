@@ -1,5 +1,5 @@
 ---
-title:  "New AI Agents for Conversational Design Workflow!"
+title:  "New DAFoam AI agents for conversational design workflow have been released!"
 categories: jekyll update
 permalink: news_dafoam_ai_agent.html
 ---
