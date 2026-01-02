@@ -136,9 +136,11 @@ Consider a cell $P$ and its east neighbor $E$. The east face lies halfway betwee
 
 This is a simple **linear interpolation** (second-order accurate on uniform grids).
 
-**For the diffusion terms** (viscous terms like $\mu \frac{\partial^2 u}{\partial x^2}$):
-- We compute gradients using **central differences** between neighboring cell centers
-- Example: $\frac{\partial u}{\partial x}\bigg|_{\text{east face}} \approx \frac{u_E - u_P}{\Delta x}$ where $\Delta x$ is the distance between cell centers
+**For the diffusion terms** (viscous terms like $\mu \frac{\partial^2 u}{\partial x^2}$): We compute gradients using **central differences** between neighboring cell centers. Example: 
+
+$${\frac{\partial u}{\partial x}}\bigg|_{\text{east face}} \approx \frac{u_E - u_P}{\Delta x}$$
+
+where $\Delta x$ is the distance between cell centers
 
 **Discrete momentum equations in 2D (cell P)**
 
@@ -215,8 +217,14 @@ In OpenFOAM, every application starts by initializing two core objects: **runTim
 
 **Common runTime properties:**
 
-<details>
-<summary>Click to show code example</summary>
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#runtimeProperties">Click to show code example</a>
+</h4>
+</div>
+<div id="runtimeProperties" class="panel-collapse collapse">
+<div class="panel-body">
 
 ```cpp
 // Access current time value
@@ -232,7 +240,9 @@ scalar endTime = runTime.endTime().value();  // Returns target end time
 runTime++;  // Increments time by deltaT
 ```
 
-</details>
+</div>
+</div>
+</div>
 
 **In CFD context:** For steady-state solvers (like lid-driven cavity), `runTime` essentially manages iteration loops even though there is no physical time. Each "time step" is really an iteration.
 
@@ -245,8 +255,14 @@ runTime++;  // Increments time by deltaT
 
 **Key concept:** The `mesh` object encapsulates the entire finite-volume mesh structure from our general CFD discussion (cells, faces, boundary conditions, etc.). It is the central data structure that OpenFOAM uses to manage all spatial discretization.
 
-<details>
-<summary><b>Common mesh properties and geometry data (click to expand)</b></summary>
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#meshProperties">Common mesh properties and geometry data (click to expand)</a>
+</h4>
+</div>
+<div id="meshProperties" class="panel-collapse collapse">
+<div class="panel-body">
 
 ```cpp
 // Number of cells and faces
@@ -283,7 +299,9 @@ for (label cellI = 0; cellI < mesh.nCells(); ++cellI) {
 }
 ```
 
-</details>
+</div>
+</div>
+</div>
 
 **CFD equivalence:**
 - `mesh.V()` = Cell area $A_P$
@@ -303,7 +321,7 @@ In OpenFOAM, all flow variables (velocity **U**, pressure **p**, etc.) are **fie
 
 ### Understanding field components
 
-#### `U.internalField()` - Internal cell values
+**`U.internalField()` - Internal cell values**
 
 Contains the velocity values at **all internal cell centers** (cells not on the boundary).
 
@@ -314,8 +332,14 @@ Contains the velocity values at **all internal cell centers** (cells not on the 
 - Each value is a **vector** $(u, v, w)$ storing the three velocity components at that cell center
 - These are the **primary unknowns** solved in the momentum equations
 
-<details>
-<summary><b>Example accessing internal field data (click to expand)</b></summary>
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#internalFieldExample">Example accessing internal field data (click to expand)</a>
+</h4>
+</div>
+<div id="internalFieldExample" class="panel-collapse collapse">
+<div class="panel-body">
 
 ```cpp
 // Access the internal field (all internal cell values)
@@ -335,9 +359,11 @@ scalar cy = cellCenterCoord[1];               // y-coordinate of cell center
 scalar cellVol = mesh.V()[cellI];                  // Get cell area (in 2D) or volume (in 3D)
 ```
 
-</details>
+</div>
+</div>
+</div>
 
-#### `U.boundaryField()` - Boundary condition values
+**`U.boundaryField()` - Boundary condition values**
 
 Contains velocity values at **all boundary cell centers** and stores the boundary condition type (Dirichlet, Neumann, cyclic, etc.).
 
@@ -349,8 +375,14 @@ Contains velocity values at **all boundary cell centers** and stores the boundar
 - Example: moving lid patch has `U = (1, 0, 0)` (moving at velocity 1 in x-direction)
 - Boundary values can be accessed similarly to internal values, indexed by face number on that patch
 
-<details>
-<summary><b>Example accessing boundary field data (click to expand)</b></summary>
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#boundaryFieldExample">Example accessing boundary field data (click to expand)</a>
+</h4>
+</div>
+<div id="boundaryFieldExample" class="panel-collapse collapse">
+<div class="panel-body">
 
 ```cpp
 // Get patch names and loop through all boundary patches
@@ -385,7 +417,9 @@ if (patchI >= 0) {
 }
 ```
 
-</details>
+</div>
+</div>
+</div>
 
 ### Connecting mesh data to finite-volume discretization
 

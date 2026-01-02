@@ -1290,3 +1290,35 @@ pre {
 .copy-button:focus {
     outline: none;
 }
+
+/* Collapsible details styling */
+details {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+details summary {
+    cursor: pointer;
+    font-weight: 500;
+    color: #248EC2;
+    user-select: none;
+    padding: 5px;
+    margin: -5px;
+    margin-bottom: 5px;
+}
+
+details summary:hover {
+    background-color: #f0f0f0;
+    border-radius: 3px;
+}
+
+details[open] summary {
+    margin-bottom: 10px;
+}
+
+details > *:not(summary) {
+    margin-left: 10px;
+}
