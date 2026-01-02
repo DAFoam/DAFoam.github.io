@@ -7,6 +7,20 @@ permalink: developer-guide-background.html
 folder: mydoc
 ---
 
+This chapter was written by [Ping He](https://github.com/friedenhe).
+
+## Learning Objectives:
+
+After reading this chapter, you should be able to: 
+
+- Describe the complete CFD solution workflow for a simple 2D lid-driven cavity problem, including geometry setup, mesh generation, discretization, and solution algorithms.
+
+- Differentiate between a simple CFD solver and OpenFOAM’s object-oriented implementation.
+
+- Describe the detailed procedure of the discrete adjoint method using a 1D heat transfer problem, including residual formulation, linearization, and adjoint equation solution.
+
+- Distinguish between a simple adjoint solver and DAFoam’s Jacobian-free adjoint framework.
+
 ## Computational Fluid Dynamics (General Introduction)
 
 Computational Fluid Dynamics (CFD) is the numerical solution of the Navier--Stokes (NS) equations that describe fluid motion. The Navier--Stokes equations have no analytical solutions, so we need to solve them on a discretized domain (a mesh). The solution process typically starts with converting the continuous NS equations into the discretized form, reformulate the discretized NS equations into algebraic equations (i.e., matrix-vector product format; Ax=b), and then repeatedly solving large sparse algebraic systems to drive the discretized residuals (R=Ax-b) to zero.
@@ -940,15 +954,6 @@ The adjoint equation needs $\left(\frac{\partial F}{\partial \mathbf{T}}\right)^
 
 ### Solution Algorithm
 
-<div class="panel panel-default">
-<div class="panel-heading">
-<h4 class="panel-title">
-<a data-toggle="collapse" href="#adjointAlgorithm">Adjoint method algorithm (click to expand)</a>
-</h4>
-</div>
-<div id="adjointAlgorithm" class="panel-collapse collapse">
-<div class="panel-body">
-
 **Step 1: Solve forward problem**
 ```
 Given: α(x) = 20.0
@@ -988,10 +993,6 @@ For each parameter α_i:
     FD derivative: (f_new - f) / ε
 Compare with adjoint result
 ```
-
-</div>
-</div>
-</div>
 
 ### Python code for the adjoint implementation
 
@@ -1240,7 +1241,8 @@ The adjoint method computes sensitivities for all 11 parameters using only **2 s
 </div>
 </div>
 
+## Discrete Adjoint Method (DAFoam Implementations)
 
-
+In progress.
 
 {% include links.html %}
