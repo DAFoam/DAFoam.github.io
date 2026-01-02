@@ -15,7 +15,7 @@ This section shows a simple CFD example by using the finite-volume method to sol
 
 ---
 
-## 1) Governing equations: incompressible, laminar Navier–Stokes (2D)
+### 1) Governing equations: incompressible, laminar Navier–Stokes (2D)
 
 For this **2D lid-driven cavity example**, we solve the incompressible Navier–Stokes equations for a Newtonian fluid with constant density $\rho$ and viscosity $\mu$ in **steady state**:
 
@@ -48,11 +48,12 @@ where:
 
 ---
 
-## 2) Discretizing the domain: mesh and control volumes (2D)
+### 2) Discretizing the domain: mesh and control volumes (2D)
 
 For our **2D lid-driven cavity**, we use a structured **quadrilateral (quad) mesh** to discretize the square domain $[0,1] \times [0,1]$.
 
-### 2.1 Mesh concepts for 2D
+**Mesh concepts for 2D**
+
 A mesh partitions the continuous 2D domain into small cells (control volumes). Each cell is a small rectangle where we will store and compute the unknowns ($u, v, p$).
 
 **Key mesh terminology in 2D:**
@@ -72,7 +73,7 @@ A mesh partitions the continuous 2D domain into small cells (control volumes). E
 - **Cell area** $A_P$: In 2D, this is the physical area of the cell. For a uniform quad mesh, all cells have the same area. For our example with $n_x \times n_y$ cells: $A_P = \frac{1}{n_x} \times \frac{1}{n_y}$.
 
 - **Face flux** $\phi_f$: The flow rate (volume per unit time per unit depth) crossing a face. Computed as:
-  $$\phi_f = u_f \cdot n_{f,x} \cdot L_f + v_f \cdot n_{f,y} \cdot L_f = \mathbf{u}_f \cdot \mathbf{n}_f \cdot L_f$$
+  $\phi_f = u_f \cdot n_{f,x} \cdot L_f + v_f \cdot n_{f,y} \cdot L_f = \mathbf{u}_f \cdot \mathbf{n}_f \cdot L_f$
   where $\mathbf{u}_f = (u_f, v_f)$ is the velocity at the face, $\mathbf{n}_f = (n_{f,x}, n_{f,y})$ is the outward unit normal, and $L_f$ is the face length.
 
 **Mesh visualization:**
@@ -81,7 +82,8 @@ A mesh partitions the continuous 2D domain into small cells (control volumes). E
 
 *Figure 1: 2D Lid-Driven Cavity Mesh (4×4 cells shown). Red circles (●) mark cell centers where velocity $(u_P, v_P)$ and pressure $p_P$ are stored. The red box highlights one cell and its four faces (east, west, north, south). Boundary conditions are specified on the domain edges: no-slip walls (u=0, v=0) on bottom/left/right, and moving lid (u=1, v=0) on top.*
 
-### 2.2 Why finite volume?
+**Why finite volume?**
+
 Finite-volume CFD stores unknowns as **cell-center values** (or cell averages) and enforces conservation by balancing **fluxes across all faces** of each cell. This approach is naturally conservative: what flows out of one cell flows into a neighboring cell.
 
 A generic transport equation in conservative form:
@@ -113,11 +115,17 @@ where:
 
 The key insight: the **same face flux** appears in both adjacent cells with **opposite signs**. Momentum leaving cell $P$ equals momentum entering its neighbor—automatic conservation.
 
+**Flux visualization:**
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/developer_guide/cfd_flux_calculation.png" style="width:600px !important;" />
+
+*Figure 2: Flux Exchange Between Adjacent Cells. Cell P (yellow, center) exchanges momentum with four neighbors (E, W, N, S) through shared faces. Arrows show the direction of flux at each face. The conservation principle states that the sum of all fluxes must balance: $\phi_E + \phi_W + \phi_N + \phi_S = 0$ in steady state, ensuring what flows out equals what flows in.*
+
 ---
 
-## 3) Turning PDEs into algebra: fluxes, interpolation, and linear systems (2D)
+## #3) Turning PDEs into algebra: fluxes, interpolation, and linear systems (2D)
 
-### 3.1 Face values and interpolation (2D example)
+**Face values and interpolation (2D example)**
 
 Since unknowns are **stored only at cell centers**, we must **interpolate** velocity to the cell faces when computing fluxes.
 
@@ -134,7 +142,7 @@ This is a simple **linear interpolation** (second-order accurate on uniform grid
 - We compute gradients using **central differences** between neighboring cell centers
 - Example: $\frac{\partial u}{\partial x}\big|_{\text{east face}} \approx \frac{u_E - u_P}{\Delta x}$ where $\Delta x$ is the distance between cell centers
 
-### 3.2 Discrete momentum equations in 2D (cell $P$)
+**Discrete momentum equations in 2D (cell P)**
 
 After finite-volume discretization, the $x$-momentum equation for cell $P$ becomes an **algebraic equation**:
 
@@ -151,7 +159,7 @@ where:
 
 **Why is this form useful?** It relates the velocity at cell $P$ to its four neighbors (E, W, N, S). This creates a **sparse system of linear equations** that can be solved iteratively.
 
-### 3.3 The pressure problem: enforcing mass conservation (2D)
+**The pressure problem: enforcing mass conservation (2D)**
 
 In our 2D cavity, there is **no equation for pressure**. Instead, pressure is determined by requiring that the **continuity equation** is satisfied:
 
@@ -183,7 +191,7 @@ This correction drives the mass imbalance to zero, enforcing continuity in the n
 
 ---
 
-## 4) How we solve it: iterative steady-state algorithm (high level)
+### 4) How we solve it: iterative steady-state algorithm (high level)
 
 A typical steady incompressible workflow (SIMPLE-like) looks like:
 
@@ -195,5 +203,175 @@ A typical steady incompressible workflow (SIMPLE-like) looks like:
 
 In production codes, each “solve” is a sparse linear solve (e.g., CG, BiCGStab, GMRES with preconditioning), and under-relaxation is often used for stability.
 
+## Computational Fluid Dynamics (OpenFOAM Implementations)
+
+### Initializing runTime and mesh
+
+In OpenFOAM, every application starts by initializing two core objects: **runTime** and **mesh**.
+
+**runTime object:**
+- Created by calling `#include "Time.H"` in an OpenFOAM solver, `runTime` is a `Time` object
+- Manages time-stepping and I/O control
+- Handles time-dependent execution (even for steady-state solvers)
+- Controls output directories and time folders
+
+
+**mesh object:**
+- Created by calling `#include "fvMesh.H"` in an OpenFOAM solver, `mesh` is a `fvMesh` object
+- Represents the computational domain as a structured collection of cells, faces, and vertices
+- Stores mesh geometry and connectivity
+- Acts as a **container for all field data** (velocity, pressure, etc.)
+
+**Key concept:** The `mesh` object encapsulates the entire finite-volume mesh structure from our general CFD discussion (cells, faces, boundary conditions, etc.). It is the central data structure that OpenFOAM uses to manage all spatial discretization.
+
+### Flow variables: storing data on the mesh
+
+In OpenFOAM, all flow variables (velocity **U**, pressure **p**, etc.) are **field objects** stored directly on the mesh. Each field is tied to the mesh and knows about all cells, internal faces, and boundary faces.
+
+**Creating velocity and pressure fields:**
+
+```cpp
+Foam::volVectorField U(
+    Foam::IOobject("U", runTime.timeName(), mesh,
+                   Foam::IOobject::MUST_READ, Foam::IOobject::AUTO_WRITE),
+    mesh
+);
+
+Foam::volScalarField p(
+    Foam::IOobject("p", runTime.timeName(), mesh,
+                   Foam::IOobject::MUST_READ, Foam::IOobject::AUTO_WRITE),
+    mesh
+);
+```
+
+- **`volVectorField`**: A field of vectors (3D) defined at cell centers (volume-averaged)
+- **`volScalarField`**: A field of scalars defined at cell centers
+- Each field has **two components**: internal field + boundary field
+
+### Understanding field components
+
+#### `U.internalField()` - Internal cell values
+
+Contains the velocity values at **all internal cell centers** (cells not on the boundary).
+
+```cpp
+Foam::scalarField& Uint = U.ref().internalFieldRef();  // Access internal field
+// Equivalent to: u_P, u_E, u_W, u_N, u_S, ... for all cells in our discretization example
+```
+
+**In CFD terms:** This is the storage for all $u_P$ values for every cell $P$ in the domain.
+
+- Size: equal to the number of internal cells (`mesh.nCells()`)
+- Ordered sequentially (cell 0, 1, 2, ...)
+- These are the **primary unknowns** solved in the momentum equations
+
+#### `U.boundaryField()` - Boundary condition values
+
+Contains velocity values at **all boundary cell centers** and stores the boundary condition type (Dirichlet, Neumann, cyclic, etc.).
+
+```cpp
+Foam::fvPatchVectorField& Upatch = U.boundaryFieldRef()[patchID];
+// Example: Dirichlet BC on "lid" patch: U = (1, 0, 0)
+```
+
+**In CFD terms:** These are the **Dirichlet boundary conditions** (no-slip walls, moving lid) specified on the domain boundaries from our lid-driven cavity example.
+
+**Structure:**
+- Multiple patches (e.g., "bottom", "left", "right", "top")
+- Each patch stores BC type and values
+- Example: moving lid patch has `U = (1, 0, 0)` (moving at velocity 1 in x-direction)
+
+### Mesh geometry data
+
+OpenFOAM provides access to mesh geometric properties through the `fvMesh` object. These directly correspond to our CFD discretization concepts:
+
+#### `mesh.V()` - Cell volumes
+
+Returns a list of volumes for all cells.
+
+```cpp
+const Foam::scalarField& V = mesh.V();  // V[cellI] = cell volume
+```
+
+**Equivalence:** $A_P$ in our CFD formulation - the area of each cell (in 2D, the "volume" is actually area).
+
+- Size: `mesh.nCells()` (one value per internal cell)
+- Used in finite-volume integration: $\int_V dV = A_P$
+
+#### `mesh.Sf()` - Face area vectors
+
+Returns the **area vector** for each face (magnitude = face area, direction = outward normal).
+
+```cpp
+const Foam::surfaceVectorField& Sf = mesh.Sf();  // Sf[faceI] = face area vector
+```
+
+**Equivalence:** $L_f \cdot \mathbf{n}_f$ in our CFD - the face area multiplied by the outward unit normal.
+
+**Structure:**
+- For internal faces: outward normal relative to the owner cell
+- For boundary faces: outward normal from the domain
+- **Sign matters:** used to compute fluxes across faces
+
+**Example:** In 2D lid-driven cavity:
+- East face of cell $P$: `Sf_E = (L_E, 0)` pointing right
+- West face of cell $P$: `Sf_W = (-L_W, 0)` pointing left
+
+#### `mesh.C()` - Cell centers
+
+Returns the coordinates of the geometric center of each cell.
+
+```cpp
+const Foam::vectorField& C = mesh.C();  // C[cellI] = (x_c, y_c, z_c)
+```
+
+**Equivalence:** $(x_c, y_c)$ in our CFD - the position where velocity and pressure are stored.
+
+- Size: `mesh.nCells()`
+- Used for interpolation, gradient computation, and flux calculations
+- Ordered same as `U.internalField()` (cell 0, 1, 2, ...)
+
+### Connecting mesh data to finite-volume discretization
+
+**How OpenFOAM uses these components:**
+
+When computing the discrete momentum equation for a cell, OpenFOAM internally:
+
+1. **Accesses cell values:** `U.internalField()[cellI]` → $u_P$
+2. **Accesses neighbor values:** through face addressing, gets `U.internalField()[neighborCellI]` → $u_E, u_W, ...$
+3. **Accesses face fluxes:** Interpolates to faces using `U.internalField()` at both sides
+4. **Applies boundary conditions:** Uses `U.boundaryField()[patchI]` for boundary cells
+5. **Integrates over volume:** Uses `mesh.V()[cellI]` for cell volume weighting
+6. **Computes face contributions:** Uses `mesh.Sf()[faceI]` to get face normal and area
+
+**Complete mapping to CFD discretization:**
+
+| CFD Concept | OpenFOAM Implementation |
+|---|---|
+| Cell values $u_P, u_E, u_W, u_N, u_S$ | `U.internalField()[cellI]` and neighbors |
+| Boundary values $u_{\text{boundary}}$ | `U.boundaryField()[patchI]` |
+| Cell volume $A_P$ | `mesh.V()[cellI]` |
+| Face area & normal $L_f \mathbf{n}_f$ | `mesh.Sf()[faceI]` |
+| Cell center position $(x_c, y_c)$ | `mesh.C()[cellI]` |
+| Discrete momentum equation assembly | Handled by `fvMatrix` (Finite-Volume Matrix) |
+
+### Summary: The data flow in OpenFOAM
+
+```
+runTime → manages time stepping and I/O
+    ↓
+mesh → stores all geometry (cells, faces, connectivity)
+    ├─ mesh.V()        → cell volumes (A_P)
+    ├─ mesh.Sf()       → face area vectors (L_f · n_f)
+    └─ mesh.C()        → cell centers (x_c, y_c)
+    ↓
+U, p → flow fields stored on mesh
+    ├─ U.internalField()  → cell-center velocities (u_P, u_E, etc.)
+    └─ U.boundaryField()  → boundary conditions
+    ↓
+fvMatrix assembly → builds discrete equations using mesh data
+```
+
+When you write OpenFOAM solvers, you're working directly with these objects to implement the finite-volume discretization and solvers described in the general CFD section.
 
 {% include links.html %}

@@ -2,22 +2,18 @@
 CFD Diagram Generator for 2D Lid-Driven Cavity Example
 ======================================================
 
-This script generates three educational diagrams illustrating fundamental CFD concepts:
+This script generates two educational diagrams illustrating fundamental CFD concepts:
 
 1. cfd_mesh_structure.png
    - Shows the structured quad mesh with cell centers and faces
    - Highlights boundary conditions on all domain edges
    - Red box highlights one example cell with labeled faces (east, west, north, south)
 
-2. cfd_single_cell_flux.png
-   - Shows a single cell (P) and its four neighboring cells (E, W, N, S)
-   - Displays face flux equations: phi_f = u_f * n_f * A_f
+2. cfd_flux_calculation.png
+   - Shows a central cell (P) and its four neighboring cells (E, W, N, S)
+   - Cells are drawn as rectangles to show they are adjacent (connected)
+   - Displays face flux equations through each shared face
    - Illustrates conservation principle: sum of fluxes balances
-
-3. cfd_velocity_field.png
-   - Displays the converged velocity field solution
-   - Shows velocity vectors and magnitude color map
-   - Demonstrates the characteristic counter-clockwise circulation pattern
 
 Usage:
     python3 create_cfd_diagrams.py
@@ -26,7 +22,7 @@ Requirements:
     - matplotlib
     - numpy
 
-The script saves all PNG images to the current directory (images/).
+The script saves all PNG images to the current directory.
 Output resolution: 300 dpi (high quality for documentation)
 
 To regenerate the diagrams, simply run this script.
@@ -35,7 +31,6 @@ To regenerate the diagrams, simply run this script.
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.patches import FancyArrowPatch, Rectangle
-import numpy as np
 
 # Set style for better looking diagrams
 plt.style.use('seaborn-v0_8-darkgrid')
@@ -120,172 +115,113 @@ print("Saved: cfd_mesh_structure.png")
 plt.close()
 
 # ============================================
-# Diagram 2: Single Cell with Fluxes
+# Diagram 2: Flux Calculation with Connected Cells
 # ============================================
 fig, ax = plt.subplots(1, 1, figsize=(10, 10))
 
-# Draw a single cell
-cell_x, cell_y = 0.2, 0.2
-cell_dx, cell_dy = 0.6, 0.6
+# Cell size - make it larger so cells touch
+cell_size = 0.25
 
-rect = Rectangle((cell_x, cell_y), cell_dx, cell_dy, linewidth=3, edgecolor='black', facecolor='lightblue', alpha=0.2)
-ax.add_patch(rect)
+# Center positions (cells are adjacent, touching)
+cx, cy = 0.5, 0.5      # P cell center
+ex, ey = cx + cell_size, cy         # E cell center (right neighbor)
+wx, wy = cx - cell_size, cy         # W cell center (left neighbor)
+nx, ny = cx, cy + cell_size         # N cell center (top neighbor)
+sx, sy = cx, cy - cell_size         # S cell center (bottom neighbor)
 
-# Cell center
-cx = cell_x + cell_dx / 2
-cy = cell_y + cell_dy / 2
-ax.plot(cx, cy, 'ro', markersize=15)
-ax.text(cx - 0.05, cy - 0.08, r'$P$: $u_P, v_P, p_P$', fontsize=12, weight='bold', ha='right')
+# Draw all five cells as rectangles (adjacent/touching)
+# East cell
+rect_e = Rectangle((ex - cell_size/2, ey - cell_size/2), cell_size, cell_size,
+                    linewidth=2, edgecolor='blue', facecolor='lightblue', alpha=0.3)
+ax.add_patch(rect_e)
+ax.plot(ex, ey, 'bs', markersize=11)
+ax.text(ex + 0.15, ey, 'E', fontsize=12, weight='bold', ha='left', color='blue')
+ax.text(ex + 0.13, ey - 0.08, r'$u_E, v_E, p_E$', fontsize=8, ha='left')
 
-# Neighboring cell centers
-# East neighbor
-ex = cell_x + cell_dx + 0.25
-ey = cy
-ax.plot(ex, ey, 'bs', markersize=12)
-ax.text(ex + 0.03, ey + 0.06, 'E\n' + r'$u_E, v_E, p_E$', fontsize=11, ha='left', weight='bold')
+# West cell
+rect_w = Rectangle((wx - cell_size/2, wy - cell_size/2), cell_size, cell_size,
+                    linewidth=2, edgecolor='blue', facecolor='lightblue', alpha=0.3)
+ax.add_patch(rect_w)
+ax.plot(wx, wy, 'bs', markersize=11)
+ax.text(wx - 0.15, wy, 'W', fontsize=12, weight='bold', ha='right', color='blue')
+ax.text(wx - 0.13, wy - 0.08, r'$u_W, v_W, p_W$', fontsize=8, ha='right')
 
-# West neighbor
-wx = cell_x - 0.25
-wy = cy
-ax.plot(wx, wy, 'bs', markersize=12)
-ax.text(wx - 0.03, wy + 0.06, r'$u_W, v_W, p_W$' + '\nW', fontsize=11, ha='right', weight='bold')
+# North cell
+rect_n = Rectangle((nx - cell_size/2, ny - cell_size/2), cell_size, cell_size,
+                    linewidth=2, edgecolor='blue', facecolor='lightblue', alpha=0.3)
+ax.add_patch(rect_n)
+ax.plot(nx, ny, 'bs', markersize=11)
+ax.text(nx, ny + 0.15, 'N', fontsize=12, weight='bold', ha='center', color='blue')
+ax.text(nx + 0.08, ny + 0.13, r'$u_N, v_N, p_N$', fontsize=8, ha='left')
 
-# North neighbor
-nx = cx
-ny = cell_y + cell_dy + 0.25
-ax.plot(nx, ny, 'bs', markersize=12)
-ax.text(nx + 0.08, ny + 0.03, 'N: ' + r'$u_N, v_N, p_N$', fontsize=11, ha='left', weight='bold')
+# South cell
+rect_s = Rectangle((sx - cell_size/2, sy - cell_size/2), cell_size, cell_size,
+                    linewidth=2, edgecolor='blue', facecolor='lightblue', alpha=0.3)
+ax.add_patch(rect_s)
+ax.plot(sx, sy, 'bs', markersize=11)
+ax.text(sx, sy - 0.15, 'S', fontsize=12, weight='bold', ha='center', color='blue', va='top')
+ax.text(sx + 0.08, sy - 0.13, r'$u_S, v_S, p_S$', fontsize=8, ha='left', va='top')
 
-# South neighbor
-sx = cx
-sy = cell_y - 0.25
-ax.plot(sx, sy, 'bs', markersize=12)
-ax.text(sx + 0.08, sy - 0.03, r'$u_S, v_S, p_S$' + ': S', fontsize=11, ha='left', va='top', weight='bold')
+# Central cell P (highlighted)
+rect_p = Rectangle((cx - cell_size/2, cy - cell_size/2), cell_size, cell_size,
+                    linewidth=3, edgecolor='red', facecolor='yellow', alpha=0.5)
+ax.add_patch(rect_p)
+ax.plot(cx, cy, 'ro', markersize=13)
+ax.text(cx, cy + 0.08, r'$P$', fontsize=13, weight='bold', ha='center', color='red')
+ax.text(cx, cy - 0.08, r'$u_P, v_P, p_P$', fontsize=8, ha='center', weight='bold')
 
-# Draw faces with flux arrows
-face_props = dict(arrowstyle='->', lw=2.5, color='darkgreen')
+# Draw flux arrows at shared faces (right next to the cells)
+arrow_props = dict(arrowstyle='->', lw=3, color='darkgreen', mutation_scale=25)
 
-# East face flux
-east_fx = cell_x + cell_dx
-east_fy = cy
-ax.annotate('', xy=(east_fx + 0.08, east_fy), xytext=(east_fx, east_fy), arrowprops=face_props)
-ax.text(east_fx + 0.12, east_fy + 0.06, r'$\phi_E = u_E \cdot n_E \cdot A_E$', fontsize=10, ha='left',
-        bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.6))
+# East flux (between P and E)
+east_face_x = cx + cell_size/2
+ax.annotate('', xy=(east_face_x + 0.04, cy), xytext=(east_face_x - 0.04, cy),
+            arrowprops=arrow_props)
+ax.text(east_face_x + 0.08, cy + 0.08, r'$\phi_E$', fontsize=10, ha='left', weight='bold',
+        bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
 
-# West face flux
-west_fx = cell_x
-west_fy = cy
-ax.annotate('', xy=(west_fx - 0.08, west_fy), xytext=(west_fx, west_fy), arrowprops={**face_props, 'arrowstyle': '<-'})
-ax.text(west_fx - 0.12, west_fy + 0.06, r'$\phi_W = u_W \cdot n_W \cdot A_W$', fontsize=10, ha='right',
-        bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.6))
+# West flux (between W and P)
+west_face_x = cx - cell_size/2
+ax.annotate('', xy=(west_face_x - 0.04, cy), xytext=(west_face_x + 0.04, cy),
+            arrowprops={**arrow_props, 'arrowstyle': '<-'})
+ax.text(west_face_x - 0.08, cy + 0.08, r'$\phi_W$', fontsize=10, ha='right', weight='bold',
+        bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
 
-# North face flux
-north_fy = cell_y + cell_dy
-north_fx = cx
-ax.annotate('', xy=(north_fx, north_fy + 0.08), xytext=(north_fx, north_fy), arrowprops=face_props)
-ax.text(north_fx + 0.15, north_fy + 0.12, r'$\phi_N = v_N \cdot n_N \cdot A_N$', fontsize=10, ha='left',
-        bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.6))
+# North flux (between P and N)
+north_face_y = cy + cell_size/2
+ax.annotate('', xy=(cx, north_face_y + 0.04), xytext=(cx, north_face_y - 0.04),
+            arrowprops=arrow_props)
+ax.text(cx + 0.10, north_face_y + 0.08, r'$\phi_N$', fontsize=10, ha='left', weight='bold',
+        bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
 
-# South face flux
-south_fy = cell_y
-south_fx = cx
-ax.annotate('', xy=(south_fx, south_fy - 0.08), xytext=(south_fx, south_fy), arrowprops={**face_props, 'arrowstyle': '<-'})
-ax.text(south_fx + 0.15, south_fy - 0.12, r'$\phi_S = v_S \cdot n_S \cdot A_S$', fontsize=10, ha='left', va='top',
-        bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.6))
+# South flux (between S and P)
+south_face_y = cy - cell_size/2
+ax.annotate('', xy=(cx, south_face_y - 0.04), xytext=(cx, south_face_y + 0.04),
+            arrowprops={**arrow_props, 'arrowstyle': '<-'})
+ax.text(cx - 0.10, south_face_y - 0.08, r'$\phi_S$', fontsize=10, ha='right', weight='bold',
+        bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
 
 # Conservation equation annotation
-conservation_text = (
-    r'Conservation: $\sum_f \phi_f = $ (momentum in cell) $= $ (source term)',
-    'What flows out one cell flows into its neighbor'
-)
-ax.text(0.5, -0.15, conservation_text[0] + '\n' + conservation_text[1], fontsize=11, weight='bold', ha='center',
-        bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+conservation_eq = r'Conservation: $\phi_E + \phi_W + \phi_N + \phi_S = 0$ (steady-state)'
+ax.text(0.5, 0.02, conservation_eq, fontsize=10, weight='bold', ha='center',
+        bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.9))
 
-ax.set_xlim(-0.3, 1.3)
-ax.set_ylim(-0.35, 1.15)
+ax.set_xlim(-0.05, 1.05)
+ax.set_ylim(-0.05, 1.05)
 ax.set_aspect('equal')
-ax.set_xlabel('x', fontsize=12, weight='bold')
-ax.set_ylabel('y', fontsize=12, weight='bold')
-ax.set_title('Finite-Volume: Single Cell with Fluxes\nCell P exchanges momentum with 4 neighbors via face fluxes',
-             fontsize=14, weight='bold', pad=20)
+ax.set_title('Flux Calculation: Cell P Exchanges Momentum with 4 Adjacent Neighbors',
+             fontsize=12, weight='bold', pad=15)
 ax.grid(False)
 ax.set_xticks([])
 ax.set_yticks([])
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.spines['left'].set_visible(False)
 
 plt.tight_layout()
-plt.savefig('/Users/phe/Documents/Sites/DAFoam.github.io/images/cfd_single_cell_flux.png', dpi=300, bbox_inches='tight')
-print("Saved: cfd_single_cell_flux.png")
-plt.close()
-
-# ============================================
-# Diagram 3: Velocity Field and Boundary Conditions
-# ============================================
-fig, ax = plt.subplots(1, 1, figsize=(11, 10))
-
-# Create velocity field using analytical approximation
-nx, ny = 6, 6
-x = np.linspace(0.1, 0.9, nx)
-y = np.linspace(0.1, 0.9, ny)
-X, Y = np.meshgrid(x, y)
-
-# Simple analytic-like velocity field for lid-driven cavity
-# Near top: rightward; near bottom: leftward; circulation pattern
-U = np.zeros_like(X)
-V = np.zeros_like(X)
-for i in range(nx):
-    for j in range(ny):
-        # Distance from top (where lid is)
-        dist_from_top = 1.0 - Y[j, i]
-        dist_from_bottom = Y[j, i]
-
-        # Shear-like profile
-        U[j, i] = 2 * dist_from_top * (1 - dist_from_top)  # Zero at top and bottom, max in middle
-        # Circulation (rough)
-        V[j, i] = 0.3 * (X[j, i] - 0.5) * np.sin(np.pi * Y[j, i])
-
-# Draw domain
-ax.add_patch(Rectangle((0, 0), 1, 1, linewidth=3, edgecolor='black', facecolor='none'))
-
-# Draw velocity vectors
-scale_factor = 0.08
-ax.quiver(X, Y, U, V, np.sqrt(U**2 + V**2), cmap='RdYlBu_r', scale=1/scale_factor,
-          width=0.003, headwidth=4, headlength=5)
-
-# Add boundary condition labels with arrows
-ax.arrow(0.2, 1.02, 0.15, 0, head_width=0.03, head_length=0.05, fc='red', ec='red', linewidth=2.5)
-ax.text(0.275, 1.08, 'u = 1, v = 0 (moving lid)', fontsize=11, weight='bold', ha='center',
-        bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.8))
-
-ax.text(-0.08, 0.5, 'u = 0\nv = 0\n(no-slip)', fontsize=10, weight='bold', ha='right', va='center',
-        bbox=dict(boxstyle='round', facecolor='lightcyan', alpha=0.8))
-
-ax.text(1.08, 0.5, 'u = 0\nv = 0\n(no-slip)', fontsize=10, weight='bold', ha='left', va='center',
-        bbox=dict(boxstyle='round', facecolor='lightcyan', alpha=0.8))
-
-ax.text(0.5, -0.08, 'u = 0, v = 0 (stationary)', fontsize=11, weight='bold', ha='center',
-        bbox=dict(boxstyle='round', facecolor='lightcyan', alpha=0.8))
-
-# Title and labels
-ax.set_xlim(-0.2, 1.2)
-ax.set_ylim(-0.2, 1.25)
-ax.set_aspect('equal')
-ax.set_xlabel('x', fontsize=12, weight='bold')
-ax.set_ylabel('y', fontsize=12, weight='bold')
-ax.set_title('2D Lid-Driven Cavity: Velocity Field and Boundary Conditions\n(Arrows show velocity magnitude and direction at cell centers)',
-             fontsize=13, weight='bold', pad=20)
-ax.set_xticks([0, 0.5, 1])
-ax.set_yticks([0, 0.5, 1])
-ax.grid(True, alpha=0.3)
-
-# Add colorbar
-sm = plt.cm.ScalarMappable(cmap='RdYlBu_r', norm=plt.Normalize(vmin=0, vmax=np.max(np.sqrt(U**2 + V**2))))
-sm.set_array([])
-cbar = plt.colorbar(sm, ax=ax, pad=0.02)
-cbar.set_label('Velocity magnitude |u|', fontsize=11, weight='bold')
-
-plt.tight_layout()
-plt.savefig('/Users/phe/Documents/Sites/DAFoam.github.io/images/cfd_velocity_field.png', dpi=300, bbox_inches='tight')
-print("Saved: cfd_velocity_field.png")
+plt.savefig('cfd_flux_calculation.png', dpi=300, bbox_inches='tight')
+print("Saved: cfd_flux_calculation.png")
 plt.close()
 
 print("\nAll diagrams generated successfully!")
