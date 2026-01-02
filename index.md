@@ -10,7 +10,7 @@ DAFoam (Discrete Adjoint for OpenFOAM) is an open, versatile, and efficient plat
 
 - **High-Fidelity Multidisciplinary Design Optimization**. (1) Adjoint-based [aerodynamic](https://dafoam.github.io/tutorials-aero-naca0012-incompressible.html), [aero-structural](https://dafoam.github.io/tutorials-aerostruct-mach-wing.html), and [aero-thermal](https://dafoam.github.io/tutorials-heat-ubend-circular.html) optimization using high-fidelity CFD and FEA solvers, (2) Shape, [topology](https://dafoam.github.io/tutorials-topo-channel-cht.html), and operating-condition optimization with hundreds of design variables and constraints, and (3) [AI-agent](https://dafoam.github.io/ai-agent-overview.html) enabled, fully conversational design workflows, including geometry generation, meshing, simulations, and post-processing.
 
-- **Machine Learning and Data Assimilation**. (1) RANS turbulence model defect corrections using field inversion machine learning ([FIML](https://dafoam.github.io/tutorials-fieldinversion-ramp.html)), (2) [Data assimilation](https://dafoam.github.io/tutorials-da-naca0012.html) to infer geometries, initial/boundary conditions, and model parameters/terms, and (3) Accurate surrogate modeling for uncertainty quantification and digital twins.
+- **Machine Learning and Data Assimilation**. (1) Data-driven augmentation of RANS turbulence models using field inversion machine learning ([FIML](https://dafoam.github.io/tutorials-fieldinversion-ramp.html)), (2) [Data assimilation](https://dafoam.github.io/tutorials-da-naca0012.html) to infer geometries, initial/boundary conditions, and model parameters/terms, and (3) Accurate surrogate modeling for uncertainty quantification and digital twins.
 
 - **Open, Extensible, and Vibrant Ecosystem**. (1) A modular architecture to add customized disciplines/solvers, design variables, objective functions, and constraints, (2) Long-term community support through the [Discussions Forum](https://github.com/mdolab/dafoam/discussions) and one-on-one meetings for new user and developer onboarding, and (3) Comprehensive documentation and [tutorials](https://dafoam.github.io/tutorials-overview.html), hands-on [workshops](https://dafoam.github.io/workshops.html), and user and developer [guides](https://dafoam.github.io/user-guide-overview.html).
 
@@ -26,8 +26,6 @@ DAFoam source code is available on [GitHub](https://github.com/mdolab/dafoam), a
         <li data-target="#carousel" data-slide-to="1"></li>
         <li data-target="#carousel" data-slide-to="2"></li>
         <li data-target="#carousel" data-slide-to="3"></li>
-        <li data-target="#carousel" data-slide-to="4"></li>
-        <li data-target="#carousel" data-slide-to="5"></li>
     </ol>
 
     <!-- Items -->
