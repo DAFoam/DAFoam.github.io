@@ -117,7 +117,7 @@ The key insight: the **same face flux** appears in both adjacent cells with **op
 
 **Flux visualization:**
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/developer_guide/cfd_flux_calculation.png" style="width:600px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/developer_guide/cfd_flux_calculation.png" style="width:400px !important;" />
 
 *Figure 2: Flux Exchange Between Adjacent Cells. Cell P (yellow, center) exchanges momentum with four neighbors (E, W, N, S) through shared faces. Arrows show the direction of flux at each face. The conservation principle states that the sum of all fluxes must balance: $\phi_E + \phi_W + \phi_N + \phi_S = 0$ in steady state, ensuring what flows out equals what flows in.*
 
@@ -215,6 +215,24 @@ In OpenFOAM, every application starts by initializing two core objects: **runTim
 - Handles time-dependent execution (even for steady-state solvers)
 - Controls output directories and time folders
 
+**Common runTime properties:**
+
+```cpp
+// Access current time value
+scalar currentTime = runTime.value();  // Returns current simulation time
+
+// Access time step size
+scalar deltaT = runTime.deltaT().value();  // Returns time step Δt
+
+// Access end time (simulation termination criterion)
+scalar endTime = runTime.endTime().value();  // Returns target end time
+
+// Increment time and check
+runTime++;  // Increments time by deltaT
+```
+
+**In CFD context:** For steady-state solvers (like lid-driven cavity), `runTime` essentially manages iteration loops even though there is no physical time. Each "time step" is really an iteration.
+
 
 **mesh object:**
 - Created by calling `#include "fvMesh.H"` in an OpenFOAM solver, `mesh` is a `fvMesh` object
@@ -224,28 +242,52 @@ In OpenFOAM, every application starts by initializing two core objects: **runTim
 
 **Key concept:** The `mesh` object encapsulates the entire finite-volume mesh structure from our general CFD discussion (cells, faces, boundary conditions, etc.). It is the central data structure that OpenFOAM uses to manage all spatial discretization.
 
+**Common mesh properties and geometry data:**
+
+```cpp
+// Number of cells and faces
+label nCells = mesh.nCells();           // Total number of internal cells
+label nFaces = mesh.nInternalFaces();   // Total number of internal faces
+label nBoundaryFaces = mesh.nBoundaryFaces();  // Total number of boundary faces
+
+// Cell volumes (corresponds to A_P in CFD)
+const Foam::scalarField& V = mesh.V();  // V[cellI] = cell volume (area in 2D)
+
+// Face area vectors (corresponds to L_f · n_f in CFD)
+const Foam::surfaceVectorField& Sf = mesh.Sf();  // Sf[faceI] = face area vector
+
+// Cell centers (corresponds to (x_c, y_c) in CFD)
+const Foam::vectorField& C = mesh.C();  // C[cellI] = (x_c, y_c, z_c)
+
+// Face centers
+const Foam::vectorField& Cf = mesh.Cf();  // Cf[faceI] = (x_f, y_f, z_f)
+
+// Mesh vertices (corner points of cells)
+const Foam::pointField& points = mesh.points();  // points[pointI] = (x, y, z) coordinates
+label nPoints = mesh.nPoints();                  // Total number of mesh vertices
+
+// Example: Loop over all cells and access their properties
+for (label cellI = 0; cellI < mesh.nCells(); ++cellI) {
+    scalar cellVolume = mesh.V()[cellI];           // Cell volume
+    vector cellCenter = mesh.C()[cellI];           // Cell center position
+    // Use these in your discretization...
+}
+```
+
+**CFD equivalence:**
+- `mesh.V()` = Cell area $A_P$
+- `mesh.Sf()` = Face area vector $L_f \cdot \mathbf{n}_f$
+- `mesh.C()` = Cell center $(x_c, y_c)$
+
 ### Flow variables: storing data on the mesh
 
 In OpenFOAM, all flow variables (velocity **U**, pressure **p**, etc.) are **field objects** stored directly on the mesh. Each field is tied to the mesh and knows about all cells, internal faces, and boundary faces.
 
 **Creating velocity and pressure fields:**
 
-```cpp
-Foam::volVectorField U(
-    Foam::IOobject("U", runTime.timeName(), mesh,
-                   Foam::IOobject::MUST_READ, Foam::IOobject::AUTO_WRITE),
-    mesh
-);
-
-Foam::volScalarField p(
-    Foam::IOobject("p", runTime.timeName(), mesh,
-                   Foam::IOobject::MUST_READ, Foam::IOobject::AUTO_WRITE),
-    mesh
-);
-```
-
-- **`volVectorField`**: A field of vectors (3D) defined at cell centers (volume-averaged)
-- **`volScalarField`**: A field of scalars defined at cell centers
+- All the field variables are created by calling `#include "createFields.H"` in an OpenFOAM solver.
+- `U` is a `volVectorField` object: A field of vectors (3D) defined at cell centers (volume-averaged)
+- `p` is a `volScalarField` object: A field of scalars defined at cell centers
 - Each field has **two components**: internal field + boundary field
 
 ### Understanding field components
@@ -254,82 +296,80 @@ Foam::volScalarField p(
 
 Contains the velocity values at **all internal cell centers** (cells not on the boundary).
 
-```cpp
-Foam::scalarField& Uint = U.ref().internalFieldRef();  // Access internal field
-// Equivalent to: u_P, u_E, u_W, u_N, u_S, ... for all cells in our discretization example
-```
-
 **In CFD terms:** This is the storage for all $u_P$ values for every cell $P$ in the domain.
 
 - Size: equal to the number of internal cells (`mesh.nCells()`)
 - Ordered sequentially (cell 0, 1, 2, ...)
+- Each value is a **vector** $(u, v, w)$ storing the three velocity components at that cell center
 - These are the **primary unknowns** solved in the momentum equations
+
+Example accessing internal field data:
+
+```cpp
+// Access the internal field (all internal cell values)
+// Access velocity at a specific cell (e.g., cellI = 100)
+label cellI = 100;
+// Get velocity vector (u, v, w) at cell 100. U[cellI] is equivalent to U.internalField()[cellI]
+vector velocityAtCell = U[cellI];     
+scalar Ux = velocityAtCell[0];           // x-component of velocity
+scalar Uy = velocityAtCell[1];           // y-component of velocity
+
+// Get the cell center coordinates for this cell
+vector cellCenterCoord = mesh.C()[cellI];          // Get (x_c, y_c, z_c) for cell 100
+scalar cx = cellCenterCoord[0];               // x-coordinate of cell center
+scalar cy = cellCenterCoord[1];               // y-coordinate of cell center
+
+// Get cell volume for this cell
+scalar cellVol = mesh.V()[cellI];                  // Get cell area (in 2D) or volume (in 3D)
+```
+
 
 #### `U.boundaryField()` - Boundary condition values
 
 Contains velocity values at **all boundary cell centers** and stores the boundary condition type (Dirichlet, Neumann, cyclic, etc.).
 
-```cpp
-Foam::fvPatchVectorField& Upatch = U.boundaryFieldRef()[patchID];
-// Example: Dirichlet BC on "lid" patch: U = (1, 0, 0)
-```
-
 **In CFD terms:** These are the **Dirichlet boundary conditions** (no-slip walls, moving lid) specified on the domain boundaries from our lid-driven cavity example.
 
 **Structure:**
 - Multiple patches (e.g., "bottom", "left", "right", "top")
-- Each patch stores BC type and values
+- Each patch stores BC type and values at all boundary faces
 - Example: moving lid patch has `U = (1, 0, 0)` (moving at velocity 1 in x-direction)
+- Boundary values can be accessed similarly to internal values, indexed by face number on that patch
 
-### Mesh geometry data
-
-OpenFOAM provides access to mesh geometric properties through the `fvMesh` object. These directly correspond to our CFD discretization concepts:
-
-#### `mesh.V()` - Cell volumes
-
-Returns a list of volumes for all cells.
+Example accessing boundary field data:
 
 ```cpp
-const Foam::scalarField& V = mesh.V();  // V[cellI] = cell volume
+// Get patch names and loop through all boundary patches
+const Foam::polyBoundaryMesh& patches = mesh.boundaryMesh();
+
+// Find and access a specific patch (e.g., "lid" patch for the moving lid)
+label patchI = patches.findPatchID("lid");
+
+// if lidPatchID >=0, the name "lid" is found in constant/polyMesh/boundary, 
+// otherwise lidPatchID = -1 (there is no "lid" patch)
+if (patchI >= 0) {
+    // Access the velocity field on this patch
+    const Foam::fvPatchVectorField& UPatch = U.boundaryField()[patchI];
+
+    // Get number of boundary faces on this patch
+    label nBoundaryFaces = UPatch.size();
+
+    // Access velocity at a specific boundary face (e.g., faceI = 10)
+    label faceI = 10;
+    vector velocityAtBoundaryFace = UPatch[faceI];  // Get velocity at boundary face
+    scalar Ux_bc = velocityAtBoundaryFace[0];       // x-component
+    scalar Uy_bc = velocityAtBoundaryFace[1];       // y-component
+
+    // Get face center position on boundary
+    vector faceCenterCoord = mesh.Cf().boundaryField()[patchI][faceI];
+    scalar xf = faceCenterCoord[0];
+    scalar yf = faceCenterCoord[1];
+
+    // Get face area vector on boundary
+    vector faceAreaVec = mesh.Sf().boundaryField()[patchI][faceI];
+    scalar faceArea = mag(faceAreaVec);
+}
 ```
-
-**Equivalence:** $A_P$ in our CFD formulation - the area of each cell (in 2D, the "volume" is actually area).
-
-- Size: `mesh.nCells()` (one value per internal cell)
-- Used in finite-volume integration: $\int_V dV = A_P$
-
-#### `mesh.Sf()` - Face area vectors
-
-Returns the **area vector** for each face (magnitude = face area, direction = outward normal).
-
-```cpp
-const Foam::surfaceVectorField& Sf = mesh.Sf();  // Sf[faceI] = face area vector
-```
-
-**Equivalence:** $L_f \cdot \mathbf{n}_f$ in our CFD - the face area multiplied by the outward unit normal.
-
-**Structure:**
-- For internal faces: outward normal relative to the owner cell
-- For boundary faces: outward normal from the domain
-- **Sign matters:** used to compute fluxes across faces
-
-**Example:** In 2D lid-driven cavity:
-- East face of cell $P$: `Sf_E = (L_E, 0)` pointing right
-- West face of cell $P$: `Sf_W = (-L_W, 0)` pointing left
-
-#### `mesh.C()` - Cell centers
-
-Returns the coordinates of the geometric center of each cell.
-
-```cpp
-const Foam::vectorField& C = mesh.C();  // C[cellI] = (x_c, y_c, z_c)
-```
-
-**Equivalence:** $(x_c, y_c)$ in our CFD - the position where velocity and pressure are stored.
-
-- Size: `mesh.nCells()`
-- Used for interpolation, gradient computation, and flux calculations
-- Ordered same as `U.internalField()` (cell 0, 1, 2, ...)
 
 ### Connecting mesh data to finite-volume discretization
 
@@ -354,6 +394,79 @@ When computing the discrete momentum equation for a cell, OpenFOAM internally:
 | Face area & normal $L_f \mathbf{n}_f$ | `mesh.Sf()[faceI]` |
 | Cell center position $(x_c, y_c)$ | `mesh.C()[cellI]` |
 | Discrete momentum equation assembly | Handled by `fvMatrix` (Finite-Volume Matrix) |
+
+### Building and solving discretized equations: fvMatrix and solvers
+
+OpenFOAM abstracts the finite-volume discretization process through the **fvMatrix** class, which represents a discretized linear system in the form **Ax = b**. Rather than manually assembling the matrix, OpenFOAM provides high-level operators that automatically construct the discrete equations.
+
+**Key operators for equation assembly:**
+
+```cpp
+// Example: Assemble the momentum equation for steady-state cavity flow
+// ddt(rho, U)       → time derivative (zero for steady-state)
+// div(phi, U)       → convective (advection) term: ∇·(uU)
+// laplacian(mu, U)  → diffusive (viscous) term: ∇²u
+// grad(p)           → pressure gradient
+
+volVectorField& U = ...;           // Velocity field
+volScalarField& p = ...;           // Pressure field
+surfaceScalarField& phi = ...;     // Face flux: phi = U·Sf
+scalar rho = 1.0;                  // Density
+scalar mu = 1.0;                   // Dynamic viscosity
+
+// Assemble the momentum equation
+fvVectorMatrix UEqn
+(
+    fvm::ddt(rho, U)               // Time derivative: ∂(ρU)/∂t
+  + fvm::div(phi, U)               // Convection: ∇·(ρUU)
+  - fvm::laplacian(mu, U)          // Diffusion (viscous): μ∇²U
+);
+
+// Add pressure gradient source (explicit)
+UEqn -= fvc::grad(p);              // fvc::grad() is explicit (not part of matrix)
+
+// Solve the momentum equation: UEqn.A() * U = UEqn.H()
+// This is equivalent to: a_P * u_P = sum(a_neighbor * u_neighbor) + source
+UEqn.solve();                       // Solves the linear system Ax=b internally
+```
+
+**Understanding fvMatrix operators:**
+
+- **`fvm::` (implicit operators)** - Add terms to the left-hand side matrix (A):
+  - `fvm::ddt(rho, U)` - Time derivative, creates diagonal matrix term
+  - `fvm::div(phi, U)` - Convective fluxes, couples with neighbors
+  - `fvm::laplacian(mu, U)` - Diffusive fluxes, couples with neighbors
+  - Result: Contributes to **a_P** (diagonal) and **a_E, a_W, a_N, a_S** (off-diagonal)
+
+- **`fvc::` (explicit operators)** - Compute values at current time step (right-hand side b):
+  - `fvc::grad(p)` - Pressure gradient, treated as known source term
+  - `fvc::div(flux)` - Explicit divergence, no matrix coupling
+  - Result: Contributes to **b_P** (source vector)
+
+**The fvMatrix structure internally represents:**
+
+After assembly, fvMatrix stores:
+    - Diagonal coefficient: a_P = diagonal()
+    - Off-diagonal coefficients: [a_E, a_W, a_N, a_S, ...]
+    - Right-hand side source: b_P = source()
+    - Boundary field contributions
+
+When you call UEqn.solve(), OpenFOAM:
+    1. Constructs the sparse matrix A from diagonal and off-diagonal coefficients
+    2. Constructs the right-hand side vector b from source terms
+    3. Applies boundary conditions to modify A and b
+    4. Calls a linear solver (BiCGStab, CG, GMRES, etc. with preconditioner)
+    5. Returns the solution back to U.internalField()
+
+**CFD equivalence - From theory to code:**
+
+| CFD Discretization | OpenFOAM Code |
+|---|---|
+| Discrete equation: $a_P u_P = \sum a_{\text{neighbor}} u_{\text{neighbor}} + b_P$ | `fvMatrix UEqn(...)` |
+| Implicit (matrix) terms: $a_P$, $a_E$, etc. | `fvm::div(...)`, `fvm::laplacian(...)` |
+| Explicit (source) terms: $b_P$ | `fvc::grad(p)` or other source |
+| Linear solve: $Ax = b$ | `UEqn.solve()` |
+| Boundary condition enforcement | `UEqn.boundaryManipulate(...)` (internal) |
 
 ### Summary: The data flow in OpenFOAM
 

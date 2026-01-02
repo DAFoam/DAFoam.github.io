@@ -132,8 +132,8 @@ rect_n = Rectangle((nx - cell_size/2, ny - cell_size/2), cell_size, cell_size,
                     linewidth=2, edgecolor='blue', facecolor='lightblue', alpha=0.4)
 ax.add_patch(rect_n)
 ax.plot(nx, ny, 'bs', markersize=12)
-ax.text(nx, ny + 0.02, 'N', fontsize=16, weight='bold', ha='center', va='bottom')
-ax.text(nx - 0.05, ny, r'$u_N, v_N, p_N$', fontsize=14, ha='right', va='center')
+ax.text(nx, ny + 0.02, 'N', fontsize=18, weight='bold', ha='center', va='bottom')
+ax.text(nx - 0.05, ny, r'$u_N, v_N, p_N$', fontsize=18, ha='right', va='center')
 
 # South cell
 sx, sy = cx, cy - cell_spacing
@@ -141,8 +141,8 @@ rect_s = Rectangle((sx - cell_size/2, sy - cell_size/2), cell_size, cell_size,
                     linewidth=2, edgecolor='blue', facecolor='lightblue', alpha=0.4)
 ax.add_patch(rect_s)
 ax.plot(sx, sy, 'bs', markersize=12)
-ax.text(sx, sy - 0.02, 'S', fontsize=16, weight='bold', ha='center', va='top')
-ax.text(sx - 0.05, sy, r'$u_S, v_S, p_S$', fontsize=14, ha='right', va='center')
+ax.text(sx, sy - 0.02, 'S', fontsize=18, weight='bold', ha='center', va='top')
+ax.text(sx - 0.05, sy, r'$u_S, v_S, p_S$', fontsize=18, ha='right', va='center')
 
 # East cell
 ex, ey = cx + cell_spacing, cy
@@ -150,8 +150,8 @@ rect_e = Rectangle((ex - cell_size/2, ey - cell_size/2), cell_size, cell_size,
                     linewidth=2, edgecolor='blue', facecolor='lightblue', alpha=0.4)
 ax.add_patch(rect_e)
 ax.plot(ex, ey, 'bs', markersize=12)
-ax.text(ex + 0.02, ey, 'E', fontsize=16, weight='bold', ha='left', va='center')
-ax.text(ex, ey + 0.05, r'$u_E, v_E, p_E$', fontsize=14, ha='center', va='bottom')
+ax.text(ex + 0.02, ey, 'E', fontsize=18, weight='bold', ha='left', va='center')
+ax.text(ex, ey + 0.05, r'$u_E, v_E, p_E$', fontsize=18, ha='center', va='bottom')
 
 # West cell
 wx, wy = cx - cell_spacing, cy
@@ -159,16 +159,16 @@ rect_w = Rectangle((wx - cell_size/2, wy - cell_size/2), cell_size, cell_size,
                     linewidth=2, edgecolor='blue', facecolor='lightblue', alpha=0.4)
 ax.add_patch(rect_w)
 ax.plot(wx, wy, 'bs', markersize=12)
-ax.text(wx - 0.02, wy, 'W', fontsize=16, weight='bold', ha='right', va='center')
-ax.text(wx, wy + 0.05, r'$u_W, v_W, p_W$', fontsize=14, ha='center', va='bottom')
+ax.text(wx - 0.02, wy, 'W', fontsize=18, weight='bold', ha='right', va='center')
+ax.text(wx, wy + 0.05, r'$u_W, v_W, p_W$', fontsize=18, ha='center', va='bottom')
 
 # Central cell P (highlighted)
 rect_p = Rectangle((cx - cell_size/2, cy - cell_size/2), cell_size, cell_size,
                     linewidth=3, edgecolor='red', facecolor='yellow', alpha=0.5)
 ax.add_patch(rect_p)
 ax.plot(cx, cy, 'ro', markersize=14)
-ax.text(cx, cy + 0.02, r'$P$', fontsize=14, weight='bold', ha='center', va='bottom', color='red')
-ax.text(cx, cy - 0.05, r'$u_P, v_P, p_P$', fontsize=14, ha='center', va='top', weight='bold')
+ax.text(cx, cy + 0.02, r'$P$', fontsize=18, weight='bold', ha='center', va='bottom', color='red')
+ax.text(cx, cy - 0.05, r'$u_P, v_P, p_P$', fontsize=18, ha='center', va='top', weight='bold')
 
 # Draw flux arrows connecting cells through faces
 arrow_props = dict(arrowstyle='->', lw=2.5, color='darkgreen', mutation_scale=25)
@@ -177,41 +177,41 @@ arrow_props = dict(arrowstyle='->', lw=2.5, color='darkgreen', mutation_scale=25
 east_mid = cx + (cell_size/2 + (cell_spacing - cell_size/2)) / 2
 ax.annotate('', xy=(east_mid + 0.05, cy), xytext=(east_mid - 0.05, cy),
             arrowprops=arrow_props)
-ax.text(east_mid, cy + 0.02, r'$\phi_E = u_E \cdot L_E$', fontsize=14, ha='center',
+ax.text(east_mid, cy + 0.02, r'$\phi_E = u_E \cdot L_E$', fontsize=18, ha='center',
         weight='bold', bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
 
 # West flux
 west_mid = cx - (cell_size/2 + (cell_spacing - cell_size/2)) / 2
 ax.annotate('', xy=(west_mid - 0.05, cy), xytext=(west_mid + 0.05, cy),
             arrowprops={**arrow_props, 'arrowstyle': '<-'})
-ax.text(west_mid, cy + 0.02, r'$\phi_W = u_W \cdot L_W$', fontsize=14, ha='center',
+ax.text(west_mid, cy + 0.02, r'$\phi_W = u_W \cdot L_W$', fontsize=18, ha='center',
         weight='bold', bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
 
 # North flux
 north_mid = cy + (cell_size/2 + (cell_spacing - cell_size/2)) / 2
 ax.annotate('', xy=(cx, north_mid + 0.05), xytext=(cx, north_mid - 0.05),
             arrowprops=arrow_props)
-ax.text(cx + 0., north_mid, r'$\phi_N = v_N \cdot L_N$', fontsize=14, ha='left',
+ax.text(cx + 0., north_mid, r'$\phi_N = v_N \cdot L_N$', fontsize=18, ha='left',
         weight='bold', bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
 
 # South flux
 south_mid = cy - (cell_size/2 + (cell_spacing - cell_size/2)) / 2
 ax.annotate('', xy=(cx, south_mid - 0.05), xytext=(cx, south_mid + 0.05),
             arrowprops={**arrow_props, 'arrowstyle': '<-'})
-ax.text(cx - 0., south_mid, r'$\phi_S = v_S \cdot L_S$', fontsize=14, ha='left',
+ax.text(cx - 0., south_mid, r'$\phi_S = v_S \cdot L_S$', fontsize=18, ha='left',
         weight='bold', bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.8))
 
 # Add conservation equation at bottom
 conservation_eq = (r'Conservation: $\phi_E + \phi_W + \phi_N + \phi_S = 0$ (steady-state)',
                    'Flux balance ensures momentum conservation across cell faces')
-ax.text(0.5, 0.04, conservation_eq[0] + '\n' + conservation_eq[1], fontsize=14, ha='center',
+ax.text(0.5, 0.04, conservation_eq[0] + '\n' + conservation_eq[1], fontsize=18, ha='center',
         bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.9))
 
 ax.set_xlim(0.05, 0.95)
 ax.set_ylim(0.02, 0.98)
 ax.set_aspect('equal')
 ax.set_title('Flux Calculation: Discrete Conservation with Cell Layout (N, E, P, W, S)',
-             fontsize=16, weight='bold', pad=15)
+             fontsize=18, weight='bold', pad=15)
 ax.grid(False)
 ax.set_xticks([])
 ax.set_yticks([])
