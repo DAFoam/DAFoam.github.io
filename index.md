@@ -40,7 +40,10 @@ DAFoam source code is available on [GitHub](https://github.com/mdolab/dafoam), a
         </div>
         <div class="item">
             <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/slider3.png" alt="Slide 4" />
-        </div>   
+        </div>
+        <div class="item">
+            <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/slider4.png" alt="Slide 4" />
+        </div>
     </div>
 </div>
 
