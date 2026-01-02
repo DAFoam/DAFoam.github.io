@@ -123,7 +123,7 @@ The key insight: the **same face flux** appears in both adjacent cells with **op
 
 ---
 
-## #3) Turning PDEs into algebra: fluxes, interpolation, and linear systems (2D)
+### 3) Turning PDEs into algebra: fluxes, interpolation, and linear systems (2D)
 
 **Face values and interpolation (2D example)**
 
@@ -140,7 +140,7 @@ This is a simple **linear interpolation** (second-order accurate on uniform grid
 
 **For the diffusion terms** (viscous terms like $\mu \frac{\partial^2 u}{\partial x^2}$):
 - We compute gradients using **central differences** between neighboring cell centers
-- Example: $\frac{\partial u}{\partial x}\big|_{\text{east face}} \approx \frac{u_E - u_P}{\Delta x}$ where $\Delta x$ is the distance between cell centers
+- Example: $\frac{\partial u}{\partial x}\bigg|_{\text{east face}} \approx \frac{u_E - u_P}{\Delta x}$ where $\Delta x$ is the distance between cell centers
 
 **Discrete momentum equations in 2D (cell P)**
 
@@ -215,7 +215,8 @@ In OpenFOAM, every application starts by initializing two core objects: **runTim
 - Handles time-dependent execution (even for steady-state solvers)
 - Controls output directories and time folders
 
-**Common runTime properties:**
+<details>
+<summary><b>Common runTime properties (click to expand)</b></summary>
 
 ```cpp
 // Access current time value
@@ -231,6 +232,8 @@ scalar endTime = runTime.endTime().value();  // Returns target end time
 runTime++;  // Increments time by deltaT
 ```
 
+</details>
+
 **In CFD context:** For steady-state solvers (like lid-driven cavity), `runTime` essentially manages iteration loops even though there is no physical time. Each "time step" is really an iteration.
 
 
@@ -242,7 +245,8 @@ runTime++;  // Increments time by deltaT
 
 **Key concept:** The `mesh` object encapsulates the entire finite-volume mesh structure from our general CFD discussion (cells, faces, boundary conditions, etc.). It is the central data structure that OpenFOAM uses to manage all spatial discretization.
 
-**Common mesh properties and geometry data:**
+<details>
+<summary><b>Common mesh properties and geometry data (click to expand)</b></summary>
 
 ```cpp
 // Number of cells and faces
@@ -274,6 +278,8 @@ for (label cellI = 0; cellI < mesh.nCells(); ++cellI) {
 }
 ```
 
+</details>
+
 **CFD equivalence:**
 - `mesh.V()` = Cell area $A_P$
 - `mesh.Sf()` = Face area vector $L_f \cdot \mathbf{n}_f$
@@ -303,7 +309,8 @@ Contains the velocity values at **all internal cell centers** (cells not on the 
 - Each value is a **vector** $(u, v, w)$ storing the three velocity components at that cell center
 - These are the **primary unknowns** solved in the momentum equations
 
-Example accessing internal field data:
+<details>
+<summary><b>Example accessing internal field data (click to expand)</b></summary>
 
 ```cpp
 // Access the internal field (all internal cell values)
@@ -323,6 +330,7 @@ scalar cy = cellCenterCoord[1];               // y-coordinate of cell center
 scalar cellVol = mesh.V()[cellI];                  // Get cell area (in 2D) or volume (in 3D)
 ```
 
+</details>
 
 #### `U.boundaryField()` - Boundary condition values
 
@@ -336,7 +344,8 @@ Contains velocity values at **all boundary cell centers** and stores the boundar
 - Example: moving lid patch has `U = (1, 0, 0)` (moving at velocity 1 in x-direction)
 - Boundary values can be accessed similarly to internal values, indexed by face number on that patch
 
-Example accessing boundary field data:
+<details>
+<summary><b>Example accessing boundary field data (click to expand)</b></summary>
 
 ```cpp
 // Get patch names and loop through all boundary patches
@@ -370,6 +379,8 @@ if (patchI >= 0) {
     scalar faceArea = mag(faceAreaVec);
 }
 ```
+
+</details>
 
 ### Connecting mesh data to finite-volume discretization
 
