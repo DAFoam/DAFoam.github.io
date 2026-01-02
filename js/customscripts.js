@@ -20,6 +20,16 @@ $( document ).ready(function() {
      */
     anchors.add('h2,h3,h4,h5');
 
+    /**
+     * Prevent page jump when collapsing panels
+     * Replace href-based collapse with click handlers that don't scroll
+     */
+    $('a[data-toggle="collapse"]').on('click', function(e) {
+        e.preventDefault();
+        var target = $(this).attr('href');
+        $(target).collapse('toggle');
+    });
+
 });
 
 // needed for nav tabs on pages. See Formatting > Nav tabs for more details.
