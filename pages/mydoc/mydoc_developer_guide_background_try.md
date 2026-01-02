@@ -72,7 +72,10 @@ A mesh partitions the continuous 2D domain into small cells (control volumes). E
 
 - **Cell area** $A_P$: In 2D, this is the physical area of the cell. For a uniform quad mesh, all cells have the same area. For our example with $n_x \times n_y$ cells: $A_P = \frac{1}{n_x} \times \frac{1}{n_y}$.
 
-- **Face flux** $\phi_f$. The flow rate (volume per unit time per unit depth) crossing a face. Computed as $\phi_f = \mathbf{u}_f \cdot \mathbf{n}_f \cdot L_f$ where $\mathbf{u}_f = (u_f, v_f)$ is the velocity at the face, $\mathbf{n}_f = (n_{f,x}, n_{f,y})$ is the outward unit normal, and $L_f$ is the face length. In component form: $\phi_f = u_f n_{f,x} L_f + v_f n_{f,y} L_f$
+- **Face flux** `φ_f`: The flow rate (volume per unit time per unit depth) crossing a face. Computed as:
+  $$\phi_f = \mathbf{u}_f \cdot \mathbf{n}_f \cdot L_f$$
+  where $\mathbf{u}_f = (u_f, v_f)$ is the velocity at the face, $\mathbf{n}_f = (n_{f,x}, n_{f,y})$ is the outward unit normal, and $L_f$ is the face length. In component form:
+  $$\phi_f = u_f n_{f,x} L_f + v_f n_{f,y} L_f$$
 
 **Mesh visualization:**
 
@@ -215,12 +218,10 @@ In OpenFOAM, every application starts by initializing two core objects: **runTim
 - Handles time-dependent execution (even for steady-state solvers)
 - Controls output directories and time folders
 
-**Common runTime properties:**
-
 <div class="panel panel-default">
 <div class="panel-heading">
 <h4 class="panel-title">
-<a data-toggle="collapse" href="#runtimeProperties">Click to show code example</a>
+<a data-toggle="collapse" href="#runtimeProperties">Example of runTime properties (click to expand)</a>
 </h4>
 </div>
 <div id="runtimeProperties" class="panel-collapse collapse">
@@ -258,7 +259,7 @@ runTime++;  // Increments time by deltaT
 <div class="panel panel-default">
 <div class="panel-heading">
 <h4 class="panel-title">
-<a data-toggle="collapse" href="#meshProperties">Common mesh properties and geometry data (click to expand)</a>
+<a data-toggle="collapse" href="#meshProperties">Example of mesh properties and geometry data (click to expand)</a>
 </h4>
 </div>
 <div id="meshProperties" class="panel-collapse collapse">
@@ -449,12 +450,10 @@ When computing the discrete momentum equation for a cell, OpenFOAM internally:
 
 OpenFOAM abstracts the finite-volume discretization process through the **fvMatrix** class, which represents a discretized linear system in the form **Ax = b**. Rather than manually assembling the matrix, OpenFOAM provides high-level operators that automatically construct the discrete equations.
 
-**Key operators for equation assembly:**
-
 <div class="panel panel-default">
 <div class="panel-heading">
 <h4 class="panel-title">
-<a data-toggle="collapse" href="#operatorExample">Click to show code example</a>
+<a data-toggle="collapse" href="#operatorExample">Example of key operators for equation assembly (click to expand)</a>
 </h4>
 </div>
 <div id="operatorExample" class="panel-collapse collapse">
