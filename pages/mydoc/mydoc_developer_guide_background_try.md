@@ -70,6 +70,8 @@ A mesh partitions the continuous 2D domain into small cells (control volumes). E
 
 - **Mesh center (cell center)**: The geometric center point of a cell $(x_c, y_c)$, where we store the main unknowns: $u(x_c, y_c)$, $v(x_c, y_c)$, and $p(x_c, y_c)$.
 
+  **Note on storage arrangements:** This description assumes a **collocated grid**, where all variables (velocities and pressure) are stored at the same location (cell centers). An alternative approach is the **staggered grid**, where velocities are stored at face centers (naturally aligned with flux calculations) and pressure at cell centers. Staggered grids are common in production CFD codes because they provide better pressure-velocity decoupling and reduce numerical oscillations. The CFD implementation example at the end (Section 6) demonstrates a staggered grid approach for this reason.
+
 - **Cell area** $A_P$: In 2D, this is the physical area of the cell. For a uniform quad mesh, all cells have the same area. For our example with $n_x \times n_y$ cells: $A_P = \frac{1}{n_x} \times \frac{1}{n_y}$.
 
 - **Face flux** `φ_f`: The flow rate (volume per unit time per unit depth) crossing a face. Computed as:
@@ -205,6 +207,228 @@ A typical steady incompressible workflow (SIMPLE-like) looks like:
 5. Repeat until residuals and mass imbalance are below tolerances
 
 In production codes, each “solve” is a sparse linear solve (e.g., CG, BiCGStab, GMRES with preconditioning), and under-relaxation is often used for stability.
+
+### 5) Python code to solve the lid-driven cavity flow 
+
+Below is a complete Python implementation demonstrating the **projection method** for steady-state 2D lid-driven cavity flow. This code illustrates the core pressure-velocity coupling algorithm in action:
+
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#cfdCode">2D lid-driven cavity flow solver (click to expand)</a>
+</h4>
+</div>
+<div id="cfdCode" class="panel-collapse collapse">
+<div class="panel-body">
+
+```python
+import numpy as np
+
+def lid_driven_cavity_fv_projection(
+    nx=64, ny=64,
+    Re=200.0,
+    max_iter=5000,
+    dt=0.002,
+    poisson_iter=80,
+    tol_div=1e-6,
+    report_every=200
+):
+    """
+    2D incompressible laminar lid-driven cavity (steady solution via pseudo-time stepping).
+    Finite-volume projection method on a staggered grid:
+      - p at cell centers: (nx, ny)
+      - u at vertical faces: (nx+1, ny)  (x-velocity)
+      - v at horizontal faces: (nx, ny+1) (y-velocity)
+
+    Domain: [0,1]x[0,1], lid velocity u=1 at top boundary, no-slip elsewhere.
+    """
+
+    Lx, Ly = 1.0, 1.0
+    dx, dy = Lx/nx, Ly/ny
+
+    rho = 1.0
+    nu  = 1.0 / Re  # kinematic viscosity
+
+    # Staggered storage
+    p = np.zeros((nx, ny), dtype=float)
+    u = np.zeros((nx+1, ny), dtype=float)
+    v = np.zeros((nx, ny+1), dtype=float)
+
+    # Helper: enforce velocity boundary conditions (no-slip + moving lid)
+    def apply_bc(u, v):
+        # u at vertical faces: i=0 and i=nx are left/right walls => u=0
+        u[0, :]  = 0.0
+        u[-1, :] = 0.0
+        # bottom wall (y=0): u=0 at faces adjacent to bottom
+        u[:, 0]  = 0.0
+        # top lid (y=1): u=1 at faces adjacent to top
+        u[:, -1] = 1.0
+
+        # v at horizontal faces: j=0 and j=ny are bottom/top walls => v=0
+        v[:, 0]  = 0.0
+        v[:, -1] = 0.0
+        # left/right walls: v=0 at faces adjacent to left/right
+        v[0, :]  = 0.0
+        v[-1, :] = 0.0
+
+    apply_bc(u, v)
+
+    # Discrete divergence at cell centers from staggered u,v
+    def divergence(u, v):
+        # div at p-cells (i=0..nx-1, j=0..ny-1)
+        du = (u[1:, :] - u[:-1, :]) / dx
+        dv = (v[:, 1:] - v[:, :-1]) / dy
+        return du + dv
+
+    # Laplacians for u and v (simple 5-point on their respective grids)
+    def lap_u(u):
+        Lu = np.zeros_like(u)
+        # interior faces for u: i=1..nx-1, j=1..ny-2 (avoid boundaries)
+        Lu[1:-1, 1:-1] = (
+            (u[2:, 1:-1] - 2*u[1:-1, 1:-1] + u[:-2, 1:-1]) / dx**2 +
+            (u[1:-1, 2:]   - 2*u[1:-1, 1:-1] + u[1:-1, :-2]) / dy**2
+        )
+        return Lu
+
+    def lap_v(v):
+        Lv = np.zeros_like(v)
+        # interior faces for v: i=1..nx-2, j=1..ny-1
+        Lv[1:-1, 1:-1] = (
+            (v[2:, 1:-1] - 2*v[1:-1, 1:-1] + v[:-2, 1:-1]) / dx**2 +
+            (v[1:-1, 2:] - 2*v[1:-1, 1:-1] + v[1:-1, :-2]) / dy**2
+        )
+        return Lv
+
+    # Pressure gradients interpolated to u- and v-locations
+    def gradp_to_u(p):
+        # dp/dx at u-faces (nx+1, ny); interior faces i=1..nx-1
+        g = np.zeros((nx+1, ny))
+        g[1:-1, :] = (p[1:, :] - p[:-1, :]) / dx
+        return g
+
+    def gradp_to_v(p):
+        # dp/dy at v-faces (nx, ny+1); interior faces j=1..ny-1
+        g = np.zeros((nx, ny+1))
+        g[:, 1:-1] = (p[:, 1:] - p[:, :-1]) / dy
+        return g
+
+    # Build RHS for pressure Poisson: ∇²p = (rho/dt) * div(u*)
+    # Use simple Jacobi iterations for Poisson with Neumann-like behavior at boundaries (dp/dn=0)
+    def poisson_pressure(p, rhs):
+        pn = p.copy()
+        for _ in range(poisson_iter):
+            p_old = pn.copy()
+            pn[1:-1, 1:-1] = (
+                (p_old[2:, 1:-1] + p_old[:-2, 1:-1]) * dy**2 +
+                (p_old[1:-1, 2:] + p_old[1:-1, :-2]) * dx**2 -
+                rhs[1:-1, 1:-1] * dx**2 * dy**2
+            ) / (2*(dx**2 + dy**2))
+
+            # "Neumann" boundaries (zero normal gradient) via copying adjacent interior
+            pn[0, :]   = pn[1, :]
+            pn[-1, :]  = pn[-2, :]
+            pn[:, 0]   = pn[:, 1]
+            pn[:, -1]  = pn[:, -2]
+
+            # Fix gauge (pressure defined up to a constant)
+            pn[0, 0] = 0.0
+        return pn
+
+    for it in range(1, max_iter+1):
+        # --- Step 1: tentative velocity u*, v* (explicit convection omitted for simplicity) ---
+        # For CFD 101, we keep the core idea: diffusion + pressure projection.
+        # Adding convection is straightforward but lengthens the code.
+        u_star = u + dt * (nu * lap_u(u) - (1.0/rho) * gradp_to_u(p))
+        v_star = v + dt * (nu * lap_v(v) - (1.0/rho) * gradp_to_v(p))
+
+        apply_bc(u_star, v_star)
+
+        # --- Step 2: pressure Poisson from divergence of u* ---
+        div_star = divergence(u_star, v_star)
+        rhs = (rho/dt) * div_star
+        p_new = poisson_pressure(p, rhs)
+
+        # --- Step 3: correct velocities to be divergence-free ---
+        u_new = u_star - (dt/rho) * gradp_to_u(p_new)
+        v_new = v_star - (dt/rho) * gradp_to_v(p_new)
+        apply_bc(u_new, v_new)
+
+        # --- Convergence monitoring: max divergence ---
+        div_new = divergence(u_new, v_new)
+        max_div = np.max(np.abs(div_new))
+
+        u, v, p = u_new, v_new, p_new
+
+        if (it % report_every) == 0 or it == 1:
+            umax = np.max(u); vmax = np.max(v)
+            print(f"iter={it:5d}  max|div|={max_div:.3e}  umax={umax:.3f}  vmax={vmax:.3f}")
+
+        if max_div < tol_div:
+            print(f"Converged: iter={it}, max|div|={max_div:.3e}")
+            break
+
+    # Return fields (staggered) and a cell-centered velocity for convenience
+    uc = 0.5 * (u[1:, :] + u[:-1, :])
+    vc = 0.5 * (v[:, 1:] + v[:, :-1])
+    return uc, vc, p
+
+
+if __name__ == "__main__":
+    uc, vc, p = lid_driven_cavity_fv_projection(nx=64, ny=64, Re=200, max_iter=6000)
+
+    # Optional visualization
+    try:
+        import matplotlib.pyplot as plt
+        nx, ny = p.shape
+        x = (np.arange(nx) + 0.5) / nx
+        y = (np.arange(ny) + 0.5) / ny
+        X, Y = np.meshgrid(x, y, indexing="ij")
+
+        plt.figure()
+        plt.contourf(X, Y, p, levels=40)
+        plt.colorbar()
+        plt.title("Pressure (cell-centered)")
+
+        plt.figure()
+        skip = 3
+        plt.quiver(X[::skip, ::skip], Y[::skip, ::skip],
+                   uc[::skip, ::skip], vc[::skip, ::skip])
+        plt.title("Velocity vectors (cell-centered)")
+        plt.xlabel("x"); plt.ylabel("y")
+        plt.tight_layout()
+        plt.show()
+    except Exception as e:
+        print("Plot skipped:", e)
+
+```
+
+**Key Implementation Concepts:**
+
+**Note on grid arrangement:** This implementation uses a **staggered grid** arrangement, which differs from the simplified collocated approach described in Section 2 for pedagogical clarity. In the staggered grid:
+- **Pressure** ($p$) is stored at cell centers: shape $(n_x, n_y)$
+- **Velocity components** ($u$, $v$) are stored at **face centers**:
+  - $u$ is stored at vertical faces (between cells in x-direction): shape $(n_x+1, n_y)$
+  - $v$ is stored at horizontal faces (between cells in y-direction): shape $(n_x, n_y+1)$
+
+This arrangement naturally aligns with the face-flux concept (Section 3) and is the standard approach in production CFD codes. It provides better pressure-velocity decoupling and reduces checkerboard oscillations.
+
+**Algorithm steps** (implementing Section 4):
+
+1. **Tentative velocity** (Step 1): Compute $\mathbf{u}^*$ using diffusion and current pressure, omitting convection for simplicity.
+
+2. **Pressure Poisson** (Step 2): Solve $\nabla^2 p^{new} = \frac{\rho}{\Delta t} \nabla \cdot \mathbf{u}^*$ using Jacobi iteration with Neumann-like boundary conditions (zero normal gradient).
+
+3. **Velocity correction** (Step 3): Update $\mathbf{u}^{new} = \mathbf{u}^* - \frac{\Delta t}{\rho} \nabla p^{new}$ to enforce continuity.
+
+4. **Convergence check**: Monitor maximum divergence $|\nabla \cdot \mathbf{u}|$ at cell centers. When below tolerance ($< 10^{-6}$), the solution has reached steady state.
+
+5. **Pseudo-time stepping**: Although the physics is steady (no explicit time dependence), we use small time steps ($\Delta t = 0.002$) to iterate toward steady state, similar to how Section 4 describes a fixed-point iteration for the coupled system.
+
+This minimal code demonstrates the complete pressure-velocity coupling workflow needed to solve incompressible flow, making clear the connection between the general CFD concepts and their implementation.
+
+</div>
+</div>
+</div>
 
 ## Computational Fluid Dynamics (OpenFOAM Implementations)
 
@@ -548,5 +772,475 @@ fvMatrix assembly → builds discrete equations using mesh data
 ```
 
 When you write OpenFOAM solvers, you're working directly with these objects to implement the finite-volume discretization and solvers described in the general CFD section.
+
+## Discrete Adjoint Method (1D Example)
+
+The adjoint method is elegant in its mathematical formulation, but the detailed implementation can be non-intuitive. Here we use a 1D diffusion example to showcase exactly how the steady-state adjoint method is implemented step-by-step, from solving the forward problem to computing sensitivities.
+
+### Problem description: 1D Diffusion with Nonlinear Source
+
+Consider a one-dimensional diffusion system described by the steady-state PDE:
+
+$$\frac{\partial^2 T}{\partial x^2} - \alpha T^2 = 0$$
+
+where:
+- $T(x)$ is the temperature field
+- $x$ is the spatial coordinate in $[0, 1]$
+- $\alpha(x)$ is a spatially varying parameter (design variable)
+- All quantities are non-dimensional
+
+**Boundary conditions:**
+- $T(0) = 0$ (left boundary)
+- $T(1) = 1$ (right boundary)
+
+This is a nonlinear problem due to the $T^2$ term. We discretize it using finite differences on 11 nodes ($x_0, x_1, \ldots, x_{10}$) with uniform spacing $\Delta x = 0.1$.
+
+**Domain discretization:**
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/developer_guide/adjoint_1d_discretization.png" style="width:700px !important;" />
+
+*Figure 3: 1D Diffusion Domain Discretization. The domain [0, 1] is discretized into 11 nodes with uniform spacing Δx = 0.1. Boundary conditions are fixed at x₀ = 0 and x₁₀ = 1. Interior nodes (i = 1 to 9) use a 3-point central difference stencil to discretize the PDE. The parameter α is defined at each interior node as a design variable.*
+
+### Finite-Difference Discretization
+
+We discretize the PDE on all 11 nodes. The discrete residual system $\mathbf{R}(\mathbf{T}, \boldsymbol{\alpha}) = \mathbf{0}$ is a vector of size 11 (one residual per node):
+
+**Interior nodes** ($i = 1, 2, \ldots, 9$): Use a 3-point central difference stencil:
+
+$$R_i(\mathbf{T}, \boldsymbol{\alpha}) = \frac{T_{i+1} - 2T_i + T_{i-1}}{\Delta x^2} - \alpha_i T_i^2 = 0$$
+
+**Boundary nodes** ($i = 0, 10$): Enforce the Dirichlet boundary conditions directly as constraints:
+
+$$R_0(\mathbf{T}) = T_0 - 0 = 0$$
+$$R_{10}(\mathbf{T}) = T_{10} - 1 = 0$$
+
+The full discrete system is:
+
+$$\mathbf{R}(\mathbf{T}, \boldsymbol{\alpha}) = \begin{bmatrix}
+T_0 \\
+\frac{T_2 - 2T_1 + T_0}{\Delta x^2} - \alpha_1 T_1^2 \\
+\frac{T_3 - 2T_2 + T_1}{\Delta x^2} - \alpha_2 T_2^2 \\
+\vdots \\
+\frac{T_{10} - 2T_9 + T_8}{\Delta x^2} - \alpha_9 T_9^2 \\
+T_{10} - 1
+\end{bmatrix} = \mathbf{0}$$
+
+This is a system of **11 equations in 11 unknowns** ($\mathbf{T}$ of size 11). Given the parameter field $\boldsymbol{\alpha}$ (size 9), we solve for the temperature field $\mathbf{T}$ (size 11).
+
+### Forward Problem: Solving for Temperature
+
+The forward problem solves the nonlinear system iteratively. Given $\alpha(x) = 20$ (constant), the direct method or fixed-point iteration converges to a solution $\mathbf{T}^*$.
+
+### Problem Formulation: State, Design, and Objective
+
+Before discussing the adjoint method, we must clearly identify the three key components of this optimization problem:
+
+**State Variables (unknowns we solve for):**
+- $\mathbf{T} = [T_0, T_1, \ldots, T_{10}]^T$ — the temperature at each node
+- These satisfy the constraints: $\mathbf{R}(\mathbf{T}, \boldsymbol{\alpha}) = \mathbf{0}$
+- Given a choice of $\boldsymbol{\alpha}$, $\mathbf{T}$ is uniquely determined by solving the forward problem
+
+**Design Variables (parameters we want to optimize):**
+- $\boldsymbol{\alpha} = [\alpha_1, \alpha_2, \ldots, \alpha_9]^T$ — the nonlinear source coefficient at interior nodes
+- Boundary nodes ($\alpha_0$ and $\alpha_{10}$) are not design variables because temperature is fixed there
+- These are the free parameters we can adjust
+
+**Objective Function (scalar quantity we want to optimize):**
+- $F(\mathbf{T}) = \sum_{i=0}^{10} T_i$ — the total heat content (sum of all temperatures)
+- This depends on the state variables $\mathbf{T}$
+- To find how $F$ changes with respect to $\boldsymbol{\alpha}$, we need: $\frac{dF}{d\boldsymbol{\alpha}}$
+
+**The Optimization Goal:**
+Compute the sensitivity: How does the objective function $F$ change when we perturb the design variable $\boldsymbol{\alpha}$?
+
+$$\frac{dF}{d\boldsymbol{\alpha}} \quad \text{(gradient of objective w.r.t. design variables)}$$
+
+### Adjoint Method for Sensitivity Analysis
+
+The adjoint method computes the total derivative $\frac{dF}{d\boldsymbol{\alpha}}$ efficiently in just two steps:
+
+**Step 1: Solve the Adjoint Equation**
+
+Given the constraint $\mathbf{R}(\mathbf{T}, \boldsymbol{\alpha}) = \mathbf{0}$, solve for the adjoint variables $\boldsymbol{\psi}$ (size 11):
+
+$$\left(\frac{\partial \mathbf{R}}{\partial \mathbf{T}}\right)^T \boldsymbol{\psi} = \left(\frac{\partial F}{\partial \mathbf{T}}\right)^T$$
+
+For our problem: $\frac{\partial F}{\partial \mathbf{T}} = [1, 1, \ldots, 1]^T$, so the RHS is a vector of all ones.
+
+**Step 2: Compute Total Derivative (Sensitivity)**
+
+Once $\boldsymbol{\psi}$ is computed, the total derivative of the objective with respect to design variables is:
+
+$$\frac{dF}{d\boldsymbol{\alpha}} = \frac{\partial F}{\partial \boldsymbol{\alpha}} - \left(\frac{\partial \mathbf{R}}{\partial \boldsymbol{\alpha}}\right)^T \boldsymbol{\psi}$$
+
+For our problem: $\frac{\partial F}{\partial \boldsymbol{\alpha}} = \mathbf{0}$ (objective doesn't depend directly on $\alpha$). This gives us the total derivative (sensitivities) with only **two solves**: one forward solve (to get $\mathbf{T}$) and one adjoint solve (to get $dF/d\boldsymbol{\alpha}$).
+
+### Jacobian Matrices
+
+We need three Jacobians to implement the adjoint method: the state Jacobian (needed for both forward and adjoint solves), the parameter Jacobian (needed for sensitivity computation), and the objective Jacobian (needed for the adjoint RHS).
+
+**1. State Jacobian** $\frac{\partial \mathbf{R}}{\partial \mathbf{T}}$ (size $11 \times 11$, tridiagonal):
+
+The entry in row $i$, column $j$ is:
+
+$$\frac{\partial R_i}{\partial T_j} = \begin{cases}
+1 & \text{if } i = 0 \text{ (boundary node)} \\
+1 & \text{if } i = 10 \text{ (boundary node)} \\
+\\
+\frac{1}{\Delta x^2} & \text{if } 1 \leq i \leq 9 \text{ and } j = i-1 \\
+-\frac{2}{\Delta x^2} - 2\alpha_i T_i & \text{if } 1 \leq i \leq 9 \text{ and } j = i \\
+\frac{1}{\Delta x^2} & \text{if } 1 \leq i \leq 9 \text{ and } j = i+1 \\
+\\
+0 & \text{otherwise}
+\end{cases}$$
+
+Explicit matrix form:
+
+$$\frac{\partial \mathbf{R}}{\partial \mathbf{T}} = \begin{pmatrix}
+1 & 0 & 0 & 0 & \cdots & 0 & 0 \\
+\frac{1}{\Delta x^2} & -\frac{2}{\Delta x^2} - 2\alpha_1 T_1 & \frac{1}{\Delta x^2} & 0 & \cdots & 0 & 0 \\
+0 & \frac{1}{\Delta x^2} & -\frac{2}{\Delta x^2} - 2\alpha_2 T_2 & \frac{1}{\Delta x^2} & \cdots & 0 & 0 \\
+0 & 0 & \frac{1}{\Delta x^2} & -\frac{2}{\Delta x^2} - 2\alpha_3 T_3 & \cdots & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & -\frac{2}{\Delta x^2} - 2\alpha_9 T_9 & \frac{1}{\Delta x^2} \\
+0 & 0 & 0 & 0 & \cdots & 0 & 1
+\end{pmatrix}$$
+
+**2. Parameter Jacobian** $\frac{\partial \mathbf{R}}{\partial \boldsymbol{\alpha}}$ (size $11 \times 11$, diagonal):
+
+The entry in row $i$, column $j$ is:
+
+$$\frac{\partial R_i}{\partial \alpha_j} = \begin{cases}
+0 & \text{if } i = 0 \text{ or } i = 10 \text{ (boundary nodes)} \\
+-T_i^2 & \text{if } 1 \leq i \leq 9 \text{ and } i = j \\
+0 & \text{otherwise}
+\end{cases}$$
+
+Explicit matrix form (diagonal with zeros at boundary rows and columns):
+
+$$\frac{\partial \mathbf{R}}{\partial \boldsymbol{\alpha}} = \begin{pmatrix}
+0 & 0 & 0 & 0 & \cdots & 0 & 0 \\
+0 & -T_1^2 & 0 & 0 & \cdots & 0 & 0 \\
+0 & 0 & -T_2^2 & 0 & \cdots & 0 & 0 \\
+0 & 0 & 0 & -T_3^2 & \cdots & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & -T_9^2 & 0 \\
+0 & 0 & 0 & 0 & \cdots & 0 & 0
+\end{pmatrix}$$
+
+**3. Objective Function Jacobian** $\frac{\partial F}{\partial \mathbf{T}}$ and $\frac{\partial F}{\partial \boldsymbol{\alpha}}$:
+
+Since the objective is $F = \sum_{i=0}^{10} T_i$:
+
+$$\frac{\partial F}{\partial T_i} = 1 \quad \text{for all } i = 0, 1, \ldots, 10$$
+
+$$\frac{\partial F}{\partial \alpha_j} = 0 \quad \text{for all } j = 0, 1, \ldots, 10$$
+
+The adjoint equation needs $\left(\frac{\partial F}{\partial \mathbf{T}}\right)^T = [1, 1, \ldots, 1]^T$ (a vector of ones, size 11).
+
+### Solution Algorithm
+
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#adjointAlgorithm">Adjoint method algorithm (click to expand)</a>
+</h4>
+</div>
+<div id="adjointAlgorithm" class="panel-collapse collapse">
+<div class="panel-body">
+
+**Step 1: Solve forward problem**
+```
+Given: α(x) = 20.0
+Solve: R(T, α) = 0 using direct method or fixed-point iteration
+Result: T* (converged temperature field)
+```
+
+**Step 2: Compute Jacobian dR/dT at the solution**
+```
+Evaluate ∂R_i/∂T_j at T = T*
+Assemble Jacobian matrix [∂R/∂T]
+```
+
+**Step 3: Solve adjoint system**
+```
+Solve: ([∂R/∂T]^T) ψ = (∂F/∂T)^T
+Where ∂F/∂T = [1, 1, ..., 1]^T
+Result: ψ (adjoint variables)
+```
+
+**Step 4: Compute sensitivities**
+```
+Evaluate ∂R_i/∂α_j at T = T*
+For each parameter α_i:
+    df/dα_i = ∂F/∂α_i - (∂R/∂α_i)^T · ψ
+            = 0 - (-T_i^2) · ψ_i
+            = T_i^2 · ψ_i
+Result: dF/dα (sensitivities)
+```
+
+**Step 5: Verify with finite-difference**
+```
+For each parameter α_i:
+    Perturb: α_new = α + ε·e_i
+    Solve forward problem with α_new → T_new
+    Compute: f_new = sum(T_new)
+    FD derivative: (f_new - f) / ε
+Compare with adjoint result
+```
+
+</div>
+</div>
+</div>
+
+### Python code for the adjoint implementation
+
+Below is a complete Python implementation of the adjoint method for the 1D diffusion problem:
+
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#adjointCode">Complete adjoint method code (click to expand)</a>
+</h4>
+</div>
+<div id="adjointCode" class="panel-collapse collapse">
+<div class="panel-body">
+
+```python
+import numpy as np
+
+# ============================================================
+# Problem Setup
+# ============================================================
+L = 1.0           # Domain length [0, 1]
+dx = 0.1          # Grid spacing
+Nx = int(L / dx) + 1  # Number of nodes (Nx = 11)
+
+# ============================================================
+# Step 1: Solve Forward Problem - Compute T from R(T, α) = 0
+# ============================================================
+def run_model(alpha, num_iterations=30):
+    """
+    Solve the discrete residual system R(T, α) = 0 using fixed-point iteration.
+
+    Args:
+        alpha: Design variables (size Nx = 11), where alpha[0] and alpha[Nx-1] are unused
+        num_iterations: Number of fixed-point iterations
+
+    Returns:
+        T: State variables (temperature field, size Nx = 11)
+    """
+    T = np.zeros(Nx)  # Initialize temperature
+    A = np.zeros([Nx, Nx])  # Jacobian dR/dT
+    b = np.zeros([Nx, 1])  # RHS vector
+
+    x = np.linspace(0, L, Nx)
+
+    # Set boundary condition values (constant RHS)
+    for i in range(Nx):
+        if i == 0:
+            b[i] = 0.0  # T[0] = 0 (left BC)
+        elif i == Nx - 1:
+            b[i] = 1.0  # T[Nx-1] = 1 (right BC)
+        else:
+            b[i] = 0.0  # Interior nodes: homogeneous RHS
+
+    # Fixed-point iteration: assemble and solve A·T = b repeatedly
+    for t in range(num_iterations):
+        # Assemble Jacobian dR/dT at current T
+        for i in range(Nx):
+            if i == 0:
+                # Boundary node: R_0 = T_0, so dR_0/dT_0 = 1
+                A[i, i] = 1.0
+            elif i == Nx - 1:
+                # Boundary node: R_Nx-1 = T_Nx-1 - 1, so dR_Nx-1/dT_Nx-1 = 1
+                A[i, i] = 1.0
+            else:
+                # Interior node: R_i = (T_{i+1} - 2T_i + T_{i-1})/dx² - α_i T_i²
+                # Diagonal: dR_i/dT_i = -2/dx² - 2α_i T_i
+                A[i, i] = -2.0 / (dx * dx) - 2.0 * alpha[i] * T[i]
+                # Upper diagonal: dR_i/dT_{i+1} = 1/dx²
+                A[i, i + 1] = 1.0 / (dx * dx)
+                # Lower diagonal: dR_i/dT_{i-1} = 1/dx²
+                A[i, i - 1] = 1.0 / (dx * dx)
+
+        # Solve linear system: T = A^{-1} · b
+        T = np.linalg.solve(A, b).flatten()
+
+    return T
+
+
+# ============================================================
+# Objective Function and Its Jacobians
+# ============================================================
+def calc_F(T):
+    """
+    Compute objective: F(T) = sum of all temperatures.
+
+    Returns:
+        F: Scalar objective value (scalar)
+    """
+    return sum(T)
+
+
+def calc_dFdT(T, alpha):
+    """
+    Compute objective Jacobian: dF/dT_i = 1 for all i.
+
+    Returns:
+        dFdT: Gradient vector (size Nx × 1)
+    """
+    dFdT = np.ones([Nx, 1])
+    return dFdT
+
+
+def calc_dFdAlpha(T, alpha):
+    """
+    Compute objective Jacobian: dF/dα_i = 0 for all i
+    (objective doesn't depend directly on design variables).
+
+    Returns:
+        dFdAlpha: Zero vector (size Nx × 1)
+    """
+    dFdAlpha = np.zeros([Nx, 1])
+    return dFdAlpha
+
+
+# ============================================================
+# Jacobian Matrices
+# ============================================================
+def calc_dRdT(T, alpha):
+    """
+    Compute state Jacobian: dR/dT (size Nx × Nx, tridiagonal).
+
+    The residual is:
+    - R_0 = T_0 (boundary)
+    - R_i = (T_{i+1} - 2T_i + T_{i-1})/dx² - α_i T_i² (interior)
+    - R_Nx-1 = T_Nx-1 - 1 (boundary)
+
+    Returns:
+        dRdT: Jacobian matrix (size Nx × Nx)
+    """
+    dRdT = np.zeros([Nx, Nx])
+    for i in range(Nx):
+        if i == 0:
+            # Boundary: dR_0/dT_0 = 1
+            dRdT[i, i] = 1.0
+        elif i == Nx - 1:
+            # Boundary: dR_Nx-1/dT_Nx-1 = 1
+            dRdT[i, i] = 1.0
+        else:
+            # Interior node (tridiagonal pattern)
+            # dR_i/dT_{i-1} = 1/dx²
+            dRdT[i, i - 1] = 1.0 / (dx * dx)
+            # dR_i/dT_i = -2/dx² - 2α_i T_i
+            dRdT[i, i] = -2.0 / (dx * dx) - 2.0 * alpha[i] * T[i]
+            # dR_i/dT_{i+1} = 1/dx²
+            dRdT[i, i + 1] = 1.0 / (dx * dx)
+
+    return dRdT
+
+
+def calc_dRdAlpha(T, alpha):
+    """
+    Compute parameter Jacobian: dR/dα (size Nx × Nx, diagonal).
+
+    The residual w.r.t. α_j is:
+    - dR_0/dα_j = 0 (boundary, doesn't depend on α)
+    - dR_i/dα_j = -T_i² if i == j, else 0 (interior, only diagonal)
+    - dR_Nx-1/dα_j = 0 (boundary, doesn't depend on α)
+
+    Returns:
+        dRdAlpha: Jacobian matrix (size Nx × Nx, diagonal with zeros at boundaries)
+    """
+    dRdAlpha = np.zeros([Nx, Nx])
+    for i in range(Nx):
+        if i == 0 or i == Nx - 1:
+            # Boundary nodes don't depend on design variables
+            dRdAlpha[i, i] = 0.0
+        else:
+            # Interior nodes: dR_i/dα_i = -T_i²
+            dRdAlpha[i, i] = -T[i] ** 2
+
+    return dRdAlpha
+
+
+# ============================================================
+# Step 2 & 3: Solve Adjoint System to get ψ
+# ============================================================
+# Given: State Jacobian dRdT and objective Jacobian dFdT
+# Solve: (dR/dT)^T · ψ = (dF/dT)^T
+
+# Set design variables
+alpha = np.ones(Nx) * 20.0  # Uniform parameter field
+
+# Step 1: Solve forward problem
+T = run_model(alpha)
+print(f"Forward solution T: {T}")
+
+# Step 2: Compute Jacobians
+dRdT = calc_dRdT(T, alpha)
+dFdT = calc_dFdT(T, alpha)
+dRdAlpha = calc_dRdAlpha(T, alpha)
+dFdAlpha = calc_dFdAlpha(T, alpha)
+
+# Step 3: Solve adjoint system
+# (dR/dT)^T · ψ = (dF/dT)^T
+dRdT_transpose = np.transpose(dRdT)
+psi = np.linalg.solve(dRdT_transpose, dFdT)
+print(f"Adjoint variables ψ: {psi.flatten()}")
+
+# ============================================================
+# Step 4: Compute Sensitivities using Adjoint Formula
+# ============================================================
+# dF/dα = dF/dα (direct term) - (dR/dα)^T · ψ
+#       = 0 - (dR/dα)^T · ψ  (since dF/dα = 0)
+
+total_adjoint = dFdAlpha - np.dot(np.transpose(dRdAlpha), psi)
+print(f"Adjoint sensitivities dF/dα:\n{total_adjoint.flatten()}")
+
+# ============================================================
+# Step 5: Verify with Finite-Difference
+# ============================================================
+# For each parameter α_j, perturb and recompute objective
+
+F_ref = calc_F(T)  # Reference objective
+total_FD = np.zeros(Nx)
+eps = 1e-1  # Finite-difference step size
+
+for i in range(Nx):
+    # Perturb parameter i
+    alpha_perturbed = alpha.copy()
+    alpha_perturbed[i] = alpha[i] + eps
+
+    # Solve forward problem with perturbed parameter
+    T_perturbed = run_model(alpha_perturbed)
+
+    # Compute new objective
+    F_perturbed = calc_F(T_perturbed)
+
+    # Finite-difference derivative: (F(α+ε) - F(α)) / ε
+    total_FD[i] = (F_perturbed - F_ref) / eps
+
+print(f"Finite-difference sensitivities dF/dα:\n{total_FD}")
+print(f"\nComparison (Adjoint vs FD):")
+print(f"  Max difference: {np.max(np.abs(total_adjoint.flatten() - total_FD))}")
+```
+
+This code implements the complete adjoint method workflow:
+1. **`run_model()`**: Solves the forward problem (R(T, α) = 0) using fixed-point iteration
+2. **`calc_dRdT()`, `calc_dRdAlpha()`**: Compute required Jacobian matrices
+3. **Adjoint solve**: Solves $(dR/dT)^T \psi = (dF/dT)^T$ to get adjoint variables
+4. **Sensitivity computation**: Uses adjoint variables to compute $dF/d\alpha$ in one pass
+5. **Verification**: Compares adjoint results with finite-difference approximation
+
+The adjoint method computes sensitivities for all 11 parameters using only **2 solves** (one forward, one adjoint), regardless of parameter count.
+
+</div>
+</div>
+</div>
+
+
+
 
 {% include links.html %}
