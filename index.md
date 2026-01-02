@@ -36,17 +36,11 @@ DAFoam source code is available on [GitHub](https://github.com/mdolab/dafoam), a
             <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/slider1.png" alt="Slide 1" />
         </div>
         <div class="item">
-            <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/propeller_wakes.png" alt="Slide 2" />
+            <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/slider2.png" alt="Slide 2" />
         </div>
         <div class="item">
-            <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/UBendAeroThermal.png" alt="Slide 4" />
-        </div>
-        <div class="item">
-            <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/drivAerStreamline.png" alt="Slide 5" />
-        </div>    
-        <div class="item">
-            <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/JBC_front_page.png" alt="Slide 6" />
-        </div>    
+            <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/slider3.png" alt="Slide 4" />
+        </div>   
     </div>
 </div>
 
