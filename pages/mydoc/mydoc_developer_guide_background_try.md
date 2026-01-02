@@ -72,9 +72,7 @@ A mesh partitions the continuous 2D domain into small cells (control volumes). E
 
 - **Cell area** $A_P$: In 2D, this is the physical area of the cell. For a uniform quad mesh, all cells have the same area. For our example with $n_x \times n_y$ cells: $A_P = \frac{1}{n_x} \times \frac{1}{n_y}$.
 
-- **Face flux** $\phi_f$: The flow rate (volume per unit time per unit depth) crossing a face. Computed as:
-  $\phi_f = u_f \cdot n_{f,x} \cdot L_f + v_f \cdot n_{f,y} \cdot L_f = \mathbf{u}_f \cdot \mathbf{n}_f \cdot L_f$
-  where $\mathbf{u}_f = (u_f, v_f)$ is the velocity at the face, $\mathbf{n}_f = (n_{f,x}, n_{f,y})$ is the outward unit normal, and $L_f$ is the face length.
+- **Face flux** $\phi_f$: The flow rate (volume per unit time per unit depth) crossing a face. Computed as $\phi_f = \mathbf{u}_f \cdot \mathbf{n}_f \cdot L_f$ where $\mathbf{u}_f = (u_f, v_f)$ is the velocity at the face, $\mathbf{n}_f = (n_{f,x}, n_{f,y})$ is the outward unit normal, and $L_f$ is the face length. In component form: $\phi_f = u_f n_{f,x} L_f + v_f n_{f,y} L_f$
 
 **Mesh visualization:**
 
@@ -215,8 +213,10 @@ In OpenFOAM, every application starts by initializing two core objects: **runTim
 - Handles time-dependent execution (even for steady-state solvers)
 - Controls output directories and time folders
 
+**Common runTime properties:**
+
 <details>
-<summary><b>Common runTime properties (click to expand)</b></summary>
+<summary>Click to show code example</summary>
 
 ```cpp
 // Access current time value
@@ -270,6 +270,11 @@ const Foam::vectorField& Cf = mesh.Cf();  // Cf[faceI] = (x_f, y_f, z_f)
 const Foam::pointField& points = mesh.points();  // points[pointI] = (x, y, z) coordinates
 label nPoints = mesh.nPoints();                  // Total number of mesh vertices
 
+// Neighbor cell access through face addressing
+label cellP = 100;                                   // Center cell
+label faceE = mesh.faceOwner().find(cellP);        // Find east face of cell P
+label neighborCellE = mesh.faceNeighbour()[faceE]; // Get east neighbor
+
 // Example: Loop over all cells and access their properties
 for (label cellI = 0; cellI < mesh.nCells(); ++cellI) {
     scalar cellVolume = mesh.V()[cellI];           // Cell volume
@@ -317,7 +322,7 @@ Contains the velocity values at **all internal cell centers** (cells not on the 
 // Access velocity at a specific cell (e.g., cellI = 100)
 label cellI = 100;
 // Get velocity vector (u, v, w) at cell 100. U[cellI] is equivalent to U.internalField()[cellI]
-vector velocityAtCell = U[cellI];     
+vector velocityAtCell = U[cellI];
 scalar Ux = velocityAtCell[0];           // x-component of velocity
 scalar Uy = velocityAtCell[1];           // y-component of velocity
 
@@ -354,8 +359,8 @@ const Foam::polyBoundaryMesh& patches = mesh.boundaryMesh();
 // Find and access a specific patch (e.g., "lid" patch for the moving lid)
 label patchI = patches.findPatchID("lid");
 
-// if lidPatchID >=0, the name "lid" is found in constant/polyMesh/boundary, 
-// otherwise lidPatchID = -1 (there is no "lid" patch)
+// if patchI >= 0, the name "lid" is found in constant/polyMesh/boundary,
+// otherwise patchI = -1 (there is no "lid" patch)
 if (patchI >= 0) {
     // Access the velocity field on this patch
     const Foam::fvPatchVectorField& UPatch = U.boundaryField()[patchI];
