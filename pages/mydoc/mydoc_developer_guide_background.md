@@ -84,7 +84,9 @@ A mesh partitions the continuous 2D domain into small cells (control volumes). E
 
 - **Cell area** $A_P$: In 2D, this is the physical area of the cell. For a uniform quad mesh, all cells have the same area. For our example with $n_x \times n_y$ cells: $A_P = \frac{1}{n_x} \times \frac{1}{n_y}$.
 
-- **Face flux** $\phi_f$: The flow rate (volume per unit time per unit depth) crossing a face. Computed as: $\phi_f = \mathbf{u}_f \mathbf{n}_f L_f$, where $\mathbf{u}_f = (u_f, v_f)$ is the velocity at the face, $\mathbf{n}_f = (n_{f,x}, n_{f,y})$ is the outward unit normal, and $L_f$ is the face length. In component form: $\phi_f = u_f n_{f,x} L_f + v_f n_{f,y} L_f$
+- **Face flux** $\phi_f$: The flow rate (volume per unit time per unit depth) crossing a face. Computed as: $\phi_f = \mathbf{u}_f \cdot \mathbf{n}_f L_f$, where $\mathbf{u}_f = (u_f, v_f)$ is the velocity at the face.
+
+In the above, $n$ is the outward unit normal, and $L_f$ is the face length. In component form: $\phi_f = u_f n_{f,x} L_f + v_f n_{f,y} L_f$
 
 **Mesh visualization:**
 
@@ -156,7 +158,7 @@ $$a_P v_P^{(n)} = a_E v_E^{(n)} + a_W v_W^{(n)} + a_N v_N^{(n)} + a_S v_S^{(n)} 
 where:
 - Superscript $(n)$ denotes the current iteration; $(n-1)$ denotes the previous iteration
 - $a_P, a_E, a_W, a_N, a_S$ are **coefficients** arising from discretization of advection and diffusion terms
-- $\frac{\partial p^{(n-1)}}{\partial x}\bigg|_P$ and $\frac{\partial p^{(n-1)}}{\partial y}\bigg|_P$ are **pressure gradients from the previous iteration** (this is the key to the iterative coupling: we use the old pressure to compute the new velocity)
+- $\left.\frac{\partial p^{(n-1)}}{\partial x}\right|_P$ and $\left.\frac{\partial p^{(n-1)}}{\partial y}\right|_P$ are **pressure gradients from the previous iteration** (this is the key to the iterative coupling: we use the old pressure to compute the new velocity)
 
 **Why is this form useful?** It relates the velocity at cell $P$ to its four neighbors (E, W, N, S). This creates a **sparse system of linear equations** that can be solved iteratively.
 
