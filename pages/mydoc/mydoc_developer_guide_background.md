@@ -168,7 +168,7 @@ In our 2D cavity, there is **no explicit equation for pressure**. Instead, press
 1. Start with the discretized momentum equations (with coefficients $a_P, a_E, a_W, a_N, a_S$ from advection and diffusion):
 $$a_P u_P^* = a_E u_E^* + a_W u_W^* + a_N u_N^* + a_S u_S^* + b_P - \frac{\partial p^{(n-1)}}{\partial x}\bigg|_P \cdot A_P$$
 
-2. We can solve the above equation to get the intermediate velocity $\mathbf{u}^*$, which generally does **not satisfy continuity**: $\nabla \cdot \mathbf{u}^* \neq 0$
+2. We can solve the above equation to get the intermediate velocity $\mathbf{u}^* $, which generally does **not satisfy continuity**: $\nabla \cdot \mathbf{u}^* \neq 0$
 
 3. We enforce the constraint that the corrected velocity must satisfy continuity:
 $$\nabla \cdot \mathbf{u}^{(n)} = 0 \quad \text{(steady-state incompressible flow)}$$
@@ -196,7 +196,7 @@ $$u_P^{(n)} := u_P^* - \frac{p_E^{(n)} - p_W^{(n)}}{2\Delta x}$$
 $$v_P^{(n)} := v_P^* - \frac{p_N^{(n)} - p_S^{(n)}}{2\Delta y}$$
 
 where:
-- $u_P^*, v_P^*$ are the intermediate (tentative) velocity components computed from momentum equations with old pressure
+- $u_P^* , v_P^* $ are the intermediate (tentative) velocity components computed from momentum equations with old pressure
 - $p^{(n)}$ is the newly computed pressure from the Poisson equation
 - $\Delta x, \Delta y$ are grid spacings
 
