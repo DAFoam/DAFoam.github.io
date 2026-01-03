@@ -42,12 +42,12 @@ $$
 
 $x$-momentum:
 $$
-\rho \left( u \frac{\partial u}{\partial x} + v \frac{\partial u}{\partial y} \right) = -\frac{\partial p}{\partial x} + \mu \left( \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} \right)
+ u \frac{\partial u}{\partial x} + v \frac{\partial u}{\partial y}  = -\frac{\partial p}{\partial x} + \mu \left( \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} \right)
 $$
 
 $y$-momentum:
 $$
-\rho \left( u \frac{\partial v}{\partial x} + v \frac{\partial v}{\partial y} \right) = -\frac{\partial p}{\partial y} + \mu \left( \frac{\partial^2 v}{\partial x^2} + \frac{\partial^2 v}{\partial y^2} \right)
+ u \frac{\partial v}{\partial x} + v \frac{\partial v}{\partial y} = -\frac{\partial p}{\partial y} + \mu \left( \frac{\partial^2 v}{\partial x^2} + \frac{\partial^2 v}{\partial y^2} \right)
 $$
 
 where:
@@ -88,7 +88,7 @@ A mesh partitions the continuous 2D domain into small cells (control volumes). E
 
 - **Cell area** $A_P$: In 2D, this is the physical area of the cell. For a uniform quad mesh, all cells have the same area. For our example with $n_x \times n_y$ cells: $A_P = \frac{1}{n_x} \times \frac{1}{n_y}$.
 
-- **Face flux** `φ_f`: The flow rate (volume per unit time per unit depth) crossing a face. Computed as:
+- **Face flux** $\phi_f$: The flow rate (volume per unit time per unit depth) crossing a face. Computed as:
   $$\phi_f = \mathbf{u}_f \cdot \mathbf{n}_f \cdot L_f$$
   where $\mathbf{u}_f = (u_f, v_f)$ is the velocity at the face, $\mathbf{n}_f = (n_{f,x}, n_{f,y})$ is the outward unit normal, and $L_f$ is the face length. In component form:
   $$\phi_f = u_f n_{f,x} L_f + v_f n_{f,y} L_f$$
@@ -99,38 +99,29 @@ A mesh partitions the continuous 2D domain into small cells (control volumes). E
 
 *Figure 1: 2D Lid-Driven Cavity Mesh (4×4 cells shown). Red circles (●) mark cell centers where velocity $(u_P, v_P)$ and pressure $p_P$ are stored. The red box highlights one cell and its four faces (east, west, north, south). Boundary conditions are specified on the domain edges: no-slip walls (u=0, v=0) on bottom/left/right, and moving lid (u=1, v=0) on top.*
 
-**Why finite volume?**
+**Converting volume to surface integration**
 
 Finite-volume CFD stores unknowns as **cell-center values** (or cell averages) and enforces conservation by balancing **fluxes across all faces** of each cell. This approach is naturally conservative: what flows out of one cell flows into a neighboring cell.
 
-A generic transport equation in conservative form:
+The divergence theorem (also called Gauss's theorem or Green's theorem) converts the volume integral of a divergence into a surface integral:
+For a scalar $q$ transported by velocity $\mathbf{u}$, integrating over control volume $V_P$:
 $$
-\nabla\cdot(\mathbf{u}\,q) = \nabla\cdot(\Gamma \nabla q) + S
-$$
-integrated over a control volume $V_P$ becomes:
-$$
-\sum_{f\in \partial V_P} (\mathbf{u}q)_f \cdot \mathbf{n}_f A_f
-=
-\sum_{f\in \partial V_P} \Gamma_f (\nabla q)_f \cdot \mathbf{n}_f A_f
-+
-S_P V_P
+\int_{V_P} \nabla\cdot(\mathbf{u}\,q) \, dV = \sum_{f\in \partial V_P} (\mathbf{u}q)_f \cdot \mathbf{n}_f A_f
 $$
 
-Here $\partial V_P$ denotes the boundary (all faces) of cell $P$. The left-hand side is the sum of **convective fluxes across all faces**; the right-hand side is the sum of **diffusive fluxes** plus **source terms**.
 
-**Discrete conservation in 2D:**
+Here $\partial V_P$ denotes the boundary (all faces) of cell $P$.
 
-For a specific cell $P$ in our cavity, the discrete $x$-momentum equation is:
+For a specific cell $P$ in our cavity, the right-hand-side of the above term can be calculated as:
 
-$$\rho \left[ (u_f)_E L_E - (u_f)_W L_W + (v_f)_N L_N - (v_f)_S L_S \right]_{u\text{-momentum}} = D_P + G_P$$
+$$ \sum_{f\in \partial V_P} (\mathbf{u}q)_f \cdot \mathbf{n}_f A_f = (u_f q_f)_E L_E - (u_f q_f)_W L_W + (v_f q_f)_N L_N - (v_f q_f)_S L_S $$
 
 where:
 - $(u_f)_E, (u_f)_W, (v_f)_N, (v_f)_S$ are face velocities at the four faces
+- $(q_f)_E, (q_f)_W, (q_f)_N, (q_f)_S$ are face scalar variable $q$ at the four faces
 - $L_E, L_W, L_N, L_S$ are the face lengths
-- $D_P$ is the net diffusion term
-- $G_P = -\left(\frac{\partial p}{\partial x}\right)_P A_P$ is the pressure gradient term
 
-The key insight: the **same face flux** appears in both adjacent cells with **opposite signs**. Momentum leaving cell $P$ equals momentum entering its neighbor—automatic conservation.
+We can use a similar formulation for other terms in the NS equations. The key insight: the **same face flux** appears in both adjacent cells with **opposite signs**. Momentum leaving cell $P$ equals momentum entering its neighbor—automatic conservation.
 
 **Flux visualization:**
 
@@ -163,50 +154,61 @@ where $\Delta x$ is the distance between cell centers
 
 **Discrete momentum equations in 2D (cell P)**
 
-After finite-volume discretization, the $x$-momentum equation for cell $P$ becomes an **algebraic equation**:
+After finite-volume discretization of advection and diffusion, the $x$-momentum equation for cell $P$ becomes a **semi-discretized equation** (velocity discretization only):
 
-$$a_P u_P = a_E u_E + a_W u_W + a_N u_N + a_S u_S + b_P - \frac{\partial p}{\partial x}\bigg|_P \cdot A_P$$
+$$a_P u_P^{(n)} = a_E u_E^{(n)} + a_W u_W^{(n)} + a_N u_N^{(n)} + a_S u_S^{(n)} - \frac{\partial p^{(n-1)}}{\partial x}\bigg|_P \cdot A_P$$
 
 Similarly for the $y$-momentum equation:
 
-$$a_P v_P = a_E v_E + a_W v_W + a_N v_N + a_S v_S + b_P - \frac{\partial p}{\partial y}\bigg|_P \cdot A_P$$
+$$a_P v_P^{(n)} = a_E v_E^{(n)} + a_W v_W^{(n)} + a_N v_N^{(n)} + a_S v_S^{(n)} - \frac{\partial p^{(n-1)}}{\partial y}\bigg|_P \cdot A_P$$
 
 where:
-- $a_P, a_E, a_W, a_N, a_S$ are **coefficients** arising from discretization of advection and diffusion
-- $b_P$ is a known source term
-- The pressure gradient terms drive the flow
+- Superscript $(n)$ denotes the current iteration; $(n-1)$ denotes the previous iteration
+- $a_P, a_E, a_W, a_N, a_S$ are **coefficients** arising from discretization of advection and diffusion terms
+- $\frac{\partial p^{(n-1)}}{\partial x}\bigg|_P$ and $\frac{\partial p^{(n-1)}}{\partial y}\bigg|_P$ are **pressure gradients from the previous iteration** (this is the key to the iterative coupling: we use the old pressure to compute the new velocity)
 
 **Why is this form useful?** It relates the velocity at cell $P$ to its four neighbors (E, W, N, S). This creates a **sparse system of linear equations** that can be solved iteratively.
 
 **The pressure problem: enforcing mass conservation (2D)**
 
-In our 2D cavity, there is **no equation for pressure**. Instead, pressure is determined by requiring that the **continuity equation** is satisfied:
+In our 2D cavity, there is **no explicit equation for pressure**. Instead, pressure is determined by requiring that the **continuity equation** (mass conservation) is satisfied. For steady-state flow, we can derive an equation for pressure as follows:
 
-$$\frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} = 0$$
+1. Start with the discretized momentum equations (with coefficients $a_P, a_E, a_W, a_N, a_S$ from advection and diffusion):
+$$a_P u_P^* = a_E u_E^* + a_W u_W^* + a_N u_N^* + a_S u_S^* + b_P - \frac{\partial p^{(n-1)}}{\partial x}\bigg|_P \cdot A_P$$
+
+2. We can solve the above equation to get the intermediate velocity $\mathbf{u}^*$, which generally does **not satisfy continuity**: $\nabla \cdot \mathbf{u}^* \neq 0$
+
+3. We enforce the constraint that the corrected velocity must satisfy continuity:
+$$\nabla \cdot \mathbf{u}^{(n)} = 0 \quad \text{(steady-state incompressible flow)}$$
+
+4. We then make an assumption that the velocity must be corrected by the pressure gradient (momentum equations relate velocity to pressure):
+$$\mathbf{u}^{(n)} = \mathbf{u}^* - \nabla p^{(n)}$$
+
+5. Substituting into the continuity constraint:
+$$\nabla \cdot \left( \mathbf{u}^* - \nabla p^{(n)} \right) = 0$$
+
+6. This yields the **pressure Poisson equation**:
+$$\nabla^2 p^{(n)} = \nabla \cdot \mathbf{u}^*$$
 
 In discrete form, for each cell $P$:
-$$\frac{u_E - u_W}{2\Delta x} + \frac{v_N - v_S}{2\Delta y} = 0$$
+$$\frac{p_E - 2p_P + p_W}{\Delta x^2} + \frac{p_N - 2p_P + p_S}{\Delta y^2} = \frac{u_E^* - u_W^*}{2\Delta x} + \frac{v_N^* - v_S^*}{2\Delta y}$$
 
-or equivalently, the sum of face fluxes must be zero:
-$$\phi_E + \phi_W + \phi_N + \phi_S = 0$$
+This is a **sparse symmetric linear system** that $p^n$ can be solved using standard solvers (CG, GMRES, multigrid, etc.).
 
-**This creates a coupling:** velocity and pressure are not independent. We use a **pressure-correction method** (like SIMPLE) to handle this coupling iteratively.
+**Correcting velocity with the computed pressure:**
 
-**Correcting velocity with pressure (discrete form):**
+Once we solve for $p^{(n)}$, we correct the intermediate velocity to enforce continuity:
 
-The pressure-correction method works by first computing an intermediate velocity $\mathbf{u}^*$ without the pressure gradient, then correcting it using the computed pressure field:
+$$u_P^{(n)} := u_P^* - \frac{p_E^{(n)} - p_W^{(n)}}{2\Delta x}$$
 
-$$u_P := u_P^* - \Delta t \frac{p_E - p_W}{2\Delta x} \cdot \frac{A_P}{\rho}$$
-
-$$v_P := v_P^* - \Delta t \frac{p_N - p_S}{2\Delta y} \cdot \frac{A_P}{\rho}$$
+$$v_P^{(n)} := v_P^* - \frac{p_N^{(n)} - p_S^{(n)}}{2\Delta y}$$
 
 where:
-- $u_P^*, v_P^*$ are the intermediate (tentative) velocity components before pressure correction
-- $p_E, p_W, p_N, p_S$ are pressures at the four neighboring cell centers
+- $u_P^*, v_P^*$ are the intermediate (tentative) velocity components computed from momentum equations with old pressure
+- $p^{(n)}$ is the newly computed pressure from the Poisson equation
 - $\Delta x, \Delta y$ are grid spacings
-- $A_P$ is the cell area, $\rho$ is density, $\Delta t$ is a time step parameter
 
-This correction drives the mass imbalance to zero, enforcing continuity in the next iteration.
+This pressure-correction ensures that the new velocity field $\mathbf{u}^{(n)}$ satisfies the continuity constraint to within the tolerance of the Poisson solver. The process repeats (fixed-point iteration) until both momentum and continuity equations are satisfied within specified tolerances.
 
 ---
 
@@ -214,10 +216,10 @@ This correction drives the mass imbalance to zero, enforcing continuity in the n
 
 A typical steady incompressible workflow (SIMPLE-like) looks like:
 
-1. Start with initial guesses $\mathbf{u}^{(0)}, p^{(0)}$
+1. Start with initial guesses $\mathbf{u}^{(n-1)}, p^{(n-1)}$
 2. Solve momentum equations using current pressure to get an intermediate velocity $\mathbf{u}^*$
-3. Solve a pressure-correction equation so that the corrected velocity satisfies continuity
-4. Correct velocity and pressure
+3. Solve a pressure-Poisson equation to get the new pressure $p^n$
+4. Correct the velocity $u^n$ based on $u^*$ and $p^n$
 5. Repeat until residuals and mass imbalance are below tolerances
 
 In production codes, each “solve” is a sparse linear solve (e.g., CG, BiCGStab, GMRES with preconditioning), and under-relaxation is often used for stability.
@@ -445,6 +447,12 @@ This minimal code demonstrates the complete pressure-velocity coupling workflow 
 </div>
 
 ## Computational Fluid Dynamics (OpenFOAM Implementations)
+
+OpenFOAM implements the **SIMPLE algorithm** (Semi-Implicit Method for Pressure-Linked Equations) using a sophisticated object-oriented framework. While the algorithm remains the same as the 2D cavity example above, OpenFOAM enables seamless handling of complex, industrial-scale problems:
+
+1. **Unified discretization framework**: OpenFOAM uses `fvMatrix` to assemble discrete equations systematically; high-level field abstractions (`volVectorField`, `volScalarField`) enable intuitive manipulation of finite-volume data across arbitrary 3D meshes
+2. **Robust boundary condition handling**: Dirichlet, Neumann, and Robin conditions are enforced consistently across all equations through a unified interface
+3. **Modular extensibility**: Complex physics (turbulence, heat transfer, multiphase flow) plug into the framework without modifying the core SIMPLE algorithm, enabling rapid development of custom solvers
 
 ### Initializing runTime and mesh
 
@@ -839,7 +847,7 @@ T_0 \\
 T_{10} - 1
 \end{bmatrix} = \mathbf{0}$$
 
-This is a system of **11 equations in 11 unknowns** ($\mathbf{T}$ of size 11). Given the parameter field $\boldsymbol{\alpha}$ (size 9), we solve for the temperature field $\mathbf{T}$ (size 11).
+This is a system of **11 equations in 11 unknowns** ($\mathbf{T}$ of size 11). Given the parameter field $\boldsymbol{\alpha}$, we solve for the temperature field $\mathbf{T}$ (size 11).
 
 ### Forward Problem: Solving for Temperature
 
@@ -855,8 +863,7 @@ Before discussing the adjoint method, we must clearly identify the three key com
 - Given a choice of $\boldsymbol{\alpha}$, $\mathbf{T}$ is uniquely determined by solving the forward problem
 
 **Design Variables (parameters we want to optimize):**
-- $\boldsymbol{\alpha} = [\alpha_1, \alpha_2, \ldots, \alpha_9]^T$ — the nonlinear source coefficient at interior nodes
-- Boundary nodes ($\alpha_0$ and $\alpha_{10}$) are not design variables because temperature is fixed there
+- $\boldsymbol{\alpha} = [\alpha_0, \alpha_2, \ldots, \alpha_{10}]^T$ — the nonlinear source coefficient at each node
 - These are the free parameters we can adjust
 
 **Objective Function (scalar quantity we want to optimize):**
@@ -1025,14 +1032,14 @@ def run_model(alpha, num_iterations=30):
     Solve the discrete residual system R(T, α) = 0 using fixed-point iteration.
 
     Args:
-        alpha: Design variables (size Nx = 11), where alpha[0] and alpha[Nx-1] are unused
+        alpha: Design variables (size Nx = 11)
         num_iterations: Number of fixed-point iterations
 
     Returns:
         T: State variables (temperature field, size Nx = 11)
     """
     T = np.zeros(Nx)  # Initialize temperature
-    A = np.zeros([Nx, Nx])  # Jacobian dR/dT
+    A = np.zeros([Nx, Nx])  # Discretization matrix A * T = b
     b = np.zeros([Nx, 1])  # RHS vector
 
     x = np.linspace(0, L, Nx)
@@ -1046,15 +1053,15 @@ def run_model(alpha, num_iterations=30):
         else:
             b[i] = 0.0  # Interior nodes: homogeneous RHS
 
-    # Fixed-point iteration: assemble and solve A·T = b repeatedly
+    # Fixed-point iteration: assemble and solve A * T = b repeatedly
     for t in range(num_iterations):
-        # Assemble Jacobian dR/dT at current T
+        # Assemble the A matrix at current T
         for i in range(Nx):
             if i == 0:
-                # Boundary node: R_0 = T_0, so dR_0/dT_0 = 1
+                # Boundary node: R_0 = T_0, so A[0,0] = 1
                 A[i, i] = 1.0
             elif i == Nx - 1:
-                # Boundary node: R_Nx-1 = T_Nx-1 - 1, so dR_Nx-1/dT_Nx-1 = 1
+                # Boundary node: R_Nx-1 = T_Nx-1 - 1, so A = 1
                 A[i, i] = 1.0
             else:
                 # Interior node: R_i = (T_{i+1} - 2T_i + T_{i-1})/dx² - α_i T_i²
@@ -1113,6 +1120,8 @@ def calc_dFdAlpha(T, alpha):
 def calc_dRdT(T, alpha):
     """
     Compute state Jacobian: dR/dT (size Nx × Nx, tridiagonal).
+    NOTE: if the governing equation was linear dR/dT = A
+    However we have a nonlinear term T^2, so dR/dT != A
 
     The residual is:
     - R_0 = T_0 (boundary)
@@ -1243,6 +1252,100 @@ The adjoint method computes sensitivities for all 11 parameters using only **2 s
 
 ## Discrete Adjoint Method (DAFoam Implementations)
 
-In progress.
+The 1D diffusion example above demonstrates the core adjoint concepts in a highly simplified case. However, applying adjoint methods to large-scale CFD solver like OpenFOAM introduces significant challenges. DAFoam handle these challenging by using a Jacobian-free adjoint approach, elaborated on as follows.
+
+---
+
+### Unified coupled variables and residual formulation
+
+In the 1D example, we had a scalar state variable $T$ and a single residual equation $R(T, \alpha) = 0$. Real CFD systems involve multiple coupled flow variables:
+- Velocity components: $\mathbf{u} = (u, v, w)$ (3 equations)
+- Pressure: $p$ (1 equation)
+- Turbulence variables: $k$, $\epsilon$, etc. (additional equations for RANS)
+
+All residuals are inter-coupled: momentum equations contain pressure gradients, continuity constrains the divergence of velocity, turbulence models depend on velocity gradients. Carefully defining the **coupled residual vector** $\mathbf{R}(\mathbf{W}, \mathbf{X})$ becomes non-trivial, where $\mathbf{W}$ are all state variables (velocity, pressure, turbulence) and $\mathbf{X}$ are design variables (mesh, material properties, etc.). Additionally, boundary conditions introduce complications: how do inlet/outlet velocities and pressure affect the Jacobian?
+
+**DAFoam's Solution:**
+
+DAFoam leverages OpenFOAM's **fvMatrix** class to systematically assemble discrete residuals for all equations:
+- Each equation (momentum, continuity, turbulence) is formulated as $\mathbf{A} \mathbf{W} = \mathbf{b}$ where $\mathbf{A}$ is a sparse matrix and $\mathbf{b}$ is the RHS, they are both stored in fvMatrix.
+- Boundary conditions are incorporated consistently into $\mathbf{A}$ and $\mathbf{b}$
+- The residual is: $\mathbf{R} = \mathbf{A} \mathbf{W} - \mathbf{b}$
+- All residuals (momentum, continuity, turbulence) are stacked into a single vector: $\mathbf{R}(\mathbf{W}, \mathbf{X})$
+
+This approach ensures:
+- Consistent treatment of Dirichlet, Neumann, and Robin boundary conditions across all equations
+- Design variable dependence (e.g., mesh movement affecting cell volumes and face areas) is tracked automatically
+
+---
+
+### Jacobian-free adjoint method
+
+In the 1D example, we explicitly formed and stored the state Jacobian $\frac{\partial \mathbf{R}}{\partial \mathbf{W}}$, a tridiagonal $11 \times 11$ matrix. For large-scale CFD problems with millions of unknowns, explicitly forming and storing this Jacobian is prohibitive in terms of memory and computational cost. Additionally, computing the exact Jacobian requires careful differentiation of complex nonlinear terms (convection, turbulence models), which becomes error-prone and difficult to maintain.
+
+**Jacobian-free GMRES approach:**
+
+Instead of explicitly computing and storing $\frac{\partial \mathbf{R}}{\partial \mathbf{W}}$, DAFoam uses **Jacobian-free GMRES** to solve the adjoint equation:
+$$\left(\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right)^T \boldsymbol{\psi} = \left(\frac{\partial F}{\partial \mathbf{W}}\right)^T$$
+
+The key insight is that GMRES only requires **matrix-vector products** of the form $\frac{\partial \mathbf{R}}{\partial \mathbf{W}}^T \mathbf{r}$ during iterations, not the full matrix. GMRES constructs the solution as a linear combination of vectors in the Krylov subspace:
+
+$$K_n = \text{span}\{\mathbf{r}_0, \mathbf{A}\mathbf{r}_0, \mathbf{A}^2\mathbf{r}_0, \ldots, \mathbf{A}^{n-1}\mathbf{r}_0\}$$
+
+This accumulates information across all iterations, achieving faster convergence than fixed-point methods.
+
+**Computing matrix-vector products via reverse-mode automatic differentiation:**
+
+We use **reverse-mode automatic differentiation** to compute matrix-vector products on-the-fly without forming the Jacobian:
+$$\overline{\mathbf{w}} = \left(\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right)^T \overline{\mathbf{R}}$$
+
+where $\overline{\mathbf{R}}$ (with overbar) denotes the input vector to be propagated backward through the adjoint computation, and $\overline{\mathbf{w}}$ (with overbar) is the resulting adjoint output representing the sensitivity with respect to state variables $\mathbf{W}$. In the GMRES iterations, we set $\overline{\mathbf{R}} = \mathbf{r}_0$ (the GMRES residual vector), and the output $\overline{\mathbf{w}} = \left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T \mathbf{r}_0$ is the matrix-vector product we need, all computed without explicitly storing the Jacobian.
+
+Note that we $\frac{\partial F}{\partial \mathbf{W}}$ is also computed via reverse-mode AD. 
+
+**Preconditioning for ill-conditioned systems:**
+
+The state Jacobian from 3D viscous turbulent flow is typically **ill-conditioned** (high ratio of largest to smallest eigenvalues), causing GMRES to converge slowly. We use a **preconditioner matrix** $\left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T_{PC}$ to transform the system into a better-conditioned form:
+
+$$\left(\left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T_{PC}\right)^{-1}\left(\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right)^T \boldsymbol{\psi} = \left(\left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T_{PC}\right)^{-1}\left(\frac{\partial F}{\partial \mathbf{W}}\right)^T$$
+
+where $\left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T_{PC} \approx \left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T$ but is much easier to invert. An efficient preconditioner clusters the eigenvalues, dramatically improving GMRES convergence.
+
+To explicitly compute $\left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T_{PC}$, DAFoam uses a **heuristic graph coloring approach** to accelerate the automatic differentiation computation, which groups variables that can be differentiated simultaneously without dependence conflicts.
+
+DAFoam uses the **PETSc software library** with a nested preconditioning strategy:
+
+1. **GMRES** (top-level solver)
+2. **Additive Schwarz Method (ASM)** (global preconditioner—divides system into overlapping blocks solved in parallel)
+3. **Incomplete LU (ILU)** factorization (local preconditioner in each block)
+4. **Richardson iterations** (inner and outer iterations to reduce memory cost)
+
+**Computing sensitivities with respect to design variables:**
+
+Once the adjoint variables $\boldsymbol{\psi}$ are obtained, we compute the total derivative of the objective with respect to design variables $\mathbf{X}$:
+
+$$\frac{dF}{d\mathbf{X}} = \frac{\partial F}{\partial \mathbf{X}} - \left(\frac{\partial \mathbf{R}}{\partial \mathbf{X}}\right)^T \boldsymbol{\psi}$$
+
+Again, DAFoam does not use analytical approach. Instead, it uses AD:
+
+1. **Direct objective partial:** $\frac{\partial F}{\partial \mathbf{X}}$ — computed via reverse-mode AD (typically zero or small if the objective depends only on state variables)
+
+2. **Design-dependent residual Jacobian:** $\left(\frac{\partial \mathbf{R}}{\partial \mathbf{X}}\right)^T \boldsymbol{\psi}$ — computed using a **Jacobian-free approach** similar to the adjoint solve. Rather than explicitly forming the matrix, we use reverse-mode AD to compute the product directly, where $\boldsymbol{\psi}$ is propagated backward through the residual computation.
+
+**Comparison: 1D Example vs. DAFoam Implementation**
+
+The following table highlights the key differences between the simple 1D adjoint method example and DAFoam's large-scale adjoint implementation:
+
+| Aspect | 1D Diffusion Example | DAFoam CFD Adjoint |
+|---|---|---|
+| **State variables** | Single scalar $T$ (11 nodes) | Coupled vectors: velocity, pressure, turbulence (millions of nodes) |
+| **System size** | $11 \times 11$ Jacobian | Could be millions × millions |
+| **State Jacobian storage** | Explicitly formed and stored | Never formed—Jacobian-free approach |
+| **Adjoint solve method** | Direct dense linear solver | GMRES with nested preconditioning (PETSc) |
+| **Matrix-vector products** | Explicit matrix multiply | Reverse-mode AD on-the-fly computation |
+| **Computing $\frac{\partial \mathbf{R}}{\partial \mathbf{X}}^T \boldsymbol{\psi}$** | Analytical formula | Reverse-mode AD matrix-vector product computation |
+
+
+---
 
 {% include links.html %}
