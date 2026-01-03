@@ -27,8 +27,6 @@ Computational Fluid Dynamics (CFD) is the numerical solution of the Navier--Stok
 
 This section shows a simple CFD example by using the finite-volume method to solve **steady-state, incompressible, laminar flow** in a lid-driven cavity.
 
----
-
 ### 1) Governing equations: incompressible, laminar Navier–Stokes (2D)
 
 For this **2D lid-driven cavity example**, we solve the incompressible Navier–Stokes equations for a Newtonian fluid with constant density $\rho$ and viscosity $\mu$ in **steady state**:
@@ -60,8 +58,6 @@ where:
 - **Nonlinear**: The advection terms $u \frac{\partial u}{\partial x}$ and $v \frac{\partial u}{\partial y}$ make the equations nonlinear
 - **Coupled**: The pressure $p$ is unknown and is determined by the constraint $\nabla \cdot \mathbf{u} = 0$ (continuity). There is no pressure equation, so we must enforce continuity indirectly through a coupling algorithm
 
----
-
 ### 2) Discretizing the domain: mesh and control volumes (2D)
 
 For our **2D lid-driven cavity**, we use a structured **quadrilateral (quad) mesh** to discretize the square domain $[0,1] \times [0,1]$.
@@ -88,10 +84,7 @@ A mesh partitions the continuous 2D domain into small cells (control volumes). E
 
 - **Cell area** $A_P$: In 2D, this is the physical area of the cell. For a uniform quad mesh, all cells have the same area. For our example with $n_x \times n_y$ cells: $A_P = \frac{1}{n_x} \times \frac{1}{n_y}$.
 
-- **Face flux** $\phi_f$: The flow rate (volume per unit time per unit depth) crossing a face. Computed as:
-  $$\phi_f = \mathbf{u}_f \cdot \mathbf{n}_f \cdot L_f$$
-  where $\mathbf{u}_f = (u_f, v_f)$ is the velocity at the face, $\mathbf{n}_f = (n_{f,x}, n_{f,y})$ is the outward unit normal, and $L_f$ is the face length. In component form:
-  $$\phi_f = u_f n_{f,x} L_f + v_f n_{f,y} L_f$$
+- **Face flux** $\phi_f$: The flow rate (volume per unit time per unit depth) crossing a face. Computed as: $\phi_f = \mathbf{u}_f \mathbf{n}_f L_f$, where $\mathbf{u}_f = (u_f, v_f)$ is the velocity at the face, $\mathbf{n}_f = (n_{f,x}, n_{f,y})$ is the outward unit normal, and $L_f$ is the face length. In component form: $\phi_f = u_f n_{f,x} L_f + v_f n_{f,y} L_f$
 
 **Mesh visualization:**
 
@@ -128,8 +121,6 @@ We can use a similar formulation for other terms in the NS equations. The key in
 <img src="{{ site.url }}{{ site.baseurl }}/images/developer_guide/cfd_flux_calculation.png" style="width:400px !important;" />
 
 *Figure 2: Flux Exchange Between Adjacent Cells. Cell P (yellow, center) exchanges momentum with four neighbors (E, W, N, S) through shared faces. Arrows show the direction of flux at each face. The conservation principle states that the sum of all fluxes must balance: $\phi_E + \phi_W + \phi_N + \phi_S = 0$ in steady state, ensuring what flows out equals what flows in.*
-
----
 
 ### 3) Turning PDEs into algebra: fluxes, interpolation, and linear systems (2D)
 
@@ -209,8 +200,6 @@ where:
 - $\Delta x, \Delta y$ are grid spacings
 
 This pressure-correction ensures that the new velocity field $\mathbf{u}^{(n)}$ satisfies the continuity constraint to within the tolerance of the Poisson solver. The process repeats (fixed-point iteration) until both momentum and continuity equations are satisfied within specified tolerances.
-
----
 
 ### 4) How we solve it: iterative steady-state algorithm (high level)
 
@@ -1254,8 +1243,6 @@ The adjoint method computes sensitivities for all 11 parameters using only **2 s
 
 The 1D diffusion example above demonstrates the core adjoint concepts in a highly simplified case. However, applying adjoint methods to large-scale CFD solver like OpenFOAM introduces significant challenges. DAFoam handle these challenging by using a Jacobian-free adjoint approach, elaborated on as follows.
 
----
-
 ### Unified coupled variables and residual formulation
 
 In the 1D example, we had a scalar state variable $T$ and a single residual equation $R(T, \alpha) = 0$. Real CFD systems involve multiple coupled flow variables:
@@ -1276,8 +1263,6 @@ DAFoam leverages OpenFOAM's **fvMatrix** class to systematically assemble discre
 This approach ensures:
 - Consistent treatment of Dirichlet, Neumann, and Robin boundary conditions across all equations
 - Design variable dependence (e.g., mesh movement affecting cell volumes and face areas) is tracked automatically
-
----
 
 ### Jacobian-free adjoint method
 
@@ -1345,7 +1330,5 @@ The following table highlights the key differences between the simple 1D adjoint
 | **Matrix-vector products** | Explicit matrix multiply | Reverse-mode AD on-the-fly computation |
 | **Computing $\frac{\partial \mathbf{R}}{\partial \mathbf{X}}^T \boldsymbol{\psi}$** | Analytical formula | Reverse-mode AD matrix-vector product computation |
 
-
----
 
 {% include links.html %}
