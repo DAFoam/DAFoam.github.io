@@ -380,7 +380,9 @@ DAFoam integrates a density-based, high-speed aerodynamic CFD solver [Hisa](http
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 cd $DAFOAM_ROOT_PATH/OpenFOAM && \
-git clone https://github.com/DAFoam/Hisa4DAFoam && \
+wget https://github.com/DAFoam/Hisa4DAFoam/archive/refs/tags/v1.1.tar.gz && \
+tar -xvf v1.1.tar.gz && \
+mv Hisa4DAFoam-* Hisa4DAFoam && \
 cd Hisa4DAFoam && \
 ./Allmake
 </pre>
