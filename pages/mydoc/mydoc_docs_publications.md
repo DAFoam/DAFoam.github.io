@@ -49,9 +49,9 @@ The following publications explicitly state that DAFoam was used in their studie
 
 <61> Z. Li, L. Fang, A. Sharma, P. He. Field Inversion Machine Learning for Accurate Predictions of Time-Resolved Unsteady Flows Over Airfoils. AIAA SciTech Forum, 2025.
 
-<60> C. Wu, Y. Zhang. Field Inversion and Machine Learning Based on the Rubber-Band Spalart-Allmaras Model. Theoretical and Applied Mechanics Letters. 2024.
+<60> J. Park, M. Mangano, S. Seraj, B. Pacini, Y. Liao, B. Knight, K. Naik, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based design optimization of a 5 kW ducted hydrokinetic turbine with practical constraints, Renewable Energy, 2025.
 
-<59> J. Park, M. Mangano, S. Seraj, B. Pacini, Y. Liao, B. Knight, K. Naik, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based design optimization of a 5 kW ducted hydrokinetic turbine with practical constraints, arXiv.2411.13492, 2024.
+<59> C. Wu, Y. Zhang. Field Inversion and Machine Learning Based on the Rubber-Band Spalart-Allmaras Model. Theoretical and Applied Mechanics Letters. 2024.
 
 <58> E. Ntantis, V. Xezonakis. Improving Transonic Performance with Adjoint-Based NACA 0012 Airfoil Design Optimization. Results in Engineering, 2024
 
