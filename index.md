@@ -1,5 +1,5 @@
 ---
-title: "DAFoam: An Open-Source Platform for Physics-Based Engineering Optimization"
+title: "DAFoam: An Open-Source Platform for High-Fidelity Engineering Optimization"
 keywords: DAFoam, OpenFOAM, adjoint, CFD, optimization, inverse problems, machine learning, AI, surrogate
 sidebar: mydoc_sidebar
 permalink: index.html
