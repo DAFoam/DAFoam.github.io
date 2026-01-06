@@ -26,6 +26,7 @@ DAFoam source code is available on [GitHub](https://github.com/mdolab/dafoam), a
         <li data-target="#carousel" data-slide-to="1"></li>
         <li data-target="#carousel" data-slide-to="2"></li>
         <li data-target="#carousel" data-slide-to="3"></li>
+        <li data-target="#carousel" data-slide-to="4"></li>
     </ol>
 
     <!-- Items -->
@@ -37,10 +38,13 @@ DAFoam source code is available on [GitHub](https://github.com/mdolab/dafoam), a
             <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/slider2.png" alt="Slide 2" />
         </div>
         <div class="item">
-            <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/slider3.png" alt="Slide 4" />
+            <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/slider3.png" alt="Slide 3" />
         </div>
         <div class="item">
             <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/slider4.png" alt="Slide 4" />
+        </div>
+        <div class="item">
+            <img src="{{ site.url }}{{ site.baseurl }}/images/slider7001400/slider5.png" alt="Slide 5" />
         </div>
     </div>
 </div>
