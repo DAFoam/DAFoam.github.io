@@ -9,6 +9,10 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
+<83> L. Fang, P. He. Agentic AI for Conversational Aerodynamic Analysis and Optimization of Airfoils and Wings. AIAA SciTech Forum, 2026.
+
+<82> A. Dikshit, P. Koratikere, L. Leifsson, P. He. Surrogate-Based Uncertainty Propagation in Aerostructural Analysis of a Wing in Subsonic Flow. AIAA SciTech Forum, 2026.
+
 <81> C. Psenica, L. Fang, S. Zoppelt, M. Leader, P. He. A Modular Conjugate Heat Transfer Optimization Framework for Thermal Management of Electric Aircraft. International Journal of Heat and Mass Transfer, 2026.
 
 <80> M. Bashir, D. Gong, L. Sun, P. Duan. Aerodynamic shape optimization using the adjoint method combined with an inverse design approach for non-parameterized geometries. Physics of Fluids, 2025.
