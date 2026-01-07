@@ -64,7 +64,7 @@ The local installation works for Linux, Windows, and MacOS and consist of the fo
   }
   </pre>
 
-- IMPORTANT! You need to close and re-open Claude Desktop to make the new MCP effective. **NOTE:** On Mac, you may need to Force Quit the Claude desktop application before you re-open it. Once the Claude Desktop is re-open, you can click the "Search and Tools" button to verify if the DAFoam MCP server is running. See the picture below. For developers: If you see an error, the logs file are in ~/Library/Logs/Claude/mcp-server-dafoam_mcp_server.log 
+- IMPORTANT! You need to close and re-open Claude Desktop to make the new MCP effective. **NOTE:** On Mac and Windows, you may need to Force Quit the Claude desktop application before you re-open it. Once the Claude Desktop is re-open, you can click the "Search and Tools" button to verify if the DAFoam MCP server is running. See the picture below. For developers: If you see an error, the logs file are in ~/Library/Logs/Claude/mcp-server-dafoam_mcp_server.log 
 
   <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI_Check_DAFoam_MCP_Server.png" style="width:500px !important;" />
 
