@@ -7,6 +7,8 @@ permalink: developer-guide-python-layer.html
 folder: mydoc
 ---
 
+This chapter was written by [Ping He](https://github.com/friedenhe).
+
 ## Overview
 
 The Python layer provides the user-facing API for DAFoam and integrates with MPhys for multidisciplinary optimization. For developers who need to wrap DAFoam into their framework or conduct high-level developments, the Python layer is the main entry point. The Python layer consists of two main modules:

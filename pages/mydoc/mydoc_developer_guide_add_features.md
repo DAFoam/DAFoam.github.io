@@ -7,6 +7,8 @@ permalink: developer-guide-add-features.html
 folder: mydoc
 ---
 
+This chapter was written by [Ping He](https://github.com/friedenhe).
+
 # Developer Guide: Adding New Features to DAFoam
 
 DAFoam's unified architecture with a single library and standardized interfaces makes adding new features significantly faster. This guide covers the most common extension points.
@@ -330,7 +332,7 @@ self.add_objective("custom_obj", scaler=1.0, ref=1.0)
 
 ## 4. Add a New Design Variable/Input (DAInput)
 
-Design variables (inputs) control what parameters the optimizer can modify. DAFoam automatically computes `dR/dX` and `dF/dX` for any new input using automatic differentiation.
+Design variables (inputs) control what parameters the optimizer can modify. DAFoam automatically computes `dR/dX` and `dF/dX` for any new input using automatic differentiation. Therefore, the ONLY thing developers need to do is to add a child class to `DAInput`.
 
 ### Step 1: Create New Input Class
 
@@ -753,56 +755,5 @@ label DAMyNewSolver::solvePrimal()
     return 0;
 }
 ```
-
----
-
-## Build and Test
-
-### Build
-
-```bash
-cd $HOME/dafoam/repos/dafoam
-./Allmake
-```
-
-**Advantages of v4:**
-- First build: ~10 minutes
-- Rebuild after changes: <<10 minutes
-- Automatic parallel build on all CPU cores
-- No need for `Allclean` - incremental compilation only rebuilds changed files
-
-### Test Your Changes
-
-```bash
-cd $HOME/mount/examples/NACA0012/
-./preProcessing.sh
-python runScript_v4.py -task=run_model
-```
-
----
-
-## Key Design Principles
-
-1. **Automatic Derivatives:** DAFoam automatically computes all partial derivatives for new functions and inputs using CoDiPack AD - you only implement the forward computation!
-
-2. **Unified Library:** All solvers (incompressible, compressible, solid) compile to one library - easier maintenance and faster builds.
-
-3. **Standardized Interfaces:** All new features follow the same pattern (Type, H/C files, registration), making code more consistent and maintainable.
-
-4. **Type Names:** All classes have unique `TypeName()` which is used for runtime selection - make sure it doesn't conflict with existing OpenFOAM types.
-
-5. **Registration:** Use `addToRunTimeSelectionTable()` macro to register new classes in OpenFOAM's runtime selection system.
-
----
-
-## Example: Complete Workflow
-
-To add a new function for maximum velocity:
-
-1. **Create** `DAFunctionMaxVelocity.H/C` with `calcFunction()` computing `max(|U|)`
-2. **Register** in `src/adjoint/Make/files`
-3. **Build** with `./Allmake` (~30 seconds)
-4. **Use** in `runScript.py` with type name
-5. DAFoam automatically computes `dMaxVel/dU`, `dMaxVel/dX` - done!
 
 {% include links.html %}

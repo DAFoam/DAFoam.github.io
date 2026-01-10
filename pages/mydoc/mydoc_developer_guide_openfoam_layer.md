@@ -7,6 +7,8 @@ permalink: developer-guide-openfoam-layer.html
 folder: mydoc
 ---
 
+This chapter was written by [Ping He](https://github.com/friedenhe).
+
 # OpenFOAM Layer Architecture
 
 The OpenFOAM layer (`src/adjoint`) is the core C++ implementation of DAFoam's discrete adjoint solver. It is responsible for computing sensitivities, managing state variables, and coordinating primal and adjoint computations. This layer bridges OpenFOAM's physics solvers with DAFoam's optimization framework.
