@@ -115,8 +115,8 @@ DAFoam uses GitHub Actions for automated testing and deployment:
 For any new changes, please make sure all the tests pass. Tests can be run from the DAFoam repository:
 
 ```bash
-cd $HOME/dafoam/repos/dafoam
-./Alltest
+cd dafoam/tests
+./Allrun
 ```
 
 This runs the complete test suite including:

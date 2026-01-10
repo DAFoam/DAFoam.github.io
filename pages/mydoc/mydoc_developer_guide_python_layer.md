@@ -134,11 +134,11 @@ The following are the key builder methods. They will NOT be directly used in DAF
    - Returns `DAFoamPostcouplingGroup`
    - Contains `DAFoamFunctions` component for computing objectives/constraints
 
-### OpenMDAO Component Classes
+### DAFoam Component Classes
 
 #### DAFoamGroup
 
-**Purpose**: OpenMDAO Group containing the main solver and optional coupling components. It does not do the actual computation, it just group certain components together to facilitate MDO.
+**Purpose**: DAFoamGroup contains the main solver and optional coupling components. It does not do the actual computation, it just group certain components together to facilitate MDO.
 
 **Structure** ([mphys_dafoam.py:125-181](https://github.com/mdolab/dafoam/blob/v4.0.3/dafoam/mphys/mphys_dafoam.py#L125-L181)):
 - **deformer**: DAFoamWarper component (if `use_warper=True`)
@@ -163,7 +163,7 @@ The group automatically promotes inputs/outputs based on coupling configuration.
 - `solve_nonlinear()`: Solves primal equations to find w such that R(w, x) = 0
 - `linearize()`: Assembles explicit Jacobian matrices (dR/dw, dR/dx), NOTE: this method is not currently used in DAFoam; DAFoam uses Jacobian-free adjoint.
 - `apply_linear()`: compute the matrix vector products for states and volume mesh coordinates, i.e., [dR/dW]^T * psi, [dR/dXv]^T * psi
-- `solve_linear()`: Solves adjoint equations [dR/dw]^T * ψ = [dF/dw]^T
+- `solve_linear()`: Solves adjoint equations [dR/dw]^T * psi = [dF/dw]^T
 
 **Inputs** (defined by `inputInfo` in daOption):
 - Design variables (shape, angle of attack, flow conditions, etc.)
@@ -185,22 +185,20 @@ The DAFoamSolver orchestrates the flow and adjoint computations through OpenMDAO
    - Calls `DASolver()` (PYDAFOAM object) to solve primal equations
    - The PYDAFOAM object's internal `__call__` method calls C++ DASolver via Cython to execute the flow solver (e.g., DASimpleFoam)
    - Returns converged state variables `aero_states` satisfying residual: `R = 0`
-   - Call DAFoamFunctions's `compute` method and return the objective and constraint functions
 
 *Adjoint Pipeline* (Reverse Pass for Sensitivity Analysis):
 1. **OpenMDAO enters reverse mode**
-2. **`linearize()` is skipped** - DAFoam uses Jacobian-free adjoint method
-3. **DAFoamFunctions**:
+2. **DAFoamFunctions**:
    - Computes partial derivatives `dF/dw` and `dF/dx`
    - This is done by calling the `compute_jacvec_product()` method in DAFoamFunctions
+3. **`solve_linear()`**:
+   - Solves the adjoint equation: `[dR/dw]^T * psi = [dF/dw]^T`
+   - Calls `solveLinearEqn()` to solve the adjoint system
+   - Returns adjoint variables `psi`
 4. **`apply_linear()`**:
    - Computes matrix-vector products: `[dR/dw]^T * psi` and `[dR/dx]^T * psi`
    - apply_linear calls C++ routine `calcJacTVecProduct` defined in `pyDASolvers.so` to compute these products without explicitly forming Jacobian matrices
-4. **`solve_linear()` **:
-   - Solves the adjoint equation: `[dR/dw]^T * ψ = [dF/dw]^T`
-   - Calls `solveLinearEqn()` to solve the adjoint system
-   - Returns adjoint variables `ψ`
-5. **Compute total derivatives**: Once `ψ` is available, the total derivatives are computed as: `total = dF/dx - [dR/dx]^T * ψ`.
+5. **Compute total derivatives**: Once `psi` is available, the total derivatives are computed as: `total = dF/dx - [dR/dx]^T * psi`.
 
 **Example Flow for an Optimization Step**:
 ```
@@ -212,9 +210,9 @@ OpenMDAO Problem.compute_totals()
   ↓
 [Reverse Pass]
   - DAFoamFunctions.compute_jacvec_product() → compute dF/dx and dF/dw
-  - DAFoamSolver.solve_linear() → [dR/dw]^T * ψ = [dF/dw]^T → C++ adjoint solve for ψ
-  - DAFoamSolver.apply_linear() → compute [dR/dx]^T * ψ
-  - Compute total deriv → dF/dx - [dR/dx]^T * ψ
+  - DAFoamSolver.solve_linear() → [dR/dw]^T * psi = [dF/dw]^T → C++ adjoint solve for psi
+  - DAFoamSolver.apply_linear() → compute [dR/dx]^T * psi
+  - Compute total deriv → dF/dx - [dR/dx]^T * psi
   ↓
 Optimizer receives total derivatives to update the design variables
 ```
@@ -306,7 +304,7 @@ Geometry parameterization is handled outside the DAFoam components and is define
 
 #### Geometry Definition (runScript.py)
 
-In the user's `runScript.py`, the geometry is parameterized using `pyGeo` (DVGeometry) and `OM_DVGEOCOMP`. For example:
+In the user's `runScript.py`, the geometry is parameterized using `pyGeo`'s `OM_DVGEOCOMP` interface. For example:
 
 ```python
 # Add the geometry component with FFD parameterization
@@ -318,7 +316,7 @@ self.connect("geometry.x_aero0", "scenario1.x_aero")
 
 The geometry component takes the initial surface coordinates (`x_aero0`) from DAFoamMesh and outputs the deformed coordinates (`x_aero0`) based on design variable changes (e.g., FFD control points, shape functions, etc.). `OM_DVGEOCOMP` is defined in in the [pyGeo repo](https://github.com/mdolab/pygeo): `pygeo/mphys/mphys_pygeo.py`.
 
-#### Design Variables (DVS) Component Setup
+#### Design Variables (dvs) Component Setup
 
 Design variables are added to the problem via the `dvs` (design variable system) component, which is an `IndepVarComp` that serves as the top-level source for all design variables. Again `dvs` has no inputs.
 
