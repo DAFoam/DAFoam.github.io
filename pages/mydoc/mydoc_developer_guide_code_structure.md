@@ -13,7 +13,7 @@ DAFoam has a three-layer architecture consisting of C++, Cython, and Python laye
 
 ## Three-Layer Architecture
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/developer_guide/dafoam_layers.png" style="width:800px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/developer_guide/dafoam_layers.png" style="width:1000px !important;" />
 
 *Figure 1: DAFoam has three code layers: C++, Cython, and Python. Each layer takes source code or libraries as input in the vertical direction and outputs libraries to the horizontal direction.*
 

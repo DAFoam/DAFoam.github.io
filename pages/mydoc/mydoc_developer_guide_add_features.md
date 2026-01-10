@@ -167,9 +167,20 @@ DAFoam automatically computes adjoint derivatives for new functions using automa
 
 ### Step 1: Create New Function Class
 
-**File:** Create `src/adjoint/DAFunction/DAFunctionCustom.H`
+**File:** Create `src/adjoint/DAFunction/DAFunctionCustom.H` and `DAFunctionCustom.C`
 
 Reference actual implementations: [DAFunctionForce.H](https://github.com/mdolab/dafoam/blob/v4.0.3/src/adjoint/DAFunction/DAFunctionForce.H), [DAFunctionMassFlowRate.H](https://github.com/mdolab/dafoam/blob/v4.0.3/src/adjoint/DAFunction/DAFunctionMassFlowRate.H)
+
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#daFunctionCode">DAFunctionCustom.H and DAFunctionCustom.C (click to expand)</a>
+</h4>
+</div>
+<div id="daFunctionCode" class="panel-collapse collapse">
+<div class="panel-body">
+
+**DAFunctionCustom.H:**
 
 ```cpp
 /*---------------------------------------------------------------------------*\
@@ -216,9 +227,7 @@ public:
 #endif
 ```
 
-**File:** Create `src/adjoint/DAFunction/DAFunctionCustom.C`
-
-Reference actual implementation: [DAFunctionForce.C](https://github.com/mdolab/dafoam/blob/v4.0.3/src/adjoint/DAFunction/DAFunctionForce.C)
+**DAFunctionCustom.C:**
 
 ```cpp
 /*---------------------------------------------------------------------------*\
@@ -284,6 +293,10 @@ scalar DAFunctionCustom::calcFunction()
 } // End namespace Foam
 ```
 
+</div>
+</div>
+</div>
+
 ### Step 2: Register in Build System
 
 **File:** [src/adjoint/Make/files](https://github.com/mdolab/dafoam/blob/v4.0.3/src/adjoint/Make/files)
@@ -321,9 +334,20 @@ Design variables (inputs) control what parameters the optimizer can modify. DAFo
 
 ### Step 1: Create New Input Class
 
-**File:** Create `src/adjoint/DAInput/DAInputCustom.H`
+**File:** Create `src/adjoint/DAInput/DAInputCustom.H` and `DAInputCustom.C`
 
 Reference actual implementations: [DAInputVolCoord.H](https://github.com/mdolab/dafoam/blob/v4.0.3/src/adjoint/DAInput/DAInputVolCoord.H), [DAInputPatchVelocity.H](https://github.com/mdolab/dafoam/blob/v4.0.3/src/adjoint/DAInput/DAInputPatchVelocity.H)
+
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a data-toggle="collapse" href="#daInputCode">DAInputCustom.H and DAInputCustom.C (click to expand)</a>
+</h4>
+</div>
+<div id="daInputCode" class="panel-collapse collapse">
+<div class="panel-body">
+
+**DAInputCustom.H:**
 
 ```cpp
 /*---------------------------------------------------------------------------*\
@@ -384,9 +408,7 @@ public:
 #endif
 ```
 
-**File:** Create `src/adjoint/DAInput/DAInputCustom.C`
-
-Reference actual implementation: [DAInputVolCoord.C](https://github.com/mdolab/dafoam/blob/v4.0.3/src/adjoint/DAInput/DAInputVolCoord.C)
+**DAInputCustom.C:**
 
 ```cpp
 /*---------------------------------------------------------------------------*\
@@ -463,6 +485,10 @@ void DAInputCustom::run(const scalarList& input)
 
 } // End namespace Foam
 ```
+
+</div>
+</div>
+</div>
 
 ### Step 2: Register in Build System
 

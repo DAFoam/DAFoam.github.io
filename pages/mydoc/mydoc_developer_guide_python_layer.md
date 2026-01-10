@@ -59,7 +59,7 @@ The `PYDAFOAM` class is the main interface to initialize and manage DAFoam C++ s
 
 The `mphys_dafoam.py` module implements the MPhys Builder API and defines OpenMDAO components that wrap DAFoam's flow solver capabilities, enabling seamless integration with multidisciplinary optimization frameworks and standardizing the interface for coupling with other physics solvers (structural, thermal, etc.). One of the main purposes of mphys_dafoam.py is to setup the MDO problem, illustrated as an OpenMDAO N2 diagram below. In the following, we will elaborate on how mphys_dafoam.py setups such an N2 diagram.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/developer_guide/dafoam_n2.png" style="width:800px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/developer_guide/dafoam_n2.png" style="width:1000px !important;" />
 
 *Figure 1: N2 diagram for a typical DAFoam aerodynamic optimization case.*
 
