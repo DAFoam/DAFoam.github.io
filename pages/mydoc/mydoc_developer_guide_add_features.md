@@ -9,6 +9,12 @@ folder: mydoc
 
 This chapter was written by [Ping He](https://github.com/friedenhe).
 
+## Learning Objectives
+
+After reading this chapter, you should be able to:
+
+- Implement all the nine new features, from adding a new parameter to adding a new solver, and verify their correctness 
+
 # Developer Guide: Adding New Features to DAFoam
 
 DAFoam's unified architecture with a single library and standardized interfaces makes adding new features significantly faster. This guide covers the most common extension points.

@@ -9,6 +9,15 @@ folder: mydoc
 
 This chapter was written by [Ping He](https://github.com/friedenhe).
 
+## Learning Objectives
+
+After reading this chapter, you should be able to:
+
+- Describe the functionality of the main entry-point C++ class DASolver, including the detailed call flow for the primal and adjoint solver routines.
+
+- Explain how the calcJacTVecProduct class computes Jacobian–transpose–vector products using reverse-mode automatic differentiation.
+
+
 # OpenFOAM Layer Architecture
 
 The OpenFOAM layer (`src/adjoint`) is the core C++ implementation of DAFoam's discrete adjoint solver. It is responsible for computing sensitivities, managing state variables, and coordinating primal and adjoint computations. This layer bridges OpenFOAM's physics solvers with DAFoam's optimization framework.

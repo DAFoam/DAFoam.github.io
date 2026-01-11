@@ -9,6 +9,17 @@ folder: mydoc
 
 This chapter was written by [Ping He](https://github.com/friedenhe).
 
+## Learning Objectives
+
+After reading this chapter, you should be able to:
+
+- Explain the roles and functionalities of the two main Python-layer files: pyDAFoam.py and mphys_dafoam.py.
+
+- Trace the detailed call flow of a typical DAFoam case, from the main entry-point class DAFoamBuilder through the primal and adjoint solver function calls.
+
+- Describe how mphys_dafoam.py sets up a typical aerodynamic shape optimization N2, including the mesh, design variables (dvs), geometry, solver group, and objective/constraint functions.
+
+
 ## Overview
 
 The Python layer provides the user-facing API for DAFoam and integrates with MPhys for multidisciplinary optimization. For developers who need to wrap DAFoam into their framework or conduct high-level developments, the Python layer is the main entry point. The Python layer consists of two main modules:
