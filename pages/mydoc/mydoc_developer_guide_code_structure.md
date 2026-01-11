@@ -9,6 +9,16 @@ folder: mydoc
 
 This chapter was written by [Ping He](https://github.com/friedenhe).
 
+## Learning Objectives:
+
+After reading this chapter, you should be able to:
+
+- Describe the three-layer code architecture of DAFoam and explain how the layers interact with one another.
+
+- Explain the DAFoam compilation process, including which files are compiled, which libraries are generated, and where these libraries are stored and used.
+
+- Describe the DAFoam regression testing workflow.
+
 ## Overview
 
 DAFoam has a three-layer architecture consisting of C++, Cython, and Python layers. This design allows DAFoam to leverage the computational efficiency of C++ while providing a user-friendly Python interface for optimization workflows. Each layer takes source code or libraries as input in the vertical direction and outputs libraries to the horizontal direction.
