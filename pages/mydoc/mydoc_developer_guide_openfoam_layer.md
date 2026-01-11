@@ -78,7 +78,7 @@ This is called from the Cython layer (`pyDASolvers.pyx`) which interfaces with P
 <div id="cfdCode" class="panel-collapse collapse">
 <div class="panel-body">
 
-1. Python Calls the Cython Layer
+**Python Calls the Cython Layer**
 
 From Python user script (e.g., `runScript.py`):
 
@@ -95,7 +95,7 @@ daOptions = {
 pyDASolvers_instance = pyDASolvers(daOptions)
 ```
 
-2. Cython Calls C++ DASolver::New()
+**Cython Calls C++ DASolver::New()**
 
 **File:** [pyDASolvers.pyx](https://github.com/mdolab/dafoam/blob/v4.0.3/src/pyDASolvers/pyDASolvers.pyx)
 
@@ -106,16 +106,16 @@ The Cython code converts Python dictionary to C++ and calls:
 DASolverPtr_.reset(DASolver::New(argsAll, pyOptions));
 ```
 
-3. DASolver::New() Routes to Correct Child Class
+**DASolver::New() Routes to Correct Child Class**
 
 **File:** [DASolver.C, lines 111-141](https://github.com/mdolab/dafoam/blob/v4.0.3/src/adjoint/DASolver/DASolver.C#L111-L141)
 
 The `New()` method:
-1. Reads `"solverName"` from pyOptions dictionary
-2. Searches runtime selection table for matching constructor
-3. Calls the constructor of the appropriate child class
+- Reads `"solverName"` from pyOptions dictionary
+- Searches runtime selection table for matching constructor
+- Calls the constructor of the appropriate child class
 
-4. Base Class Constructor Initializes Common Infrastructure
+**Base Class Constructor Initializes Common Infrastructure**
 
 **File:** [DASolver.C, lines 35-107](https://github.com/mdolab/dafoam/blob/v4.0.3/src/adjoint/DASolver/DASolver.C#L35-L107)
 
@@ -142,7 +142,7 @@ DASolver::DASolver(
 }
 ```
 
-5. Child Class Constructor Initializes Solver-Specific Components
+**Child Class Constructor Initializes Solver-Specific Components**
 
 **File:** [DASimpleFoam.C, lines 41-78](https://github.com/mdolab/dafoam/blob/v4.0.3/src/adjoint/DASolver/DASimpleFoam/DASimpleFoam.C#L41-L78)
 
@@ -158,7 +158,7 @@ DASimpleFoam::DASimpleFoam(
 }
 ```
 
-6. Python Gets Reference to DASolver Instance
+**Python Gets Reference to DASolver Instance**
 
 The Cython wrapper returns a handle to the C++ DASolver object, which Python can use for:
 - Calling `solvePrimal()` to run CFD simulations
@@ -206,25 +206,17 @@ product = [dOutput/dInput]^T * seed
 ```
 
 More specifically:
-- If output is a function F and input is a design variable X:
-  ```
-  product = (∂F/∂X)^T * seed = (∂F/∂X) * seed
-  ```
-- If output is state U and input is design variable X:
-  ```
-  product = (∂U/∂X)^T * seed
-  ```
+- If output is a function F and input is a design variable X: `product = (∂F/∂X)^T * seed = (∂F/∂X) * seed`
+- If output is state U and input is design variable X: `product = (∂U/∂X)^T * seed`
 
 <div class="panel panel-default">
 <div class="panel-heading">
 <h4 class="panel-title">
-<a data-toggle="collapse" href="#cfdCode">Detailed Implementation Flow for calcJacTVecProduct (click to expand)</a>
+<a data-toggle="collapse" href="#matvec">Detailed Implementation Flow for calcJacTVecProduct (click to expand)</a>
 </h4>
 </div>
-<div id="cfdCode" class="panel-collapse collapse">
+<div id="matvec" class="panel-collapse collapse">
 <div class="panel-body">
-
-**:**
 
 ```cpp
 1. Create Input/Output Objects
@@ -271,6 +263,7 @@ More specifically:
    ├─> assignStateGradient2Vec(input_array, product_vector)
    └─> product = [∂output/∂input]^T * seed
 ```
+
 </div>
 </div>
 </div>
