@@ -1293,7 +1293,11 @@ Note that we $\frac{\partial F}{\partial \mathbf{W}}$ is also computed via rever
 
 The state Jacobian from 3D viscous turbulent flow is typically **ill-conditioned** (high ratio of largest to smallest eigenvalues), causing GMRES to converge slowly. We use a **preconditioner matrix** $\left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T_{PC}$ to transform the system into a better-conditioned form:
 
-$$\left(\left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T_{PC}\right)^{-1}\left(\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right)^T \boldsymbol{\psi} = \left(\left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T_{PC}\right)^{-1}\left(\frac{\partial F}{\partial \mathbf{W}}\right)^T \label{eq:dafoam-preconditioned-adjoint}$$
+<div id="eq-dafoam-preconditioned-adjoint">
+
+$$\left(\left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T_{PC}\right)^{-1}\left(\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right)^T \boldsymbol{\psi} = \left(\left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T_{PC}\right)^{-1}\left(\frac{\partial F}{\partial \mathbf{W}}\right)^T$$
+
+</div>
 
 where $\left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T_{PC} \approx \left[\frac{\partial \mathbf{R}}{\partial \mathbf{W}}\right]^T$ but is much easier to invert. An efficient preconditioner clusters the eigenvalues, dramatically improving GMRES convergence.
 
@@ -1310,7 +1314,11 @@ DAFoam uses the **PETSc software library** with a nested preconditioning strateg
 
 Once the adjoint variables $\boldsymbol{\psi}$ are obtained, we compute the total derivative of the objective with respect to design variables $\mathbf{X}$:
 
-$$\frac{dF}{d\mathbf{X}} = \frac{\partial F}{\partial \mathbf{X}} - \left(\frac{\partial \mathbf{R}}{\partial \mathbf{X}}\right)^T \boldsymbol{\psi} \label{eq:dafoam-adjoint-total-deriv}$$
+<div id="eq-dafoam-adjoint-total-deriv">
+
+$$\frac{dF}{d\mathbf{X}} = \frac{\partial F}{\partial \mathbf{X}} - \left(\frac{\partial \mathbf{R}}{\partial \mathbf{X}}\right)^T \boldsymbol{\psi}$$
+
+</div>
 
 Again, DAFoam does not use analytical approach. Instead, it uses AD:
 
