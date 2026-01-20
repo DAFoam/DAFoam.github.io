@@ -209,6 +209,14 @@ entries:
           url: /tutorials-da-ramp.html
           output: web, pdf
 
+      - title: Surrogate Based Optimization
+        output: web, pdf
+        subfolderitems:
+      
+        - title: NACA0012 incompressible
+          url: /tutorials-SBO-naca0012.html
+          output: web, pdf
+
 
   - title: User Guide
     output: web, pdf
