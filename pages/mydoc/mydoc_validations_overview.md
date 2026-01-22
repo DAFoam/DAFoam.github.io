@@ -3,7 +3,7 @@ title: Overview
 keywords: validations, overview
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_validations_overview.html
+permalink: validations-overview.html
 folder: mydoc
 ---
 

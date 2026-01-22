@@ -3,11 +3,10 @@ title: pitzDaily
 keywords: tutorial, pitzDaily
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_topo_pitzdaily.html
+permalink: tutorials-topo-pitzdaily.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is a density-based topology optimization case for the pitzDaily case in OpenFOAM. 
 
@@ -53,7 +52,7 @@ Other notes:
 
 - We need to specify the total number of cells "nCells".
 
-- We need to choose the Jacobian free option in daOptions: "adjJacobianOption": "JacobianFree". This means that we need to compile the AD version of OpenFOAM and DAFoam (see [here](https://dafoam.github.io/mydoc_installation_source.html#compile-dafoam-with-automatic-differentiation-optional)). If you use the Docker image, they have been compiled so no additional action is needed.
+- We need to choose the Jacobian free option in daOptions: "adjJacobianOption": "JacobianFree". This means that we need to compile the AD version of OpenFOAM and DAFoam (see [here](https://dafoam.github.io/installation-source.html#compile-dafoam-with-automatic-differentiation-optional)). If you use the Docker image, they have been compiled so no additional action is needed.
 
 - We need to properly scale the design variable because the alpha porosity field could be very large, e.g., 1e4. So we use "scale=1e-4" in DVGeo.addGeoDVVGlobal("alphaPorosity", ...).
 

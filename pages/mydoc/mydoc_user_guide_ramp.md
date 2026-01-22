@@ -3,7 +3,7 @@ title: Ramp - field inversion machine learning
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_user_guide_ramp.html
+permalink: user-guide-ramp.html
 folder: mydoc
 ---
 

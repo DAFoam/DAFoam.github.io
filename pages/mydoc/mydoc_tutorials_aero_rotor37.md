@@ -3,11 +3,10 @@ title: Rotor 37 compressor
 keywords: tutorial, rotor37
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_rotor37.html
+permalink: tutorials-aero-rotor37.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an aerodynamic shape optimization case for the Rotor37 axial compressor rotor.
 

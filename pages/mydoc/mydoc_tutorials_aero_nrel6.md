@@ -3,11 +3,10 @@ title: NREL6 wind turbine
 keywords: tutorial, nrel6
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_nrel6.html
+permalink: tutorials-aero-nrel6.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an aerodynamic shape optimization case for the NREL6 wind turbine blades.
 <pre>

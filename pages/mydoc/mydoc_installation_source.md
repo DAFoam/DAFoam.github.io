@@ -1,52 +1,64 @@
 ---
-title: Compile from source (Ubuntu)
+title: Compile from source (Gcc)
 keywords: dafoam, installation, compile
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_installation_source.html
+permalink: installation-source.html
 folder: mydoc
 ---
 
-{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](mydoc_installation_source_2210.html), [v2.2.0-](mydoc_installation_source_220.html), and [v1.0.0](mydoc_installation_source_100.html)." %}
+{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](installation-source-2210.html), [v2.2.0-](installation-source-220.html), and [v1.0.0](installation-source-100.html)." %}
 
-The DAFoam package can be compiled with various dependency versions. Here we elaborate on how to compile it on **Ubuntu 22.04** using the dependencies shown in the following table.
+The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 22.04 and two different HPC clusters.
 
+**Workstation** uses the Ubuntu 22.04 system with the following compiler versions.
 
-Ubuntu | Compiler | OpenMPI | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy | Cython
-| :------------------------------------------------------------------------------------------------ | 
-22.04.2 | gcc/11.4  | 4.1.2   | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.10    | 1.23.5 | 1.13.1 | 0.29.21
+Compiler | OpenMPI | Cmake |
+| :------------------------| 
+gcc/11.4 | 4.1.2   | 3.22  |
 
-To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours, the most time-consuming part is to compile OpenFOAM.
+**TACC-Stampede3 HPC** uses the Rocky Linux 9.5 system with the following compiler versions.
 
-## **Prerequisites**
+Compiler | OpenMPI | Cmake |
+| :------------------------| 
+gcc/13.2 | 5.0.8   |  3.22 |
 
-Run this on terminal to install prerequisites:
+**ISU Nova HPC** uses the RedHat Linux 9.4 system with the following compiler versions.
+
+Compiler | OpenMPI | Cmake |
+| :------------------------| 
+gcc/12.2 | 4.1.5   |  3.26 |
+
+To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours; the most time-consuming part is compiling OpenFOAM.
+
+## **Prerequisites (Ubuntu only)**
+
+If you use Ubuntu, run this on the terminal to install prerequisites. If you install DAFoam on an HPC, skip this step.
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin --no-install-recommends
+sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin lsof --no-install-recommends
 </pre>
+
+The following installation steps should work for both Ubuntu 22.04 and the HPC clusters.
 
 ## **Root folder**
 
-First, we need to create a "dafoam" folder in your home directory. Then create a "loadDAFoam.sh" bash script to set up the root path $DAFOAM_ROOT_PATH, and load loadDAFoam.sh the script:
+Run the following commands to create a root folder and a few subfolders where DAFoam's modules will be installed into. The default is \$HOME/dafoam, and you can change to a different path by modifying the first line. We suggest you reserve at least 5 Gb hard disk space for the DAFoam installation. Here "loadDAFoam.sh" is a bash script to load the DAFoam environment, and we will add more modules into loadDAFoam.sh later. 
 
 <pre>
-mkdir -p $HOME/dafoam && \
-echo '#!/bin/bash' > $HOME/dafoam/loadDAFoam.sh && \
-echo '# DAFoam root path' >> $HOME/dafoam/loadDAFoam.sh && \
-echo 'export DAFOAM_ROOT_PATH=$HOME/dafoam' >> $HOME/dafoam/loadDAFoam.sh && \
-chmod 755 $HOME/dafoam/loadDAFoam.sh && \
-. $HOME/dafoam/loadDAFoam.sh
+export DAFOAM_ROOT_PATH=$HOME/dafoam
+mkdir -p "$DAFOAM_ROOT_PATH" && \
+cd "$DAFOAM_ROOT_PATH" && \
+echo '#!/bin/bash' > loadDAFoam.sh && \
+echo '# DAFoam root path' >> loadDAFoam.sh && \
+echo "export DAFOAM_ROOT_PATH=$DAFOAM_ROOT_PATH" >> loadDAFoam.sh && \
+chmod 755 loadDAFoam.sh && \
+. ./loadDAFoam.sh && \
+mkdir -p $DAFOAM_ROOT_PATH/packages $DAFOAM_ROOT_PATH/OpenFOAM $DAFOAM_ROOT_PATH/OpenFOAM/sharedBins $DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs $DAFOAM_ROOT_PATH/repos
 </pre>
 
 {% include note.html content="You need to complete the following steps on the same terminal session. If you start a new terminal session, you need to load the loadDAFoam.sh script before installing DAFoam packages!" %}
-
-Next, we will create the "packages", "OpenFOAM", and "repos" folders in $DAFOAM_ROOT_PATH.
-
-<pre>
-mkdir -p $DAFOAM_ROOT_PATH/packages $DAFOAM_ROOT_PATH/OpenFOAM $DAFOAM_ROOT_PATH/OpenFOAM/sharedBins $DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs $DAFOAM_ROOT_PATH/repos
-</pre>
 
 ## **Python**
 
@@ -64,17 +76,19 @@ echo 'export PYTHONUSERBASE=no-local-libs' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh &&
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh
 </pre>
 
-In the above, we use "export PYTHONUSERBASE=no-local-libs" to bypass the site-packages in user's .local directory because they may conflict with the DAFoam packages. 
+In the above, we use "export PYTHONUSERBASE=no-local-libs" to bypass the site-packages in your `.local` directory, as they may conflict with the DAFoam packages. 
 
-The miniconda's built-in libstdc++ and libtinfo libs may conflict with the Ubuntu's system libs. Also, the new miniconda's compiler_compat ld may conflict with the system ld. So we need to rename the miniconda's libs and exes by running:
+The miniconda's built-in libstdc++ and libtinfo libs may conflict with the system libs. Also, the new miniconda's compiler_compat ld may conflict with the system ld. So we need to rename the miniconda's libs and exes by running:
 
 <pre>
 mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libstdc++.so.6.backup && \
 mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libtinfo.so.6.backup && \
-mv $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld.backup
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld $DAFOAM_ROOT_PATH/packages/miniconda3/compiler_compat/ld.backup && \
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libgcc_s.so.1 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libgcc_s.so.1.backup && \
+mv $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libquadmath.so.0 $DAFOAM_ROOT_PATH/packages/miniconda3/lib/libquadmath.so.0.backup
 </pre>
 
-Next, we need to upgrade the pip utility and install python packages:
+Next, we need to upgrade the pip utility and install Python packages:
 
 <pre>
 pip install --upgrade pip && \
@@ -85,12 +99,13 @@ pip install cython==0.29.21 && \
 pip install numpy-stl==2.16.0 && \
 pip install pynastran==1.3.3 && \
 pip install nptyping==1.4.4 && \
-pip install tensorflow-cpu==2.12
+pip install tensorflow-cpu==2.12 && \
+pip install coverage==7.11.0
 </pre>
 
 ## **Petsc**
 
-First append relevant environmental variables by running:
+First, append relevant environmental variables by running:
 
 <pre>
 echo '# Petsc' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -108,7 +123,7 @@ cd $DAFOAM_ROOT_PATH/packages && \
 wget https://www.mcs.anl.gov/petsc/mirror/release-snapshots/petsc-3.15.5.tar.gz  && \
 tar -xvf petsc-3.15.5.tar.gz && \
 cd petsc-3.15.5 && \
-./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 && \
+./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --download-f2cblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 && \
 make PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.15.5 PETSC_ARCH=real-opt all
 </pre>
 
@@ -116,12 +131,12 @@ Finally, install petsc4py-3.15:
 
 <pre>
 cd $PETSC_DIR/src/binding/petsc4py && \
-pip install .
+pip install . --no-build-isolation
 </pre>
 
 ## **CGNS**
 
-First append relevant environmental variables by running:
+First, append relevant environmental variables by running:
 
 <pre>
 echo '# CGNS' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -156,29 +171,39 @@ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib' >> $DAFOAM_ROOT_PA
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh
 </pre>
 
-Next, compiles the ThirdParty dependencies Metis and Mumps by running:
+Next, compile the ThirdParty dependencies and IPOPT by running:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/packages && \
-git clone -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
+git clone --depth 1 -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
 cd $IPOPT_DIR && \
-git clone -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
-cd ThirdParty-Mumps && \
-./get.Mumps && \
+git clone --depth 1 -b stable/1.3 https://github.com/coin-or-tools/ThirdParty-Blas.git && \
+cd ThirdParty-Blas && ./get.Blas && \
 ./configure --prefix=$IPOPT_DIR && \
-make && \
-make install
-</pre>
-
-Finally, compile Ipopt by running:
-
-<pre>
-cd $IPOPT_DIR && \
-mkdir build && \
-cd build && \
-../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" && \
-make && \
-make install
+make && make install && cd .. && \
+git clone --depth 1 -b stable/1.5 https://github.com/coin-or-tools/ThirdParty-Lapack.git && \
+cd ThirdParty-Lapack && ./get.Lapack && \
+./configure --prefix=$IPOPT_DIR --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" && \
+make && make install && cd .. && \
+git clone --depth 1 -b stable/1.3 https://github.com/coin-or-tools/ThirdParty-Metis.git && \
+cd ThirdParty-Metis && ./get.Metis && \
+./configure --prefix=$IPOPT_DIR && make && make install && cd .. && \
+git clone --depth 1 -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
+cd ThirdParty-Mumps && ./get.Mumps && \
+./configure --prefix=$IPOPT_DIR --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" \
+             --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
+             --with-metis-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" \
+             --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+make && make install && \
+cd $IPOPT_DIR && mkdir -p build && cd build && \
+../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps \
+             --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" \
+             --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" \
+             --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" \
+             --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
+             --with-metis-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" \
+             --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+make && make install
 </pre>
 
 ## **MACH-Aero framework**
@@ -264,7 +289,7 @@ export WM_NCOMPPROCS=4 && \
 ./Allwmake
 </pre>
 
-{% include note.html content="In the above command, we replaced some custome source files to enable Python wrapping for OpenFOAM. These patch files also make OpenFOAM-v1812 compatible with newer Gcc compilers, like Gcc 13." %}
+{% include note.html content="In the above command, we replaced some custom source files to enable Python wrapping for OpenFOAM. These patch files also make OpenFOAM-v1812 compatible with newer Gcc compilers, like Gcc 13." %}
 
 {% include note.html content="The above command will compile OpenFOAM using 4 CPU cores. If you want to compile OpenFOAM using more cores, change the ``WM_NCOMPPROCS`` parameter before running ``./Allwmake``" %}
 
@@ -274,7 +299,7 @@ Finally, verify the installation by running:
 simpleFoam -help
 </pre>
 
-It should see some basic information of OpenFOAM
+It should see some basic information about OpenFOAM
 
 
 **Build Reverse Mode AD**
@@ -300,11 +325,11 @@ Then, verify the installation by running:
 DASimpleFoamReverseAD -help
 </pre>
 
-It should see some basic information of DASimpleFoamReverseAD.
+It should see some basic information about DASimpleFoamReverseAD.
 
 {% include note.html content="We use CodiPack to differentiate the OpenFOAM libraries." %}
 
-After OpenFOAM-v1812-ADR is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
+After OpenFOAM-v1812-ADR is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path so that this is portable.
 
 <pre>
 cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib && \
@@ -331,7 +356,7 @@ export WM_NCOMPPROCS=4 && \
 ./Allwmake
 </pre>
 
-After OpenFOAM-v1812-ADF is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path because we want this to be portable.
+After OpenFOAM-v1812-ADF is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path so that this is portable.
 
 <pre>
 cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib && \
@@ -361,19 +386,19 @@ make && pip install .
 
 ## **Hisa4DAFoam**
 
-DAFoam integrates a density-based, high-speed aerodynamic CFD solver [Hisa](https://hisa.gitlab.io/index.html). We have adopted the original Hisa solver into a DAFoam compatible lib called Hisa4DAFoam. Run the following command to install the Hisa4DAFoam dependency: 
+DAFoam integrates a density-based, high-speed aerodynamic CFD solver [Hisa](https://hisa.gitlab.io/index.html). We have adopted the original Hisa solver into a DAFoam-compatible lib called Hisa4DAFoam. Run the following command to install the Hisa4DAFoam dependency: 
 
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 cd $DAFOAM_ROOT_PATH/OpenFOAM && \
-git clone https://github.com/DAFoam/Hisa4DAFoam && \
+wget https://github.com/DAFoam/Hisa4DAFoam/archive/refs/tags/v1.1.tar.gz && \
+tar -xvf v1.1.tar.gz && \
+mv Hisa4DAFoam-* Hisa4DAFoam && \
 cd Hisa4DAFoam && \
 ./Allmake
 </pre>
 
-You should see "Build Successful!" at the end of the compilation. Once Hisa4DAFoam is compiled, you need to recompile the DAFoam repo in repos/dafoam to make sure everything is up-to-date.
-
-***NOTE: The solver is called DAHisaFoam and is in a beta state.*** It is not supported by v4.0.2. Instead, you need to use the latest version of the DAFoam repo. We currently have two tutorials: supersonic, Euler flow optimization for a [cone](https://github.com/DAFoam/tutorials/tree/main/Cone_Supersonic) and a transonic, RANS flow optimization for [RAE2822 airfoil](https://github.com/DAFoam/tutorials/tree/main/RAE2822_Airfoil). Only the JST flux scheme is supported. Other schemes, such as AUSMPlusUp, may have adjoint convergence issues.
+You should see "Build Successful!" at the end of the compilation. ***NOTE: The solver is called DAHisaFoam and is in a beta state.***
 
 ## **DAFoam**
 
@@ -399,7 +424,7 @@ export COMPILE_DAFOAM_ADF=1 && \
 
 ## **MDO packages**
 
-To perform multidisplinary deisgn optimization, we need to install the following packages:
+To perform multidisciplinary design optimization, we need to install the following packages:
 
 [OpenMDAO](https://openmdao.org) is an open-source multidisciplinary optimization framework. 
 
@@ -408,7 +433,7 @@ To perform multidisplinary deisgn optimization, we need to install the following
 pip install openmdao==3.26
 </pre>
 
-[Mphys](https://github.com/OpenMDAO/mphys) is an interface that faciliate the interation between low- and high-fidelity tools within OpenMDAO.
+[Mphys](https://github.com/OpenMDAO/mphys) is an interface that facilitates the interaction between low- and high-fidelity tools within OpenMDAO.
 
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -418,7 +443,7 @@ tar -xvf mphys.tar.gz && mv mphys-* mphys && \
 cd mphys && pip install .
 </pre>
 
-[FUNtoFEM](https://github.com/smdogroup/funtofem) is a generic aeroelastic analysis and adjoint-based gradient evaluation tools.
+[FUNtoFEM](https://github.com/smdogroup/funtofem) is a generic aeroelastic analysis and adjoint-based gradient evaluation tool.
 
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -427,7 +452,8 @@ wget https://github.com/smdogroup/funtofem/archive/refs/tags/v0.3.tar.gz -O funt
 tar -xvf funtofem.tar.gz && mv funtofem-* funtofem && \
 cd funtofem && cp Makefile.in.info Makefile.in && \
 sed -i "s/F2F_DIR=.*/F2F_DIR=\$\{DAFOAM_ROOT_PATH\}\/repos\/funtofem/g" Makefile.in && \
-make && pip install -e .
+sed -i "s/LAPACK_LIBS\ =.*/LAPACK_LIBS=-L\$\{PETSC_LIB\}\ -lf2clapack -lf2cblas/g" Makefile.in && \
+make && pip install -e . --no-build-isolation
 </pre>
 
 [TACS](https://github.com/smdogroup/tacs) is a finite-element library for analysis and adjoint-based gradient evaluation
@@ -448,7 +474,8 @@ cd ../../ && \
 cp Makefile.in.info Makefile.in && \
 ls && \
 sed -i "s/TACS_DIR\ =.*/TACS_DIR=\$\{DAFOAM_ROOT_PATH\}\/repos\/tacs/g" Makefile.in && \
-make && pip install -e . && \
+sed -i "s/LAPACK_LIBS\ =.*/LAPACK_LIBS=-L\$\{PETSC_LIB\}\ -lf2clapack -lf2cblas -lpthread/g" Makefile.in && \
+make && pip install -e . --no-build-isolation && \
 cd extern/f5tovtk && make && cp f5tovtk $DAFOAM_ROOT_PATH/OpenFOAM/sharedBins
 </pre>
 
@@ -460,7 +487,7 @@ To verify the DAFoam installation, you can run the regression tests:
 cd $DAFOAM_ROOT_PATH/repos/dafoam-*/tests && ./Allrun
 </pre>
 
-The regression tests should take less than 30 minutes. The test progress will be printed to screen. Make sure you see this at the end:
+The regression tests should take less than 30 minutes. The test progress will be printed to the screen. Make sure you see this at the end:
 
 <pre>   
 *** All Tests Passed! ***
@@ -468,7 +495,7 @@ The regression tests should take less than 30 minutes. The test progress will be
 
 |
 
-In summary, here is the folder structures for all the installed packages:
+In summary, here is the folder structure for all the installed packages:
 
 <pre>
 $HOME/dafoam
@@ -529,6 +556,23 @@ export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
 export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH
 </pre>
 
+## **Install MCP depedneicies (optional)**
+
+This step is needed if you want to use the DAFoam MCP server. Here we need to install fastmcp, trame, and ParaView.
+
+<pre>
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+cd $DAFOAM_ROOT_PATH/packages && \
+pip install fastmcp==2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0 && \
+wget https://www.paraview.org/files/v5.13/ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
+tar -xf ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
+mv ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64 ParaView-5.13.3 && \
+rm -rf ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
+mv ParaView-5.13.3/bin/mpiexec  ParaView-5.13.3/bin/mpiexec_bk && \
+echo "# ParaView" >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo "export PATH=\$DAFOAM_ROOT_PATH/packages/ParaView-5.13.3/bin:\$PATH" >> $DAFOAM_ROOT_PATH/loadDAFoam.sh
+</pre>
+
 ## **Compile SNOPT for pyOptSparse (optional)**
 
 This step is needed if you want to use the SNOPT optimizer. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com).
@@ -540,31 +584,5 @@ cd $DAFOAM_ROOT_PATH/repos/pyoptsparse-2.10.1 && \
 pip install .
 </pre>
 
-
-## **Make the DAFoam package portable (optional)**
-
-This step is only needed if you want to change the root path of your installation, e.g., copy your compiled DAFoam packages to another directory.
-
-The only thing you need to do is to modify the interpreter lines "#!" for files in $DAFOAM_ROOT_PATH/packages/miniconda3/. This is because Miniconda hard codes the Python path, so we need to chagne it to "#!/usr/bin/env python"
-
-First find an example of the hard-coded interpreter line from $DAFOAM_ROOT_PATH/packages/miniconda3/bin/conda. Run this command
-
-<pre>
-head -1 $DAFOAM_ROOT_PATH/packages/miniconda3/bin/conda
-</pre>
-
-You may see an output like this:
-
-<pre>
-#!/home/replace_this_with_your_username/dafoam/packages/miniconda3/bin/python
-</pre>
-
-Then run this command to replace all the hard-coded interpreter lines:
-
-<pre>
-sed -i 's,^#\!/home/replace_this_with_your_username/dafoam/packages/miniconda3/bin/python,#!/usr/bin/env python,g' $DAFOAM_ROOT_PATH/packages/miniconda3/*/*
-</pre>
-
-Finally, you can change the DAFOAM_ROOT_PATH value (in loadDAFoam.sh) to your new directory, source the "loadDAFoam.sh" script again, and run DAFoam without compiling everything again.
 
 {% include links.html %}

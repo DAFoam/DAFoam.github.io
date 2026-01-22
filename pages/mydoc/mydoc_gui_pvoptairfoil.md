@@ -3,7 +3,7 @@ title: Airfoil aerodynamic optimization GUI
 keywords: gui, airfoil
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_gui_pvoptairfoil.html
+permalink: gui-pvoptairfoil.html
 folder: mydoc
 ---
 
@@ -13,7 +13,7 @@ pvOptAirfoil is the first in a series of graphical user interface (GUI) plugins 
 
 To run a GUI-based optimization case, first download the [pvOptGUI tutorial](https://github.com/DAFoam/pvOptGUI_tutorials/archive/refs/heads/main.zip) and extract it.
 
-Then, open ParaView following the instructions mentioned on [this page](mydoc_gui_overview.html). 
+Then, open ParaView following the instructions mentioned on [this page](gui-overview.html). 
 
 Then open the pvOptAirfoil source by first clicking the sources tab in the toolbar at the top of the screen. Then hover over pvOptGUI and select pvOptAirfoil. Open a paraview.foam dummy file inside the new source's file select option, an example of this file is found in pvOptGUI_tutorials.
 

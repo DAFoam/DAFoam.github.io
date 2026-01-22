@@ -3,7 +3,7 @@ title: Airfoil aerodynamic optimization using a GUI
 keywords: gui, overview
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_gui_overview.html
+permalink: gui-overview.html
 folder: mydoc
 ---
 
@@ -25,7 +25,7 @@ To load ParaView, open the shortcut *paraview.exe* located in the bin folder of 
 
 To load one of the sources contained in the pvOptGUI plugin, click the source tab at the top of the toolbar, then select one of the choices listed in the *PvOptGUI* tab.
 
-Refer to [this page](mydoc_gui_pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
+Refer to [this page](gui-pvoptairfoil.html) for detailed instructions on how to use the pvOptAirfoil plugin.
 
 ###Docker (optional)
 
@@ -61,7 +61,7 @@ pvOptUMesh is the second graphical user interface (GUI) plugin in the pvOptGUI s
 
 ### Load the case and plugin
 
-First, install and open ParaView following the instructions mentioned on [this page](mydoc_gui_overview.html).
+First, install and open ParaView following the instructions mentioned on [this page](gui-overview.html).
 
 Next, open the pvOptUMesh source, located by opening the *sources* tab of the toolbar then hovering over *pvOptGUI*.
 
@@ -152,7 +152,7 @@ pvOptAirfoil is the first in a series of graphical user interface (GUI) plugins 
 
 To run a GUI-based optimization case, first download the [pvOptGUI tutorial](https://github.com/DAFoam/pvOptGUI_tutorials/archive/refs/heads/main.zip) and extract it.
 
-Then, open ParaView following the instructions mentioned on [this page](mydoc_gui_overview.html). 
+Then, open ParaView following the instructions mentioned on [this page](gui-overview.html). 
 
 Then open the pvOptAirfoil source by first clicking the sources tab in the toolbar at the top of the screen. Then hover over pvOptGUI and select pvOptAirfoil. Open a paraview.foam dummy file inside the new source's file select option, an example of this file is found in pvOptGUI_tutorials.
 
@@ -334,7 +334,7 @@ PvOptPostProcessing and PvOptView are Paraview based graphical user interfaces i
 
 ---
 
-To post process data, first open ParaView with PvOptGUI following the instructions mentioned on [this page](mydoc_gui_overview.html).
+To post process data, first open ParaView with PvOptGUI following the instructions mentioned on [this page](gui-overview.html).
 
 **PvOptPostProcessing**
 

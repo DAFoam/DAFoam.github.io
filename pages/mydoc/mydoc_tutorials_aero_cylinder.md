@@ -3,11 +3,10 @@ title: Cylinder (unsteady flow)
 keywords: tutorial, cylinder
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_aero_cylinder.html
+permalink: tutorials-aero-cylinder.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is an unsteady aerodynamic shape optimization case for a cylinder
 <pre>

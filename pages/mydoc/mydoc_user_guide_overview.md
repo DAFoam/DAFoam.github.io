@@ -3,35 +3,35 @@ title: DAFoam User Guide - Overview
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_user_guide_overview.html
+permalink: user-guide-overview.html
 folder: mydoc
 ---
 
 The objective of this user guide is to serve as a comprehensive, stand-alone resource to help new users onboard efficiently and become proficient in using DAFoam for a wide range of design optimization problems. The case files for this user guide can be found [here](https://github.com/DAFoam/user_guide_files).
 
-- [Chapter 1. Background ](mydoc_user_guide_background.html)
+- [Chapter 1. Background ](user-guide-background.html)
 
-- [Chapter 2. OpenFOAM basics](mydoc_user_guide_openfoam.html)
+- [Chapter 2. OpenFOAM basics](user-guide-openfoam.html)
 
-- [Chapter 3. OpenMDAO basics](mydoc_user_guide_openmdao.html)
+- [Chapter 3. OpenMDAO basics](user-guide-openmdao.html)
 
-- [Chapter 4. NACA0012 airfoil: 2D aerodynamic shape optimization](mydoc_user_guide_naca0012.html)
+- [Chapter 4. NACA0012 airfoil: 2D aerodynamic shape optimization](user-guide-naca0012.html)
 
-- [Chapter 5. NACA0012 variations: compressibility, multi-point, multi-cases](mydoc_user_guide_naca0012_variations.html)
+- [Chapter 5. NACA0012 variations: compressibility, multi-point, multi-cases](user-guide-naca0012-variations.html)
 
-- [Chapter 6. ADODG3 wing: 3D aerodynamic shape optimization](mydoc_user_guide_adodg3.html)
+- [Chapter 6. ADODG3 wing: 3D aerodynamic shape optimization](user-guide-adodg3.html)
 
-- [Chapter 7. UAV propeller: aerodynamic optimization of turbomachinery](mydoc_user_guide_uav_prop.html)
+- [Chapter 7. UAV propeller: aerodynamic optimization of turbomachinery](user-guide-uav-prop.html)
 
-- [Chapter 8. Cylinder: unsteady aerodynamic shape optimization](mydoc_user_guide_cylinder.html)
+- [Chapter 8. Cylinder: unsteady aerodynamic shape optimization](user-guide-cylinder.html)
 
-- [Chapter 9. Ramp: field inversion machine learning](mydoc_user_guide_ramp.html)
+- [Chapter 9. Ramp: field inversion machine learning](user-guide-ramp.html)
 
-- [Chapter 10. MACH Tutorial wing: aero-structural optimization](mydoc_user_guide_mach_aerostruct.html)
+- [Chapter 10. MACH Tutorial wing: aero-structural optimization](user-guide-mach-aerostruct.html)
 
-- [Chapter 11. U-bend pipe: aero-thermal optimization](mydoc_user_guide_ubend_aerothermal.html)
+- [Chapter 11. U-bend pipe: aero-thermal optimization](user-guide-ubend-aerothermal.html)
 
-- [Appendix](mydoc_user_guide_appendix.html)
+- [Appendix](user-guide-appendix.html)
 
 The user guide was written by [Ping He](https://github.com/friedenhe), [Lean Fang](https://github.com//LeanFang), [Zilong Li](https://github.com//zilonglicfd), [Seth Zoppelt](https://github.com/szoppelt), and [Christian Psenica](https://github.com/ChrisPsenica).
 

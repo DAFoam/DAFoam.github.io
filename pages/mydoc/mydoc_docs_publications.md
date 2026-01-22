@@ -3,11 +3,21 @@ title: DAFoam publications
 keywords: Papers
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_docs_publications.html
+permalink: publications.html
 folder: mydoc
 ---
 
-The following publications used DAFoam in their studies. If we miss yours, please feel free to edit this page and submit a pull request.
+The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
+
+<84> H. Ji, Y. Luo, H. Zhou Y. Zhao. Progressive Mixture-of-Experts with autoencoder routing for continual RANS turbulence modelling. arXiv.2601.09305, 2026
+
+<83> L. Fang, P. He. Agentic AI for Conversational Aerodynamic Analysis and Optimization of Airfoils and Wings. AIAA SciTech Forum, 2026.
+
+<82> A. Dikshit, P. Koratikere, L. Leifsson, P. He. Surrogate-Based Uncertainty Propagation in Aerostructural Analysis of a Wing in Subsonic Flow. AIAA SciTech Forum, 2026.
+
+<81> C. Psenica, L. Fang, S. Zoppelt, M. Leader, P. He. A Modular Conjugate Heat Transfer Optimization Framework for Thermal Management of Electric Aircraft. International Journal of Heat and Mass Transfer, 2026.
+
+<80> M. Bashir, D. Gong, L. Sun, P. Duan. Aerodynamic shape optimization using the adjoint method combined with an inverse design approach for non-parameterized geometries. Physics of Fluids, 2025.
 
 <79> Z. Zhang, G. Karniadakis. Effect of Turbulence-Closure Consistency on Airfoil Identification. arXiv.2511.08341, 2025 
 
@@ -47,9 +57,9 @@ The following publications used DAFoam in their studies. If we miss yours, pleas
 
 <61> Z. Li, L. Fang, A. Sharma, P. He. Field Inversion Machine Learning for Accurate Predictions of Time-Resolved Unsteady Flows Over Airfoils. AIAA SciTech Forum, 2025.
 
-<60> C. Wu, Y. Zhang. Field Inversion and Machine Learning Based on the Rubber-Band Spalart-Allmaras Model. Theoretical and Applied Mechanics Letters. 2024.
+<60> J. Park, M. Mangano, S. Seraj, B. Pacini, Y. Liao, B. Knight, K. Naik, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based design optimization of a 5 kW ducted hydrokinetic turbine with practical constraints, Renewable Energy, 2025.
 
-<59> J. Park, M. Mangano, S. Seraj, B. Pacini, Y. Liao, B. Knight, K. Naik, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based design optimization of a 5 kW ducted hydrokinetic turbine with practical constraints, arXiv.2411.13492, 2024.
+<59> C. Wu, Y. Zhang. Field Inversion and Machine Learning Based on the Rubber-Band Spalart-Allmaras Model. Theoretical and Applied Mechanics Letters. 2024.
 
 <58> E. Ntantis, V. Xezonakis. Improving Transonic Performance with Adjoint-Based NACA 0012 Airfoil Design Optimization. Results in Engineering, 2024
 

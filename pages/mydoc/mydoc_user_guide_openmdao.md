@@ -3,7 +3,7 @@ title: OpenMDAO Basics
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_user_guide_openmdao.html
+permalink: user-guide-openmdao.html
 folder: mydoc
 ---
 

@@ -3,7 +3,7 @@ title: Run optimization
 keywords: run, tutorial, optimization
 summary: "We first run preProcessing.sh for pre-processing and then run runScript.py for optimization."
 sidebar: mydoc_sidebar
-permalink: mydoc_get_started_run.html
+permalink: get-started-run.html
 folder: mydoc
 ---
 
@@ -69,7 +69,7 @@ Then, use the following command to run the optimization with 4 CPU cores:
 mpirun -np 4 python runScript.py 2>&1 | tee logOpt.txt
 </pre>
 
-The optimization progress will be printed to the screen and also written to logOpt.txt (we will elaborate on logOpt.txt later on [this page](mydoc_get_started_runscript.html)). This case ran for 18 optimization iterations and took about 15 minutes with an Intel 3.0 GHz CPU.
+The optimization progress will be printed to the screen and also written to logOpt.txt (we will elaborate on logOpt.txt later on [this page](get-started-runscript.html)). This case ran for 18 optimization iterations and took about 15 minutes with an Intel 3.0 GHz CPU.
 
 A few notes:
 
@@ -81,6 +81,6 @@ A few notes:
 
 - dafoamuser has the sudo privilege and its password is: dafoamuser.
 
-Check [this page](mydoc_get_started_post_processing.html) for interpreting and post processing the optimization results.
+Check [this page](get-started-post-processing.html) for interpreting and post processing the optimization results.
 
 {% include links.html %}

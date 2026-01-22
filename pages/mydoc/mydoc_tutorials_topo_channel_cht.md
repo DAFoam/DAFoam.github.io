@@ -3,11 +3,10 @@ title: Conjugate heat transfer topology optimization of a channel
 keywords: tutorial, channel
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_tutorials_topo_channel_cht.html
+permalink: tutorials-topo-channel-cht.html
 folder: mydoc
 ---
 
-{% include note.html content="We recommend going through the tutorial in [Get started](mydoc_get_started_download_docker.html) before running this case." %}
 
 The following is a conjugate heat transfer topology optimization setup for a channel. 
 

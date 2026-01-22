@@ -3,7 +3,7 @@ title: Background
 keywords: user guide
 summary: 
 sidebar: mydoc_sidebar
-permalink: mydoc_user_guide_background.html
+permalink: user-guide-background.html
 folder: mydoc
 ---
 
