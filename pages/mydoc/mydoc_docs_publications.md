@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
+<85> M. Formichetti, U. Padmanaban, P. He, S. Symon, B. Ganapathisubramani. Assimilating rough features: A data-driven framework to infer rough wall properties from sparse experimental data. 10.48550/arXiv.2601.15980, 2026
+
 <84> H. Ji, Y. Luo, H. Zhou Y. Zhao. Progressive Mixture-of-Experts with autoencoder routing for continual RANS turbulence modelling. arXiv.2601.09305, 2026
 
 <83> L. Fang, P. He. Agentic AI for Conversational Aerodynamic Analysis and Optimization of Airfoils and Wings. AIAA SciTech Forum, 2026.
