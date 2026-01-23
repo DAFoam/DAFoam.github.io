@@ -42,19 +42,168 @@ RAS
 The `system/controlDict` file contains:
 ```foam
 application     simpleFoam;
-
 startFrom       startTime;
-
 startTime       0;
-
 stopAt          endTime;
-
 endTime         10000;
 ```
 
-## DES case
-Next, we will proceed to run the $k\text{-}\omega$ SST IDDES simulation using the RANS solution as the initial condition. The length scale is set to $\delta_\text{max}$, defined as the maximum edge length of a mesh cell.
+### DES case
+Next, we will proceed to run the $k\text{-}\omega$ SST IDDES simulation using the RANS solution as the initial condition. This hybrid approach combines the advantages of RANS modeling in the boundary layer regions with LES capabilities in separated flow regions, allowing for accurate prediction of complex turbulent structures while maintaining computational efficiency. The length scale is set to $\delta_\text{max}$, defined as the maximum edge length of a mesh cell.
+
+#### Turbulence Properties Configuration
+
+The `constant/turbulenceProperties` file is configured as follows:
+```foam
+simulationType      LES;
+LES
+{
+    LESModel        kOmegaSSTIDDES;
+    printCoeffs     no;
+    turbulence      yes;
+    delta           IDDESDelta;
+    IDDESDeltaCoeffs
+    {
+        hmax           maxDeltaxyz;
+        maxDeltaxyzCoeffs
+        {
+        }
+    }
+}
+```
+
+#### Control Dictionary Configuration
+
+The `system/controlDict` file contains:
+```foam
+application     pimpleFoam;
+startFrom       latestTime;
+startTime       0;
+stopAt          endTime;
+endTime         10000;
+deltaT          0.00001;
+writeControl    adjustable;
+writeInterval   0.0065;
+purgeWrite      30;
+writeFormat     ascii;
+writePrecision  8;
+writeCompression off;
+timeFormat      general;
+timePrecision   8;
+runTimeModifiable yes;
+adjustTimeStep  no;
+maxCo           5;
+```
+
+#### fvSchemes Configuration
+
+The `constant/turbulenceProperties` file is configured as follows:
+```foam
+ddtSchemes
+{
+    default         backward;
+}
+gradSchemes
+{
+    default         Gauss linear;
+    grad(p)         Gauss linear;
+}
+divSchemes
+{
+    default         none;
+    div(phi,U)      Gauss DEShybrid
+        linear                    
+        linearUpwind grad(U)      
+        hmax
+        0.65                      
+        1                         
+        0.028                     
+        0                         
+        1                         
+        1; 
+    div(phi,k)      Gauss limitedLinear 1;
+    div(phi,omega) Gauss limitedLinear 1;
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;
+}
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
+interpolationSchemes
+{
+    default         linear;
+}
+snGradSchemes
+{
+    default         corrected;
+}
+wallDist
+{
+    method          meshWave;
+    nRequired       yes;
+}
+```
+
+#### fvSolution Configuration
+
+The `constant/turbulenceProperties` file is configured as follows:
+```foam
+solvers
+{
+    p
+    {
+        solver          GAMG;
+        smoother        DICGaussSeidel;
+        tolerance       1e-06;
+        relTol          0.05;
+    }
+    pFinal
+    {
+        $p;
+        relTol          0;
+    }
+    "(U|k|omega)"
+    {
+        solver          PBiCG;
+        preconditioner  DILU;
+        tolerance       1e-05;
+        relTol          0.1;
+    }
+    "(U|k|omega)Final"
+    {
+        $U;
+        relTol          0;
+    }
+}
+SIMPLE
+{
+    nNonOrthogonalCorrectors 0;
+    pRefCell        0;
+    pRefValue       0;
+}
+PIMPLE
+{
+    nOuterCorrectors 1;
+    nCorrectors      3;
+    nNonOrthogonalCorrectors 1;
+    pRefCell        0;
+    pRefValue       0;
+}
+relaxationFactors
+{
+    fields
+    {
+    }
+    equations
+    {
+        ".*"        1;
+    }
+}
+
+```
+#### Results from IDDES method
 
 
+Fig.1 Grids for the NACA0012 airfoil
 
 {% include links.html %}

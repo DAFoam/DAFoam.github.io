@@ -11,6 +11,10 @@ folder: mydoc
 
 This chapter was written by [Christian Psenica](https://github.com/ChrisPsenica) and reviewed by [Ping He](https://github.com/friedenhe).
 
+For more details on the implementation of conjugate heat transfer in DAFoam, please see the following paper:
+
+C. Psenica, L. Fang, S. Zoppelt, M. Leader, P. He. A Modular Conjugate Heat Transfer Optimization Framework for Thermal Management of Electric Aircraft. International Journal of Heat and Mass Transfer, 2026.
+
 ## Learning Objectives:
 
 This chapter provides the case structure for conjugate heat transfer (CHT) shape optimization in DAFoam. After reading this chapter, you should be able to: 
