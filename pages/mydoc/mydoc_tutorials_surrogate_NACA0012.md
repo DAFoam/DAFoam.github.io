@@ -22,7 +22,7 @@ Mesh cells: ~4,000
 Solver: DASimpleFoam
 </pre>
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/CHT_ubend_ffd.png" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/NACA0012_FFD.png" width="500" />
 
 Fig. 1. Mesh and FFD points for the NACA0012 airfoil
 
@@ -115,7 +115,7 @@ mpirun -np 4 python runScript_SBO.py 2>&1 | tee logOpt.txt
 
 The optimization reduced drag by 17.12% with $C_{l} = 0.502$
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/CHT_ubend.gif" width="640" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/naca0012_sbo_opt.png" width="500" />
 
 Fig. 2. Optimized NACA0012 airfoil velocity field
 
