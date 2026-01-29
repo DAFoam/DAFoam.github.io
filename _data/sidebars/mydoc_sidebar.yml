@@ -269,6 +269,10 @@ entries:
     - title: Chapter 11 Aerothermal (CHT)
       url: /user-guide-ubend-aerothermal.html
       output: web, pdf
+
+    - title: Chapter 12 Surrogate based optimization (SBO)
+      url: /user-guide-SBO-adodg3.html
+      output: web, pdf
     
     - title: Appendix
       url: /user-guide-appendix.html
