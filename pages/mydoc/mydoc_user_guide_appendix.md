@@ -206,4 +206,142 @@ relaxationFactors
 
 Fig.1 Grids for the NACA0012 airfoil
 
+### LES case
+Large Eddy Simulation (LES) is a computational approach that directly resolves large-scale turbulent structures while modeling the effects of smaller, subgrid-scale eddies through appropriate closure models. This method provides a balance between the accuracy of Direct Numerical Simulation (DNS) and the computational efficiency of Reynolds-Averaged Navier-Stokes (RANS) approaches, making it particularly suitable for simulating complex turbulent flows in engineering applications.
+
+#### Turbulence Properties Configuration
+
+The `constant/turbulenceProperties` file is configured as follows:
+```foam
+simulationType      LES;
+
+LES
+{
+    LESModel        Smagorinsky;
+    SmagorinskyCoeffs
+    {
+        Ce              1.048;
+        Ck              0.0265463553; // Updated to give Cs = 0.065
+    }
+    delta           vanDriest;
+    vanDriestCoeffs
+    {
+        delta           cubeRootVol;
+        cubeRootVolCoeffs
+        {
+            deltaCoeff      1;
+        }
+        Aplus           26;
+        Cdelta          0.158;
+    }
+    printCoeffs     on;
+    turbulence      on;
+}
+```
+
+#### Control Dictionary Configuration
+
+The `system/controlDict` file contains:
+```foam
+application     pimpleFoam;
+startFrom       latestTime;
+startTime       0;
+stopAt          endTime;
+endTime         10000;
+deltaT          0.00001;
+writeControl    adjustable;
+writeInterval   0.0065;
+purgeWrite      30;
+writeFormat     ascii;
+writePrecision  8;
+writeCompression off;
+timeFormat      general;
+timePrecision   8;
+runTimeModifiable yes;
+adjustTimeStep  no;
+maxCo           5;
+```
+
+#### fvSchemes Configuration
+
+The `constant/turbulenceProperties` file is configured as follows:
+```foam
+ddtSchemes
+{
+    default         backward;
+}
+gradSchemes
+{
+    default         Gauss linear;
+}
+divSchemes
+{
+    default         none;
+    div(phi,U)      Gauss linear;
+    div((nuEff*dev2(T(grad(U))))) Gauss linear;
+}
+laplacianSchemes
+{
+    default         Gauss linear orthogonal;
+}
+interpolationSchemes
+{
+    default         linear;
+}
+snGradSchemes
+{
+    default         orthogonal;
+}
+```
+
+#### fvSolution Configuration
+
+The `constant/turbulenceProperties` file is configured as follows:
+```foam
+solvers
+{
+    p
+    {
+        solver          GAMG;
+        smoother        DICGaussSeidel;
+        tolerance       1e-06;
+        relTol          0.001;
+        nPreSweeps      0;
+        nPostSweeps     2;
+        cacheAgglomeration true;
+        nCellsInCoarsestLevel 1000;
+        agglomerator    faceAreaPair;
+        mergeLevels     1;
+    }
+    pFinal
+    {
+        $p;
+        tolerance       1e-06;
+        relTol          0;
+    }
+    U
+    {
+        solver          PBiCG;
+        preconditioner  DILU;
+        tolerance       1e-08;
+        relTol          0.1;
+    }
+    UFinal
+    {
+        $U;
+        tolerance       1e-08;
+        relTol          0;
+    }
+}
+PISO
+{
+    nCorrectors         3;
+    nNonOrthogonalCorrectors 0;
+    pRefCell            0;
+    pRefValue           0;
+}
+
+```
+#### Results from LES method
+
 {% include links.html %}
