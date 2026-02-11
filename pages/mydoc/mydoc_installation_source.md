@@ -266,7 +266,7 @@ Install SMT for surrogate-based optimization:
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 cd $DAFOAM_ROOT_PATH/repos && \
-wget wget https://github.com/SMTorg/smt/archive/refs/tags/v2.10.1.tar.gz && \
+wget https://github.com/SMTorg/smt/archive/refs/tags/v2.10.1.tar.gz && \
 tar -xvf v2.10.1.tar.gz && \
 cd smt-2.10.1 && \
 pip install .
