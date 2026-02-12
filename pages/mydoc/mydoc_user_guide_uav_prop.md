@@ -7,6 +7,8 @@ permalink: user-guide-uav-prop.html
 folder: mydoc
 ---
 
+This chapter was written by [Seth Zoppelt](https://github.com/szoppelt) and reviewed by [Ping He](https://github.com/friedenhe).
+
 ## Learning Objectives:
 
 This chapter includes a detailed explaination for the relevant files such as the runScript for the aerodynamic NACA0012 UAV Propeller case.
@@ -15,8 +17,8 @@ After reading this chapter, you should be able to:
 
 - Describe the folders, files and scripts for a DAFoam optimization case
 - Describe the structure of the runScript for a UAV Propeller optimization
-- ...
-- ...
+- Describe how to optimize for different variables with their respective case numbers (e.g., twist, shape, chord, span)
+- Make modifications to optimize different cases for a UAV propeller
 
 
 ## Overview of the NACA0012 UAV Propeller optimization 
@@ -337,6 +339,222 @@ tri_points = self.mesh_aero.mphys_get_triangulated_surface()
 self.geometry.nom_setConstraintSurface(tri_points)
 ```
 
+Next, we set up the FFD points for the twist variable. We call the index as "3" to make sure that we do not change the first 3 FFD layers. We do this because this is part of the root of the propeller blade, and this will remain rigid throughout the optimization. Next, we set the FFD points that we do want to move, which we get from the geometry. After that, we create the reference axis for the twist, which we again get from the geometry setup. Finally, we define and perform the twist in the for loop below, only changing the FFD points after the root layer. Then, we add this global design variable to the geometry for the optimization. This case will be used for any of the case numbers that are listed above (twist only, twist+chord, twist+chord+span). 
+
+```python
+        # we don't change the first 3 FFD layers from the root
+        shapeStartIdx = 3
+
+        # select the FFD points to move
+        pts = self.geometry.DVGeo.getLocalIndex(0)
+        indexList = pts[:, :, shapeStartIdx:].flatten()
+        PS = geo_utils.PointSelect("list", indexList)
+        nShapes = self.geometry.nom_addLocalDV(dvName="shape", axis="x", pointSelect=PS)
+
+        # Create reference axis for the twist variable
+        nRefAxPts = self.geometry.nom_addRefAxis(name="bladeAxis", yFraction=0.5, alignIndex="k", volumes=[0])
+
+        # Set up global design variables. We dont change the root twist
+        def twist(val, geo):
+            for i in range(shapeStartIdx, nRefAxPts):
+                geo.rot_z["bladeAxis"].coef[i] = val[i - shapeStartIdx]
+
+        self.geometry.nom_addGlobalDV(dvName="twist", value=np.array([0] * (nRefAxPts - shapeStartIdx)), func=twist)
+```
+
+Next, we want to set up the span variable for optimization. Here, we define the span function and find the coordinates for the reference axis, then define a relative location for the reference axis, and finally we linearly change the reference axis along the span. After, we add this as a global design variable to the geometry to use for the optimization.
+
+```python
+        # Set up the span variable, here val[0] is the span change in m
+        def span(val, geo):
+            # coordinates for the reference axis
+            refAxisCoef = geo.extractCoef("bladeAxis")
+            # the relative location of a point in the ref axis
+            # refAxisS[0] = 0, and refAxisS[-1] = 1
+            refAxisS = geo.refAxis.curves[0].s
+            deltaSpan = val[0]
+            # linearly change the refAxis coef along the span
+            for i in range(shapeStartIdx, nRefAxPts):
+                refAxisCoef[i, 2] += refAxisS[i - shapeStartIdx] * deltaSpan
+            geo.restoreCoef(refAxisCoef, "bladeAxis")
+
+        self.geometry.nom_addGlobalDV(dvName="span", value=np.array([0]), func=span)
+```
+
+Finally, we set up the chord variable for the optimization. This set up is similar to the twist, but this time we are setting up the chord variable along `geo.scale_y` rather than `geo.rot_z`. Finally, we also add this as a global design variable for the optimization.
+
+```python
+       # chord var
+        def chord(val, geo):
+            for i in range(shapeStartIdx, nRefAxPts):
+                geo.scale_y["bladeAxis"].coef[i] = val[i - shapeStartIdx]
+
+        self.geometry.nom_addGlobalDV(dvName="chord", value=np.array([1] * (nRefAxPts - shapeStartIdx)), func=chord)
+```
+
+Next, we define the MRF function to set to the boundary conditions for the CFD mesh. After defining the function, we add this to the hover scenario within the solver, and then we add it to the post-processing part of the optimization. 
+
+```python
+        def MRF(val, DASolver):
+            omega = float(val[0])
+            # we need to update the U value only
+            DASolver.setOption("primalBC", {"MRF": omega})
+            DASolver.updateDAOption()
+
+        self.hover.coupling.solver.add_dv_func("MRF", MRF)
+        self.hover.aero_post.add_dv_func("MRF", MRF)
+```
+
+Now, similar to the NACA0012 airfoil case, we add in the volume and thickness constraints by creating a leading ("leList") and trailing ("teList") edge list that defines a straight line parallel to the respective edge and close to the edge as well. See the paragraph on adding these constraints in the NACA0012 airfoil - 2D aerodynamic shape optimization chapter in the user guide. 
+
+```python
+        # setup the volume and thickness constraints
+        leList = [[-0.0034, -0.013, 0.03], [-0.0034, -0.013, 0.148]]
+        teList = [[0.00355, 0.0133, 0.03], [0.00355, 0.0133, 0.148]]
+        self.geometry.nom_addThicknessConstraints2D("thickcon", leList, teList, nSpan=20, nChord=10)
+        self.geometry.nom_addVolumeConstraint("volcon", leList, teList, nSpan=20, nChord=10)
+```
+
+Next, we set the outputs from the dvs component and use them as the design variables. We also connect these dvs outputs to the scenario (hover) and geometry components. 
+
+```python
+        # add the design variables to the dvs component's output
+        self.dvs.add_output("shape", val=np.array([0] * nShapes))
+        self.dvs.add_output("MRF", val=np.array([omega0]))
+        self.dvs.add_output("twist", val=np.array([0] * (nRefAxPts - shapeStartIdx)))
+        self.dvs.add_output("chord", val=np.array([1] * (nRefAxPts - shapeStartIdx)))
+        self.dvs.add_output("span", val=np.array([0]))
+        # manually connect the dvs output to the geometry and hover
+        self.connect("shape", "geometry.shape")
+        self.connect("MRF", "hover.MRF")
+        self.connect("twist", "geometry.twist")
+        self.connect("span", "geometry.span")
+        self.connect("chord", "geometry.chord")
+```
+
+Next, we define the design variables based on which case number we are running when we run the optimization. The snippet below shows which design variable corresponds to which case number. 
+
+```python
+        # define the design variables
+        self.add_design_var("MRF", lower=0.8 * omega0, upper=1.2 * omega0, scaler=0.1)
+        if args.case >= 1:
+            self.add_design_var("twist", lower=-50.0, upper=50.0, scaler=0.1)
+        if args.case >= 2:
+            self.add_design_var("shape", lower=-0.05, upper=0.05, scaler=100.0)
+        if args.case >= 3:
+            self.add_design_var("chord", lower=0.5, upper=2.0, scaler=1)
+        if args.case >= 4:
+            self.add_design_var("span", lower=-0.1, upper=0.1, scaler=100)
+```
+
+Finally, we add out objective and constraint functions to the optimization problem. Here, our objective is to to minimize the propeller shaft power, and we are given a thrust target constraint, and thickness constraint, a volume constraint, and two mesh constraints (a maximum skewness and a maximum non-orthogonality constraint). 
+
+```python
+        # add objective and constraints to the top level
+        self.add_objective("hover.aero_post.power", scaler=1.0)
+        self.add_constraint("hover.aero_post.thrust", equals=thrust_target, scaler=1.0)
+        self.add_constraint("geometry.thickcon", lower=0.8, upper=3.0, scaler=1.0)
+        self.add_constraint("geometry.volcon", lower=-100, upper=1.1, scaler=1.0)
+        self.add_constraint("hover.aero_post.skewness", upper=4.0, scaler=1.0)
+        self.add_constraint("hover.aero_post.nonOrtho", upper=80.0, scaler=0.1)
+```
+
+Now that we have the Top class fully defined and finished, we can set up the optimization problem using OpenMDAO. Here, we first define the OpenMDAO problem. Then, we assign our Top class as the model. After that, we set up the problem and generate an N2 diagram to verify that our connections are correct and make sense. Below, we set up the optimization function. 
+
+```python
+# OpenMDAO setup
+prob = om.Problem()
+prob.model = Top()
+prob.setup(mode="rev")
+om.n2(prob, show_browser=False, outfile="mphys_aero.html")
+
+# initialize the optimization function
+optFuncs = OptFuncs(daOptions, prob)
+```
+
+Below, we use pyOptSparse to set up the optimization. Then, we simply have options for the optimizer depending on which one is chosen. 
+
+```python
+# use pyoptsparse to setup optimization
+prob.driver = om.pyOptSparseDriver()
+prob.driver.options["optimizer"] = args.optimizer
+# options for optimizers
+if args.optimizer == "SNOPT":
+    prob.driver.opt_settings = {
+        "Major feasibility tolerance": 1.0e-5,
+        "Major optimality tolerance": 1.0e-5,
+        "Minor feasibility tolerance": 1.0e-5,
+        "Verify level": -1,
+        "Function precision": 1.0e-5,
+        "Major iterations limit": 100,
+        "Linesearch tolerance": 0.99,
+        "Hessian updates": 10000,
+        "Nonderivative linesearch": None,
+        "Print file": "opt_SNOPT_print.txt",
+        "Summary file": "opt_SNOPT_summary.txt",
+    }
+elif args.optimizer == "IPOPT":
+    prob.driver.opt_settings = {
+        "tol": 1.0e-5,
+        "constr_viol_tol": 1.0e-5,
+        "max_iter": 100,
+        "print_level": 5,
+        "output_file": "opt_IPOPT.txt",
+        "mu_strategy": "adaptive",
+        "limited_memory_max_history": 10,
+        "nlp_scaling_method": "none",
+        "alpha_for_y": "full",
+        "recalc_y": "yes",
+    }
+elif args.optimizer == "SLSQP":
+    prob.driver.opt_settings = {
+        "ACC": 1.0e-5,
+        "MAXIT": 100,
+        "IFILE": "opt_SLSQP.txt",
+    }
+else:
+    print("optimizer arg not valid!")
+    exit(1)
+
+prob.driver.options["debug_print"] = ["nl_cons", "objs", "desvars"]
+# prob.driver.options["print_opt_prob"] = True
+prob.driver.hist_file = "OptView.hst"
+```
+
+Finally, to finish the runScript file, we set up our options for the case. For "opt", we are running the optimization as it is set up. For "runPrimal", we are just running the baseline case with no optimization performed. For "runAdjoint", We run just the primal solution as well as check the adjoint (no optimization). For "checkTotals", we check our derivatives against finite difference, checking all partial and full derivatives (no optimization or analysis performed). 
+
+```python
+if args.task == "opt":
+    # solve CL
+    optFuncs.findFeasibleDesign(
+        ["hover.aero_post.functionals.thrust"], ["MRF"], targets=[thrust_target], epsFD=[1e-2], tol=1e-3
+    )
+    # run the optimization
+    prob.run_driver()
+elif args.task == "runPrimal":
+    # just run the primal once
+    prob.run_model()
+elif args.task == "runAdjoint":
+    # just run the primal and adjoint once
+    prob.run_model()
+    totals = prob.compute_totals()
+    if MPI.COMM_WORLD.rank == 0:
+        print(totals)
+elif args.task == "checkTotals":
+    # verify the total derivatives against the finite-difference
+    prob.run_model()
+    prob.check_totals(
+        # of=["hover.aero_post.functionals.power", "hover.aero_post.functionals.thrust"],
+        wrt=["span"],
+        compact_print=False,
+        step=1e-3,
+        form="central",
+        step_calc="abs",
+    )
+else:
+    print("task arg not found!")
+    exit(1)
+```
 
 
 ## Allclean.sh
@@ -344,6 +562,9 @@ self.geometry.nom_setConstraintSurface(tri_points)
 Allclean.sh is used for wiping all data generated by previous optimization runs and restore the default setup. If you wish to rerun the optimziation, make sure to use Allclean.sh first. Otherwise, DAFoam will not run and it will lead to errors.
 
 
+## Questions
+
+TBD
 
 {% include note.html content="This webpage is under construction." %}
 
