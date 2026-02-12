@@ -170,6 +170,22 @@ Since this is a propeller in hover, we set "hasIterativeBC" to be true to enforc
 
 The "primalBC" dictionary defines the boundary conditions for the primal solution. Note that if primalBC is defined, it will overwrite the values defined in the 0 folder. Here we need to provide the variable name, patch names, and value to set for each variable. If "primalBC" is left blank, we will use the BCs defined in the 0 folder. 
 
+Next, we define the "primalVarBounds", which defines the upper and lower bounds for the primal solution. In this case, we define a minimum omega. 
+
+The "objFunc" dictionary defines our objective and constraint functions. Some of these parameters within the objFunc are the same as in the NACA0012 Airfoil case. Specifically in the propeller case, we want to define the "power", with important parts here are setting the type to "power", we set the "patches" type to "blade" since this is a propeller, we set the "axis" and "center", and we make sure to include this in the adjoint calculation by setting "addToAdjoint" to "True". The thrust here is set as "fixedDirection" to fix the direction of thrust while the propeller is in hover. We again add this to the adjoint calculation. For both "skewness" and "nonOrtho", we define these as mesh quality checks as the optimization is running. 
+
+We set "adjStateOrdering" explicity here to "cell" because the default is "state". This simply sets the ordering of the state variable, with two options "state" and "cell". 
+
+Now, we set the parameters for the adjoint calculation using "adjEqnOption" dictionary. 
+
+Next, we set the "adjPCLag", whic is the interval of recomputing the pre-conditioner matrix dRdWTPC for solveAdjoint. By default, dRdWTPC will be re-computed each time the solveAdjoint function is called. However, you can increase the lag to skip it and reuse the dRdWTPC computed previously.
+
+Next, we set our normalized states in the "normalizedStates" dictionary. Here, we simply set the states for generally standard temperature and pressure values for the propeller in hover. 
+
+In the "checkMeshTreshold" dictionary, we just add this for a check to make sure that the nonorthogonality and skewness are within our constraints. 
+
+Finally, we set our design variables and declare the "decomposeParDict", which is a file that will be automatically written such that we can run an optimization with any number of CPU cores without the need to manually change "decomposeParDict".
+
 ```python
 daOptions = {
     "designSurfaces": ["blade"],
@@ -259,6 +275,69 @@ daOptions = {
     "decomposeParDict": {"preservePatches": ["cyc1", "cyc2"]},
 }
 ```
+
+Next, we need to define the mesh options, shown below.
+
+```python
+meshOptions = {
+    "gridFile": os.getcwd(),
+    "fileType": "OpenFOAM",
+    "useRotations": False,
+    # point and normal for the symmetry plane
+    "symmetryPlanes": [],
+}
+```
+
+Now, we set up the top class, defined as 
+
+```python
+class Top(Multipoint):
+```
+
+Inside this OpenMDAO class, we first setup the problem. Similar to the NACA0012 airfoil case, we first set up the DAFoam solver. In this case, we call it the "aero_builder" rather than "dafoam_builder". Next, we add our subsystems, with "dvs" being a set of independent variable components, which we tend to use as inputs, "mesh_aero" being the aerodynamnic mesh that we use for the optimization, and "geometry" being the set of FFD points for the geometry. Next, we use mPhys to set up the aerodynamic scenario, which we call "hover" for this case. Lastly, we connect the x_aero0 from the mesh and geometry components and subsequently x_aero0 also from the geometry component to the hover scenario group. This is the surface mesh coordinate. 
+
+```python
+def setup(self):
+  # create the builder to initialize the DASolvers
+  aero_builder = DAFoamBuilder(daOptions, meshOptions, scenario="aerodynamic")
+  aero_builder.initialize(self.comm)
+
+  # add the design variable component to keep the top level design variables
+  self.add_subsystem("dvs", om.IndepVarComp(), promotes=["*"])
+
+  # add the aerodynamic mesh component
+  self.add_subsystem("mesh_aero", aero_builder.get_mesh_coordinate_subsystem())
+
+  # add the geometry component (FFD)
+  self.add_subsystem("geometry", OM_DVGEOCOMP(file="FFD/FFD.xyz", type="ffd"))
+
+  self.mphys_add_scenario("hover", ScenarioAerodynamic(aero_builder=aero_builder))
+
+  # need to manually connect the x_aero0 between the mesh and geometry components
+  # here x_aero0 means the surface coordinates of structurally undeformed mesh
+  self.connect("mesh_aero.x_aero0", "geometry.x_aero_in")
+  # need to manually connect the x_aero0 between the geometry component and the hover
+  # scenario group
+  self.connect("geometry.x_aero0", "hover.x_aero")
+```
+
+Next, we set up the `configure(self)` function. First, we add the objective function to the hover scenario: `self.hover.aero_post.mphys_add_funcs()`. 
+
+Similar to the NACA0012 airfoil case, we add the surface coordinates and set the triangular points for geometric constraints. 
+
+```python
+# get the surface coordinates from the mesh component
+points = self.mesh_aero.mphys_get_surface_mesh()
+
+# add pointset to the geometry component
+self.geometry.nom_add_discipline_coords("aero", points)
+
+# set the triangular points to the geometry component for geometric constraints
+tri_points = self.mesh_aero.mphys_get_triangulated_surface()
+self.geometry.nom_setConstraintSurface(tri_points)
+```
+
+
 
 ## Allclean.sh
 
