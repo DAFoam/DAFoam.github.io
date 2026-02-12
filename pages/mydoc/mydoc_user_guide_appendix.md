@@ -14,10 +14,8 @@ folder: mydoc
 
 Below is an OpenFOAM tutorial for performing a DES simulation of an airfoil. The case involves a three-dimensional airfoil positioned near the center of a computational domain whose dimensions are much larger than the airfoil's chord length. The flow conditions are as follows:
 
-- Reynolds number based on chord: $Re_c = \frac{U_\infty c}{\nu} = 6 \times 10^6$
-- Streamwise far-field velocity: $U_x = 51.4815$ m/s
+- Reynolds number based on chord: $Re_c = \frac{U_\infty c}{\nu} = 5 \times 10^6$
 - Characteristic length (local chord length): $c = 1.0$ m
-- Kinematic viscosity of the fluid: $\nu = 8.58 \times 10^{-6}$ m²/s
 - Turbulence model: $k\text{-}\omega$ SST model
 
 ### Initial condition from simpleFoam case
@@ -202,9 +200,16 @@ relaxationFactors
 
 ```
 #### Results from IDDES method
+Figure 1 shows the computational grids used for the NACA0012 airfoil. Fine mesh resolution is employed near the upper surface to accurately capture flow separation. The y⁺ value of the first grid layer is maintained at approximately 1.0. Figure 2 presents the iso-surfaces of Q-criterion for the NACA0012 airfoil. The present IDDES method successfully captures the spanwise vortices, Kelvin-Helmholtz instability, and hairpin vortices on the upper surface. The IDDES results are from the paper "Field Inversion Machine Learning for Time-Resolved Unsteady Flows in Airfoil Dynamic Stall (arXiv:2511.18276, https://doi.org/10.48550/arXiv.2511.18276)".
+<div align="center">
+  <img width="400" alt="mesh" src="https://github.com/user-attachments/assets/a23a8250-1948-4284-9065-3744c139b7fc" />
+  <p>Fig.1 Computational grids for the NACA0012 airfoil</p>
+</div>
 
-
-Fig.1 Grids for the NACA0012 airfoil
+<div align="center">
+  <img width="800" alt="image (2)" src="https://github.com/user-attachments/assets/90697135-1202-408f-930d-34833a3e574f" />
+  <p>Fig.2 Iso-surfaces of Q-criteria for the NACA0012 airfoil</p>
+</div>
 
 ### LES case
 Large Eddy Simulation (LES) is a computational approach that directly resolves large-scale turbulent structures while modeling the effects of smaller, subgrid-scale eddies through appropriate closure models. This method provides a balance between the accuracy of Direct Numerical Simulation (DNS) and the computational efficiency of Reynolds-Averaged Navier-Stokes (RANS) approaches, making it particularly suitable for simulating complex turbulent flows in engineering applications.
