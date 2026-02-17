@@ -555,7 +555,7 @@ For this case, the mesh generation is automatically handled within the `run` scr
 
 After running this case:
 
-- You should arrive at a drag value of $C_{d} = 0.0041$
+- You should arrive at a drag value of roughly $C_{d} = 0.0041$
 
 
 Hints: 
@@ -566,7 +566,7 @@ Hints:
 
 - Treat the `lowerWallStartup` and `upperWallStartup` as symmetry planes and `front` and `back` as empty patches (this is a 2D case).
 
-- For the `aeroForces` function, most entries will be the same as the NACA0012 case as we are still simulating air at standard sea-level conditions. However, the following entries will have to be adjusted if you use the `aeroForces` function from the NACA0012 case: `patches`, `pitchAxis`, `CofR`, `magUInf`, `lRef`, `Aref`, and `writeInterval`. The `pitchAxis` and `CofR` are not needed as a pitching and rotation motion are not required for computing drag with a stationary geometry (as is the case with the backward facing step). These entries can be effectively ignored by passing in a `(0 0 0);` value. The `lRef` entry is the length of the patch that you wish to calculate values for (in this case, drag) and the `Aref` entry is the corresponding area.
+- For the `aeroForces` function, most entries will be the same as the NACA0012 case as we are still simulating air at standard sea-level conditions. However, the following entries will have to be adjusted if you use the `aeroForces` function from the NACA0012 case: `patches`, `pitchAxis`, `CofR`, `magUInf`, `lRef`, `Aref`, and `writeInterval`. The `pitchAxis` and `CofR` are not needed as a pitching and rotation motion are not required for computing drag with a stationary geometry (as is the case with the backward facing step). These entries can be effectively ignored by passing in a `(0 0 0);` value. The `lRef` entry is the length of the patch that you wish to calculate values for (in this case, drag) and the `Aref` entry is the corresponding area. One way to get these measurements is to load the mesh into paraview and use the ruler or line tool to measure the geometry. Another option is to display only the patch of interest in paraview and go to the properties menu to view the dimensions directly. For this tutorial, either method is fine to use.
 
 - Remember, it is always easier to take a pre-existing case and modify it to your particular needs than it is to start a case from scratch. OpenFOAM has many tutorial cases to show users how to use various solvers/functions. If you find yourself confused on setting this case up it is recommended to checkout the OpenFOAM tutorials and find a similiar case (this may be especially useful when setting up the boundary conditions!) to see how to setup your case.
 
