@@ -545,29 +545,33 @@ It is recommended to run this NACA0012 case in parallel as that will speed up th
 
 ## Questions
 
-Construct a new case of a [backward facing step](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM/backwardFacingStep) and compute the drag along the bottom wall:
+Construct a new case of a [backward facing step](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM/backwardFacingStep) (a 2D case) and compute the drag along the bottom wall. The `blockMeshDict` file is supplied for you as well as the `run` script. The boundary conditions, `constant` folder and all other `system/` files will have to be created. It is recommended to first generate the mesh and familiarize yourself with the different patches that define the geometry before constructing the case. The mesh generation is automatically handled within the `run` script which runs `system/blockMeshDict`. The `run` script only has the necessary line to generate the mesh. All other code will have to be manually added. 
 
-- Add an `aeroForces` function in `system/controlDict` to compute the drag force on `lowerWall`
+- Add an `aeroForces` function in `system/controlDict` to compute the drag force on `lowerWall`.
 
-- Use an inlet velocity of 44.2 $m/s$ (positive x-direction)
+- Use an inlet velocity of 50 $m/s$ (positive x-direction).
 
-For this case, the mesh generation is automatically handled within the `run` script which runs `system/blockMeshDict`. This `run` script and `system/blockMeshDict` have been included; you will not have to generate the mesh yourself. The `run` script only has the necessary line to generate the mesh. All other code will have to be manually added. Additionally, since `system/fvSchemes` and `system/fvSolution` were not covered in-depth in this guide, these files have been provided as well. 
+For best reproducibility:
+
+- Use the `kEpsilon` turbulence model.
+
+- For the `aeroForces` function, `rhoInf` is 1.225 (standard sea-level conditions) and magUInf is the same as the inlet velocity. The reference length and area (`lRef` and `Aref` respectively), these values are obtained through paraview.
+
+- The boundary conditions for tubulence field values that must be specified are: `epsilon`, `k`, and `nut`. For the initial conditions use 17.83 for `epsilon`, 1.09e-3 for `k`, and 0 for `nut`.
+
+- The patches `lowerWallinlet` and `upperWallinlet` can be treated as symmetry planes with `front` and `back` as empty patches.
+
+- The divergence scheme for `div(phi,k)` and `div(phi,epsilon)` should be `bounded Gauss limitedLinear 1;` and `bounded Gauss limitedLinearV 1;` for `div(phi,U)`.
+
+- For the `solvers` dictionary in `fvSolution`, use the `DICGaussSeidel` smoother for the `GAMG` solver when solving pressure. The `smoothSolver` can be used for `U`, `k`, and `epsilon`. `epsilon` should use `nSweeps 2;`.
+
+- The `SIMPLE` dictionary in `fvSolution` should use a `consistent` method and add `residualControl` dictionary in the `SIMPLE` dictionary for  `p` (1e-4), `U` (1e-6), and 1e-5 for `"(k|epsilon|f|v2)"`. 
+
+- The `relaxationFactors` in `fvSolution` should use 0.3 for `p` and 0.5 for `U`, `k`, and `epsilon`.
 
 After running this case:
 
-- You should arrive at a drag value of roughly $C_{d} = 0.0041$
+- You should arrive at a drag value of roughly $C_{d} = 0.006$
 
-
-Hints: 
-
-- It may be useful to generate the mesh and open it in ParaView to see what each boundary is before creating `0.orig`. This can be done by creating the `paraview.foam` file and opening this file in ParaView after running the `blockMesh` command in the `run` script. All of the boundaries will automatically be created and named according to this tutorial case.
-
-- For best reproducibility, it is suggested to use the `kOmegaSST` turbulence model and simulate the case up to 2000 seconds.
-
-- Treat the `lowerWallStartup` and `upperWallStartup` as symmetry planes and `front` and `back` as empty patches (this is a 2D case).
-
-- For the `aeroForces` function, most entries will be the same as the NACA0012 case as we are still simulating air at standard sea-level conditions. However, the following entries will have to be adjusted if you use the `aeroForces` function from the NACA0012 case: `patches`, `pitchAxis`, `CofR`, `magUInf`, `lRef`, `Aref`, and `writeInterval`. The `pitchAxis` and `CofR` are not needed as a pitching and rotation motion are not required for computing drag with a stationary geometry (as is the case with the backward facing step). These entries can be effectively ignored by passing in a `(0 0 0);` value. The `lRef` entry is the length of the patch that you wish to calculate values for (in this case, drag) and the `Aref` entry is the corresponding area. One way to get these measurements is to load the mesh into paraview and use the ruler or line tool to measure the geometry. Another option is to display only the patch of interest in paraview and go to the properties menu to view the dimensions directly. For this tutorial, either method is fine to use.
-
-- Remember, it is always easier to take a pre-existing case and modify it to your particular needs than it is to start a case from scratch. OpenFOAM has many tutorial cases to show users how to use various solvers/functions. If you find yourself confused on setting this case up it is recommended to checkout the OpenFOAM tutorials and find a similiar case (this may be especially useful when setting up the boundary conditions!) to see how to setup your case.
 
 {% include links.html %}
