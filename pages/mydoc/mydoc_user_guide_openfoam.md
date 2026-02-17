@@ -22,7 +22,7 @@ After reading this chapter, you should be able to:
 OpenFOAM (Open-source Field Operation And Manipulation) is a free open-source finite-volume CFD solver. OpenFOAM is primarily written in C++ and comes with libraries to help facilitate numerical operations on field values. OpenFOAM also has a wide range of utilities for pre- and post-processing, such as mesh generation/quality checks and support for ParaView (for post-process visualization). There are three main branches of OpenFOAM: ESI OpenCFD, The OpenFOAM Foundation, and Extended Project. DAFoam only supports the ESI OpenCFD version, the OpenFOAM version discussed within this document.
 
 ### Follow Along
-This document contains basic information related to setting up OpenFOAM for the steady-state [NACA0012 simulation](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM). We will discuss every file within this case in an effort to clarify the various aspects of OpenFOAM.
+This document contains basic information related to setting up OpenFOAM for the steady-state [NACA0012 simulation](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM/NACA0012). We will discuss every file within this case in an effort to clarify the various aspects of OpenFOAM.
 
 To help with clarity, below is the file/folder structure for the NACA0012 case. As a general overview: `0.orig` contains boundary conditions and initial field values, `constant` handles flow properties (such as turbulence model and fluid modeling parameters), and `system` controls the numerical discretization, equation solution parameters, etc. This document serves as detailed documentation for these directories.
 
@@ -280,7 +280,7 @@ transportModel Newtonian;  // transport model being used
 
 nu    1.5e-5;              // dynamic viscosity
 Pr    0.7;                 // Prandtl number
-Prt   0.85;                 // turbulent Prandtl number
+Prt   0.85;                // turbulent Prandtl number
 </pre>
 
 The first entry tells OpenFOAM which transport model to use. The Newtonian transport model used in the NACA0012 case assumes a constant dynamic viscosity (nu). Hence, the following entry, `nu`, where we give this constant value for OpenFOAM to use. The value used here, $1.5e-5$ is a typical value used for modeling air. 
@@ -545,53 +545,33 @@ It is recommended to run this NACA0012 case in parallel as that will speed up th
 
 ## Questions
 
-Construct a new case of a [backward facing step](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM) and compute the drag along the bottom wall:
+Construct a new case of a [backward facing step](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM/backwardFacingStep) (a 2D case) and compute the drag along the bottom wall. The `blockMeshDict` file is supplied for you as well as the `run` script. The boundary conditions, `constant` folder and all other `system/` files will have to be created. It is recommended to first generate the mesh and familiarize yourself with the different patches that define the geometry before constructing the case. The mesh generation is automatically handled within the `run` script which runs `system/blockMeshDict`. The `run` script only has the necessary line to generate the mesh. All other code will have to be manually added. 
 
-- Add an `aeroForces` function in `system/controlDict` to compute the drag force on `lowerWall`
+- Add an `aeroForces` function in `system/controlDict` to compute the drag force on `lowerWall`.
 
-- Use an inlet velocity of 44.2 $m/s$ (positive x-direction)
+- Use an inlet velocity of 50 $m/s$ (positive x-direction).
 
-For this case, the mesh generation is automatically handled within the `run` script which runs `system/blockMeshDict`. This `run` script and `system/blockMeshDict` have been included; you will not have to generate the mesh yourself. The `run` script only has the necessary line to generate the mesh. All other code will have to be manually added. Additionally, since `system/fvSchemes` and `system/fvSolution` were not covered in-depth in this guide, these files have been provided as well. 
+For best reproducibility:
+
+- Use the `kEpsilon` turbulence model.
+
+- For the `aeroForces` function, `rhoInf` is 1.225 (standard sea-level conditions) and magUInf is the same as the inlet velocity. The reference length and area (`lRef` and `Aref` respectively), these values are obtained through paraview.
+
+- The boundary conditions for tubulence field values that must be specified are: `epsilon`, `k`, and `nut`. For the initial conditions use 17.83 for `epsilon`, 1.09e-3 for `k`, and 0 for `nut`.
+
+- The patches `lowerWallinlet` and `upperWallinlet` can be treated as symmetry planes with `front` and `back` as empty patches.
+
+- The divergence scheme for `div(phi,k)` and `div(phi,epsilon)` should be `bounded Gauss limitedLinear 1;` and `bounded Gauss limitedLinearV 1;` for `div(phi,U)`.
+
+- For the `solvers` dictionary in `fvSolution`, use the `DICGaussSeidel` smoother for the `GAMG` solver when solving pressure. The `smoothSolver` can be used for `U`, `k`, and `epsilon`. `epsilon` should use `nSweeps 2;`.
+
+- The `SIMPLE` dictionary in `fvSolution` should use a `consistent` method and add `residualControl` dictionary in the `SIMPLE` dictionary for  `p` (1e-4), `U` (1e-6), and 1e-5 for `"(k|epsilon|f|v2)"`. 
+
+- The `relaxationFactors` in `fvSolution` should use 0.3 for `p` and 0.5 for `U`, `k`, and `epsilon`.
 
 After running this case:
 
-- You should arrive at a drag value of $C_{d} = 0.0041$
-
-
-Hints: 
-
-- It may be useful to generate the mesh and open it in ParaView to see what each boundary is before creating `0.orig`. This can be done by creating the `paraview.foam` file and opening this file in ParaView after running the `blockMesh` command in the `run` script.
-
-- Treat the `lowerWallStartup` and `upperWallStartup` as symmetry planes and `front` and `back` as empty patches
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- You should arrive at a drag value of roughly $C_{d} = 0.006$
 
 
 {% include links.html %}
