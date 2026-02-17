@@ -22,7 +22,7 @@ After reading this chapter, you should be able to:
 OpenFOAM (Open-source Field Operation And Manipulation) is a free open-source finite-volume CFD solver. OpenFOAM is primarily written in C++ and comes with libraries to help facilitate numerical operations on field values. OpenFOAM also has a wide range of utilities for pre- and post-processing, such as mesh generation/quality checks and support for ParaView (for post-process visualization). There are three main branches of OpenFOAM: ESI OpenCFD, The OpenFOAM Foundation, and Extended Project. DAFoam only supports the ESI OpenCFD version, the OpenFOAM version discussed within this document.
 
 ### Follow Along
-This document contains basic information related to setting up OpenFOAM for the steady-state [NACA0012 simulation](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM). We will discuss every file within this case in an effort to clarify the various aspects of OpenFOAM.
+This document contains basic information related to setting up OpenFOAM for the steady-state [NACA0012 simulation](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM/NACA0012). We will discuss every file within this case in an effort to clarify the various aspects of OpenFOAM.
 
 To help with clarity, below is the file/folder structure for the NACA0012 case. As a general overview: `0.orig` contains boundary conditions and initial field values, `constant` handles flow properties (such as turbulence model and fluid modeling parameters), and `system` controls the numerical discretization, equation solution parameters, etc. This document serves as detailed documentation for these directories.
 
@@ -280,7 +280,7 @@ transportModel Newtonian;  // transport model being used
 
 nu    1.5e-5;              // dynamic viscosity
 Pr    0.7;                 // Prandtl number
-Prt   0.85;                 // turbulent Prandtl number
+Prt   0.85;                // turbulent Prandtl number
 </pre>
 
 The first entry tells OpenFOAM which transport model to use. The Newtonian transport model used in the NACA0012 case assumes a constant dynamic viscosity (nu). Hence, the following entry, `nu`, where we give this constant value for OpenFOAM to use. The value used here, $1.5e-5$ is a typical value used for modeling air. 
@@ -545,7 +545,7 @@ It is recommended to run this NACA0012 case in parallel as that will speed up th
 
 ## Questions
 
-Construct a new case of a [backward facing step](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM) and compute the drag along the bottom wall:
+Construct a new case of a [backward facing step](https://github.com/DAFoam/user_guide_files/tree/main/Chapter2_OpenFOAM/backwardFacingStep) and compute the drag along the bottom wall:
 
 - Add an `aeroForces` function in `system/controlDict` to compute the drag force on `lowerWall`
 
@@ -560,38 +560,14 @@ After running this case:
 
 Hints: 
 
-- It may be useful to generate the mesh and open it in ParaView to see what each boundary is before creating `0.orig`. This can be done by creating the `paraview.foam` file and opening this file in ParaView after running the `blockMesh` command in the `run` script.
+- It may be useful to generate the mesh and open it in ParaView to see what each boundary is before creating `0.orig`. This can be done by creating the `paraview.foam` file and opening this file in ParaView after running the `blockMesh` command in the `run` script. All of the boundaries will automatically be created and named according to this tutorial case.
 
-- Treat the `lowerWallStartup` and `upperWallStartup` as symmetry planes and `front` and `back` as empty patches
+- For best reproducibility, it is suggested to use the `kOmegaSST` turbulence model and simulate the case up to 2000 seconds.
 
+- Treat the `lowerWallStartup` and `upperWallStartup` as symmetry planes and `front` and `back` as empty patches (this is a 2D case).
 
+- For the `aeroForces` function, most entries will be the same as the NACA0012 case as we are still simulating air at standard sea-level conditions. However, the following entries will have to be adjusted if you use the `aeroForces` function from the NACA0012 case: `patches`, `pitchAxis`, `CofR`, `magUInf`, `lRef`, `Aref`, and `writeInterval`. The `pitchAxis` and `CofR` are not needed as a pitching and rotation motion are not required for computing drag with a stationary geometry (as is the case with the backward facing step). These entries can be effectively ignored by passing in a `(0 0 0);` value. The `lRef` entry is the length of the patch that you wish to calculate values for (in this case, drag) and the `Aref` entry is the corresponding area.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Remember, it is always easier to take a pre-existing case and modify it to your particular needs than it is to start a case from scratch. OpenFOAM has many tutorial cases to show users how to use various solvers/functions. If you find yourself confused on setting this case up it is recommended to checkout the OpenFOAM tutorials and find a similiar case (this may be especially useful when setting up the boundary conditions!) to see how to setup your case.
 
 {% include links.html %}
