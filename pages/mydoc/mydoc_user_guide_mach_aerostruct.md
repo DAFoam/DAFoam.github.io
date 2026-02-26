@@ -138,7 +138,7 @@ xfer_builder = MeldBuilder(aero_builder, struct_builder, isym=2, check_partials=
 xfer_builder.initialize(self.comm)
 ```
 
-Then, we need to setup linear and nonlinear block solvers to solve the aero-structural coupled primal and adjoint.
+Then, we need to setup linear and nonlinear block solvers to solve the aero-structural coupled primal and adjoint. Here `maxiter` is the max iteration for the linear or nonlinear block Gauss-Seidel (BGS) iteration. Here BGS means we will repeatedly solve the aero and struct component until a prescribed tolerance is met. `use_atiken=True` means OpenMDAO will automatically adjust the relaxation factor for the BGS iteration. `rtol` and `atol` are the relative and absolute tolerances for the residuals of the BGS iterations. When the simulation runs these residuals will be printed to the screen. For example, for the primal simulation, it will read: `NL: NLBGS 7 ; 530.0 0.01` Here the BGS runs for 7 iteration, the absolute residual is 530 and the relative residual is 0.01.
 
 ```python
 # primal and adjoint solution options, i.e., nonlinear block Gauss-Seidel for aerostructural analysis
@@ -154,6 +154,43 @@ self.mphys_add_scenario(
     nonlinear_solver,
     linear_solver,
 )
+```
+
+Next, we need to manually connect the aero-struct's geometry and scenario components (no need to change these):
+
+```python
+# need to manually connect the vars in the geo component to scenario1
+for discipline in ["aero", "struct"]:
+    self.connect("geometry.x_%s0" % discipline, "scenario1.x_%s0" % discipline)
+```
+
+Then, we need to connect the structure design variable (panel/shell thickness) to the scenario. Here we set the initial thickness of all panels and shells to 0.01 m. NOTE: we fix the structure thickness for the optimization; these structure thicknesses are NOT design variables.
+
+```python
+# add the structural thickness DVs
+ndv_struct = struct_builder.get_ndv()
+dvs.add_output("dv_struct", np.array(ndv_struct * [0.01]))
+self.connect("dv_struct", "scenario1.dv_struct")
+```
+
+In the `configure` function in runScript.py, we need some additional calls (no need to changes these).
+
+```python
+# call this to configure the coupling solver
+super().configure()
+
+# get the surface coordinates from the mesh component
+points = self.mesh_aero.mphys_get_surface_mesh()
+
+# add pointset for both aero and struct
+self.geometry.nom_add_discipline_coords("aero", points)
+self.geometry.nom_add_discipline_coords("struct")
+```
+
+The rest of the lines in `configure` is similar between aero-struct and aero-only, the only difference is that we need to add a structural stress constraint:
+
+```python
+self.add_constraint("scenario1.ks_vmfailure", lower=0.0, upper=1.0, scaler=1.0)
 ```
 
 {% include links.html %}
