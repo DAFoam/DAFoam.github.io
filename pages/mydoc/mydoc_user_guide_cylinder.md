@@ -115,6 +115,8 @@ nuTilda0 = 4.5e-5
 A0 = 0.1
 ```
 
+Because we are running an unsteady optimization problem, so we need to use the DAPimpleFoam for the "solverName" in the daOptions, and we also need to set up the "unsteadyAdjoint" entry in the daOptions. We use "timeAcurrate" for the "mode", the "PCMatPrecomputeInterval" is set to 100, "PCMatUpdateInterval" is set to 1, and the "reduceIO" is set to "True", and the "zeroInitFields" is set to "False". If may print out the unsteady optimization result at every time step so we set the "printIntervalUnsteady": 1.
+
 ```python
 # Set the parameters for optimization
 daOptions = {
