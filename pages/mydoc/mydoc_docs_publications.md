@@ -9,137 +9,139 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
-<87> J. Zhou, Y. Zhang. Multi-point aerodynamic optimization of airfoilsunder stall conditions based on the unsteadydiscrete adjoint method. Physics of Fluids, 2026.
+<88> J. Zhou, Y. Zhang. Multi-point aerodynamic optimization of airfoilsunder stall conditions based on the unsteadydiscrete adjoint method. Physics of Fluids, 2026.
 
-<86> U. Padmanaban, B. Ganapathisubramani, S. Symon. Three-dimensional variational data assimilation of separated flows using time-averaged experimental data. Physical Review Fluids, 2026
+<87> U. Padmanaban, B. Ganapathisubramani, S. Symon. Three-dimensional variational data assimilation of separated flows using time-averaged experimental data. Physical Review Fluids, 2026
 
-<85> M. Formichetti, U. Padmanaban, P. He, S. Symon, B. Ganapathisubramani. Assimilating rough features: A data-driven framework to infer rough wall properties from sparse experimental data. 10.48550/arXiv.2601.15980, 2026
+<86> M. Formichetti, U. Padmanaban, P. He, S. Symon, B. Ganapathisubramani. Assimilating rough features: A data-driven framework to infer rough wall properties from sparse experimental data. 10.48550/arXiv.2601.15980, 2026
 
-<84> H. Ji, Y. Luo, H. Zhou Y. Zhao. Progressive Mixture-of-Experts with autoencoder routing for continual RANS turbulence modelling. arXiv.2601.09305, 2026
+<85> H. Ji, Y. Luo, H. Zhou Y. Zhao. Progressive Mixture-of-Experts with autoencoder routing for continual RANS turbulence modelling. arXiv.2601.09305, 2026
 
-<83> L. Fang, P. He. Agentic AI for Conversational Aerodynamic Analysis and Optimization of Airfoils and Wings. AIAA SciTech Forum, 2026.
+<84> L. Fang, P. He. Agentic AI for Conversational Aerodynamic Analysis and Optimization of Airfoils and Wings. AIAA SciTech Forum, 2026.
 
-<82> A. Dikshit, P. Koratikere, L. Leifsson, P. He. Surrogate-Based Uncertainty Propagation in Aerostructural Analysis of a Wing in Subsonic Flow. AIAA SciTech Forum, 2026.
+<83> A. Dikshit, P. Koratikere, L. Leifsson, P. He. Surrogate-Based Uncertainty Propagation in Aerostructural Analysis of a Wing in Subsonic Flow. AIAA SciTech Forum, 2026.
 
-<81> C. Psenica, L. Fang, S. Zoppelt, M. Leader, P. He. A Modular Conjugate Heat Transfer Optimization Framework for Thermal Management of Electric Aircraft. International Journal of Heat and Mass Transfer, 2026.
+<82> C. Psenica, L. Fang, S. Zoppelt, M. Leader, P. He. A Modular Conjugate Heat Transfer Optimization Framework for Thermal Management of Electric Aircraft. International Journal of Heat and Mass Transfer, 2026.
 
-<80> M. Bashir, D. Gong, L. Sun, P. Duan. Aerodynamic shape optimization using the adjoint method combined with an inverse design approach for non-parameterized geometries. Physics of Fluids, 2025.
+<81> M. Bashir, D. Gong, L. Sun, P. Duan. Aerodynamic shape optimization using the adjoint method combined with an inverse design approach for non-parameterized geometries. Physics of Fluids, 2025.
 
-<79> Z. Zhang, G. Karniadakis. Effect of Turbulence-Closure Consistency on Airfoil Identification. arXiv.2511.08341, 2025 
+<80> Z. Zhang, G. Karniadakis. Effect of Turbulence-Closure Consistency on Airfoil Identification. arXiv.2511.08341, 2025 
 
-<78> C. Wu, S. Zhang. Y. Zhang. Data-driven Augmentation of Turbulence Model in Three dimensional Flows Via Sequential Correction. arXiv.2510.22469, 2025
+<79> C. Wu, S. Zhang. Y. Zhang. Data-driven Augmentation of Turbulence Model in Three dimensional Flows Via Sequential Correction. arXiv.2510.22469, 2025
 
-<77> M. H. Negahban Development and optimization of novel morphing wings for the next-generation aircraft. PhD Thesis, University of Quebec, Montreal, 2025
+<78> M. H. Negahban Development and optimization of novel morphing wings for the next-generation aircraft. PhD Thesis, University of Quebec, Montreal, 2025
 
-<76> A.A. Siddiqui. Data-Driven Correction Fields for Turbulence Modeling: A Priori and A Posteriori Study. M.S. Thesis, Delft University of Technology, 2025.
+<77> A.A. Siddiqui. Data-Driven Correction Fields for Turbulence Modeling: A Priori and A Posteriori Study. M.S. Thesis, Delft University of Technology, 2025.
 
-<75> J. Beland. Bayesian Optimization Algorithms for High-Dimensional Problems and Robust Design. PhD Thesis, University of Toronto, 2025. 
+<76> J. Beland. Bayesian Optimization Algorithms for High-Dimensional Problems and Robust Design. PhD Thesis, University of Toronto, 2025. 
 
-<74> EL. Ntantis, V. Xezonakis. Discrete Adjoint Optimization for Improved Aerodynamics Using the Spalart-Allmaras Model. International Review on Modelling and Simulations, 2025.
+<75> EL. Ntantis, V. Xezonakis. Discrete Adjoint Optimization for Improved Aerodynamics Using the Spalart-Allmaras Model. International Review on Modelling and Simulations, 2025.
 
-<73> H. Blumhoefer, A. Sharma. Numerical Simulation of Tornado-Like Vortices: Swirl Ratio Optimization. AIAA Aviation Forum, 2025.
+<74> H. Blumhoefer, A. Sharma. Numerical Simulation of Tornado-Like Vortices: Swirl Ratio Optimization. AIAA Aviation Forum, 2025.
 
-<72> S. Menon, K. Ahmed, A. Sharma, P. Durbin. Machine-Learning-Enhanced Simulation of Unsteady Turbulent Flows. AIAA Aviation Forum, 2025.
+<73> S. Menon, K. Ahmed, A. Sharma, P. Durbin. Machine-Learning-Enhanced Simulation of Unsteady Turbulent Flows. AIAA Aviation Forum, 2025.
 
-<71> K. Ahmed, S. Menon, D. Sitarski, A. Sharma, P. Durbin. Data-Enhanced RANS Modeling of Unsteady Transitional Flows. AIAA Aviation Forum, 2025.
+<72> K. Ahmed, S. Menon, D. Sitarski, A. Sharma, P. Durbin. Data-Enhanced RANS Modeling of Unsteady Transitional Flows. AIAA Aviation Forum, 2025.
 
-<70> L. Carlsson. Optimizing rotor blades for heavier-than-air flight on mars using the discrete adjoint method in the open-source framework DAFoam. Master Thesis, Uppsala University, 2025.
+<71> L. Carlsson. Optimizing rotor blades for heavier-than-air flight on mars using the discrete adjoint method in the open-source framework DAFoam. Master Thesis, Uppsala University, 2025.
 
-<69> T.H.N Vuong, G.H. Long, T.H.H Le, T.L. Le. Improvement in aerodynamic performance of airfoils using aerodynamic shape optimization. JP Journal of Heat and Mass Transfer, 2025.
+<70> T.H.N Vuong, G.H. Long, T.H.H Le, T.L. Le. Improvement in aerodynamic performance of airfoils using aerodynamic shape optimization. JP Journal of Heat and Mass Transfer, 2025.
 
-<68> M. H Negahban, R.M. Botez. Comparison of Aerodynamic Characteristics of Morphing and Conventional Wings. INCAS Bulletin, 2025.
+<69> M. H Negahban, R.M. Botez. Comparison of Aerodynamic Characteristics of Morphing and Conventional Wings. INCAS Bulletin, 2025.
 
-<67> Eric Segalerba. High fidelity simulations of the nasal flow with heat transfer and adjoint based optimization. PhD Thesis. University of Genoa, 2025.
+<68> Eric Segalerba. High fidelity simulations of the nasal flow with heat transfer and adjoint based optimization. PhD Thesis. University of Genoa, 2025.
 
-<66> B. Pacini, M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Investigating the Benefit of Aerodynamic Shape Optimization for a Wing with Distributed Propulsion. Meccanica, 2025.
+<67> B. Pacini, M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Investigating the Benefit of Aerodynamic Shape Optimization for a Wing with Distributed Propulsion. Meccanica, 2025.
 
-<65> S. Zhang, C. Wu, Y. Zhang. Numerical Simulation of Three-dimensional High-Lift Configurations Using Data-Driven Turbulence Model. arXiv.2503.14859, 2025.
+<66> S. Zhang, C. Wu, Y. Zhang. Numerical Simulation of Three-dimensional High-Lift Configurations Using Data-Driven Turbulence Model. arXiv.2503.14859, 2025.
 
-<64> U. Padmanaban, B. Ganapathisubramani, and S. Symon. Three-dimensional variational data assimilation of separated flows using time-averaged experimental data. arXiv.2503.19689, 2025.
+<65> U. Padmanaban, B. Ganapathisubramani, and S. Symon. Three-dimensional variational data assimilation of separated flows using time-averaged experimental data. arXiv.2503.19689, 2025.
 
-<63> P. He, C. Psenica, L. Fang, M. Leader. Aerothermal Shape Optimization of Actively-Cooled Battery Packs Using Conjugate Heat Transfer. AIAA SciTech Forum, 2025.
+<64> P. He, C. Psenica, L. Fang, M. Leader. Aerothermal Shape Optimization of Actively-Cooled Battery Packs Using Conjugate Heat Transfer. AIAA SciTech Forum, 2025.
 
-<62> C. Psenica, L. Fang, S. Zoppelt, P. He. Conjugate Heat Transfer Shape Optimization of a U-bend Pipe With a Discrete Adjoint Method. AIAA SciTech Forum, 2025.
+<63> C. Psenica, L. Fang, S. Zoppelt, P. He. Conjugate Heat Transfer Shape Optimization of a U-bend Pipe With a Discrete Adjoint Method. AIAA SciTech Forum, 2025.
 
-<61> Z. Li, L. Fang, A. Sharma, P. He. Field Inversion Machine Learning for Accurate Predictions of Time-Resolved Unsteady Flows Over Airfoils. AIAA SciTech Forum, 2025.
+<62> Z. Li, L. Fang, A. Sharma, P. He. Field Inversion Machine Learning for Accurate Predictions of Time-Resolved Unsteady Flows Over Airfoils. AIAA SciTech Forum, 2025.
 
-<60> J. Park, M. Mangano, S. Seraj, B. Pacini, Y. Liao, B. Knight, K. Naik, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based design optimization of a 5 kW ducted hydrokinetic turbine with practical constraints, Renewable Energy, 2025.
+<61> J. Park, M. Mangano, S. Seraj, B. Pacini, Y. Liao, B. Knight, K. Naik, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based design optimization of a 5 kW ducted hydrokinetic turbine with practical constraints, Renewable Energy, 2025.
 
-<59> C. Wu, Y. Zhang. Field Inversion and Machine Learning Based on the Rubber-Band Spalart-Allmaras Model. Theoretical and Applied Mechanics Letters. 2024.
+<60> C. Wu, Y. Zhang. Field Inversion and Machine Learning Based on the Rubber-Band Spalart-Allmaras Model. Theoretical and Applied Mechanics Letters. 2024.
 
-<58> E. Ntantis, V. Xezonakis. Improving Transonic Performance with Adjoint-Based NACA 0012 Airfoil Design Optimization. Results in Engineering, 2024
+<59> E. Ntantis, V. Xezonakis. Improving Transonic Performance with Adjoint-Based NACA 0012 Airfoil Design Optimization. Results in Engineering, 2024
 
-<57> Z. Ding, Q. Liu, H Luo, M. Yang, Y. ZHang, S. Wang, Y. Luo, S. Chen. A preoperative planning procedure of septal myectomy for hypertrophic obstructive cardiomyopathy using image-based computational fluid dynamics simulations and shape optimization. Scientific Reports, 2024.
+<58> Z. Ding, Q. Liu, H Luo, M. Yang, Y. ZHang, S. Wang, Y. Luo, S. Chen. A preoperative planning procedure of septal myectomy for hypertrophic obstructive cardiomyopathy using image-based computational fluid dynamics simulations and shape optimization. Scientific Reports, 2024.
 
-<56> J. Ho, N Pepper, T. Dodwell. Probabilistic Machine Learning to Improve Generalisation of Data-Driven Turbulence Modelling. Computers & Fluids, 2024.
+<57> J. Ho, N Pepper, T. Dodwell. Probabilistic Machine Learning to Improve Generalisation of Data-Driven Turbulence Modelling. Computers & Fluids, 2024.
 
-<55> J. Caudron. Aerostructural optimization of an aircraft wing assisted by dimensionality reduction methods. MS Thesis. University of Liège, 2024.
+<56> J. Caudron. Aerostructural optimization of an aircraft wing assisted by dimensionality reduction methods. MS Thesis. University of Liège, 2024.
 
-<54> U. C. Padmanaban, B. Ganapathisubramani, C. Vanderwel, S. Symon. Towards passive scalar reconstruction using data assimilation. 14th UK Conference on Wind Engineering, 2024. 
+<55> U. C. Padmanaban, B. Ganapathisubramani, C. Vanderwel, S. Symon. Towards passive scalar reconstruction using data assimilation. 14th UK Conference on Wind Engineering, 2024. 
 
-<53> M.H. Negahban, M. Bashir, C. Priolet, R.M. Botez. Novel Twist Morphing Aileron and Winglet Design for UAS Control and Performance. Drones. 2024.
+<54> M.H. Negahban, M. Bashir, C. Priolet, R.M. Botez. Novel Twist Morphing Aileron and Winglet Design for UAS Control and Performance. Drones. 2024.
 
-<52> S. Batay, A. Baidullayeva, E. Sarsenov, Y. Zhao, T. Zhou, E. Ng, T. Kadylulu. Integrated Aerodynamic Shape and Aero-Structural Optimization: Applications from Ahmed Body to NACA 0012 Airfoil and Wind Turbine Blades. Fluids, 2024.
+<53> S. Batay, A. Baidullayeva, E. Sarsenov, Y. Zhao, T. Zhou, E. Ng, T. Kadylulu. Integrated Aerodynamic Shape and Aero-Structural Optimization: Applications from Ahmed Body to NACA 0012 Airfoil and Wind Turbine Blades. Fluids, 2024.
 
-<51> J. Henry. Modeling and Optimization of Embedded Active Flow Control Systems. PhD Thesis. Illinois Institute of Technology, 2024.
+<52> J. Henry. Modeling and Optimization of Embedded Active Flow Control Systems. PhD Thesis. Illinois Institute of Technology, 2024.
 
-<50> R. Halder. Data-Driven Surrogate Models for Computational Fluid Dynamics. PhD Thesis. University of Michigan, 2024.
+<51> R. Halder. Data-Driven Surrogate Models for Computational Fluid Dynamics. PhD Thesis. University of Michigan, 2024.
 
-<49> K. Hoang. High-fidelity aerostructural optimization of high aspect ratio wings, MS Thesis. Iowa State University, 2024.
+<50> K. Hoang. High-fidelity aerostructural optimization of high aspect ratio wings, MS Thesis. Iowa State University, 2024.
 
-<48> C. Thompson, U. Padmanaban, B. Ganapathisubramani, S. Symon. The effect of variations in experimental and computational fidelity on data assimilation approaches. Theoretical and Computational Fluid Dynamics, 2024.
+<49> C. Thompson, U. Padmanaban, B. Ganapathisubramani, S. Symon. The effect of variations in experimental and computational fidelity on data assimilation approaches. Theoretical and Computational Fluid Dynamics, 2024.
 
-<47> C. Wu, Y. Zhang. Flow Topology Optimization at High Reynolds Numbers Based on Modified Turbulence Models. Aerospace, 2024.
+<48> C. Wu, Y. Zhang. Flow Topology Optimization at High Reynolds Numbers Based on Modified Turbulence Models. Aerospace, 2024.
 
-<46> E. Ntantis, V. Xezonakis. Aerodynamic design optimization of a NACA 0012 airfoil: An introductory adjoint discrete tool for educational purposes. International Journal of Mechanical Engineering Education, 2024
+<47> E. Ntantis, V. Xezonakis. Aerodynamic design optimization of a NACA 0012 airfoil: An introductory adjoint discrete tool for educational purposes. International Journal of Mechanical Engineering Education, 2024
 
-<45> L. Fang, P. He. Field inversion machine learning augmented turbulence modeling for time-accurate unsteady flow. Physics of Fluids, 2024.
+<46> L. Fang, P. He. Field inversion machine learning augmented turbulence modeling for time-accurate unsteady flow. Physics of Fluids, 2024.
 
-<44> L. Fang, P. He. A Duality-Preserving Adjoint Method for Segregated Navier-Stokes Solvers. Journal of Computational Physics, 2024.
+<45> L. Fang, P. He. A Duality-Preserving Adjoint Method for Segregated Navier-Stokes Solvers. Journal of Computational Physics, 2024.
 
-<43> O. Bidar, S. Anderson, N. Qin. Sensor placement for data assimilation of turbulence models using eigenspace perturbations, Physics of Fluids, 2024.
+<44> O. Bidar, S. Anderson, N. Qin. Sensor placement for data assimilation of turbulence models using eigenspace perturbations, Physics of Fluids, 2024.
 
-<42> C. Wu, Y. Zhang. Development of a Generalizable Data-Driven Turbulence Model: Conditioned Field Inversion and Symbolic Regression. AIAA Journal, 2024.
+<43> C. Wu, Y. Zhang. Development of a Generalizable Data-Driven Turbulence Model: Conditioned Field Inversion and Symbolic Regression. AIAA Journal, 2024.
 
-<41> L. Fang, P. He. A Segregated Time-Accurate Adjoint Method for Field Inversion of Unsteady Flow. AIAA SciTech forum, 2024.
+<42> L. Fang, P. He. A Segregated Time-Accurate Adjoint Method for Field Inversion of Unsteady Flow. AIAA SciTech forum, 2024.
 
-<40> S. Zoppelt, H. Koyuncuoglu. P. He. High-fidelity Aerostructural Optimization Benchmark for Aircraft Propellers in Hover. AIAA SciTech forum, 2024.
+<41> S. Zoppelt, H. Koyuncuoglu. P. He. High-fidelity Aerostructural Optimization Benchmark for Aircraft Propellers in Hover. AIAA SciTech forum, 2024.
 
-<39> O. Bidar, P. He, S. Anderson, N. Qin. Aerodynamic Shape Optimisation Using a Machine Learning-Augmented Turbulence Model. AIAA SciTech forum, 2024.
+<40> O. Bidar, P. He, S. Anderson, N. Qin. Aerodynamic Shape Optimisation Using a Machine Learning-Augmented Turbulence Model. AIAA SciTech forum, 2024.
 
-<38> J. Park, B. Knight, Y. Liao, M. Mangano, B. Pacini, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based Design Optimization of Ducted Hydrokinetic Turbines, Scientific Reports, 2023.
+<39> J. Park, B. Knight, Y. Liao, M. Mangano, B. Pacini, K. Maki, J. Martins, J. Sun, and Y. Pan. CFD-based Design Optimization of Ducted Hydrokinetic Turbines, Scientific Reports, 2023.
 
-<37> M.H. Negahban, M. Bashir, V. Traisnel, R.M. Botez. Seamless morphing trailing edge flaps for UAS-S45 using high-fidelity aerodynamic optimization. Chinese Journal of Aeronautics, 2023.
+<38> M.H. Negahban, M. Bashir, V. Traisnel, R.M. Botez. Seamless morphing trailing edge flaps for UAS-S45 using high-fidelity aerodynamic optimization. Chinese Journal of Aeronautics, 2023.
 
-<36> S. Batay, A. Baidullayeva, Y. Zhao, D. Wei. Aero-Structural Design Optimization of Wind Turbine Blades. Preprints, 2023.
+<37> S. Batay, A. Baidullayeva, Y. Zhao, D. Wei. Aero-Structural Design Optimization of Wind Turbine Blades. Preprints, 2023.
 
-<35> U. Toman. High-fidelity aerodynamic and aerostructural optimization of UAV propellers, MS Thesis. Iowa State University, 2023.
+<36> U. Toman. High-fidelity aerodynamic and aerostructural optimization of UAV propellers, MS Thesis. Iowa State University, 2023.
 
-<34> F. Cao, Z. Tang, C. Zhu X. Zhao. An Efficient Hybrid Multi-Objective Optimization Method Coupling Global Evolutionary and Local Gradient Searches for Solving Aerodynamic Optimization Problems. Mathematics, 2023.
+<35> F. Cao, Z. Tang, C. Zhu X. Zhao. An Efficient Hybrid Multi-Objective Optimization Method Coupling Global Evolutionary and Local Gradient Searches for Solving Aerodynamic Optimization Problems. Mathematics, 2023.
 
-<33> C. Wu, Y. Zhang. Enhancing the shear-stress-transport turbulence model with symbolic regression: A generalizable and interpretable data-driven approach. Physical Review Fluids, 2023.
+<34> C. Wu, Y. Zhang. Enhancing the shear-stress-transport turbulence model with symbolic regression: A generalizable and interpretable data-driven approach. Physical Review Fluids, 2023.
 
-<32> F. Yeganehdoust, H. Karbasian, B. Vermeire. Aerodynamic Optimization of eVTOL Rotor Profiles. Proceedings of the Canadian Society for Mechanical Engineering International Congress, 2023.
+<33> F. Yeganehdoust, H. Karbasian, B. Vermeire. Aerodynamic Optimization of eVTOL Rotor Profiles. Proceedings of the Canadian Society for Mechanical Engineering International Congress, 2023.
 
-<31> F. Chen, X. Cheng, K. Zhang, Y. Chen, X. Zhang. Unsteady Aerodynamic Shape Optimization of a Vertical Axis Wind Turbine Under the Framework of DAFoam. 2023 Asia-Pacific International Symposium on Aerospace Technology (APISAT 2023) Proceedings.
+<32> F. Chen, X. Cheng, K. Zhang, Y. Chen, X. Zhang. Unsteady Aerodynamic Shape Optimization of a Vertical Axis Wind Turbine Under the Framework of DAFoam. 2023 Asia-Pacific International Symposium on Aerospace Technology (APISAT 2023) Proceedings.
 
-<30> B. Pacini, M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Towards Mixed-Fidelity Aero-Structural-Acoustic Optimization for Urban Air Mobility Vehicle Design. In: AIAA Aviation Forum, 2023.
+<31> B. Pacini, M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Towards Mixed-Fidelity Aero-Structural-Acoustic Optimization for Urban Air Mobility Vehicle Design. In: AIAA Aviation Forum, 2023.
 
-<29> H. M. Hajdik, B. Pacini, A. Yildirim, B. J. Brelje, J.R.R.A. Martins. Combined systems packaging and aerodynamic shape optimization of a full aircraft configuration. In: AIAA Aviation Forum, 2023.
+<30> H. M. Hajdik, B. Pacini, A. Yildirim, B. J. Brelje, J.R.R.A. Martins. Combined systems packaging and aerodynamic shape optimization of a full aircraft configuration. In: AIAA Aviation Forum, 2023.
 
-<28> S. Batay, B. Kamalov, D. Zhangaskanov, Y. Zhao, D. Wei, T. Zhou, X. Su. Adjoint-Based High-Fidelity Concurrent Aerodynamic Design Optimization of Wind Turbine. Fluids, 2023
+<29> S. Batay, B. Kamalov, D. Zhangaskanov, Y. Zhao, D. Wei, T. Zhou, X. Su. Adjoint-Based High-Fidelity Concurrent Aerodynamic Design Optimization of Wind Turbine. Fluids, 2023
 
-<27> H. U. Koyuncuoglu, P. He. CFD Based Multi-Component Aerodynamic Optimization for Wing Propeller Coupling. In: AIAA Scitech Forum, 2023. 
+<28> H. U. Koyuncuoglu, P. He. CFD Based Multi-Component Aerodynamic Optimization for Wing Propeller Coupling. In: AIAA Scitech Forum, 2023. 
 
-<26> P. He, H.U. Koyuncuoglu, H. Hu, A. Dhulipalla, H.Y. Hu, H. Hu. High-fidelity Aerodynamic and Aerostructural Optimization of UAV Propellers Using the Adjoint Method. In: AIAA Scitech Forum, 2023.
+<27> P. He, H.U. Koyuncuoglu, H. Hu, A. Dhulipalla, H.Y. Hu, H. Hu. High-fidelity Aerodynamic and Aerostructural Optimization of UAV Propellers Using the Adjoint Method. In: AIAA Scitech Forum, 2023.
 
-<25> B Pacini M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Multipoint Aerostructural Optimization for Urban Air Mobility Vehicle Design. In: AIAA Scitech Forum, 2023.
+<26> B Pacini M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Multipoint Aerostructural Optimization for Urban Air Mobility Vehicle Design. In: AIAA Scitech Forum, 2023.
 
-<24> B Pacini M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Understanding Distributed Propulsion on the NASA Tiltwing Concept Vehicle with Aerodynamic Shape Optimization. In: AIAA Scitech Forum, 2023. 
+<25> B Pacini M. Prajapati, K. Duraisamy, J.R.R.A. Martins, P. He. Understanding Distributed Propulsion on the NASA Tiltwing Concept Vehicle with Aerodynamic Shape Optimization. In: AIAA Scitech Forum, 2023. 
 
-<23> M. H. Negahban, M. Bashir, R.M. Botez. Free-Form Deformation Parameterization on the Aerodynamic Optimization of Morphing Trailing Edge. Applied Mechanics, 2023.
+<24> M. H. Negahban, M. Bashir, R.M. Botez. Free-Form Deformation Parameterization on the Aerodynamic Optimization of Morphing Trailing Edge. Applied Mechanics, 2023.
 
-<22> M. H. Negahban, M. Bashir, R.M. Botez. Aerodynamic Optimization of a Novel Synthetic Trailing Edge and Chord Elongation Morphing: Application to the UAS-S45 Airfoil. In: AIAA Scitech Forum, 2023. 
+<23> M. H. Negahban, M. Bashir, R.M. Botez. Aerodynamic Optimization of a Novel Synthetic Trailing Edge and Chord Elongation Morphing: Application to the UAS-S45 Airfoil. In: AIAA Scitech Forum, 2023. 
+
+<22> K. Allen, T.L. Guevara, K. Stachenfeld, A. Sanchez-Gonzalez, P. Battaglia, J. Hamrick, T. Pfaff. Inverse Design for Fluid-Structure Interactions using Graph Network Simulators, 36th Conference on Neural Information Processing Systems (NeurIPS 2022), 2022.
 
 <21> A. Ghasemi, A. Elham. Efficient multi‑stage aerodynamic topology optimization using an operator‑based analytical differentiation. Structural and Multidisciplinary Optimization, 2022.
 
