@@ -204,7 +204,7 @@ daOptions = {
     "primalVarBounds": {
         "omegaMin": -1e16,
     },
-    "objFunc": {
+    "function": {
         "power": {
             "part1": {
                 "type": "power",
