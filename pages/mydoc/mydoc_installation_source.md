@@ -21,7 +21,7 @@ gcc/11.4 | 4.1.2   | 3.22  |
 
 Compiler | OpenMPI | Cmake |
 | :------------------------| 
-gcc/13.2 | 5.0.8   |  3.22 |
+gcc/13.2 | 5.0.8   |  3.28 |
 
 **ISU Nova HPC** uses the RedHat Linux 9.4 system with the following compiler versions.
 
