@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
+<90> J. Li, C. Wu, Z. He, Y. Zhang. Field Inversion Symbolic Regression with Embedded Equation Learner for Interpretable Turbulence Model Correction. arXiv.2604.14569. 2026
+
 <89> C. Yu, A. Zhang, F. Qin, X. Chen, Y. Gao. Adjoint-Based Optimization of Overwing Nacelle and Wing Configuration. Aerospace, 2026.
 
 <88> J. Zhou, Y. Zhang. Multi-point aerodynamic optimization of airfoilsunder stall conditions based on the unsteadydiscrete adjoint method. Physics of Fluids, 2026.
