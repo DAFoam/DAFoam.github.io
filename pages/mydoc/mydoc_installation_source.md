@@ -37,7 +37,7 @@ If you use Ubuntu, run this on the terminal to install prerequisites. If you ins
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin lsof --no-install-recommends
+sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin lsof lcov --no-install-recommends
 </pre>
 
 The following installation steps should work for both Ubuntu 22.04 and the HPC clusters.
@@ -155,8 +155,7 @@ tar -xvaf v4.5.0.tar.gz && \
 cd CGNS-4.5.0 && \
 mkdir -p build && \
 cd build && \
-cmake .. -DCGNS_ENABLE_FORTRAN=1 -DCMAKE_INSTALL_PREFIX=$CGNS_HOME -DCGNS_BUILD_CGNSTOOLS=0 -DCGNS_ENABLE_HDF5=OFF -DCGNS_ENABLE_64BIT=OFF -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_Fortran_FLAGS="-fPIC"
-&& \
+cmake .. -DCGNS_ENABLE_FORTRAN=1 -DCMAKE_INSTALL_PREFIX=$CGNS_HOME -DCGNS_BUILD_CGNSTOOLS=0 -DCGNS_ENABLE_HDF5=OFF -DCGNS_ENABLE_64BIT=OFF -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_Fortran_FLAGS="-fPIC" && \
 make all install
 </pre>
 
