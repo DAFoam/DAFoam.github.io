@@ -342,7 +342,7 @@ entries:
       url: /ai-agent-wing.html
       output: web, pdf
 
-  - title: Misc
+  - title: Information
     output: web, pdf
     folderitems:
 
