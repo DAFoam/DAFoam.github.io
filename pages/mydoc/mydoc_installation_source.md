@@ -9,13 +9,13 @@ folder: mydoc
 
 {% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](installation-source-2210.html), [v2.2.0-](installation-source-220.html), and [v1.0.0](installation-source-100.html)." %}
 
-The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 22.04 and two different HPC clusters.
+The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 24.04 and two different HPC clusters.
 
-**Workstation** uses the Ubuntu 22.04 system with the following compiler versions.
+**Workstation** uses the Ubuntu 24.04 system with the following compiler versions.
 
 Compiler | OpenMPI | Cmake |
 | :------------------------| 
-gcc/11.4 | 4.1.2   | 3.22  |
+gcc/13.3 | 4.1.6   | 3.28  |
 
 **TACC-Stampede3 HPC** uses the Rocky Linux 9.5 system with the following compiler versions.
 
@@ -40,7 +40,7 @@ sudo apt-get update && \
 sudo apt-get install -y build-essential flex bison cmake zlib1g-dev libboost-system-dev libboost-thread-dev libreadline-dev libncurses-dev libxt-dev freeglut3-dev texinfo libscotch-dev libcgal-dev gfortran swig wget git vim cmake-curses-gui libfl-dev apt-utils libibverbs-dev ca-certificates pkg-config liblapack-dev libmetis-dev libopenmpi-dev openmpi-bin lsof lcov --no-install-recommends
 </pre>
 
-The following installation steps should work for both Ubuntu 22.04 and the HPC clusters.
+The following installation steps should work for both Ubuntu 24.04 and the HPC clusters.
 
 ## **Root folder**
 
@@ -94,7 +94,7 @@ Next, we need to upgrade the pip utility and install Python packages:
 pip install --upgrade pip && \
 pip install numpy==1.23.5 && \
 pip install scipy==1.13.1 && \
-pip install mpi4py==3.1.5 && \
+pip install mpi4py==4.1.1 && \
 pip install cython==0.29.21 && \
 pip install numpy-stl==2.16.0 && \
 pip install pynastran==1.3.3 && \
