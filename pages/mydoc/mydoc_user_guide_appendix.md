@@ -8,6 +8,8 @@ folder: mydoc
 ---
 {% include note.html content="This webpage is under construction." %}
 
+This chapter was written by [Jiawei Chen](https://github.com/chenjiaweiDr).
+
 ## Mesh generation for OpenFOAM
 
 ## DES and LES simulations in OpenFOAM
