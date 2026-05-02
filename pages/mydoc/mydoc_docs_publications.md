@@ -9,6 +9,8 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
+<92> U. Padmanaban, C. Thompson, B. Ganapathisubramani, S. Symon. To stall-cell or not to stall-cell: Variational data assimilation of 3D mean flow past a stalled airfoil. arXiv:2604.27680, 2026
+
 <91> Z. Zhang, K. Shukla, Z. Wang, A. Morales, T. Kaufer, S. Salauddin, N. Walters, aD. Barrett, K. Ahmed, M. Triantafyllou, G. Karniadakis. Turbulence closure in Reynolds-averaged Navier–Stokes and flow inference around a cylinder using physics-informed neural networks and sparse experimental data. Journal of Fluid Mechanics, 2026.
 
 <90> J. Li, C. Wu, Z. He, Y. Zhang. Field Inversion Symbolic Regression with Embedded Equation Learner for Interpretable Turbulence Model Correction. arXiv.2604.14569. 2026
