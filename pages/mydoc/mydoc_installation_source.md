@@ -588,7 +588,7 @@ echo "export PATH=\$DAFOAM_ROOT_PATH/packages/ParaView-5.13.3/bin:\$PATH" >> $DA
 
 This step is needed if you want to use OpenVSP for geometry parameterization. Here we build the OpenVSP with no GUI, no vspaero, only the vspscript and its Python API.
 
-```bash
+<pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 cd $DAFOAM_ROOT_PATH/packages && \
 mkdir OpenVSP && cd OpenVSP && \
@@ -605,7 +605,7 @@ cd python_pseudo && pip install ./vsp_airfoils ./utilities ./degen_geom ./openvs
 echo '# OpenVSP' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PATH=$PATH:$DAFOAM_ROOT_PATH/packages/OpenVSP/build/vsp' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh
-```
+</pre>
 
 ## **Compile SNOPT for pyOptSparse (optional)**
 
