@@ -586,22 +586,22 @@ echo "export PATH=\$DAFOAM_ROOT_PATH/packages/ParaView-5.13.3/bin:\$PATH" >> $DA
 
 ## **Install OpenVSP (optional)**
 
-This step is needed if you want to use OpenVSP for geometry parameterization. Here we build the OpenVSP with no GUI, no vspaero, only the vspscript and its Python API.
+This step is needed if you want to use OpenVSP for geometry parameterization. Here we build the OpenVSP with no GUI, no vspaero, only the vspscript and its Python API. **IMPORTANT**: there is a bug in the recent version of OpenVSP that will cause seg fault when perturbing a small step (e.g., 1e-6) for parameter such as camber for the surface geometry. Version 3.42.3 is the latest working version.
 
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 cd $DAFOAM_ROOT_PATH/packages && \
 mkdir OpenVSP && cd OpenVSP && \
 mkdir build buildlibs && \
-wget https://github.com/OpenVSP/OpenVSP/archive/refs/tags/OpenVSP_3.50.0.tar.gz && \
-tar -xvf OpenVSP_3.50.0.tar.gz && mv OpenVSP-* repo && rm -rf OpenVSP_3.50.0.tar.gz && \
+wget https://github.com/OpenVSP/OpenVSP/archive/refs/tags/OpenVSP_3.42.3.tar.gz && \
+tar -xvf OpenVSP_3.42.3.tar.gz && mv OpenVSP-* repo && rm -rf OpenVSP_3.42.3.tar.gz && \
 cd buildlibs && \
 cmake -DVSP_NO_GRAPHICS=ON -DVSP_USE_SYSTEM_ADEPT2=false -DVSP_USE_SYSTEM_CLIPPER2=false -DVSP_USE_SYSTEM_CMINPACK=false -DVSP_USE_SYSTEM_CODEELI=false -DVSP_USE_SYSTEM_CPPTEST=false -DVSP_USE_SYSTEM_DELABELLA=false -DVSP_USE_SYSTEM_EIGEN=false -DVSP_USE_SYSTEM_EXPRPARSE=false -DVSP_USE_SYSTEM_FLTK=false -DVSP_USE_SYSTEM_GLEW=false -DVSP_USE_SYSTEM_GLM=false -DVSP_USE_SYSTEM_LIBIGES=false -DVSP_USE_SYSTEM_LIBXML2=true -DVSP_USE_SYSTEM_OPENABF=false -DVSP_USE_SYSTEM_PINOCCHIO=false -DVSP_USE_SYSTEM_STEPCODE=false -DVSP_USE_SYSTEM_TRIANGLE=false ../repo/Libraries -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx && \
 make -j4 && \
 cd ../build && \
 cmake ../repo/src/ -DVSP_LIBRARY_PATH=$DAFOAM_ROOT_PATH/packages/OpenVSP/buildlibs -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DVSP_NO_GRAPHICS=ON && \
 make -j4 && \
-cd python_pseudo && pip install ./vsp_airfoils ./utilities ./degen_geom ./openvsp_config ./openvsp && \
+cd python_pseudo && pip install ./utilities ./degen_geom ./openvsp_config ./openvsp && \
 echo '# OpenVSP' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PATH=$PATH:$DAFOAM_ROOT_PATH/packages/OpenVSP/build/vsp' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh
