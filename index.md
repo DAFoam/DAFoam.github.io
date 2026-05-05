@@ -49,5 +49,6 @@ DAFoam source code is available on [GitHub](https://github.com/mdolab/dafoam), a
     </div>
 </div>
 
+{% include note.html content="We are upgrading DAFoam to v5. Please refer to https://dafoam.github.io/v4-pages for the v4 website." %}
 
 {% include links.html %}
