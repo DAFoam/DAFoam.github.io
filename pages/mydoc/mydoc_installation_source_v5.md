@@ -9,25 +9,25 @@ folder: mydoc
 
 {% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](installation-source-2210.html), [v2.2.0-](installation-source-220.html), and [v1.0.0](installation-source-100.html)." %}
 
-The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 22.04 and two different HPC clusters.
+The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 24.04 and two different HPC clusters.
 
-**Workstation** uses the Ubuntu 22.04 system with the following dependencies.
+**Workstation** uses the Ubuntu 24.04 system with the following compiler versions.
 
-Compiler | OpenMPI | Cmake | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy  | Cython  |
-| :--------------------------------------------------------------------------------------------------| 
-gcc/11.4 | 4.1.2   | 3.22. | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.10   | 1.23.5 | 1.13.1 | 0.29.21 |
+Compiler | OpenMPI | Cmake |
+| :------------------------| 
+gcc/13.3 | 4.1.6   | 3.28  |
 
-**TACC-Stampede3 HPC** uses the Rocky Linux 9.5 system with the following dependencies:
+**TACC-Stampede3 HPC** uses the Rocky Linux 9.5 system with the following compiler versions.
 
-Compiler | OpenMPI | Cmake | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy  | Cython  |
-| :--------------------------------------------------------------------------------------------------| 
-gcc/13.2 | 5.0.8   |  3.22 | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.10   | 1.23.5 | 1.13.1 | 0.29.21 |
+Compiler | OpenMPI | Cmake |
+| :------------------------| 
+gcc/13.2 | 5.0.8   |  3.28 |
 
-**ISU Nova HPC** uses the RedHat Linux 9.4 system with the following dependencies:
+**ISU Nova HPC** uses the RedHat Linux 9.4 system with the following compiler versions.
 
-Compiler | OpenMPI | Cmake | mpi4py | PETSc  | petsc4py | CGNS  | Python | Numpy  | Scipy  | Cython  |
-| :--------------------------------------------------------------------------------------------------| 
-gcc/12.2 | 4.1.5   |  3.26 | 3.1.5  | 3.15.5 | 3.15.5   | 4.5.0 | 3.10   | 1.23.5 | 1.13.1 | 0.29.21 |
+Compiler | OpenMPI | Cmake |
+| :------------------------| 
+gcc/12.2 | 4.1.5   |  3.26 |
 
 To compile, you can just copy the code blocks in the following steps and run them on the terminal. If a code block contains multiple lines, copy all the lines and run them on the terminal. Make sure each step run successfully before going to the next one. The entire compilation may take a few hours; the most time-consuming part is compiling OpenFOAM.
 
@@ -37,10 +37,10 @@ If you use Ubuntu, run this on the terminal to install prerequisites. If you ins
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y --no-install-recommends --no-install-recommends build-essential ca-certificates cmake flex bison libfl-dev libcgal-dev libopenmpi-dev openmpi-bin libscotch-dev libreadline-dev libncurses-dev sudo wget vim git lcov patchelf lsof pkg-config swig gfortran
+sudo apt-get install -y --no-install-recommends build-essential ca-certificates cmake flex bison libfl-dev libcgal-dev libopenmpi-dev openmpi-bin libscotch-dev libreadline-dev libncurses-dev sudo wget vim git lcov patchelf pkg-config swig gfortran libxrender1 libxml2-dev
 </pre>
 
-The following installation steps should work for both Ubuntu 22.04 and the HPC clusters.
+The following installation steps should work for both Ubuntu 24.04 and the HPC clusters.
 
 ## **Root folder**
 
@@ -92,15 +92,7 @@ Next, we need to upgrade the pip utility and install Python packages:
 
 <pre>
 pip install --upgrade pip && \
-pip install numpy==1.23.5 && \
-pip install scipy==1.13.1 && \
-pip install mpi4py==3.1.5 && \
-pip install cython==0.29.21 && \
-pip install numpy-stl==2.16.0 && \
-pip install pynastran==1.3.3 && \
-pip install nptyping==1.4.4 && \
-pip install tensorflow-cpu==2.12 && \
-pip install coverage==7.11.0
+pip install numpy==1.23.5 scipy==1.13.1 mpi4py==4.1.1 cython==0.29.21 numpy-stl==2.16.0 pynastran==1.3.3 nptyping==1.4.4 tensorflow-cpu==2.12 coverage==7.11.0 fastmcp==2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0
 </pre>
 
 ## **Petsc**
@@ -155,8 +147,7 @@ tar -xvaf v4.5.0.tar.gz && \
 cd CGNS-4.5.0 && \
 mkdir -p build && \
 cd build && \
-cmake .. -DCGNS_ENABLE_FORTRAN=1 -DCMAKE_INSTALL_PREFIX=$CGNS_HOME -DCGNS_BUILD_CGNSTOOLS=0 -DCGNS_ENABLE_HDF5=OFF -DCGNS_ENABLE_64BIT=OFF -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_Fortran_FLAGS="-fPIC"
-&& \
+cmake .. -DCGNS_ENABLE_FORTRAN=1 -DCMAKE_INSTALL_PREFIX=$CGNS_HOME -DCGNS_BUILD_CGNSTOOLS=0 -DCGNS_ENABLE_HDF5=OFF -DCGNS_ENABLE_64BIT=OFF -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_Fortran_FLAGS="-fPIC" && \
 make all install
 </pre>
 
@@ -259,6 +250,41 @@ tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.10.1 && \
 pip install .
 </pre>
 
+## **Surrogate Modeling Toolbox (SMT)**
+
+Install SMT for surrogate-based optimization:
+
+<pre>
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/SMTorg/smt/archive/refs/tags/v2.10.1.tar.gz && \
+tar -xvf v2.10.1.tar.gz && \
+cd smt-2.10.1 && \
+pip install .
+</pre>
+
+## **OpenVSP**
+
+This step is needed if you want to use OpenVSP for geometry parameterization. Here we build the OpenVSP without GUI, only the vspscript and its Python API. **IMPORTANT**: there is a bug in the recent version of OpenVSP that will cause seg fault when perturbing a small step (e.g., 1e-6) for parameter such as camber for the surface geometry. Version 3.42.3 is the latest working version.
+
+<pre>
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+cd $DAFOAM_ROOT_PATH/packages && \
+mkdir OpenVSP && cd OpenVSP && \
+mkdir build buildlibs && \
+wget https://github.com/OpenVSP/OpenVSP/archive/refs/tags/OpenVSP_3.42.3.tar.gz && \
+tar -xvf OpenVSP_3.42.3.tar.gz && mv OpenVSP-* repo && rm -rf OpenVSP_3.42.3.tar.gz && \
+cd buildlibs && \
+cmake -DVSP_NO_GRAPHICS=ON -DVSP_USE_SYSTEM_ADEPT2=false -DVSP_USE_SYSTEM_CLIPPER2=false -DVSP_USE_SYSTEM_CMINPACK=false -DVSP_USE_SYSTEM_CODEELI=false -DVSP_USE_SYSTEM_CPPTEST=false -DVSP_USE_SYSTEM_DELABELLA=false -DVSP_USE_SYSTEM_EIGEN=false -DVSP_USE_SYSTEM_EXPRPARSE=false -DVSP_USE_SYSTEM_FLTK=false -DVSP_USE_SYSTEM_GLEW=false -DVSP_USE_SYSTEM_GLM=false -DVSP_USE_SYSTEM_LIBIGES=false -DVSP_USE_SYSTEM_LIBXML2=true -DVSP_USE_SYSTEM_OPENABF=false -DVSP_USE_SYSTEM_PINOCCHIO=false -DVSP_USE_SYSTEM_STEPCODE=false -DVSP_USE_SYSTEM_TRIANGLE=false ../repo/Libraries -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx && \
+make -j4 && \
+cd ../build && \
+cmake ../repo/src/ -DVSP_LIBRARY_PATH=$DAFOAM_ROOT_PATH/packages/OpenVSP/buildlibs -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DVSP_NO_GRAPHICS=ON && \
+make -j4 && \
+cd python_pseudo && pip install ./utilities ./degen_geom ./openvsp_config ./openvsp && \
+echo '# OpenVSP' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo 'export PATH=$PATH:$DAFOAM_ROOT_PATH/packages/OpenVSP/build/vsp' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh
+</pre>
 
 ## **OpenFOAM**
 
@@ -270,26 +296,22 @@ Run the following:
 
 <pre>
 cd $DAFOAM_ROOT_PATH/OpenFOAM && \
-wget https://sourceforge.net/projects/openfoam/files/v1812/OpenFOAM-v1812.tgz/download -O OpenFOAM-v1812.tgz && \
-wget https://sourceforge.net/projects/openfoam/files/v1812/ThirdParty-v1812.tgz/download -O ThirdParty-v1812.tgz && \
-tar -xvf OpenFOAM-v1812.tgz && \
-tar -xvf ThirdParty-v1812.tgz && \
-cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812 && \
-wget https://github.com/DAFoam/files/releases/download/v1.0.0/OpenFOAM-v1812-patch-files.tar.gz && \
-tar -xvf OpenFOAM-v1812-patch-files.tar.gz && \
-cd OpenFOAM-v1812-patch-files && \
-./runPatch.sh && \
-cd .. && \
-echo '# OpenFOAM-v1812' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-echo 'source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+wget https://sourceforge.net/projects/openfoam/files/v2506/OpenFOAM-v2506.tgz/download -O OpenFOAM-v2506.tgz && \
+wget https://sourceforge.net/projects/openfoam/files/v2506/ThirdParty-v2506.tgz/download -O ThirdParty-v2506.tgz && \
+tar -xvf OpenFOAM-v2506.tgz && \
+tar -xvf ThirdParty-v2506.tgz && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506 && \
+wget https://github.com/DAFoam/files/releases/download/v1.0.0/UPstream_OF2506_Patch.C && \
+mv UPstream_OF2506_Patch.C src/Pstream/mpi && \
+echo '# OpenFOAM-v2506' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo 'source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506/etc/bashrc' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+export WM_QUIET=true && \
 export WM_NCOMPPROCS=4 && \
 ./Allwmake
 </pre>
-
-{% include note.html content="In the above command, we replaced some custom source files to enable Python wrapping for OpenFOAM. These patch files also make OpenFOAM-v1812 compatible with newer Gcc compilers, like Gcc 13." %}
 
 {% include note.html content="The above command will compile OpenFOAM using 4 CPU cores. If you want to compile OpenFOAM using more cores, change the ``WM_NCOMPPROCS`` parameter before running ``./Allwmake``" %}
 
@@ -307,14 +329,14 @@ It should see some basic information about OpenFOAM
 Run the following:
 
 <pre>
-cd $DAFOAM_ROOT_PATH/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.2.tar.gz -O OpenFOAM-v1812-AD.tgz && \
-tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADR && \
-cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-ADR && \
-sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADR/g' etc/bashrc && \
-sed -i 's/export WM_CODI_AD_LIB_POSTFIX=ADF/export WM_CODI_AD_LIB_POSTFIX=ADR/g' etc/bashrc && \
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM && \
+wget https://github.com/DAFoam/OpenFOAM-AD/archive/refs/heads/v2506-ad.tar.gz -O OpenFOAM-AD.tgz && \
+tar -xvf OpenFOAM-AD.tgz && mv OpenFOAM-AD-* OpenFOAM-AD && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-AD && \
+sed -i 's/export WM_AD_MODE=.*/export WM_AD_MODE=ADR/g' etc/bashrc && \
 source etc/bashrc && \
+export WM_QUIET=true && \
 export WM_NCOMPPROCS=4 && \
 ./Allwmake
 </pre>
@@ -322,52 +344,54 @@ export WM_NCOMPPROCS=4 && \
 Then, verify the installation by running:
 
 <pre>
-DASimpleFoamReverseAD -help
+simpleFoamADR -help
 </pre>
 
-It should see some basic information about DASimpleFoamReverseAD.
+It should see some basic information about simpleFoamADR.
 
 {% include note.html content="We use CodiPack to differentiate the OpenFOAM libraries." %}
 
-After OpenFOAM-v1812-ADR is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path so that this is portable.
+After the ADR is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v2506 folder. Note that we need to link the relative path so that this is portable.
 
 <pre>
-cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib && \
-ln -s ../../../../OpenFOAM-v1812-ADR/platforms/*/lib/*.so . && \
-cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy && \
-ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/dummy/*.so . && \
-cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-system && \
-ln -s ../../../../../OpenFOAM-v1812-ADR/platforms/*/lib/openmpi-system/*.so .
+cd $DAFOAM_ROOT_PATH/OpenFOAM-AD && \
+./renameAD.sh platforms/linux*ADR --ADR --commit && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506/platforms/*/lib && \
+ln -s ../../../../OpenFOAM-AD/platforms/linux*ADR/lib/*.so . && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506/platforms/*/lib/dummy && \
+ln -s ../../../../../OpenFOAM-AD/platforms/linux*ADR/lib/dummy/*.so . && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506/platforms/*/lib/$FOAM_MPI && \
+ln -s ../../../../../OpenFOAM-AD/platforms/linux*ADR/lib/$FOAM_MPI/*.so .
 </pre>
 
 **Build Forward Mode AD (Optional)**
 
-Run the following:
+This is needed only if you want to compare the adjoint derivatives with forward AD. We must compile the ADR version first! After that, run the following:
 
 <pre>
-cd $DAFOAM_ROOT_PATH/OpenFOAM && \
-wget https://github.com/DAFoam/OpenFOAM-v1812-AD/archive/v1.3.2.tar.gz -O OpenFOAM-v1812-AD.tgz && \
-tar -xvf OpenFOAM-v1812-AD.tgz && mv OpenFOAM-v1812-AD-* OpenFOAM-v1812-ADF && \
-cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812-ADF && \
-sed -i 's/WM_PROJECT_VERSION=v1812-AD/WM_PROJECT_VERSION=v1812-ADF/g' etc/bashrc && \
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-AD && \
+sed -i 's/export WM_AD_MODE=.*/export WM_AD_MODE=ADF/g' etc/bashrc && \
 source etc/bashrc && \
+export WM_QUIET=true && \
 export WM_NCOMPPROCS=4 && \
 ./Allwmake
 </pre>
 
-After OpenFOAM-v1812-ADF is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v1812 folder. Note that we need to link the relative path so that this is portable.
+After DF is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v2506 folder. Note that we need to link the relative path so that this is portable.
 
 <pre>
-cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib && \
-ln -s ../../../../OpenFOAM-v1812-ADF/platforms/*/lib/*.so . && \
-cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/dummy && \
-ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/dummy/*.so . && \
-cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/platforms/*/lib/openmpi-system && \
-ln -s ../../../../../OpenFOAM-v1812-ADF/platforms/*/lib/openmpi-system/*.so .
+cd $DAFOAM_ROOT_PATH/OpenFOAM-AD && \
+./renameAD.sh platforms/linux*ADF --ADF --commit && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506/platforms/*/lib && \
+ln -s ../../../../OpenFOAM-AD/platforms/linux*ADF/lib/*.so . && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506/platforms/*/lib/dummy && \
+ln -s ../../../../../OpenFOAM-AD/platforms/linux*ADF/lib/dummy/*.so . && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506/platforms/*/lib/$FOAM_MPI && \
+ln -s ../../../../../OpenFOAM-AD/platforms/linux*ADF/lib/$FOAM_MPI/*.so .
 </pre>
 
-Once done, we need to re-source the original OpenFOAM-v1812.
+Once done, we need to re-source the original OpenFOAM-v2506.
 
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh
@@ -499,16 +523,16 @@ In summary, here is the folder structure for all the installed packages:
 $HOME/dafoam
   loadDAFoam.sh
   - OpenFOAM
-    - OpenFOAM-v1812
-    - OpenFOAM-v1812-ADF
-    - OpenFOAM-v1812-ADR
-    - ThirdParty-v1812
+    - OpenFOAM-v2506
+    - OpenFOAM-AD
+    - ThirdParty-v2506
     - sharedBins
     - sharedLibs
   - packages
     - Ipopt
     - miniconda3
     - CGNS-4.5.0
+    - OpenVSP
     - petsc-3.15.5
   - repos
     - baseclasses
@@ -548,27 +572,10 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CGNS_HOME/lib
 # Ipopt
 export IPOPT_DIR=$DAFOAM_ROOT_PATH/packages/Ipopt
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib
-# OpenFOAM-v1812
-source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v1812/etc/bashrc
+# OpenFOAM-v2506
+source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506/etc/bashrc
 export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
 export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH
-</pre>
-
-## **Install MCP depedneicies (optional)**
-
-This step is needed if you want to use the DAFoam MCP server. Here we need to install fastmcp, trame, and ParaView.
-
-<pre>
-. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-cd $DAFOAM_ROOT_PATH/packages && \
-pip install fastmcp==2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0 && \
-wget https://www.paraview.org/files/v5.13/ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
-tar -xf ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
-mv ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64 ParaView-5.13.3 && \
-rm -rf ParaView-5.13.3-egl-MPI-Linux-Python3.10-x86_64.tar.gz && \
-mv ParaView-5.13.3/bin/mpiexec  ParaView-5.13.3/bin/mpiexec_bk && \
-echo "# ParaView" >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-echo "export PATH=\$DAFOAM_ROOT_PATH/packages/ParaView-5.13.3/bin:\$PATH" >> $DAFOAM_ROOT_PATH/loadDAFoam.sh
 </pre>
 
 ## **Compile SNOPT for pyOptSparse (optional)**
