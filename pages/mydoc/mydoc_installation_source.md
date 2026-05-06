@@ -37,7 +37,7 @@ If you use Ubuntu, run this on the terminal to install prerequisites. If you ins
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y --no-install-recommends build-essential ca-certificates cmake flex bison libfl-dev libcgal-dev libopenmpi-dev openmpi-bin libscotch-dev libreadline-dev libncurses-dev sudo wget vim git lcov patchelf pkg-config swig gfortran libxrender1 libxml2-dev
+sudo apt-get install -y --no-install-recommends build-essential ca-certificates cmake flex bison libfl-dev libcgal-dev libopenmpi-dev openmpi-bin libscotch-dev libreadline-dev libncurses-dev sudo wget vim git lcov patchelf pkg-config swig gfortran libxrender1 libxml2-dev libegl1
 </pre>
 
 The following installation steps should work for both Ubuntu 24.04 and the HPC clusters.
