@@ -265,7 +265,9 @@ pip install .
 
 ## **OpenVSP**
 
-This step is needed if you want to use OpenVSP for geometry parameterization. Here we build the OpenVSP without GUI, only the vspscript and its Python API. **IMPORTANT**: there is a bug in the recent version of OpenVSP that will cause seg fault when perturbing a small step (e.g., 1e-6) for parameter such as camber for the surface geometry. Version 3.42.3 is the latest working version.
+This step is needed if you want to use OpenVSP for geometry parameterization. Here we build the OpenVSP without GUI, only the vspscript and its Python API. Use the following commands.
+
+**IMPORTANT**: (1) The Python API depends on swig. So, if you build it on the HPC, you need to load the swig module. (2) there is a bug in the recent version of OpenVSP that will cause seg fault when perturbing a small step (e.g., 1e-6) for parameter such as camber for the surface geometry. Version 3.42.3 is the latest working version.
 
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
