@@ -7,6 +7,8 @@ permalink: ai-agent-overview.html
 folder: mydoc
 ---
 
+{% include note.html content="The dafoam_mcp_server is deprecated and a new verson will be released soon!" %}
+
 The DAFoam AI Agent enables the conversational pre-processing, simulations, optimization, and post-processing of DAFoam cases. Currently, we support only airfoil and wing cases with the Claude LLM. The AI agent can be installed locally or on the HPC.
 
 ## Local Installation
