@@ -1,5 +1,5 @@
 ---
-title: Overview of DAFoam AI Agents
+title: Overview of MDO Agent Deck
 keywords: ai assistant
 summary: 
 sidebar: mydoc_sidebar
@@ -7,138 +7,181 @@ permalink: ai-agent-overview.html
 folder: mydoc
 ---
 
-{% include note.html content="The dafoam_mcp_server is deprecated and a new verson will be released soon!" %}
+{% include note.html content="The dafoam_mcp_server is deprecated and a new version will be released soon!" %}
 
-The DAFoam AI Agent enables the conversational pre-processing, simulations, optimization, and post-processing of DAFoam cases. Currently, we support only airfoil and wing cases with the Claude LLM. The AI agent can be installed locally or on the HPC.
+The MDO Agent Deck is an agentic AI framework that enables the conversational pre-processing, simulation, optimization, and post-processing of many design optimization problems. Currently, we support the airfoil, wing, and aircraft agents. The AI agent can be installed locally or on an HPC.
 
-## Local Installation
+## Installation (local computers)
 
-The local installation works for Linux, Windows, and MacOS and consist of the following two steps.
+The installation works for Linux, Windows, and MacOS.
 
-### Install the DAFoam MCP server using Docker
+### Step 1. Install a LLM client
 
-- Download and install the Docker Desktop for [MacOS](https://docs.docker.com/desktop/setup/install/mac-install) or [Windows](https://docs.docker.com/desktop/setup/install/windows-install/). Open Docker Desktop and keep it open.
-- Open a Terminal (MacOS) or Command Prompt (Windows). Run the following command to download the DAFoam Docker image. NOTE: if you have preciously downloaded the `dafoam/opt-packages:latest` image, delete it and re-download to ensure you have the latest.
-  <pre>
-  docker pull dafoam/opt-packages:latest
-  </pre>
-- Run the following command to download the dafoam_mcp_server repo from GitHub
+We need to first install an LLM client's command line interface (CLI). The MDO Agent Deck supports three LLM clients: Codex, Claude Code, and Gemini, but here you need to install **ONLY ONE** CLI client, and the Codex CLI is recommended.
 
-  <pre>
-  git clone https://github.com/dafoam/dafoam_mcp_server.git
-  </pre>
-  Alternative: If you don't have git, you can also download the repo from [here](https://github.com/dafoam/dafoam_mcp_server/archive/refs/heads/main.zip) and unzip it. Then, rename the unzipped folder to dafoam_mcp_server.
-  
-- Open a Terminal (MacOS) or Command Prompt (Windows) and cd into the `dafoam_mcp_server` directory, then run the following to build the dafoam_mcp_server docker image
-  <pre>
-  docker build -t dafoam_mcp_server . 
-  </pre>
+**MacOS/Linux:**
 
-### Connect the DAFoam MCP server to the LLM client (Claude Desktop).
+Codex CLI:
 
-- Download and install the Claude Desktop from [here](https://www.claude.com/download). Open Claude Desktop (you may need to sign up for an account).
-- In Claude Desktop, locate to the top left and click "Toggle sidebar", and then locate to the bottom left and click: "Your Account->Settings->Developer". Then, click "Edit Config", this will open a directory where Claude saves your claude_desktop_config.json file. **NOTE:** If there is an empty bracket when you open the .json file (something like "{}"), this MUST be deleted.  
-- Open claude_desktop_config.json and add the following lines into it. **NOTE:** you need to replace `abs_path_to_your_dafoam_mcp_server` with the absolute path of the dafoam_mcp_server folder on your local system. For example, you may use `/Users/phe/Desktop/dafoam_mcp_server:/home/dafoamuser/mount` for MacOS and `C:\\Users\\phe\\Desktop\\dafoam_mcp_server:/home/dafoamuser/mount` for Windows (we need to use double slash in the path for Windows!). The DAFoam MCP will make modifications ONLY in this dafoam_mcp_server folder. 
+`npm install -g @openai/codex`
 
-  <pre>
-  {
+Claude code CLI:
+
+`curl -fsSL https://claude.ai/install.sh | bash`
+
+Gemini CLI:
+
+`npm install -g @google/gemini-cli`
+
+**Windows CMD (Command Prompt):**
+
+Codex CLI:
+
+`npm install -g @openai/codex`
+
+Claude code CLI:
+
+`curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd`
+
+Gemini CLI:
+
+`npm install -g @google/gemini-cli`
+
+
+### Step 2. Install VSCode
+
+Download VS Code 1.100.3 from [here](https://code.visualstudio.com/updates/v1_100). **NOTE:** Some newer versions of VS Code may experience issues when connecting to HPC systems. 
+
+Optional: For VSCode on Windows, you can configure your terminal to use CMD by opening the Command Palette from the top panel, searching for "Terminal: Select Default Profile", and then selecting CMD.
+
+### Step 3. Install Docker Desktop
+
+Download and install Docker Desktop App for [MacOS](https://docs.docker.com/desktop/setup/install/mac-install), [Windows](https://docs.docker.com/desktop/setup/install/windows-install), or [Linux](https://docs.docker.com/desktop/setup/install/linux)
+
+After the Docker Desktop is installed, open it and keep it open.
+
+Then, open a terminal and run the following command to download the pre-compiled MDO Agent Deck image:
+
+`docker pull dafoam/agent:latest`
+
+### Step 4. Create a working directory with LLM configuration files
+
+In your local computer, create a folder called `mdo_agents` and navigate into it. Inside the `mdo_agents` folder, create a subfolder called `results`. The MDO Agent simulation results will be saved in the `results` folder.
+
+Next, we need to create configuration files to tell LLM client about our LLM agents. Again, you need to follow **ONLY ONE** of the following, depending which LLM client you are using.
+
+**Codex**
+
+Navigate into the `mdo_agents/results` folder, create a new subfolder called `.codex`, and inside it create a new file called `config.toml`.
+
+Then, add the following to your `.codex/config.toml` file  (no need to change this file, just use it as is):
+
+```bash
+[mcp_servers.mdo_agent_deck]
+command = "docker"
+args = ["run", "-i", "--rm", "--name", "mdo_agent_deck", "-p", "8001:8001", "-p", "8002:8002", "--mount", "type=bind,src=../,target=/home/dafoamuser/mount", "-w", "/home/dafoamuser/mount/results", "dafoam/agent:latest", "bash", "-lc", "source /home/dafoamuser/dafoam/loadDAFoam.sh && mdo-agent-deck-mcp"]
+```
+
+**Claude Code**
+
+Navigate into the `mdo_agents/results` folder and create a new `.mcp.json` file with the following content (no need to change this file, just use it as is):
+
+```bash
+{
     "mcpServers": {
-      "dafoam_mcp_server": {
-        "command": "docker",
-        "args": [
-          "run", 
-          "-i", 
-          "--rm",
-          "--name",
-          "dafoam_mcp_server",
-          "--platform",
-          "linux/amd64",
-          "-p",
-          "8001:8001",
-          "-p",
-          "8002:8002",
-          "-v", 
-          "/abs_path_to_your_dafoam_mcp_server:/home/dafoamuser/mount",
-          "dafoam_mcp_server"
-        ]
-      }
+        "mdo_agent_deck": {
+            "type": "stdio",
+            "command": "docker",
+            "args": [
+                "run",
+                "-i",
+                "--rm",
+                "--name", "mdo_agent_deck",
+                "-p", "8001:8001",
+                "-p", "8002:8002",
+                "--mount", "type=bind,src=../,target=/home/dafoamuser/mount",
+                "-w", "/home/dafoamuser/mount/results",
+                "dafoam/agent:latest",
+                "bash", "-lc",
+                "source /home/dafoamuser/dafoam/loadDAFoam.sh && mdo-agent-deck-mcp"
+            ]
+        }
     }
-  }
-  </pre>
-
-- IMPORTANT! You need to close and re-open Claude Desktop to make the new MCP effective. **NOTE:** On Mac and Windows, you may need to Force Quit the Claude desktop application before you re-open it. Once the Claude Desktop is re-open, you can click the "Search and Tools" button to verify if the DAFoam MCP server is running. See the picture below. For developers: If you see an error, the logs file are in ~/Library/Logs/Claude/mcp-server-dafoam_mcp_server.log 
-
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI_Check_DAFoam_MCP_Server.png" style="width:500px !important;" />
-
-- Occasionally, you may see the error shown below when opening the Claude Desktop app. If this happens, the DAFoam MCP server is not loading properly. You can simply force-quit Claude and reopen it. The error should disappear.
-
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-claude-error.png" style="width:400px !important;" />
+}
+```
 
 
-## HPC Installation
+**Gemini**
 
-### Connecting to the HPC Using VS Code Remote SSH
+Navigate into the `mdo_agents/results` folder, create a new subfolder called `.gemini`, and inside it create a new file called `settings.json`.
 
-The recommended way to connect to an HPC when using the DAFoam MCP server is via the **VS Code Remote SSH** extension. This approach is supported on Windows, macOS, and Linux.
+Then, add the following to your `.gemini/settings.json` file (no need to change this file, just use it as is):
 
-- First, download VS Code 1.100.3 from [here](https://code.visualstudio.com/updates/v1_100).  
-  **NOTE:** Some newer versions of VS Code may experience issues when connecting to HPC systems.
+```bash
+{
+    "mcpServers": {
+        "mdo_agent_deck": {
+            "command": "docker",
+            "args": [
+                "run",
+                "-i",
+                "--rm",
+                "--name", "mdo_agent_deck",
+                "-p", "8001:8001",
+                "-p", "8002:8002",
+                "--mount", "type=bind,src=../,target=/home/dafoamuser/mount",
+                "-w", "/home/dafoamuser/mount/results",
+                "dafoam/agent:latest",
+                "bash", "-lc",
+                "source /home/dafoamuser/dafoam/loadDAFoam.sh && mdo-agent-deck-mcp"
+            ]
+        }
+    }
+}
+```
 
-- Open VS Code. From the left panel, click `Extensions`, then search for `Remote SSH` by Microsoft and click `Install`.
+The local installation is finished!
 
-- After installing Remote SSH, set up the SSH connection: (1) Click the `Open a Remote Window` button in the lower-left corner of VS Code. See the screenshot below; it is blue on macOS, but has no color on Windows. (2) In the pop-up window on the top, select `Connect to Host`, then choose `+ Add New SSH Host`. (3) In the pop-up window, enter your SSH command, for example: `ssh my_user_name@nova.its.iastate.edu`. (4) When prompted, select the SSH configuration file to update (choose `~/.ssh/config` or similar).
+## Installation (HPC)
 
-- Once the SSH configuration is complete, click `Connect to Host` again and select your newly added host (e.g., `nova.its.iastate.edu`). You will be prompted to enter your password and, if applicable, a verification code to log in to the HPC.
+TBD
 
-- After successfully logging in, click `Open Folder` in the left panel and navigate to the path of your `dafoam_mcp_server` repository. This enables: (1) Access to an integrated terminal on the HPC, (2) Browsing and editing all files in the repository, and (3) Viewing any opened files within VS Code. If the terminal is not visible after opening the folder, click `Toggle Panel` in the top-right corner of VS Code. An example of VS Code Remote SSH connected to the Nova HPC is shown below.
+## Test the agent
 
-  <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-vscode-hpc-login.png" style="width:700px !important;" />
+**IMPORTANT**: The MCP server setup is local and works only in the `mdo_agents/results` folder.
 
-### Setup DAFoam, Claude Code, and MCP Server
+First, open VSCode and click the "Explorer" icon from the left bar. From there, you can select "Open Folder" and open the `mdo_agents/results` folder as your working directory.
 
-- Login into your HPC through VS Code Remote SSH. cd into your \$HOME directory (e.g., `/home/my_user_name`). Here we use the \$HOME directory installation as an example, you can also install DAFoam MCP server and DAFoam packages into a different directory.
+Next, click the "Toggle Panel" button in the top right corner to open a terminal.
 
-- Compile DAFoam from source, follow the instructions from [here](https://dafoam.github.io/installation-source.html). Here we assume DAFoam is compiled in /home/my_user_name/dafoam.
+In the terminal, cd into the `mdo_agents/results` folder and open your LLM client in full-permission mode to avoid interruptions. Again, you need to choose **ONLY ONE** of the following, depending which LLM client you are using.
 
-- Run the following command to download the dafoam_mcp_server repo into /home/my_user_name
+**Claude Code:**
 
-  <pre>
-  git clone https://github.com/dafoam/dafoam_mcp_server.git
-  </pre>
+`claude --dangerously-skip-permissions`
 
-  
-- cd into the /home/my_user_name/dafoam_mcp_server directory and change the base_path in dafoam_mcp_server.py to `/home/my_user_name/dafoam_mcp_server`
+**Codex:**
 
-- You also need to modify the job submission sbatch script `myJob.sh` in the airfoils and wings folder according to your HPC setup. You need to replace line 10 in `myJob.sh` with the absolute path of your DAFoam package's `loadDAFoam.sh` file on the HPC. 
+`codex --yolo`
 
-- Install the Claude code by running the following command. Here the install.sh will automatically detect your system and copy the claude code exe into your `~/.local/bin` directory. It will also add `~/.local/bin` to your \$PATH variable in `~/.bash_profile`. In some HPCs, you may need to manually add `~/.local/bin` to your \$PATH in your `~/.bashrc`.
+**Gemini:**
 
-  <pre>
-  curl -fsSL https://claude.ai/install.sh | bash
-  </pre>
+`gemini --yolo`
 
-  Important! You need to verify your claude installation by running this command from the terminal.
+If this is the first time you add a new MCP server, your client may show a **"New MCP server found"** prompt. Choose **`2. Use this MCP server`**.
 
-  <pre>
-  claude -v
-  </pre>
+Some LLM clients may also warn you about the skipped-permissions setup. You can allow it if needed. If you prefer, you can omit the `--dangerously-skip-permissions` or `--yolo` arguments.
 
-  You should see your claude version printed on the terminal.
+Then, run `/mcp` and verify if the `mdo_agent_deck` is `connected`. If yes, you can start asking questions.
 
-- After the claude code is installed, you need to add the DAFoam MCP server information by running the following command. Here we need to provide the absolute paths on the HPC for the loadDAFoam.sh script (this script should be generated after you compile DAFoam from source) and the dafoam_mcp_server.py file (this file should be in the dafoam_mcp_server folder).
+You can ask something like:
 
-  <pre>
-  claude mcp add --transport stdio dafoam_mcp_server -- bash -c "source /home/my_user_name/dafoam/loadDAFoam.sh && python /home/my_user_name/dafoam_mcp_server/dafoam_mcp_server.py"
-  </pre>
+"Generate a CFD mesh for the NACA0012 airfoil with 20K cells with yPlus 5."
 
-  The above command will add relevant MCP information into the claude code configuration file in `~/.claude.json`. You don't need to manually change `~/.claude.json`.
+The agent will parse your promopt into solver input argements and run predefined commands to generate the mesh and then return clickable paths for the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows and Linux) and click these paths to view the figures directly in VSCode.
 
-- Verify the MCP installation by running
+The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
 
-  <pre>
-  claude mcp list
-  </pre>
-
-  You should see the dafoam_mcp_server is "connected". Important, please verify you see the mcp server connected before running any simulations.
+For the best visual experience, we recommend using the "Light Modern" color theme in VSCode. To change the theme, open the Command Palette in VSCode, search for "Preferences: Color Theme", and select "Light Modern".
 
 {% include links.html %}
