@@ -19,31 +19,19 @@ We need to first install an LLM client's command line interface (CLI). The MDO A
 
 **MacOS/Linux:**
 
-Codex CLI:
+Codex CLI: `npm install -g @openai/codex`
 
-`npm install -g @openai/codex`
+Claude code CLI: `curl -fsSL https://claude.ai/install.sh | bash`
 
-Claude code CLI:
-
-`curl -fsSL https://claude.ai/install.sh | bash`
-
-Gemini CLI:
-
-`npm install -g @google/gemini-cli`
+Gemini CLI: `npm install -g @google/gemini-cli`
 
 **Windows CMD (Command Prompt):**
 
-Codex CLI:
+Codex CLI: `npm install -g @openai/codex`
 
-`npm install -g @openai/codex`
+Claude code CLI: `curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd`
 
-Claude code CLI:
-
-`curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd`
-
-Gemini CLI:
-
-`npm install -g @google/gemini-cli`
+Gemini CLI: `npm install -g @google/gemini-cli`
 
 
 ### Step 2. Install VSCode
@@ -86,17 +74,11 @@ Next, click the "Toggle Panel" button in the top right corner to open a terminal
 
 In the terminal, cd into the `mdo_agent_results-main` folder and open your LLM client in full-permission mode to avoid interruptions. Again, you need to choose **ONLY ONE** of the following, depending which LLM client you are using.
 
-**Claude Code:**
+Claude Code: `claude --dangerously-skip-permissions`
 
-`claude --dangerously-skip-permissions`
+Codex: `codex --yolo`
 
-**Codex:**
-
-`codex --yolo`
-
-**Gemini:**
-
-`gemini --yolo`
+Gemini: `gemini --yolo`
 
 If this is the first time you add a new MCP server, your client may show a "New MCP server found" prompt. Choose "Use this MCP server".
 
