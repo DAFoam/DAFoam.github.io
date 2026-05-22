@@ -206,7 +206,7 @@ The agent will also return a clickable link for a Trame server to view the mesh 
 
 For the best visual experience, we recommend using the "Light Modern" color theme in VSCode. To change the theme, open the Command Palette in VSCode, search for "Preferences: Color Theme", and select "Light Modern".
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:700px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:600px !important;" />
 
 Fig. 1. An example of VSCode interface on local computers
 
