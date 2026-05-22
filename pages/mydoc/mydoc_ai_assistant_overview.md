@@ -121,6 +121,7 @@ First, create a new subfolder called `.codex` inside `mdo_agent_results`, and th
 command = "bash"
 args = ["-c", ". /replace_this_with_the_abs_path_to_your_loadDAFoam.sh && mdo-agent-deck-mcp"]
 ```
+
 **IMPORTANT**: You need to replace `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` with the absolute path of your loadDAFoam.sh file on the HPC, e.g., `/home/your_user_name/dafoam/loadDAFoam.sh`
 
 **Claude Code**
@@ -204,5 +205,9 @@ The agent will parse your prompt into solver input arguments and run predefined 
 The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
 
 For the best visual experience, we recommend using the "Light Modern" color theme in VSCode. To change the theme, open the Command Palette in VSCode, search for "Preferences: Color Theme", and select "Light Modern".
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:600px !important;" />
+
+Fig. 1. An example of VSCode interface on local computers
 
 {% include links.html %}
