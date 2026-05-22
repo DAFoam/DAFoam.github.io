@@ -7,17 +7,17 @@ permalink: ai-agent-overview.html
 folder: mydoc
 ---
 
-The MDO Agent Deck is an agentic AI framework that enables the conversational pre-processing, simulation, optimization, and post-processing of many design optimization problems. Currently, we support the airfoil, wing, and aircraft agents. The AI agent can be installed locally or on an HPC.
+The MDO Agent Deck is an agentic AI framework that enables conversational pre-processing, simulation, optimization, and post-processing for a wide range of design optimization problems. Currently, we support the airfoil, wing, and aircraft agents. The AI agent can be installed locally or on an HPC. If you are new to the MDO Agent Deck, we recommend starting with the local installation.
 
 ## Installation (local computers)
 
-The local installation works for Linux, Windows, and MacOS, and it is the easist way to run the agents with small cases. If you plan to run larger cases, e.g., wing aero-structural optimizatin, you need to install the agents on an HPC.
+The local installation works for Linux, Windows, and MacOS, and it is the easiest way to run the agents with small cases. If you plan to run larger cases, e.g., wing aero-structural optimization, you need to install the agents on an HPC.
 
 ### Step 1. Install a LLM client
 
 We need to first install an LLM client's command line interface (CLI). The MDO Agent Deck supports three LLM clients: Codex, Claude Code, and Gemini, but here you need to install **ONLY ONE** CLI client, and the Codex CLI is recommended.
 
-**MacOS/Linux:**
+**MacOS/Linux (Terminal):**
 
 Codex CLI: `npm install -g @openai/codex`
 
@@ -54,25 +54,134 @@ Then, open a terminal and run the following command to download the pre-compiled
 
 Download `mdo_agent_results` repo from [here](https://github.com/DAFoam/mdo_agent_results/archive/refs/heads/main.zip). 
 
-Unzip it and you will see a folder called `mdo_agent_results-main`. This will be the main working directory for your agents. 
+Unzip it and you will see a folder called `mdo_agent_results-main`. Rename it to `mdo_agent_results`. This will be the main working directory for your agents. 
 
-**IMPORTANT**: you can not manually create a folder and use it as LLM's working directory! You must use `mdo_agent_results-main`. This is because `mdo_agent_results-main` has some pre-defined LLM configuraiton files (hidden by default). You DO NOT need to change these configuration files, though.
+**IMPORTANT**: Do not manually create a folder and use it as the LLM's working directory. You must use `mdo_agent_results`. This is because `mdo_agent_results` contains pre-defined LLM configuration files (hidden by default). You do not need to modify these configuration files.
 
 The local installation is finished!
 
 ## Installation (HPC)
 
-TBD
+This section is for running large-scale cases on an HPC. If you are using the local installation and running the agents on your local computer, you do not need to follow these steps.
+
+### Step 1. Install VSCode and Remote SSH
+
+Download VS Code 1.100.3 from [here](https://code.visualstudio.com/updates/v1_100). **NOTE:** Some newer versions of VS Code may experience issues when connecting to HPC systems. 
+
+Open VS Code. From the left panel, click `Extensions`, then search for `Remote SSH` by Microsoft and click `Install`.
+
+After installing Remote SSH, set up the SSH connection: 
+
+- Click the `Open a Remote Window` button in the lower-left corner of VS Code. It is a blue icon on macOS, but has no color on Windows. 
+
+- In the pop-up window on the top, select `Connect to Host`, then choose `+ Add New SSH Host`. 
+
+- In the pop-up window, enter your SSH command, for example: `ssh my_user_name@nova.its.iastate.edu`.
+
+- When prompted, select the SSH configuration file to update (choose `~/.ssh/config` or similar).
+
+- Once the SSH configuration is complete, click `Connect to Host` again and select your newly added host (e.g., `nova.its.iastate.edu`). You will be prompted to enter your password and, if applicable, a verification code to log in to the HPC.
+
+- If the terminal is not visible after opening the folder, click `Toggle Panel` in the top-right corner of VS Code.
+
+DO NOT close the VSCode and the opened terminal on the HPC, we will use it to install other packages in the following.
+
+### Step 2. Install a LLM client on the HPC
+
+Using the terminal in VSCode via Remote SSH, we need to install an LLM client's command line interface (CLI) on the HPC. The MDO Agent Deck supports three LLM clients: Codex, Claude Code, and Gemini, but you only need to install **ONE** CLI client. The Codex CLI is recommended.
+
+Codex CLI: `npm install -g @openai/codex`
+
+Claude code CLI: `curl -fsSL https://claude.ai/install.sh | bash`
+
+Gemini CLI: `npm install -g @google/gemini-cli`
+
+### Step 3. Install the agents and DAFoam on the HPC
+
+Using the terminal in VSCode via Remote SSH, we need to compile the DAFoam package from scratch. Follow the instructions from [here](https://dafoam.github.io/installation-source.html). In this example, we assume DAFoam is installed in `/home/your_user_name/dafoam`.
+
+After DAFoam is compiled, load its environment, e.g., `source /home/your_user_name/dafoam/loadDAFoam.sh`, and then run the following command to install the MDO Agent Deck:
+
+`pip install mdo_agent_deck`
+
+Here mdo_agent_deck is hosted on PyPI. 
+
+### Step 4. Create the working directory
+
+Using the terminal in VSCode via Remote SSH, we need to create a working directory called `mdo_agent_results` on the HPC, for example at `/home/your_user_name/mdo_agent_results`.
+
+Next, create MCP configuration files in the `mdo_agent_results` folder. Follow **ONLY ONE** of the approaches below, depending on which LLM client you are using.
+
+**Codex**
+
+First, create a new subfolder called `.codex` inside `mdo_agent_results`, and then, create a new file called `config.toml` inside `mdo_agent_results/.codex`. Finally, add the following to your `mdo_agent_results/.codex/config.toml` file. 
+
+```bash
+[mcp_servers.mdo_agent_deck]
+command = "bash"
+args = ["-c", ". /replace_this_with_the_abs_path_to_your_loadDAFoam.sh && mdo-agent-deck-mcp"]
+```
+**IMPORTANT**: You need to replace `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` with the absolute path of your loadDAFoam.sh file on the HPC, e.g., `/home/your_user_name/dafoam/loadDAFoam.sh`
+
+**Claude Code**
+
+First, create a new file called `.mcp.json` inside `mdo_agent_results`. Next, add the following to your `mdo_agent_results/.mcp.json` file. 
+
+```bash
+{
+    "mcpServers": {
+        "mdo_agent_deck": {
+          "type": "stdio",
+          "command": "bash",
+          "args": [
+            "-c",
+            ". /replace_this_with_the_abs_path_to_your_loadDAFoam.sh && mdo-agent-deck-mcp"
+          ],
+          "env": {}
+        }
+    }
+}
+```
+
+**IMPORTANT**: You need to replace `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` with the absolute path of your loadDAFoam.sh file on the HPC, e.g., `/home/your_user_name/dafoam/loadDAFoam.sh`
+
+
+**Gemini**
+
+First, create a new subfolder called `.gemini` inside `mdo_agent_results`, and then, create a new file called `settings.json` inside `mdo_agent_results/.gemini`. Finally, add the following to your `mdo_agent_results/.gemini/settings.json` file. 
+
+Put the same content in `mdo_agent_results/.gemini/settings.json` as in `mdo_agent_results/.mcp.json` above. Remember to change `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` accordingly.
+
+
+### Step 5. Edit the MDO Agent Deck config
+
+Navigate to where mdo_agent_deck is installed in Miniconda. An example is `/home/your_user_name/dafoam/packages/miniconda3/lib/python3.10/site-packages/mcp_server.py`.
+
+Open `mcp_server.py` and set `run_mode` to either `"HPC"` (submit a job from the head node) or `"Native"` (interactive compute nodes). Also set `work_dir` to the absolute path of the `mdo_agent_results` working directory. An example is as follows:
+
+```python
+AGENT_DECK_CONFIG = {
+    "run_mode": "HPC",
+    "work_dir": "/homme/your_user_name/mdo_agent_results",
+    "load_modules": "",
+}
+```
+
+The agents are ready to use on the HPC
 
 ## Test the agent
 
-**IMPORTANT**: The MCP server setup is local and works only in the `mdo_agent_results-main` folder.
+The following steps work for both local and HPC installations.
 
-First, open VSCode and click the "Explorer" icon from the left bar. From there, you can select "Open Folder" and open the `mdo_agent_results-main` folder as your working directory.
+**IMPORTANT**: The MCP server setup is local and works only in the `mdo_agent_results` folder.
+
+First, open VSCode. For HPC installation, you need to use Remote SSH to connect to the HPC. No need to do such for local installation.
+
+Then, in VSCode, click the "Explorer" icon from the left bar. From there, you can select "Open Folder" and open the `mdo_agent_results` folder as your working directory.
 
 Next, click the "Toggle Panel" button in the top right corner to open a terminal.
 
-In the terminal, cd into the `mdo_agent_results-main` folder and open your LLM client in full-permission mode to avoid interruptions. Again, you need to choose **ONLY ONE** of the following, depending which LLM client you are using.
+In the terminal, navigate to the `mdo_agent_results` folder and launch your LLM client in full-permission mode to avoid interruptions. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
 
 Claude Code: `claude --dangerously-skip-permissions`
 
@@ -90,7 +199,7 @@ You can ask something like:
 
 "Generate a CFD mesh for the NACA0012 airfoil with 20K cells with yPlus 5."
 
-The agent will parse your promopt into solver input argements and run predefined commands to generate the mesh and then return clickable paths for the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows and Linux) and click these paths to view the figures directly in VSCode.
+The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows and Linux) and click these paths to view the figures directly in VSCode.
 
 The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
 
