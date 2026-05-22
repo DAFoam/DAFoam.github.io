@@ -68,11 +68,11 @@ This section is for running large-scale cases on an HPC. If you are using the lo
 
 Download VS Code 1.100.3 from [here](https://code.visualstudio.com/updates/v1_100). **NOTE:** Some newer versions of VS Code may experience issues when connecting to HPC systems. 
 
-Open VS Code. From the left panel, click `Extensions`, then search for `Remote SSH` by Microsoft and click `Install`.
+Open VS Code. From the left panel, click `Extensions` (see Fig. 1 below), then search for `Remote SSH` by Microsoft and click `Install`.
 
 After installing Remote SSH, set up the SSH connection: 
 
-- Click the `Open a Remote Window` button in the lower-left corner of VS Code. It is a blue icon on macOS, but has no color on Windows. 
+- Click the `Open a Remote Window` button in the lower-left corner of VS Code (see Fig. 1 below).
 
 - In the pop-up window on the top, select `Connect to Host`, then choose `+ Add New SSH Host`. 
 
@@ -82,7 +82,7 @@ After installing Remote SSH, set up the SSH connection:
 
 - Once the SSH configuration is complete, click `Connect to Host` again and select your newly added host (e.g., `nova.its.iastate.edu`). You will be prompted to enter your password and, if applicable, a verification code to log in to the HPC.
 
-- If the terminal is not visible after opening the folder, click `Toggle Panel` in the top-right corner of VS Code.
+- If the terminal is not visible after opening the folder, click `Toggle Panel` in the top-right corner of VS Code (see Fig. 1 below).
 
 DO NOT close the VSCode and the opened terminal on the HPC, we will use it to install other packages in the following.
 
@@ -178,9 +178,9 @@ The following steps work for both local and HPC installations.
 
 First, open VSCode. For HPC installation, you need to use Remote SSH to connect to the HPC. No need to do such for local installation.
 
-Then, in VSCode, click the "Explorer" icon from the left bar. From there, you can select "Open Folder" and open the `mdo_agent_results` folder as your working directory.
+Then, in VSCode, click the "Explorer" icon from the left bar (see Fig. below). From there, you can select "Open Folder" and open the `mdo_agent_results` folder as your working directory.
 
-Next, click the "Toggle Panel" button in the top right corner to open a terminal.
+Next, click the "Toggle Panel" button in the top right corner to open a terminal (see Fig. 1 below).
 
 In the terminal, navigate to the `mdo_agent_results` folder and launch your LLM client in full-permission mode to avoid interruptions. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
 
@@ -200,13 +200,13 @@ You can ask something like:
 
 "Generate a CFD mesh for the NACA0012 airfoil with 20K cells with yPlus 5."
 
-The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows and Linux) and click these paths to view the figures directly in VSCode.
+The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows and Linux) and click these paths to view the figures directly in VSCode (see Fig. 1 below).
 
 The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
 
 For the best visual experience, we recommend using the "Light Modern" color theme in VSCode. To change the theme, open the Command Palette in VSCode, search for "Preferences: Color Theme", and select "Light Modern".
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:600px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:700px !important;" />
 
 Fig. 1. An example of VSCode interface on local computers
 
