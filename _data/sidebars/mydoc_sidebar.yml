@@ -326,7 +326,7 @@ entries:
       url: /validations-rae2822.html
       output: web, pdf
 
-  - title: AI Agent
+  - title: AI Agents
     output: web, pdf
     folderitems:
 
@@ -340,6 +340,10 @@ entries:
     
     - title: Wing Agent
       url: /ai-agent-wing.html
+      output: web, pdf
+
+    - title: Aircraft Agent
+      url: /ai-agent-aircraft.html
       output: web, pdf
 
   - title: Information

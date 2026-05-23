@@ -7,7 +7,9 @@ permalink: ai-agent-airfoil.html
 folder: mydoc
 ---
 
-Once the DAFoam MCP server is installed and connected to Claude, you can open the Docker Desktop and the Claude Desktop app, and start using it to analyze and optimize airfoil cases. We support three functionalities.
+{% include note.html content="Please follow the instructions from the Overview page to install MDO Agent Deck before using the airfoil agent." %}
+
+The airfoil agent facilitates the CFD-based aerodynamic analysis, design, and optimization of airfoils. It currently support three functionalities.
 
 ## Airfoil mesh generation. 
 
