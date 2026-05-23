@@ -7,6 +7,6 @@ permalink: ai-agent-aircraft.html
 folder: mydoc
 ---
 
-Under construction..
+{% include note.html content="Please follow the instructions from the Overview page to install MDO Agent Deck before using the aircraft agent." %}
 
 {% include links.html %}
