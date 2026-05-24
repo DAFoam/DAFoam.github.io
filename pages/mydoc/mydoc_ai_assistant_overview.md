@@ -7,7 +7,9 @@ permalink: ai-agent-overview.html
 folder: mydoc
 ---
 
-The MDO Agent Deck is an agentic AI framework for multidisciplinary design optimization (MDO). It exposes engineering workflows through an MCP server and orchestrates domain agents such as `airfoil`, `wing`, and `aircraft`.
+**Latest release: v0.1.3**
+
+The MDO Agent Deck is an agentic AI framework for multidisciplinary design optimization (MDO). It exposes engineering workflows through an MCP server and orchestrates domain agents such as `airfoil`, `wing`, and `aircraft`. The MDO Agent Deck framework is not open source. Instead, it is distributed on PyPI as compiled shared library package for evaluation purpose. Check [LICENSE](https://pypi.org/project/mdo-agent-deck/) for more details.
 
 ## Trustworthy Agentic AI Framework for MDO
 
