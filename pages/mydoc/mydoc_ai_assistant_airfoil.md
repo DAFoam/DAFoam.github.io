@@ -89,11 +89,16 @@ The airfoil agent supports these skills:
 </div>
 </div>
 
-## Example Prompt
+## Example Prompts
 
-```text
-Use the airfoil agent to generate a CFD mesh for NACA0012 at Mach 0.05, with 6000 cells and y+ target of 50.
-```
+1. `Generate a cfd mesh for the RAE2822 airfoil with 20K cells, Mach number is 0.7 and yPlus is 5.`
 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-prompt.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-plot1.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-plot2.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-trame.png" style="width:400px !important;" />
+
+Fig. 1. Airfoil mesh generation results
 
 {% include links.html %}
