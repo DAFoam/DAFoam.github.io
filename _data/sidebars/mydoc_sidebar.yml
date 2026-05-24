@@ -338,15 +338,15 @@ entries:
       url: /ai-agent-installation.html
       output: web, pdf
 
-    - title: Airfoil Agent
+    - title: Tutorial: Airfoil Agent
       url: /ai-agent-airfoil.html
       output: web, pdf
     
-    - title: Wing Agent
+    - title: Tutorial: Wing Agent
       url: /ai-agent-wing.html
       output: web, pdf
 
-    - title: Aircraft Agent
+    - title: Tutorial: Aircraft Agent
       url: /ai-agent-aircraft.html
       output: web, pdf
 

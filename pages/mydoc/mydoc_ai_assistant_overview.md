@@ -7,207 +7,89 @@ permalink: ai-agent-overview.html
 folder: mydoc
 ---
 
-The MDO Agent Deck is an agentic AI framework that enables conversational pre-processing, simulation, optimization, and post-processing for a wide range of design optimization problems. Currently, we support the airfoil, wing, and aircraft agents. The AI agent can be installed locally or on an HPC. If you are new to the MDO Agent Deck, we recommend starting with the local installation.
+The MDO Agent Deck is an agentic AI framework for multidisciplinary design optimization (MDO). It exposes engineering workflows through an MCP server and orchestrates domain agents such as `airfoil`, `wing`, and `aircraft`.
 
-## Installation (local computers)
+## Trustworthy Agentic AI Framework for MDO
 
-The local installation works for Linux, Windows, and MacOS, and it is the easiest way to run the agents with small cases. If you plan to run larger cases, e.g., wing aero-structural optimization, you need to install the agents on an HPC.
+The framework is designed to be trustworthy for engineering using the following guardrails:
 
-### Step 1. Install a LLM client
+- Narrowly scoped, domain-specific agents.
+- Strictly constrained input parameters per skill.
+- A robust review-and-correction loop at each phase.
+- Fully transparent and auditable execution workflows.
 
-We need to first install an LLM client's command line interface (CLI). The MDO Agent Deck supports three LLM clients: Codex, Claude Code, and Gemini, but here you need to install **ONLY ONE** CLI client, and the Codex CLI is recommended.
+## Core Architecture
 
-**MacOS/Linux (Terminal):**
+At a high level, `mdo_agent_deck` is the top-level orchestrator:
 
-Codex CLI: `npm install -g @openai/codex`
+- `mcp_server.py` exposes MCP tools (`get_skills`, `get_skill_input_info`, `set_skill_inputs`, `prepare`, `run`, `review_run`, `analyze`).
+- `AgentDeck` loads installed agent packages from a registry and coordinates case directories, state persistence, and workflow auditing.
+- Each agent provides one or more skills that follow a common interface (`prepare`, `run`, `review_run`, `analyze`, `review_analyze`).
 
-Claude code CLI: `curl -fsSL https://claude.ai/install.sh | bash`
+## How the Framework Works
 
-Gemini CLI: `npm install -g @google/gemini-cli`
+For each user request, a skill execution follows a strict sequence:
 
-**Windows CMD (Command Prompt):**
+1. The system identifies the best domain agent and workflow step for the request.
+2. It validates and fills required inputs.
+3. It creates a new isolated case folder for that run.
+4. It runs a **prepare** phase and checks the review result.
+5. It runs the main **run** phase and checks the review result.
+6. If the run is still active, the system keeps checking status until completion.
+7. It runs an **analyze** phase and checks the final review result.
 
-Codex CLI: `npm install -g @openai/codex`
+This review gate after every phase is a key guardrail. If a review fails, the workflow stops and requests correction before moving forward.
 
-Claude code CLI: `curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd`
+For example, if a user asks:
 
-Gemini CLI: `npm install -g @google/gemini-cli`
+> “Generate a CFD mesh for NACA0012 at Mach 0.05, Reynolds 20,000, y+ target 50.”
 
+A typical execution looks like this:
 
-### Step 2. Install VSCode
+1. The LLM routes the request to the `airfoil` agent and selects the `generate-cfd-mesh` skill.
+2. It validates inputs (airfoil profile, flow condition tags, mesh controls, and naming fields).
+3. It creates a new case folder, for example:
+   - `results/airfoil_mesh_naca0012_ma005_20k_y50_0000`
+4. In **prepare**, it copy geometry and mesh configuration files into that folder.
+5. In **run**, it launches the mesh generation commands/scripts for that case.
+6. In **analyze**, it computes mesh quality metrics and generates deliverables (for example mesh snapshots and summary metrics).
+7. The user receives a clear status plus output paths, such as:
+   - mesh files in the case folder
+   - plots under `plots/`
+   - quality metrics JSON (for example `mesh_analysis_metrics.json`)
 
-Download VS Code 1.100.3 from [here](https://code.visualstudio.com/updates/v1_100). **NOTE:** Some newer versions of VS Code may experience issues when connecting to HPC systems. 
+If any review fails (for example invalid input ranges or mesh quality below threshold), the workflow stops at that phase and reports what must be fixed.
 
-Optional: For VSCode on Windows, you can configure your terminal to use CMD by opening the Command Palette from the top panel, searching for "Terminal: Select Default Profile", and then selecting CMD.
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-overview-diagram.png" style="width:800px !important;" />
 
-### Step 3. Install Docker Desktop
+Fig. 1. Schematic of the agentic AI workflow
 
-Download and install Docker Desktop App for [MacOS](https://docs.docker.com/desktop/setup/install/mac-install), [Windows](https://docs.docker.com/desktop/setup/install/windows-install), or [Linux](https://docs.docker.com/desktop/setup/install/linux)
 
-After the Docker Desktop is installed, open it and keep it open.
+## Case Folder and Run Isolation
 
-Then, open a terminal and run the following command to download the pre-compiled MDO Agent Deck image:
+Each skill run is mapped to a unique case directory under the working directory:
 
-`docker pull dafoam/agent:latest`
+- Users provide a concise `case_name` such as `mesh_naca0012_20k`.
+- AgentDeck prefixes with agent name and appends a run-id suffix (for example `_0000`, `_0001`).
+- This prevents stale files from older runs from contaminating new runs.
 
-### Step 4. Download the working directory
+For multi-step workflows, downstream steps start from a clean copy of the previous step results, so each stage stays reproducible and isolated.
 
-Download `mdo_agent_results` repo from [here](https://github.com/DAFoam/mdo_agent_results/archive/refs/heads/main.zip). 
+## Transparency and Auditability
 
-Unzip it and you will see a folder called `mdo_agent_results-main`. Rename it to `mdo_agent_results`. This will be the main working directory for your agents. 
+The framework records workflow and runtime context in the working directory:
 
-**IMPORTANT**: Do not manually create a folder and use it as the LLM's working directory. You must use `mdo_agent_results`. This is because `mdo_agent_results` contains pre-defined LLM configuration files (hidden by default). You do not need to modify these configuration files.
+- `agent_workflow.json`: auditable case-by-case phase history (`set_skill_inputs`, `prepare`, `review_prepare`, `run`, `review_run`, `analyze`, `review_analyze`) with timestamps and status.
+- `agent_state.json`: persisted bindings (inputs and case directories) so sessions can resume after MCP server restarts.
 
-The local installation is finished!
+This design supports traceability, debugging, and reproducibility for engineering studies.
 
-## Installation (HPC)
+## Deployment Modes
 
-This section is for running large-scale cases on an HPC. If you are using the local installation and running the agents on your local computer, you do not need to follow these steps.
+The MCP server supports three run modes:
 
-### Step 1. Install VSCode and Remote SSH
-
-Download VS Code 1.100.3 from [here](https://code.visualstudio.com/updates/v1_100). **NOTE:** Some newer versions of VS Code may experience issues when connecting to HPC systems. 
-
-Open VS Code. From the left panel, click `Extensions` (see Fig. 1 below), then search for `Remote SSH` by Microsoft and click `Install`.
-
-After installing Remote SSH, set up the SSH connection: 
-
-- Click the `Open a Remote Window` button in the lower-left corner of VS Code (see Fig. 1 below).
-
-- In the pop-up window on the top, select `Connect to Host`, then choose `+ Add New SSH Host`. 
-
-- In the pop-up window, enter your SSH command, for example: `ssh my_user_name@nova.its.iastate.edu`.
-
-- When prompted, select the SSH configuration file to update (choose `~/.ssh/config` or similar).
-
-- Once the SSH configuration is complete, click `Connect to Host` again and select your newly added host (e.g., `nova.its.iastate.edu`). You will be prompted to enter your password and, if applicable, a verification code to log in to the HPC.
-
-- If the terminal is not visible after opening the folder, click `Toggle Panel` in the top-right corner of VS Code (see Fig. 1 below).
-
-DO NOT close the VSCode and the opened terminal on the HPC, we will use it to install other packages in the following.
-
-### Step 2. Install a LLM client on the HPC
-
-Using the terminal in VSCode via Remote SSH, we need to install an LLM client's command line interface (CLI) on the HPC. The MDO Agent Deck supports three LLM clients: Codex, Claude Code, and Gemini, but you only need to install **ONE** CLI client. The Codex CLI is recommended.
-
-Codex CLI: `npm install -g @openai/codex`
-
-Claude code CLI: `curl -fsSL https://claude.ai/install.sh | bash`
-
-Gemini CLI: `npm install -g @google/gemini-cli`
-
-### Step 3. Install the agents and DAFoam on the HPC
-
-Using the terminal in VSCode via Remote SSH, we need to compile the DAFoam package from scratch. Follow the instructions from [here](https://dafoam.github.io/installation-source.html). In this example, we assume DAFoam is installed in `/home/your_user_name/dafoam`.
-
-After DAFoam is compiled, load its environment, e.g., `source /home/your_user_name/dafoam/loadDAFoam.sh`, and then run the following command to install the MDO Agent Deck:
-
-`pip install mdo_agent_deck`
-
-Here mdo_agent_deck is hosted on PyPI. 
-
-### Step 4. Create the working directory
-
-Using the terminal in VSCode via Remote SSH, we need to create a working directory called `mdo_agent_results` on the HPC, for example at `/home/your_user_name/mdo_agent_results`.
-
-Next, create MCP configuration files in the `mdo_agent_results` folder. Follow **ONLY ONE** of the approaches below, depending on which LLM client you are using.
-
-**Codex**
-
-First, create a new subfolder called `.codex` inside `mdo_agent_results`, and then, create a new file called `config.toml` inside `mdo_agent_results/.codex`. Finally, add the following to your `mdo_agent_results/.codex/config.toml` file. 
-
-```bash
-[mcp_servers.mdo_agent_deck]
-command = "bash"
-args = ["-c", ". /replace_this_with_the_abs_path_to_your_loadDAFoam.sh && mdo-agent-deck-mcp"]
-```
-
-**IMPORTANT**: You need to replace `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` with the absolute path of your loadDAFoam.sh file on the HPC, e.g., `/home/your_user_name/dafoam/loadDAFoam.sh`
-
-**Claude Code**
-
-First, create a new file called `.mcp.json` inside `mdo_agent_results`. Next, add the following to your `mdo_agent_results/.mcp.json` file. 
-
-```bash
-{
-    "mcpServers": {
-        "mdo_agent_deck": {
-          "type": "stdio",
-          "command": "bash",
-          "args": [
-            "-c",
-            ". /replace_this_with_the_abs_path_to_your_loadDAFoam.sh && mdo-agent-deck-mcp"
-          ],
-          "env": {}
-        }
-    }
-}
-```
-
-**IMPORTANT**: You need to replace `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` with the absolute path of your loadDAFoam.sh file on the HPC, e.g., `/home/your_user_name/dafoam/loadDAFoam.sh`
-
-
-**Gemini**
-
-First, create a new subfolder called `.gemini` inside `mdo_agent_results`, and then, create a new file called `settings.json` inside `mdo_agent_results/.gemini`. Finally, add the following to your `mdo_agent_results/.gemini/settings.json` file. 
-
-Put the same content in `mdo_agent_results/.gemini/settings.json` as in `mdo_agent_results/.mcp.json` above. Remember to change `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` accordingly.
-
-
-### Step 5. Edit the MDO Agent Deck config
-
-Navigate to where mdo_agent_deck is installed in Miniconda. An example is `/home/your_user_name/dafoam/packages/miniconda3/lib/python3.10/site-packages/mcp_server.py`.
-
-Open `mcp_server.py` and set `run_mode` to either `"HPC"` (submit a job from the head node) or `"Native"` (interactive compute nodes). Also set `work_dir` to the absolute path of the `mdo_agent_results` working directory. An example is as follows:
-
-```python
-AGENT_DECK_CONFIG = {
-    "run_mode": "HPC",
-    "work_dir": "/homme/your_user_name/mdo_agent_results",
-    "load_modules": "",
-}
-```
-
-The agents are ready to use on the HPC
-
-## Test the agent
-
-The following steps work for both local and HPC installations.
-
-**IMPORTANT**: The MCP server setup is local and works only in the `mdo_agent_results` folder.
-
-First, open VSCode. For HPC installation, you need to use Remote SSH to connect to the HPC. No need to do such for local installation.
-
-Then, in VSCode, click the "Explorer" icon from the left bar (see Fig. below). From there, you can select "Open Folder" and open the `mdo_agent_results` folder as your working directory.
-
-Next, click the "Toggle Panel" button in the top right corner to open a terminal (see Fig. 1 below).
-
-In the terminal, navigate to the `mdo_agent_results` folder and launch your LLM client in full-permission mode to avoid interruptions. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
-
-Claude Code: `claude --dangerously-skip-permissions`
-
-Codex: `codex --yolo`
-
-Gemini: `gemini --yolo`
-
-If this is the first time you add a new MCP server, your client may show a "New MCP server found" prompt. Choose "Use this MCP server".
-
-Some LLM clients may also warn you about the skipped-permissions setup. You can allow it if needed. If you prefer, you can omit the `--dangerously-skip-permissions` or `--yolo` arguments.
-
-Then, run `/mcp` and verify if the `mdo_agent_deck` is `connected`. If yes, you can start asking questions.
-
-You can ask something like:
-
-"Generate a CFD mesh for the NACA0012 airfoil with 20K cells with yPlus 5."
-
-The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows and Linux) and click these paths to view the figures directly in VSCode (see Fig. 1 below).
-
-The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
-
-For the best visual experience, we recommend using the "Light Modern" color theme in VSCode. To change the theme, open the Command Palette in VSCode, search for "Preferences: Color Theme", and select "Light Modern".
-
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:600px !important;" />
-
-Fig. 1. An example of VSCode interface on local computers
+- `Docker`: default containerized workflow.
+- `Native`: direct execution on local/HPC environment.
+- `HPC`: submit jobs to the cluster queue and run them when compute resources are available.
 
 {% include links.html %}

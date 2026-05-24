@@ -1,5 +1,5 @@
 ---
-title: Airfoil agent
+title: Tutorial: Airfoil agent
 keywords: ai assistant
 summary: 
 sidebar: mydoc_sidebar
