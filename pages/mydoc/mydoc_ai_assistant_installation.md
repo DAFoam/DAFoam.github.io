@@ -52,11 +52,11 @@ Then, open a terminal and run the following command to download the pre-compiled
 
 ### Step 4. Download the working directory
 
-Download `mdo_agent_results` repo from [here](https://github.com/DAFoam/mdo_agent_results/archive/refs/heads/main.zip). 
+Download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/main.zip). 
 
-Unzip it and you will see a folder called `mdo_agent_results-main`. Rename it to `mdo_agent_results`. This will be the main working directory for your agents. 
+Unzip it and you will see a folder called `mdo_agent_work-main`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents. 
 
-**IMPORTANT**: Do not manually create a folder and use it as the LLM's working directory. You must use `mdo_agent_results`. This is because `mdo_agent_results` contains pre-defined LLM configuration files (hidden by default). You do not need to modify these configuration files.
+**IMPORTANT**: Do not manually create a folder and use it as the LLM's working directory. You must use `mdo_agent_work`. This is because `mdo_agent_work/results` contains pre-defined LLM configuration files (hidden by default). You do not need to modify these configuration files.
 
 The local installation is finished!
 
@@ -108,13 +108,15 @@ Here mdo_agent_deck is hosted on PyPI.
 
 ### Step 4. Create the working directory
 
-Using the terminal in VSCode via Remote SSH, we need to create a working directory called `mdo_agent_results` on the HPC, for example at `/home/your_user_name/mdo_agent_results`.
+Using the terminal in VSCode via Remote SSH, we need to create a working directory called `mdo_agent_work` on the HPC, for example at `/home/your_user_name/mdo_agent_work`.
 
-Next, create MCP configuration files in the `mdo_agent_results` folder. Follow **ONLY ONE** of the approaches below, depending on which LLM client you are using.
+Inside `mdo_agent_work`, create a subfolder called `results`.
+
+Next, create MCP configuration files in the `mdo_agent_work/results` folder. Follow **ONLY ONE** of the approaches below, depending on which LLM client you are using.
 
 **Codex**
 
-First, create a new subfolder called `.codex` inside `mdo_agent_results`, and then, create a new file called `config.toml` inside `mdo_agent_results/.codex`. Finally, add the following to your `mdo_agent_results/.codex/config.toml` file. 
+First, create a new subfolder called `.codex` inside `mdo_agent_work/results`, and then, create a new file called `config.toml` inside `mdo_agent_work/results/.codex`. Finally, add the following to your `mdo_agent_work/results/.codex/config.toml` file. 
 
 ```bash
 [mcp_servers.mdo_agent_deck]
@@ -126,7 +128,7 @@ args = ["-c", ". /replace_this_with_the_abs_path_to_your_loadDAFoam.sh && mdo-ag
 
 **Claude Code**
 
-First, create a new file called `.mcp.json` inside `mdo_agent_results`. Next, add the following to your `mdo_agent_results/.mcp.json` file. 
+First, create a new file called `.mcp.json` inside `mdo_agent_work/results`. Next, add the following to your `mdo_agent_work/results/.mcp.json` file. 
 
 ```bash
 {
@@ -149,21 +151,21 @@ First, create a new file called `.mcp.json` inside `mdo_agent_results`. Next, ad
 
 **Gemini**
 
-First, create a new subfolder called `.gemini` inside `mdo_agent_results`, and then, create a new file called `settings.json` inside `mdo_agent_results/.gemini`. Finally, add the following to your `mdo_agent_results/.gemini/settings.json` file. 
+First, create a new subfolder called `.gemini` inside `mdo_agent_work/results`, and then, create a new file called `settings.json` inside `mdo_agent_work/results/.gemini`. Finally, add the following to your `mdo_agent_work/results/.gemini/settings.json` file. 
 
-Put the same content in `mdo_agent_results/.gemini/settings.json` as in `mdo_agent_results/.mcp.json` above. Remember to change `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` accordingly.
+Put the same content in `mdo_agent_work/results/.gemini/settings.json` as in `mdo_agent_work/results/.mcp.json` above. Remember to change `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` accordingly.
 
 
 ### Step 5. Edit the MDO Agent Deck config
 
 Navigate to where mdo_agent_deck is installed in Miniconda. An example is `/home/your_user_name/dafoam/packages/miniconda3/lib/python3.10/site-packages/mcp_server.py`.
 
-Open `mcp_server.py` and set `run_mode` to either `"HPC"` (submit a job from the head node) or `"Native"` (interactive compute nodes). Also set `work_dir` to the absolute path of the `mdo_agent_results` working directory. An example is as follows:
+Open `mcp_server.py` and set `run_mode` to either `"HPC"` (submit a job from the head node) or `"Native"` (interactive compute nodes). Also set `work_dir` to the absolute path of the `mdo_agent_work/results` working directory. An example is as follows:
 
 ```python
 AGENT_DECK_CONFIG = {
     "run_mode": "HPC",
-    "work_dir": "/homme/your_user_name/mdo_agent_results",
+    "work_dir": "/homme/your_user_name/mdo_agent_work/results",
     "load_modules": "",
 }
 ```
@@ -174,15 +176,17 @@ The agents are ready to use on the HPC
 
 The following steps work for both local and HPC installations.
 
-**IMPORTANT**: The MCP server setup works only in the `mdo_agent_results` folder.
+**IMPORTANT**: The MCP server setup works only in the `mdo_agent_work/results` folder.
 
 First, open VSCode. For HPC installation, you need to use Remote SSH to connect to the HPC. No need to do such for local installation.
 
-Then, in VSCode, click the "Explorer" icon from the left bar (see Fig. below). From there, you can select "Open Folder" and open the `mdo_agent_results` folder as your working directory.
+Then, in VSCode, click the "Explorer" icon from the left bar (see Fig. below). From there, you can select "Open Folder" and open the `mdo_agent_work` folder as your working directory.
 
 Next, click the "Toggle Panel" button in the top right corner to open a terminal (see Fig. 1 below).
 
-In the terminal, navigate to the `mdo_agent_results` folder. If you use the HPC or Native mode, you need to load the DAFoam environment. No need to do such for the Docker mode.
+In the terminal, navigate to the `mdo_agent_work/results` folder. If you use the HPC or Native mode, you need to load the DAFoam environment. No need to do such for the Docker mode.
+
+**IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional to avoid conflicts with VSCode LLM extensions.
 
 Then, launch your LLM client in full-permission mode to avoid interruptions. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
 
