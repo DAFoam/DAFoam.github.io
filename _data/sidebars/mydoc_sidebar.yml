@@ -334,6 +334,10 @@ entries:
       url: /ai-agent-overview.html
       output: web, pdf
 
+    - title: Installation
+      url: /ai-agent-installation.html
+      output: web, pdf
+
     - title: Airfoil Agent
       url: /ai-agent-airfoil.html
       output: web, pdf
