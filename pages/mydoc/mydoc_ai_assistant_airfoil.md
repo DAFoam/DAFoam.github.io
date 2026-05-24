@@ -21,9 +21,9 @@ The airfoil agent supports these skills:
 
 <div class="panel panel-default">
 <div class="panel-heading">
-<h4 class="panel-title">
+<div class="panel-title">
 <a data-toggle="collapse" href="#airfoilMeshInputs">`generate-cfd-mesh` inputs (click to expand)</a>
-</h4>
+</div>
 </div>
 <div id="airfoilMeshInputs" class="panel-collapse collapse">
 <div class="panel-body">
@@ -41,9 +41,9 @@ The airfoil agent supports these skills:
 
 <div class="panel panel-default">
 <div class="panel-heading">
-<h4 class="panel-title">
+<div class="panel-title">
 <a data-toggle="collapse" href="#airfoilSteadyCfdInputs">`run-cfd-simulation` inputs (click to expand)</a>
-</h4>
+</div>
 </div>
 <div id="airfoilSteadyCfdInputs" class="panel-collapse collapse">
 <div class="panel-body">
@@ -64,9 +64,9 @@ The airfoil agent supports these skills:
 
 <div class="panel panel-default">
 <div class="panel-heading">
-<h4 class="panel-title">
+<div class="panel-title">
 <a data-toggle="collapse" href="#airfoilAeroOptInputs">`run-aero-optimization` inputs (click to expand)</a>
-</h4>
+</div>
 </div>
 <div id="airfoilAeroOptInputs" class="panel-collapse collapse">
 <div class="panel-body">
