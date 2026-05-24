@@ -43,13 +43,8 @@ The execution will look like this:
 2. It semantically parses the user prompt into skill inputs (`airfoil_profile=naca0012`, `mach_number=0.05`, `reynolds_number=20000`, `y_plus_target=50`).
 3. It creates a new isolated case folder, e.g., `airfoil_mesh_naca0012_ma005_20k_y50_0000`
 4. In **prepare**, it copies geometry and mesh configuration files into that folder, then checks the review result.
-5. In **run**, it launches the predefined mesh generation commands/scripts for that case.
-6. In **analyze**, it computes mesh quality metrics and generates deliverables, then checks the final review result.
-
-The user then receives a clear status plus output paths, such as:
-   - mesh files in the case folder
-   - plots under `plots/`
-   - quality metrics JSON (for example `mesh_analysis_metrics.json`)
+5. In **run**, it create a bash script that contains the predefined mesh generation commands, and run the bash script.
+6. In **analyze**, it computes mesh quality metrics, verify if the mesh quality passes thresholds, and also generate mesh plots.
 
 If any review fails (for example invalid input ranges or mesh quality below threshold), the workflow stops at that phase and reports what must be fixed.
 
