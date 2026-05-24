@@ -94,10 +94,10 @@ The airfoil agent supports these skills:
 1. `Generate a cfd mesh for the RAE2822 airfoil with 20K cells, Mach number is 0.7 and yPlus is 5.`
 
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-prompt.png" style="width:400px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-plot1.png" style="width:400px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-plot2.png" style="width:400px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-trame.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-prompt.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-plot1.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-plot2.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-trame.png" style="width:400px !important;" />
 
 Fig. 1. Airfoil mesh generation results
 
