@@ -1,5 +1,5 @@
 ---
-title: Tutorial: Wing agent
+title: "Tutorial: Wing agent"
 keywords: ai assistant
 summary: 
 sidebar: mydoc_sidebar
