@@ -42,7 +42,7 @@ This review gate after every phase is a key guardrail. If a review fails, the wo
 
 For example, if a user asks:
 
-> “Generate a CFD mesh for NACA0012 at Mach 0.05, Reynolds 20,000, y+ target 50.”
+`Generate a CFD mesh for NACA0012 at Mach 0.05, Reynolds 20,000, y+ target 50.`
 
 A typical execution looks like this:
 
@@ -60,7 +60,7 @@ A typical execution looks like this:
 
 If any review fails (for example invalid input ranges or mesh quality below threshold), the workflow stops at that phase and reports what must be fixed.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-overview-diagram.png" style="width:800px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-overview-diagram.png" style="width:700px !important;" />
 
 Fig. 1. Schematic of the agentic AI workflow
 

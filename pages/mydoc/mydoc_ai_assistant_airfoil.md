@@ -17,7 +17,7 @@ The airfoil agent supports these skills:
 - `run-cfd-simulation`: run steady CFD from an existing mesh.
 - `run-aero-optimization`: run single-point aerodynamic optimization.
 
-## Detailed Inputs (Click to Expand)
+## Detailed Inputs 
 
 <div class="panel panel-default">
 <div class="panel-heading">
@@ -94,8 +94,6 @@ The airfoil agent supports these skills:
 ```text
 Use the airfoil agent to generate a CFD mesh for NACA0012 at Mach 0.05, with 6000 cells and y+ target of 50.
 ```
-
-{% include links.html %}
 
 
 {% include links.html %}

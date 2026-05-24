@@ -174,7 +174,7 @@ The agents are ready to use on the HPC
 
 The following steps work for both local and HPC installations.
 
-**IMPORTANT**: The MCP server setup is local and works only in the `mdo_agent_results` folder.
+**IMPORTANT**: The MCP server setup works only in the `mdo_agent_results` folder.
 
 First, open VSCode. For HPC installation, you need to use Remote SSH to connect to the HPC. No need to do such for local installation.
 
@@ -182,7 +182,9 @@ Then, in VSCode, click the "Explorer" icon from the left bar (see Fig. below). F
 
 Next, click the "Toggle Panel" button in the top right corner to open a terminal (see Fig. 1 below).
 
-In the terminal, navigate to the `mdo_agent_results` folder and launch your LLM client in full-permission mode to avoid interruptions. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
+In the terminal, navigate to the `mdo_agent_results` folder. If you use the HPC or Native mode, you need to load the DAFoam environment. No need to do such for the Docker mode.
+
+Then, launch your LLM client in full-permission mode to avoid interruptions. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
 
 Claude Code: `claude --dangerously-skip-permissions`
 
