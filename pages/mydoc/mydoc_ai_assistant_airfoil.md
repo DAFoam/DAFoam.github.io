@@ -34,6 +34,8 @@ The airfoil agent supports these skills:
 - `y_plus` (`float`, default: `50.0`): near-wall mesh target in wall units.
 - `mach_number` (`float`, default: `0.3`): freestream Mach number used for mesh sizing.
 - `d0` (`float`, default: `-1.0`): first-layer height in meters; negative means auto-estimate from `y_plus` and `mach_number`.
+- `local_refine_level` (`int`, default: `-1`): local `refineMesh` level for trailing-edge-region refinement; use `-1` to disable local refinement.
+- `local_refine_box` (`list[list[float]]`, default: `[[1.0, -0.2, -0.1], [2.0, 0.2, 0.1]]`): two box-corner vectors `[[x0, y0, z0], [x1, y1, z1]]` used when local refinement is enabled.
 
 </div>
 </div>
@@ -92,7 +94,6 @@ The airfoil agent supports these skills:
 ## Example Prompts
 
 1. `Generate a cfd mesh for the RAE2822 airfoil with 20K cells, Mach number is 0.7 and yPlus is 5.`
-
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-prompt.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-plot1.png" style="width:400px !important;" />
