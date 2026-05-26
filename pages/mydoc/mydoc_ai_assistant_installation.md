@@ -7,6 +7,8 @@ permalink: ai-agent-installation.html
 folder: mydoc
 ---
 
+## Latest Release: v0.1.8
+
 The AI agent can be installed locally or on an HPC. If you are new to the MDO Agent Deck, we recommend starting with the local installation.
 
 ## Installation (local computers)
@@ -121,10 +123,10 @@ First, create a new subfolder called `.codex` inside `mdo_agent_work/results`, a
 ```bash
 [mcp_servers.mdo_agent_deck]
 command = "bash"
-args = ["-c", ". /replace_this_with_the_abs_path_to_your_loadDAFoam.sh && mdo-agent-deck-mcp"]
+args = ["-c", ". /abs_path_to_your_loadDAFoam.sh && export AGENT_DECK_RUN_MODE=HPC && export AGENT_DECK_WORK_DIR=/abs_path_to_your_mdo_agent_work/results && mdo-agent-deck-mcp"]
 ```
 
-**IMPORTANT**: You need to replace `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` with the absolute path of your loadDAFoam.sh file on the HPC, e.g., `/home/your_user_name/dafoam/loadDAFoam.sh`
+**IMPORTANT**: You need to replace `/abs_path_to_your_loadDAFoam.sh` with the absolute path of your loadDAFoam.sh file on the HPC, e.g., `/home/your_user_name/dafoam/loadDAFoam.sh` and replace `/abs_path_to_your_mdo_agent_work/results` with the absolute path of your `mdo_agent_work/results` folder, e.g., `/home/your_user_name/mdo_agent_work/results`.
 
 **Claude Code**
 
@@ -138,7 +140,7 @@ First, create a new file called `.mcp.json` inside `mdo_agent_work/results`. Nex
           "command": "bash",
           "args": [
             "-c",
-            ". /replace_this_with_the_abs_path_to_your_loadDAFoam.sh && mdo-agent-deck-mcp"
+            ". /abs_path_to_your_loadDAFoam.sh && export AGENT_DECK_RUN_MODE=HPC && export AGENT_DECK_WORK_DIR=/abs_path_to_your_mdo_agent_work/results && mdo-agent-deck-mcp"
           ],
           "env": {}
         }
@@ -146,7 +148,7 @@ First, create a new file called `.mcp.json` inside `mdo_agent_work/results`. Nex
 }
 ```
 
-**IMPORTANT**: You need to replace `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` with the absolute path of your loadDAFoam.sh file on the HPC, e.g., `/home/your_user_name/dafoam/loadDAFoam.sh`
+**IMPORTANT**: You need to replace `/abs_path_to_your_loadDAFoam.sh` with the absolute path of your loadDAFoam.sh file on the HPC, e.g., `/home/your_user_name/dafoam/loadDAFoam.sh` and replace `/abs_path_to_your_mdo_agent_work/results` with the absolute path of your `mdo_agent_work/results` folder, e.g., `/home/your_user_name/mdo_agent_work/results`.
 
 
 **Gemini**
@@ -155,20 +157,6 @@ First, create a new subfolder called `.gemini` inside `mdo_agent_work/results`, 
 
 Put the same content in `mdo_agent_work/results/.gemini/settings.json` as in `mdo_agent_work/results/.mcp.json` above. Remember to change `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` accordingly.
 
-
-### Step 5. Edit the MDO Agent Deck config
-
-Navigate to where mdo_agent_deck is installed in Miniconda. An example is `/home/your_user_name/dafoam/packages/miniconda3/lib/python3.10/site-packages/mcp_server.py`.
-
-Open `mcp_server.py` and set `run_mode` to either `"HPC"` (submit a job from the head node) or `"Native"` (interactive compute nodes). Also set `work_dir` to the absolute path of the `mdo_agent_work/results` working directory. An example is as follows:
-
-```python
-AGENT_DECK_CONFIG = {
-    "run_mode": "HPC",
-    "work_dir": "/homme/your_user_name/mdo_agent_work/results",
-    "load_modules": "",
-}
-```
 
 The agents are ready to use on the HPC
 
