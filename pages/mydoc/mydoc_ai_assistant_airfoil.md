@@ -91,15 +91,15 @@ The airfoil agent supports these skills:
 </div>
 </div>
 
-## Example Prompts
+## Agent Capability demos
 
-1. `Generate a cfd mesh for the RAE2822 airfoil with 20K cells, Mach number is 0.7 and yPlus is 5.`
+1. **Mesh generation.** Users can prompt to generate airfoil mesh with desired airfoil profiles, mesh densities, yPlus, and local refinement.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-prompt.png" style="width:400px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-plot1.png" style="width:400px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-plot2.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-coarse.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-trame.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-fine.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-local-refine.png" style="width:400px !important;" />
 
-Fig. 1. Airfoil mesh generation results
+Fig. 1. Top left: Overview of a coarse mesh. Prompt: Generate a cfd mesh for the naca0012 airfoil. Top right: Trame interactive view of the TE mesh. Bottom left: Overview of a fine mesh with a different airfoil. Prompt: Generate a cfd mesh for the rae2822 airfoil with 50K cells, yPlus 3, and ref Mach=0.7. Bottom right: Locally refined mesh. Prompt: Locally refine the above mesh between -0.1 to 1.1 chords from LE, z length of the refinment is 0.5 chords.
 
 {% include links.html %}
