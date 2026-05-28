@@ -124,6 +124,7 @@ First, create a new subfolder called `.codex` inside `mdo_agent_work/results`, a
 [mcp_servers.mdo_agent_deck]
 command = "bash"
 args = ["-c", ". $DAFOAM_ROOT_PATH/loadDAFoam.sh && export AGENT_DECK_RUN_MODE=HPC && export AGENT_DECK_WORK_DIR=$PWD && mdo-agent-deck-mcp"]
+env_vars = ["DAFOAM_ROOT_PATH", "PWD"]
 ```
 
 **Claude Code**
@@ -137,10 +138,13 @@ First, create a new file called `.mcp.json` inside `mdo_agent_work/results`. Nex
           "type": "stdio",
           "command": "bash",
           "args": [
-            "-c",
+            "-lc",
             ". $DAFOAM_ROOT_PATH/loadDAFoam.sh && export AGENT_DECK_RUN_MODE=HPC && export AGENT_DECK_WORK_DIR=$PWD && mdo-agent-deck-mcp"
           ],
-          "env": {}
+          "env": {
+            "DAFOAM_ROOT_PATH": "${DAFOAM_ROOT_PATH}",
+            "PWD": "${PWD}"
+          }
         }
     }
 }
