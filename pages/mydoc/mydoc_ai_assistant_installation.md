@@ -102,7 +102,7 @@ Gemini CLI: `npm install -g @google/gemini-cli`
 
 Using the terminal in VSCode via Remote SSH, we need to compile the DAFoam package from scratch. Follow the instructions from [here](https://dafoam.github.io/installation-source.html). In this example, we assume DAFoam is installed in `/home/your_user_name/dafoam`.
 
-After DAFoam is compiled, load its environment, e.g., `source /home/your_user_name/dafoam/loadDAFoam.sh`, and then run the following command to install the MDO Agent Deck:
+After DAFoam is compiled, load its environment, e.g., `. /home/your_user_name/dafoam/loadDAFoam.sh`, and then run the following command to install the MDO Agent Deck:
 
 `pip install mdo_agent_deck`
 
@@ -118,19 +118,17 @@ Next, create MCP configuration files in the `mdo_agent_work/results` folder. Fol
 
 **Codex**
 
-First, create a new subfolder called `.codex` inside `mdo_agent_work/results`, and then, create a new file called `config.toml` inside `mdo_agent_work/results/.codex`. Finally, add the following to your `mdo_agent_work/results/.codex/config.toml` file. 
+First, create a new subfolder called `.codex` inside `mdo_agent_work/results`, and then, create a new file called `config.toml` inside `mdo_agent_work/results/.codex`. Finally, add the following to your `mdo_agent_work/results/.codex/config.toml` file. Use the following `config.toml` template as is; no need to make any changes.
 
 ```bash
 [mcp_servers.mdo_agent_deck]
 command = "bash"
-args = ["-c", ". /abs_path_to_your_loadDAFoam.sh && export AGENT_DECK_RUN_MODE=HPC && export AGENT_DECK_WORK_DIR=/abs_path_to_your_mdo_agent_work/results && mdo-agent-deck-mcp"]
+args = ["-c", ". $DAFOAM_ROOT_PATH/loadDAFoam.sh && export AGENT_DECK_RUN_MODE=HPC && export AGENT_DECK_WORK_DIR=$PWD && mdo-agent-deck-mcp"]
 ```
-
-**IMPORTANT**: You need to replace `/abs_path_to_your_loadDAFoam.sh` with the absolute path of your loadDAFoam.sh file on the HPC, e.g., `/home/your_user_name/dafoam/loadDAFoam.sh` and replace `/abs_path_to_your_mdo_agent_work/results` with the absolute path of your `mdo_agent_work/results` folder, e.g., `/home/your_user_name/mdo_agent_work/results`.
 
 **Claude Code**
 
-First, create a new file called `.mcp.json` inside `mdo_agent_work/results`. Next, add the following to your `mdo_agent_work/results/.mcp.json` file. 
+First, create a new file called `.mcp.json` inside `mdo_agent_work/results`. Next, add the following to your `mdo_agent_work/results/.mcp.json` file. Use the following `.mcp.json` template as is; no need to make any changes. 
 
 ```bash
 {
@@ -140,7 +138,7 @@ First, create a new file called `.mcp.json` inside `mdo_agent_work/results`. Nex
           "command": "bash",
           "args": [
             "-c",
-            ". /abs_path_to_your_loadDAFoam.sh && export AGENT_DECK_RUN_MODE=HPC && export AGENT_DECK_WORK_DIR=/abs_path_to_your_mdo_agent_work/results && mdo-agent-deck-mcp"
+            ". $DAFOAM_ROOT_PATH/loadDAFoam.sh && export AGENT_DECK_RUN_MODE=HPC && export AGENT_DECK_WORK_DIR=$PWD && mdo-agent-deck-mcp"
           ],
           "env": {}
         }
@@ -148,14 +146,11 @@ First, create a new file called `.mcp.json` inside `mdo_agent_work/results`. Nex
 }
 ```
 
-**IMPORTANT**: You need to replace `/abs_path_to_your_loadDAFoam.sh` with the absolute path of your loadDAFoam.sh file on the HPC, e.g., `/home/your_user_name/dafoam/loadDAFoam.sh` and replace `/abs_path_to_your_mdo_agent_work/results` with the absolute path of your `mdo_agent_work/results` folder, e.g., `/home/your_user_name/mdo_agent_work/results`.
-
-
 **Gemini**
 
 First, create a new subfolder called `.gemini` inside `mdo_agent_work/results`, and then, create a new file called `settings.json` inside `mdo_agent_work/results/.gemini`. Finally, add the following to your `mdo_agent_work/results/.gemini/settings.json` file. 
 
-Put the same content in `mdo_agent_work/results/.gemini/settings.json` as in `mdo_agent_work/results/.mcp.json` above. Remember to change `/replace_this_with_the_abs_path_to_your_loadDAFoam.sh` accordingly.
+Put the same content in `mdo_agent_work/results/.gemini/settings.json` as in `mdo_agent_work/results/.mcp.json` above.
 
 
 The agents are ready to use on the HPC
@@ -164,17 +159,15 @@ The agents are ready to use on the HPC
 
 The following steps work for both local and HPC installations.
 
-**IMPORTANT**: The MCP server setup works only in the `mdo_agent_work/results` folder.
-
 First, open VSCode. For HPC installation, you need to use Remote SSH to connect to the HPC. No need to do such for local installation.
 
 Then, in VSCode, click the "Explorer" icon from the left bar (see Fig. below). From there, you can select "Open Folder" and open the `mdo_agent_work` folder as your working directory.
 
 Next, click the "Toggle Panel" button in the top right corner to open a terminal (see Fig. 1 below).
 
-In the terminal, navigate to the `mdo_agent_work/results` folder. If you use the HPC or Native mode, you need to load the DAFoam environment. No need to do such for the Docker mode.
+In the terminal, navigate to the `mdo_agent_work/results` folder. If you use the HPC or Native mode, you **MUST load the DAFoam environment**. No need to do such for the Docker mode.
 
-**IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional to avoid conflicts with VSCode LLM extensions.
+**IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional to avoid conflicts with VSCode LLM extensions. You must start the LLM in the `mdo_agent_work/results` folder. But the name of the `results` folder can be arbitrary. If you need to run multiple cases, you can make copies of the `results` folder inside `mdo_agent_work`, e.g., `mdo_agent_work/results1` and `mdo_agent_work/result2`.
 
 Then, launch your LLM client in full-permission mode to avoid interruptions. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
 
