@@ -19,32 +19,34 @@ The local installation works for Linux, Windows, and MacOS, and it is the easies
 
 We need to first install an LLM client's command line interface (CLI). The MDO Agent Deck supports three LLM clients: Codex, Claude Code, and Gemini, but here you need to install **ONLY ONE** CLI client, and the Codex CLI is recommended.
 
-**MacOS/Linux (Terminal):**
+Please follow the official installation instructions for your selected client:
 
-Codex CLI: `npm install -g @openai/codex`
+- Codex CLI: [OpenAI Codex CLI installation guide](https://help.openai.com/en/articles/11096431)
+- Claude Code CLI: [Anthropic Claude Code installation guide](https://docs.anthropic.com/en/docs/claude-code/getting-started)
+- Gemini CLI: [Google Gemini CLI installation guide](https://github.com/google-gemini/gemini-cli/blob/main/docs/get-started/index.md)
 
-Claude code CLI: `curl -fsSL https://claude.ai/install.sh | bash`
+Note: The installation steps may differ by operating system and may require additional dependencies such as Node.js.
 
-Gemini CLI: `npm install -g @google/gemini-cli`
+After the installation is finished, verify that your CLI is available in the terminal:
 
-**Windows CMD (Command Prompt):**
+- Codex CLI: `codex -V`
+- Claude Code CLI: `claude -V`
+- Gemini CLI: `gemini -V`
 
-Codex CLI: `npm install -g @openai/codex`
-
-Claude code CLI: `curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd`
-
-Gemini CLI: `npm install -g @google/gemini-cli`
+You should see the version of your LLM client in the terminal.
 
 
-### Step 2. Install VSCode
+### Step 2. Install VS Code
 
-Download VS Code 1.100.3 from [here](https://code.visualstudio.com/updates/v1_100). **NOTE:** Some newer versions of VS Code may experience issues when connecting to HPC systems. 
+Download VS Code from [here](https://code.visualstudio.com/download) and install it.
 
-Optional: For VSCode on Windows, you can configure your terminal to use CMD by opening the Command Palette from the top panel, searching for "Terminal: Select Default Profile", and then selecting CMD.
+Optional: Some newer versions of VS Code may experience issues when connecting to HPC systems. If you run into this issue, try an older version of VS Code: [1.100.3](https://code.visualstudio.com/updates/v1_100). 
+
+Optional: For VS Code on Windows, you can configure your terminal to use CMD by opening the Command Palette from the top panel, searching for "Terminal: Select Default Profile", and then selecting CMD.
 
 ### Step 3. Install Docker Desktop
 
-Download and install Docker Desktop App for [MacOS](https://docs.docker.com/desktop/setup/install/mac-install), [Windows](https://docs.docker.com/desktop/setup/install/windows-install), or [Linux](https://docs.docker.com/desktop/setup/install/linux)
+Download and install the Docker Desktop app for [MacOS](https://docs.docker.com/desktop/setup/install/mac-install), [Windows](https://docs.docker.com/desktop/setup/install/windows-install), or [Linux](https://docs.docker.com/desktop/setup/install/linux).
 
 After the Docker Desktop is installed, open it and keep it open.
 
@@ -66,7 +68,7 @@ The local installation is finished!
 
 This section is for running large-scale cases on an HPC. If you are using the local installation and running the agents on your local computer, you do not need to follow these steps.
 
-### Step 1. Install VSCode and Remote SSH
+### Step 1. Install VS Code and Remote SSH
 
 Download VS Code 1.100.3 from [here](https://code.visualstudio.com/updates/v1_100). **NOTE:** Some newer versions of VS Code may experience issues when connecting to HPC systems. 
 
@@ -86,31 +88,42 @@ After installing Remote SSH, set up the SSH connection:
 
 - If the terminal is not visible after opening the folder, click `Toggle Panel` in the top-right corner of VS Code (see Fig. 1 below).
 
-DO NOT close the VSCode and the opened terminal on the HPC, we will use it to install other packages in the following.
+DO NOT close VS Code or the open terminal on the HPC. We will use them to install other packages in the following steps.
 
 ### Step 2. Install a LLM client on the HPC
 
-Using the terminal in VSCode via Remote SSH, we need to install an LLM client's command line interface (CLI) on the HPC. The MDO Agent Deck supports three LLM clients: Codex, Claude Code, and Gemini, but you only need to install **ONE** CLI client. The Codex CLI is recommended.
+Using the terminal in VS Code via Remote SSH, we need to install an LLM client's command line interface (CLI) on the HPC. The MDO Agent Deck supports three LLM clients: Codex, Claude Code, and Gemini, but you only need to install **ONE** CLI client. The Codex CLI is recommended.
 
-Codex CLI: `npm install -g @openai/codex`
+Please follow the official installation instructions for your selected client:
 
-Claude code CLI: `curl -fsSL https://claude.ai/install.sh | bash`
+- Codex CLI: [OpenAI Codex CLI installation guide](https://help.openai.com/en/articles/11096431)
+- Claude Code CLI: [Anthropic Claude Code installation guide](https://docs.anthropic.com/en/docs/claude-code/getting-started)
+- Gemini CLI: [Google Gemini CLI installation guide](https://github.com/google-gemini/gemini-cli/blob/main/docs/get-started/index.md)
 
-Gemini CLI: `npm install -g @google/gemini-cli`
+On some HPC systems, packages such as Node.js may not be available by default. In that case, first load the required modules or ask your HPC administrator for the recommended installation method.
+
+After the installation is finished, verify that your CLI is available in the terminal:
+
+- Codex CLI: `codex -V`
+- Claude Code CLI: `claude -V`
+- Gemini CLI: `gemini -V`
+
+You should see the version of your LLM client in the terminal.
+
 
 ### Step 3. Install the agents and DAFoam on the HPC
 
-Using the terminal in VSCode via Remote SSH, we need to compile the DAFoam package from scratch. Follow the instructions from [here](https://dafoam.github.io/installation-source.html). In this example, we assume DAFoam is installed in `/home/your_user_name/dafoam`.
+Using the terminal in VS Code via Remote SSH, we need to compile the DAFoam package from scratch. Follow the instructions from [here](https://dafoam.github.io/installation-source.html). In this example, we assume DAFoam is installed in `/home/your_user_name/dafoam`.
 
 After DAFoam is compiled, load its environment, e.g., `. /home/your_user_name/dafoam/loadDAFoam.sh`, and then run the following command to install the MDO Agent Deck:
 
 `pip install mdo_agent_deck`
 
-Here mdo_agent_deck is hosted on PyPI. 
+The `mdo_agent_deck` package is hosted on PyPI.
 
 ### Step 4. Create the working directory
 
-Using the terminal in VSCode via Remote SSH, we need to create a working directory called `mdo_agent_work` on the HPC, for example at `/home/your_user_name/mdo_agent_work`.
+Using the terminal in VS Code via Remote SSH, we need to create a working directory called `mdo_agent_work` on the HPC, for example at `/home/your_user_name/mdo_agent_work`.
 
 Inside `mdo_agent_work`, create a subfolder called `results`.
 
@@ -157,21 +170,21 @@ First, create a new subfolder called `.gemini` inside `mdo_agent_work/results`, 
 Put the same content in `mdo_agent_work/results/.gemini/settings.json` as in `mdo_agent_work/results/.mcp.json` above.
 
 
-The agents are ready to use on the HPC
+The agents are ready to use on the HPC.
 
 ## Test the agent
 
 The following steps work for both local and HPC installations.
 
-First, open VSCode. For HPC installation, you need to use Remote SSH to connect to the HPC. No need to do such for local installation.
+First, open VS Code. For HPC installation, you need to use Remote SSH to connect to the HPC. You do not need to do this for local installation.
 
-Then, in VSCode, click the "Explorer" icon from the left bar (see Fig. below). From there, you can select "Open Folder" and open the `mdo_agent_work` folder as your working directory.
+Then, in VS Code, click the "Explorer" icon in the left sidebar (see Fig. below). From there, select "Open Folder" and open the `mdo_agent_work` folder as your working directory.
 
-Next, click the "Toggle Panel" button in the top right corner to open a terminal (see Fig. 1 below).
+Next, click the "Toggle Panel" button in the top-right corner to open a terminal (see Fig. 1 below).
 
-In the terminal, navigate to the `mdo_agent_work/results` folder. If you use the HPC or Native mode, you **MUST load the DAFoam environment**. No need to do such for the Docker mode.
+In the terminal, navigate to the `mdo_agent_work/results` folder. If you use HPC or Native mode, you **MUST load the DAFoam environment**. You do not need to do this for Docker mode.
 
-**IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional to avoid conflicts with VSCode LLM extensions. You must start the LLM in the `mdo_agent_work/results` folder. But the name of the `results` folder can be arbitrary. If you need to run multiple cases, you can make copies of the `results` folder inside `mdo_agent_work`, e.g., `mdo_agent_work/results1` and `mdo_agent_work/result2`.
+**IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional and helps avoid conflicts with VS Code LLM extensions. You must start the LLM in the `mdo_agent_work/results` folder. The name of the `results` folder can be arbitrary. If you need to run multiple cases, you can make copies of the `results` folder inside `mdo_agent_work`, e.g., `mdo_agent_work/results1` and `mdo_agent_work/results2`.
 
 Then, launch your LLM client in full-permission mode to avoid interruptions. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
 
@@ -180,6 +193,8 @@ Claude Code: `claude --dangerously-skip-permissions`
 Codex: `codex --yolo`
 
 Gemini: `gemini --yolo`
+
+You need to sign up for an account and log in to the LLM CLI. DO NOT use API keys; use subscription login instead.
 
 If this is the first time you add a new MCP server, your client may show a "New MCP server found" prompt. Choose "Use this MCP server".
 
@@ -191,14 +206,14 @@ You can ask something like:
 
 "Generate a CFD mesh for the NACA0012 airfoil with 20K cells with yPlus 5."
 
-The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows and Linux) and click these paths to view the figures directly in VSCode (see Fig. 1 below).
+The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows and Linux) and click these paths to view the figures directly in VS Code (see Fig. 1 below).
 
 The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
 
-For the best visual experience, we recommend using the "Light Modern" color theme in VSCode. To change the theme, open the Command Palette in VSCode, search for "Preferences: Color Theme", and select "Light Modern".
+For the best visual experience, we recommend using the "Light Modern" color theme in VS Code. To change the theme, open the Command Palette in VS Code, search for "Preferences: Color Theme", and select "Light Modern".
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:600px !important;" />
 
-Fig. 1. An example of VSCode interface on local computers
+Fig. 1. An example of the VS Code interface on local computers
 
 {% include links.html %}
