@@ -31,7 +31,7 @@ After the installation is finished, verify that your CLI is available in the ter
 
 - Codex CLI: `codex -V`
 - Claude Code CLI: `claude -V`
-- Gemini CLI: `gemini -V`
+- Gemini CLI: `gemini -v`
 
 You should see the version of your LLM client in the terminal.
 
@@ -106,7 +106,7 @@ After the installation is finished, verify that your CLI is available in the ter
 
 - Codex CLI: `codex -V`
 - Claude Code CLI: `claude -V`
-- Gemini CLI: `gemini -V`
+- Gemini CLI: `gemini -v`
 
 You should see the version of your LLM client in the terminal.
 
