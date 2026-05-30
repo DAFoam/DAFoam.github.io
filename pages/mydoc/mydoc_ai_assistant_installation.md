@@ -40,9 +40,7 @@ You should see the version of your LLM client in the terminal.
 
 Download VS Code from [here](https://code.visualstudio.com/download) and install it.
 
-Optional: Some newer versions of VS Code may experience issues when connecting to HPC systems. If you run into this issue, try an older version of VS Code: [1.100.3](https://code.visualstudio.com/updates/v1_100). 
-
-Optional: For VS Code on Windows, you can configure your terminal to use CMD by opening the Command Palette from the top panel, searching for "Terminal: Select Default Profile", and then selecting CMD.
+Optional: For VS Code on Windows, you can configure your terminal to use a desired bash interface by opening the Command Palette from the top panel, searching for "Terminal: Select Default Profile", and then selecting CMD, PowerShell, or bash.
 
 ### Step 3. Install Docker Desktop
 
@@ -56,9 +54,9 @@ Then, open a terminal and run the following command to download the pre-compiled
 
 ### Step 4. Download the working directory
 
-Download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/main.zip). 
+Download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/docker.zip). 
 
-Unzip it and you will see a folder called `mdo_agent_work-main`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents. 
+Unzip it and you will see a folder called `mdo_agent_work-docker`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents. 
 
 **IMPORTANT**: Do not manually create a folder and use it as the LLM's working directory. You must use `mdo_agent_work`. This is because `mdo_agent_work/results` contains pre-defined LLM configuration files (hidden by default). You do not need to modify these configuration files.
 
@@ -70,7 +68,9 @@ This section is for running large-scale cases on an HPC. If you are using the lo
 
 ### Step 1. Install VS Code and Remote SSH
 
-Download VS Code 1.100.3 from [here](https://code.visualstudio.com/updates/v1_100). **NOTE:** Some newer versions of VS Code may experience issues when connecting to HPC systems. 
+Download VS Code from [here](https://code.visualstudio.com/download) and install it.
+
+Optional: Some newer versions of VS Code may experience issues when connecting to HPC systems. If you run into this issue, try an older version of VS Code: [1.100.3](https://code.visualstudio.com/updates/v1_100). 
 
 Open VS Code. From the left panel, click `Extensions` (see Fig. 1 below), then search for `Remote SSH` by Microsoft and click `Install`.
 
@@ -123,52 +123,11 @@ The `mdo_agent_deck` package is hosted on PyPI.
 
 ### Step 4. Create the working directory
 
-Using the terminal in VS Code via Remote SSH, we need to create a working directory called `mdo_agent_work` on the HPC, for example at `/home/your_user_name/mdo_agent_work`.
+Using the terminal in VS Code via Remote SSH, we will need to first download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/hpc.zip). 
 
-Inside `mdo_agent_work`, create a subfolder called `results`.
+Unzip it and you will see a folder called `mdo_agent_work-hpc`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents. You can put `mdo_agent_work` any where on the HPC, e.g., `/home/your_user_name/mdo_agent_work`.
 
-Next, create MCP configuration files in the `mdo_agent_work/results` folder. Follow **ONLY ONE** of the approaches below, depending on which LLM client you are using.
-
-**Codex**
-
-First, create a new subfolder called `.codex` inside `mdo_agent_work/results`, and then, create a new file called `config.toml` inside `mdo_agent_work/results/.codex`. Finally, add the following to your `mdo_agent_work/results/.codex/config.toml` file. Use the following `config.toml` template as is; no need to make any changes.
-
-```bash
-[mcp_servers.mdo_agent_deck]
-command = "bash"
-args = ["-c", ". $DAFOAM_ROOT_PATH/loadDAFoam.sh && export AGENT_DECK_RUN_MODE=HPC && export AGENT_DECK_WORK_DIR=$PWD && mdo-agent-deck-mcp"]
-env_vars = ["DAFOAM_ROOT_PATH", "PWD"]
-```
-
-**Claude Code**
-
-First, create a new file called `.mcp.json` inside `mdo_agent_work/results`. Next, add the following to your `mdo_agent_work/results/.mcp.json` file. Use the following `.mcp.json` template as is; no need to make any changes. 
-
-```bash
-{
-    "mcpServers": {
-        "mdo_agent_deck": {
-          "type": "stdio",
-          "command": "bash",
-          "args": [
-            "-lc",
-            ". $DAFOAM_ROOT_PATH/loadDAFoam.sh && export AGENT_DECK_RUN_MODE=HPC && export AGENT_DECK_WORK_DIR=$PWD && mdo-agent-deck-mcp"
-          ],
-          "env": {
-            "DAFOAM_ROOT_PATH": "${DAFOAM_ROOT_PATH}",
-            "PWD": "${PWD}"
-          }
-        }
-    }
-}
-```
-
-**Gemini**
-
-First, create a new subfolder called `.gemini` inside `mdo_agent_work/results`, and then, create a new file called `settings.json` inside `mdo_agent_work/results/.gemini`. Finally, add the following to your `mdo_agent_work/results/.gemini/settings.json` file. 
-
-Put the same content in `mdo_agent_work/results/.gemini/settings.json` as in `mdo_agent_work/results/.mcp.json` above.
-
+**IMPORTANT**: Do not manually create a folder and use it as the LLM's working directory. You must use `mdo_agent_work`. This is because `mdo_agent_work/results` contains pre-defined LLM configuration files (hidden by default). You do not need to modify these configuration files.
 
 The agents are ready to use on the HPC.
 
