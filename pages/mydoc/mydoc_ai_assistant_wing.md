@@ -38,9 +38,9 @@ The wing agent supports these skills:
 - `dihedrals` (list[float], default: [0.0]): dihedral angles in degrees ordered root to tip.
 - `twists` (list[float], default: [0.0]): twist angles in degrees ordered from the first non-root section to the tip.
 - `mesh_cells` (int, default: 200000): target total volume mesh cell count.
-- `y_plus` (float, default: 50.0): target near-wall spacing in wall units (`y+`) used to estimate the first-layer cell size `d0` when `d0` is not provided.
-- `mach_number` (float, default: 0.2): freestream Mach number used together with `y_plus`, `reynolds_number`, and `ref_chord` to estimate the near-wall first-layer cell size `d0` when `d0` is not provided.
-- `reynolds_number` (float, default: 5e6): freestream Reynolds number used together with `y_plus`, `mach_number`, and `ref_chord` to estimate the near-wall first-layer cell size `d0` when `d0` is not provided.
+- `y_plus` (float, default: 50.0): target near-wall spacing in wall units (y+) used to estimate the first-layer cell size d0 when it is not provided.
+- `mach_number` (float, default: 0.2): freestream Mach number used together with y_plus, reynolds_number, and ref_chord to estimate the near-wall first-layer cell size d0 when it is not provided.
+- `reynolds_number` (float, default: 5e6): freestream Reynolds number used together with y_plus, mach_number, and ref_chord to estimate the near-wall first-layer cell size d0 when it is not provided.
 - `local_refine_box` (list[list[float]], default: None): optional two-corner local refinement box `[[x0, y0, z0], [x1, y1, z1]]`; leave unset for no local refinement.
 
 </div>
@@ -219,7 +219,7 @@ The wing agent supports these skills:
 - `le_cluster` (float, default: 0.1): leading-edge clustering factor.
 - `te_cluster` (float, default: 0.1): trailing-edge clustering factor.
 - `farfield_scale` (float, default: 20.0): outer-boundary distance scale.
-- `d0` (float, default: -1.0): first-layer height in meters; use a negative value to estimate it from `y_plus`, `mach_number`, `reynolds_number`, and `ref_chord`.
+- `d0` (float, default: -1.0): first-layer height in meters; use a negative value to estimate it from y_plus, mach_number, reynolds_number, and ref_chord.
 - `hyperbolic_sweeps` (int, default: 10): smoothing sweeps per layer for hyperbolic extrusion.
 - `neighbor_rings` (int, default: 10): neighbor-ring depth for the hyperbolic smoother.
 - `diffuse_start` (float, default: null): smoothing onset distance in meters.
@@ -265,7 +265,7 @@ The wing agent supports these skills:
 - `max_flow_iters` (int, default: 10000): maximum flow iterations written to the case control settings.
 - `primal_func_std_tol` (float, default: 5e-3): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance.
-- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when `prepare` fits CST coefficients.
+- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
 - `reference_area` (float, default: null): aerodynamic reference area override; if unset, the skill uses mean chord times span.
 - `reference_length` (float, default: null): aerodynamic reference length override; if unset, the skill uses the mean chord.
 - `coef_stddev_pct_pass` (float, default: 0.001): pass threshold for force-coefficient standard deviation in percent.
@@ -291,7 +291,7 @@ The wing agent supports these skills:
 - `max_flow_iters` (int, default: 10000): maximum flow iterations written to the case control settings.
 - `primal_func_std_tol` (float, default: 5e-3): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance.
-- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when `prepare` fits CST coefficients.
+- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
 - `reference_area` (float, default: null): aerodynamic reference area override; if unset, the skill uses mean chord times span.
 - `reference_length` (float, default: null): aerodynamic reference length override; if unset, the skill uses the mean chord.
 - `objective_reduction_pct_pass` (float, default: 5.0): pass threshold for objective reduction in percent.
@@ -321,11 +321,11 @@ The wing agent supports these skills:
 - `primal_min_iters` (int, default: 200): minimum number of primal iterations.
 - `primal_func_std_tol` (float, default: 1e-2): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-2): DAFoam primal function slope tolerance.
-- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when `prepare` fits CST coefficients.
+- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
 - `reference_area` (float, default: null): aerodynamic reference area override; if unset, the skill uses mean chord times span.
 - `reference_length` (float, default: null): aerodynamic reference length override; if unset, the skill uses the mean chord.
-- `nlbgs_rel_tol` (float, default: 1e-7): relative tolerance for the aerostructural OpenMDAO `NonlinearBlockGS` solver.
-- `nlbgs_abs_tol` (float, default: 2.0): absolute tolerance for the aerostructural OpenMDAO `NonlinearBlockGS` solver.
+- `nlbgs_rel_tol` (float, default: 1e-7): relative tolerance for the aerostructural OpenMDAO NonlinearBlockGS solver.
+- `nlbgs_abs_tol` (float, default: 2.0): absolute tolerance for the aerostructural OpenMDAO NonlinearBlockGS solver.
 - `nlbgs_rel_tol_orders_pass` (float, default: 0.0): pass threshold for final relative NLBGS tolerance drop in log10 orders.
 - `nlbgs_rel_tol_orders_warning` (float, default: 2.0): warning threshold for final relative NLBGS tolerance drop in log10 orders.
 - `nlbgs_abs_tol_orders_pass` (float, default: 0.0): pass threshold for final absolute NLBGS tolerance drop in log10 orders.
@@ -355,11 +355,11 @@ The wing agent supports these skills:
 - `primal_min_iters` (int, default: 200): minimum number of primal iterations.
 - `primal_func_std_tol` (float, default: 1e-2): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-2): DAFoam primal function slope tolerance.
-- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when `prepare` fits CST coefficients.
+- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
 - `reference_area` (float, default: null): aerodynamic reference area override; if unset, the skill uses mean chord times span.
 - `reference_length` (float, default: null): aerodynamic reference length override; if unset, the skill uses the mean chord.
-- `nlbgs_rel_tol` (float, default: 1e-7): relative tolerance for the aerostructural OpenMDAO `NonlinearBlockGS` solver.
-- `nlbgs_abs_tol` (float, default: 2.0): absolute tolerance for the aerostructural OpenMDAO `NonlinearBlockGS` solver.
+- `nlbgs_rel_tol` (float, default: 1e-7): relative tolerance for the aerostructural OpenMDAO NonlinearBlockGS solver.
+- `nlbgs_abs_tol` (float, default: 2.0): absolute tolerance for the aerostructural OpenMDAO NonlinearBlockGS solver.
 - `objective_reduction_pct_pass` (float, default: 5.0): pass threshold for objective reduction in percent.
 - `objective_reduction_pct_warning` (float, default: 1.0): warning threshold for objective reduction in percent.
 - `final_feasibility_pass` (float, default: 0.0001): pass threshold for final feasibility.

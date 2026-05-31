@@ -30,9 +30,9 @@ The airfoil agent supports these skills:
 
 - `airfoil_profile` (str, default: "naca0012"): airfoil name (for example "naca0012", "rae2822").
 - `mesh_cells` (int, default: 6000): target total mesh-cell count for the airfoil mesh workflow.
-- `y_plus` (float, default: 50.0): target near-wall spacing in wall units (`y+`) used to estimate the first-layer cell size `d0` when `d0` is not provided.
-- `mach_number` (float, default: 0.2): freestream Mach number used together with `y_plus` and `reynolds_number` to estimate the near-wall first-layer cell size `d0` when `d0` is not provided.
-- `reynolds_number` (float, default: 5e6): freestream Reynolds number used together with `y_plus` and `mach_number` to estimate the near-wall first-layer cell size `d0` when `d0` is not provided.
+- `y_plus` (float, default: 50.0): target near-wall spacing in wall units (y+) used to estimate the first-layer cell size d0 when it is not provided.
+- `mach_number` (float, default: 0.2): freestream Mach number used together with y_plus and reynolds_number to estimate the near-wall first-layer cell size d0 when it is not provided.
+- `reynolds_number` (float, default: 5e6): freestream Reynolds number used together with y_plus and mach_number to estimate the near-wall first-layer cell size d0 when it is not provided.
 - `local_refine_box` (list[list[float]], default: None): optional two-corner local refinement box `[[x0, y0, z0], [x1, y1, z1]]`; leave unset for no local refinement.
 
 </div>
@@ -49,10 +49,10 @@ The airfoil agent supports these skills:
 <div class="panel-body">
 
 - `angle_of_attack` (float, default: 2.0): angle of attack in degrees.
-- `airfoil_profile` (str, default: inherited from mesh step): airfoil profile name inherited from `generate-cfd-mesh` and used to fit CST coefficients when needed.
+- `airfoil_profile` (str, default: inherited from mesh step): airfoil profile name inherited from generate-cfd-mesh and used to fit CST coefficients when needed.
 - `mach_number` (float, default: inherited from mesh step): freestream Mach number.
 - `reynolds_number` (float, default: inherited from mesh step): freestream Reynolds number.
-- `cst_coeffs` (list[float], default: None): optional CST vector `[upper..., lower...]`; if omitted, `prepare` fits the coefficients automatically.
+- `cst_coeffs` (list[float], default: None): optional CST vector [upper..., lower...]; if omitted, prepare fits the coefficients automatically.
 - `n_cpu_cores` (int, default: 1): MPI ranks/CPU cores.
 
 </div>
@@ -69,7 +69,7 @@ The airfoil agent supports these skills:
 <div class="panel-body">
 
 - `angle_of_attack` (float, default: 2.0): initial angle of attack in degrees.
-- `airfoil_profile` (str, default: inherited from mesh step): airfoil profile name inherited from `generate-cfd-mesh` and used to fit CST coefficients when needed.
+- `airfoil_profile` (str, default: inherited from mesh step): airfoil profile name inherited from generate-cfd-mesh and used to fit CST coefficients when needed.
 - `mach_number` (float, default: inherited from mesh step): freestream Mach number.
 - `reynolds_number` (float, default: inherited from mesh step): freestream Reynolds number.
 - `optimizer` (str, default: "IPOPT"): optimizer ("IPOPT", "SNOPT", "SLSQP").
@@ -78,7 +78,7 @@ The airfoil agent supports these skills:
 - `thickness_constraint` (float, default: 0.5): minimum normalized thickness (negative disables).
 - `le_radius_constraint` (float, default: 0.7): minimum normalized leading-edge radius (negative disables).
 - `volume_constraint` (float, default: 1.0): minimum normalized airfoil volume (negative disables).
-- `cst_coeffs` (list[float], default: None): optional initial CST vector `[upper..., lower...]`.
+- `cst_coeffs` (list[float], default: None): optional initial CST vector [upper..., lower...].
 - `n_cpu_cores` (int, default: 1): MPI ranks/CPU cores.
 
 </div>
@@ -97,7 +97,7 @@ The airfoil agent supports these skills:
 <div class="panel-body">
 
 - `blunt_te` (float, default: 0.01): trailing-edge round percentage expressed as an x/chord trim location; 0.01 means the trim starts at x = 0.01 from the trailing edge.
-- `d0` (float, default: -1.0): first-layer height in meters; use a negative value to estimate it from `y_plus`, `mach_number`, and `reynolds_number`.
+- `d0` (float, default: -1.0): first-layer height in meters; use a negative value to estimate it from y_plus, mach_number, and reynolds_number.
 - `hyperbolic_sweeps` (int, default: 20): number of smoothing sweeps per layer for hyperbolic extrusion.
 - `neighbor_rings` (int, default: 5): neighbor-ring depth used by the hyperbolic extrusion smoother.
 - `diffuse_start` (float, default: 0.002): smoothing onset distance in meters for hyperbolic diffusion.
@@ -124,7 +124,7 @@ The airfoil agent supports these skills:
 - `transonic_mach_boundary` (float, default: 0.4): Mach-number boundary used by the default Mach-based solver selection when solver_name is not provided.
 - `solver_name` (str, default: null): explicit solver override; leave unset to use the default Mach-based solver selection.
 - `max_flow_iters` (int, default: 10000): maximum flow iterations written to the case control settings.
-- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when `prepare` fits CST coefficients.
+- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
 - `primal_func_std_tol` (float, default: 5e-3): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance.
 - `coef_stddev_pct_pass` (float, default: 0.001): pass threshold for force-coefficient standard deviation in percent.
@@ -148,7 +148,7 @@ The airfoil agent supports these skills:
 - `transonic_mach_boundary` (float, default: 0.4): Mach-number boundary used by the default Mach-based solver selection when solver_name is not provided.
 - `solver_name` (str, default: null): explicit solver override; leave unset to use the default Mach-based solver selection.
 - `max_flow_iters` (int, default: 10000): maximum flow iterations written to the case control settings.
-- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when `prepare` fits CST coefficients.
+- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
 - `primal_func_std_tol` (float, default: 5e-3): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance.
 - `objective_reduction_pct_pass` (float, default: 5.0): pass threshold for objective reduction in percent.
