@@ -373,4 +373,24 @@ The wing agent supports these skills:
 </div>
 </div>
 
+## Agent Capability demos
+
+### CFD Mesh Generation 
+
+Users can prompt to generate wing CFD mesh with desired airfoil profiles, chords, sweeps, twists, dihedral, and span. For example, `Generate a cfd mesh for a wing with naca4412 at the root and naca0012 at the tip. The root chord is 1 m and the tip chord is 0.5 m. The tip twist is 1 deg. The semi-span is 3 m. The sweep is 10 degs. Mesh size 200K, yPlus 50.` The following is the AI generated pictures. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-mesh.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-mesh-trame.png" style="width:400px !important;" />
+
+Fig. 1. Left: Overview of the generated CFD mesh. Top right: Trame interactive view of the CFD mesh.
+
+### FEA Mesh Generation 
+
+Users can prompt to generate wing FEA mesh with desired ribs, spars, and the coverage of the wingbox in chordwise and spanwise direction. For example, `Generate a FEA mesh for this wing with 2 spars and 10 ribs. The total element is about 3000. The wingbox starts and ends from 20% to 80% chord and extends to 90% span.` The following is the AI generated pictures. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-fea-mesh.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-fea-mesh-trame.png" style="width:400px !important;" />
+
+Fig. 1. Left: Overview of the generated FEA mesh. Top right: Trame interactive view of the FEA mesh.
+
 {% include links.html %}
