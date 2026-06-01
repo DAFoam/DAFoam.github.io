@@ -179,15 +179,19 @@ Fig. 1. Top left: Overview of a coarse mesh. Prompt: `Generate a cfd mesh for th
 
 ### CFD Simulation 
 
-Users can prompt to run airfoil CFD simulations with desired airfoil profiles (prescribed in the mesh generation skill), angles of attack, Mach numbers, and Reynolds numbers. 
+Users can prompt to run airfoil CFD simulations with desired airfoil profiles (prescribed in the mesh generation skill), angles of attack, Mach numbers, and Reynolds numbers. For example, `Generate a cfd mesh for the naca0012 airfoil and run a cfd simulation at Ma=0.3, Re=5e6, and aoa=3 degs. Use 2 CPU cores`. The following are the agent-generated figures.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-pressure-profile.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-trame-nut.png" style="width:400px !important;" />
 
-Fig. 1. Left: Airfoil pressure profile. Prompt: `Generate a cfd mesh for the naca0012 airfoil and run a cfd simulation at Ma=0.3, Re=5e6, and aoa=3 degs. Use 2 CPU cores`. Right: Visualization of airfoil turbulence variable field in the trame interactive server.
+Fig. 2. Left: Airfoil pressure profile. Right: Visualization of airfoil turbulence variable field in the trame interactive server.
 
 ### CFD Mesh Convergence Study
 
-Users can prompt to conduct a mesh convergence study for an airfoil.
+Users can prompt to conduct a mesh convergence study for an airfoil. For example, ` Conduct a cfd mesh convergence study for the RAE2822 airfoil at Ma=0.75, Re=1e7, and aoa=2 degs. The mesh sizes are 10K, 20K, 50K, and 100K. The yPlus is 3. Use 24 cores. CFD maxIter=5000`. The following is the agent-generated figure, one needs to add a follow up prompt to plot this pressure profile comparisoin figure, such as `Plot the pressure profile for all cases in one figure to show the difference.` 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-conv.png" style="width:400px !important;" />
+
+Fig. 3. Pressure profile comparison between different mesh densities.
 
 {% include links.html %}
