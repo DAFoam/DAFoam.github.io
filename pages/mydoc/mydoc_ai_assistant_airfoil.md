@@ -179,12 +179,14 @@ Fig. 1. Top left: Overview of a coarse mesh. Prompt: `Generate a cfd mesh for th
 
 ### CFD Simulation 
 
-Users can prompt to run airfoil CFD simulations with desired airfoil profiles (prescribed in the mesh generation skill), angles of attack, Mach numbers, and Reynolds numbers. For example, `Generate a cfd mesh for the naca0012 airfoil and run a cfd simulation at Ma=0.3, Re=5e6, and aoa=3 degs. Use 2 CPU cores`. The following are the agent-generated figures.
+Users can prompt to run airfoil CFD simulations with desired airfoil profiles (prescribed in the mesh generation skill), angles of attack, Mach numbers, and Reynolds numbers. For example, `Generate a cfd mesh for the naca0012 airfoil and run a cfd simulation at Ma=0.3, Re=5e6, and aoa=3 degs. Use 2 CPU cores`. Or a supersonic flow case `Generate a cfd mesh for rae2822 airfoil with 100K cells, yPlus 5, Re 2e7 and Ma 1.5. Run a cfd with aoa=1 deg use 4 cores.`. The following are the agent-generated figures.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-pressure-profile.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-trame-nut.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-supersonic-p.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-supersonic-U.png" style="width:400px !important;" />
 
-Fig. 2. Left: Airfoil pressure profile. Right: Visualization of airfoil turbulence variable field in the trame interactive server.
+Fig. 2. Top left: Airfoil pressure profile. Top right: Visualization of airfoil turbulence variable field in the trame interactive server. Bottom left and right: pressure and velocity contours of the supersonic csaae.
 
 ### CFD Mesh Convergence Study
 
