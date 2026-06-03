@@ -369,7 +369,11 @@ entries:
     - title: Workshops
       url: /workshops.html
       output: web, pdf
-    
+
+    - title: Governance
+      url: /governance.html
+      output: web, pdf
+
     - title: Acknowledgement
       url: /acknowledgement.html
       output: web, pdf
