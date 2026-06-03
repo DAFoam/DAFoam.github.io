@@ -382,7 +382,7 @@ Users can prompt to generate wing CFD mesh with desired airfoil profiles, chords
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-mesh.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-mesh-trame.png" style="width:400px !important;" />
 
-Fig. 1. Left: Overview of the generated CFD mesh. Top right: Trame interactive view of the CFD mesh.
+Fig. 1. Left: Overview of the generated CFD mesh. Right: Trame interactive view of the CFD mesh.
 
 ### FEA Mesh Generation 
 
@@ -391,6 +391,15 @@ Users can prompt to generate wing FEA mesh with desired ribs, spars, and the cov
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-fea-mesh.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-fea-mesh-trame.png" style="width:400px !important;" />
 
-Fig. 1. Left: Overview of the generated FEA mesh. Top right: Trame interactive view of the FEA mesh.
+Fig. 2. Left: Overview of the generated FEA mesh. Right: Trame interactive view of the FEA mesh.
+
+### CFD-based Aerodynamic Simulation
+
+Users can prompt to run wing CFD simulations with desired Mach number, Reynolds number, and angle of attack. For example, `Generate a cfd mesh for a wing with RAE2822 airfoils. The root chord is 1 m and the tip chord is 0.5 m. The sweep is 15 degs, and the semi span is 4 m. The tip twist is 1 deg. After that, run a cfd with aoa=3degs, The ref mach is 0.8 and the ref re is 1e7.` The following is the AI generated pictures. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-p-profile.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-trame.png" style="width:400px !important;" />
+
+Fig. 3. Left: Pressure profile from the CFD simulation. Right: Trame interactive view of the pressure contour.
 
 {% include links.html %}
