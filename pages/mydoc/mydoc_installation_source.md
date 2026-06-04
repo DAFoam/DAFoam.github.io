@@ -267,7 +267,7 @@ pip install .
 
 This step is needed if you want to use OpenVSP for geometry parameterization. Here we build the OpenVSP without GUI, only the vspscript and its Python API. Use the following commands.
 
-**IMPORTANT**: (1) The Python API depends on swig. So, if you build it on the HPC, you need to load the swig module. (2) there is a bug in the recent version of OpenVSP that will cause seg fault when perturbing a small step (e.g., 1e-6) for parameter such as camber for the surface geometry. Version 3.42.3 is the latest working version. (3) there is a bug in the fitCST API for 3.42.3, which has been fixed in the later version of OpenVSP. Here, we have applied the bug fix through the `sed` line. (4) OpenVSP does not compile with Gcc 10 or 11.
+**IMPORTANT**: (1) The Python API depends on swig. So, if you build it on the HPC, you need to load the swig module. (2) there is a bug in the recent version of OpenVSP that will cause seg fault when perturbing a small step (e.g., 1e-6) for parameter such as camber for the surface geometry. Version 3.42.3 is the latest working version. (3) there is a bug in the fitCST API for 3.42.3, which has been fixed in the later version of OpenVSP. Here, we have applied the bug fix through the `sed` line. (4) OpenVSP does not compile with Gcc 11 or 12.
 
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
