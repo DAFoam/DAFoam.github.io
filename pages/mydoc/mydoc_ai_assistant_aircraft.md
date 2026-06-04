@@ -186,4 +186,24 @@ The aircraft agent supports these skills:
 </div>
 </div>
 
+## Agent Capability demos
+
+### CFD Mesh Generation 
+
+Users can prompt to generate an aircraft CFD mesh with the pre-defined model (wing+fuselage+tails). The default model is similar to Boeing 737 and users can prescribe the desired wing sectional airfoil profiles, chords, sweeps, twists, dihedral, span, as well as the vertical tail rotation. For example, `Generate a cfd mesh for the default aircraft configuration. Use 8 cores` The following is the AI generated pictures. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-geometry.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-mesh.png" style="width:400px !important;" />
+
+Fig. 1. Left: The default aircraft geometry. Right: Overview of the generated CFD mesh.
+
+### CFD-based Aerodynamic Simulation
+
+Users can prompt to run CFD simulations for the aircraft with desired Mach number, Reynolds number, and angle of attack. For example, `Generate a cfd mesh for the default aircraft configuration. After that, run a cfd with aoa=2degs, The mach is 0.85 and the ref re is 2e7.` The following is the AI generated pictures. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-cfd-p-profile.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-cfd-trame.png" style="width:400px !important;" />
+
+Fig. 2. Left: Pressure profile from the CFD simulation. Right: Trame interactive view of the pressure contour.
+
 {% include links.html %}
