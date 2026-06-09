@@ -9,6 +9,12 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
+<95> J Li, R. Kunz. G. Huan. X. Yang. The role of the law of the wall in cross-scenario generalisation of data-driven models. Journal of Fluid Mechanics, 2026.
+
+<94> J Li, R. Kunz. G. Huan. X. Yang. The Engineering Turbulence Problem and a Data-DrivenSolution. AIAA Aviation Forum, 2026.
+
+<93> H. Blumhoefer and A. Sharma. Field Inversion–Enhanced Simulation of Tornado-Like Vortices. AIAA Aviation Forum, 2026.
+
 <92> U. Padmanaban, C. Thompson, B. Ganapathisubramani, S. Symon. To stall-cell or not to stall-cell: Variational data assimilation of 3D mean flow past a stalled airfoil. arXiv:2604.27680, 2026
 
 <91> Z. Zhang, K. Shukla, Z. Wang, A. Morales, T. Kaufer, S. Salauddin, N. Walters, aD. Barrett, K. Ahmed, M. Triantafyllou, G. Karniadakis. Turbulence closure in Reynolds-averaged Navier–Stokes and flow inference around a cylinder using physics-informed neural networks and sparse experimental data. Journal of Fluid Mechanics, 2026.
@@ -31,9 +37,9 @@ The following publications explicitly state that DAFoam was used in their studie
 
 <82> C. Psenica, L. Fang, S. Zoppelt, M. Leader, P. He. A Modular Conjugate Heat Transfer Optimization Framework for Thermal Management of Electric Aircraft. International Journal of Heat and Mass Transfer, 2026.
 
-<81> M. Bashir, D. Gong, L. Sun, P. Duan. Aerodynamic shape optimization using the adjoint method combined with an inverse design approach for non-parameterized geometries. Physics of Fluids, 2025.
+<81> Z. Zhang, G. Karniadakis. Effect of Turbulence-Closure Consistency on Airfoil Identification. Computers & Fluids, 2026 
 
-<80> Z. Zhang, G. Karniadakis. Effect of Turbulence-Closure Consistency on Airfoil Identification. arXiv.2511.08341, 2025 
+<80> M. Bashir, D. Gong, L. Sun, P. Duan. Aerodynamic shape optimization using the adjoint method combined with an inverse design approach for non-parameterized geometries. Physics of Fluids, 2025.
 
 <79> C. Wu, S. Zhang. Y. Zhang. Data-driven Augmentation of Turbulence Model in Three dimensional Flows Via Sequential Correction. arXiv.2510.22469, 2025
 
