@@ -9,9 +9,11 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
-<95> J Li, R. Kunz. G. Huan. X. Yang. The role of the law of the wall in cross-scenario generalisation of data-driven models. Journal of Fluid Mechanics, 2026.
+<96> H. Ji, Y. Luo, H. Zhou, Y. Zhao.Progressive mixture-of-experts with autoencoder routing for continual RANS turbulence modelling. Journal of Fluid Mechanics, 2026.
 
-<94> J Li, R. Kunz. G. Huan. X. Yang. The Engineering Turbulence Problem and a Data-DrivenSolution. AIAA Aviation Forum, 2026.
+<95> J. Li, R. Kunz. G. Huan. X. Yang. The role of the law of the wall in cross-scenario generalisation of data-driven models. Journal of Fluid Mechanics, 2026.
+
+<94> J. Li, R. Kunz. G. Huan. X. Yang. The Engineering Turbulence Problem and a Data-DrivenSolution. AIAA Aviation Forum, 2026.
 
 <93> H. Blumhoefer and A. Sharma. Field Inversion–Enhanced Simulation of Tornado-Like Vortices. AIAA Aviation Forum, 2026.
 
