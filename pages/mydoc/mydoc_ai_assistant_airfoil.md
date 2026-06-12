@@ -196,4 +196,13 @@ Users can prompt to conduct a mesh convergence study for an airfoil. For example
 
 Fig. 3. Pressure profile comparison between different mesh densities.
 
+### CD/CL vs AoA
+
+Users can prompt to simulation CD/CL sweep for various angle of attacks. For example, `› Generate a cfd mesh for the naca0012 airfoil with 50K cells and yPlus 3. Then, run a sweep of CFD at Ma=0.3 and Re=5e6, and aoa = 2 to 18 degs with 2 deg interval. After the simulation is finished, plot cl/cd vs aoa and drop diverged cases.`. The following is the agent-generated figure.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cd-aoa.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cl-aoa.png" style="width:400px !important;" />
+
+Fig. 4. CD/CL vs AoA plots
+
 {% include links.html %}
