@@ -190,7 +190,7 @@ Fig. 2. Top left: Airfoil pressure profile. Top right: Visualization of airfoil 
 
 ### CFD Mesh Convergence Study
 
-Users can prompt to conduct a mesh convergence study for an airfoil. For example, ` Conduct a cfd mesh convergence study for the RAE2822 airfoil at Ma=0.75, Re=1e7, and aoa=2 degs. The mesh sizes are 10K, 20K, 50K, and 100K. The yPlus is 3. Use 24 cores. CFD maxIter=5000`. The following is the agent-generated figure, one needs to add a follow up prompt to plot this pressure profile comparisoin figure, such as `Plot the pressure profile for all cases in one figure to show the difference.` 
+Users can prompt to conduct a mesh convergence study for an airfoil. For example, `Conduct a cfd mesh convergence study for the RAE2822 airfoil at Ma=0.75, Re=1e7, and aoa=2 degs. The mesh sizes are 10K, 20K, 50K, and 100K. The yPlus is 3. Use 24 cores. CFD maxIter=5000`. The following is the agent-generated figure, one needs to add a follow up prompt to plot this pressure profile comparisoin figure, such as `Plot the pressure profile for all cases in one figure to show the difference.` 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-conv.png" style="width:400px !important;" />
 
@@ -198,7 +198,7 @@ Fig. 3. Pressure profile comparison between different mesh densities.
 
 ### CD/CL vs AoA
 
-Users can prompt to simulation CD/CL sweep for various angle of attacks. For example, `› Generate a cfd mesh for the naca0012 airfoil with 50K cells and yPlus 3. Then, run a sweep of CFD at Ma=0.3 and Re=5e6, and aoa = 2 to 18 degs with 2 deg interval. After the simulation is finished, plot cl/cd vs aoa and drop diverged cases.`. The following is the agent-generated figure.
+Users can prompt to simulation CD/CL sweep for various angle of attacks. For example, `› Generate a cfd mesh for the naca0012 airfoil with 50K cells and yPlus 3. Then, run a sweep of CFD at Ma=0.3 and Re=5e6, and aoa = 2 to 18 degs with 2 deg interval. Use 24 cores. After the simulation is finished, plot cl/cd vs aoa and drop diverged cases.`. The following is the agent-generated figure. This case ran on the HPC and you may need to follow up to ask the agent to analyze the result once the job is finished on compute nodes.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cd-aoa.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cl-aoa.png" style="width:400px !important;" />
