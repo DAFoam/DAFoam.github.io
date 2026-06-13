@@ -198,11 +198,20 @@ Fig. 3. Pressure profile comparison between different mesh densities.
 
 ### CD/CL vs AoA
 
-Users can prompt to simulation CD/CL sweep for various angle of attacks. For example, `› Generate a cfd mesh for the naca0012 airfoil with 50K cells and yPlus 3. Then, run a sweep of CFD at Ma=0.3 and Re=5e6, and aoa = 2 to 18 degs with 2 deg interval. Use 24 cores. After the simulation is finished, plot cl/cd vs aoa and drop diverged cases.`. The following is the agent-generated figure. This case ran on the HPC and you may need to follow up to ask the agent to analyze the result once the job is finished on compute nodes.
+Users can prompt to simulation CD/CL sweep for various angle of attacks. For example, `Generate a cfd mesh for the naca0012 airfoil with 50K cells and yPlus 3. Then, run a sweep of CFD at Ma=0.3 and Re=5e6, and aoa = 2 to 18 degs with 2 deg interval. Use 24 cores. After the simulation is finished, plot cl/cd vs aoa and drop diverged cases.`. The following is the agent-generated figure. This case ran on the HPC and you may need to follow up to ask the agent to analyze the result once the job is finished on compute nodes.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cd-aoa.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cl-aoa.png" style="width:400px !important;" />
 
 Fig. 4. CD/CL vs AoA plots
+
+### Aerodyanamic shape optimization
+
+Users can prompt to run aerodynamic shape optimization. The default objective is drag, the design variabels are airfoil shape and angle of attack, the constraints include lift, thickness, volume, and leading edge radius. For example, `Generate a cfd mesh for the naca0012 airfoil and run an aero optimization at ma 0.3, re 5e6, cl 0.5. Run the optimization for 20 iters. Use 2 cores`. The following is the agent-generated figure. The drag reduction and constraints can be found in the chat window after the optimization is finished.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-opt-shape.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-opt-trame.png" style="width:400px !important;" />
+
+Fig. 5. Aerodynamic optimization. Left: comparison of the pressure and shape between the baseline and optimized designs. Right: Visualizing of the pressure for optimized design in trame.
 
 {% include links.html %}
