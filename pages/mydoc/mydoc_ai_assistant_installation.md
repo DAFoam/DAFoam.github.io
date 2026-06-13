@@ -15,23 +15,27 @@ The AI agent can be installed locally or on an HPC. If you are new to the MDO Ag
 
 The local installation works for Linux, Windows, and MacOS, and it is the easiest way to run the agents with small cases. If you plan to run larger cases, e.g., wing aero-structural optimization, you need to install the agents on an HPC.
 
-### Step 1. Install a LLM client
+### Step 1. Install an LLM client
 
-We need to first install an LLM client's command line interface (CLI). The MDO Agent Deck supports three LLM clients: Codex, Claude Code, and Gemini, but here you need to install **ONLY ONE** CLI client, and the Codex CLI is recommended.
+First, install a command-line interface (CLI) for an LLM client. The MDO Agent Deck supports multiple LLM clients, but for this setup, you only need to install **ONE** CLI client.
 
-Please follow the official installation instructions for your selected client:
+**NOTE**: You must sign up for an account for the selected CLI client and log in using your subscription. Do **NOT** use API keys. If you already have a paid subscription for one of the following LLM providers, install its corresponding CLI client. Otherwise, choose a client that offers a free but limited usage quota. If the quota for one free-tier client runs out, you may need to switch to another free-tier CLI client.
 
-- Codex CLI: [OpenAI Codex CLI installation guide](https://help.openai.com/en/articles/11096431)
-- Claude Code CLI: [Anthropic Claude Code installation guide](https://docs.anthropic.com/en/docs/claude-code/getting-started)
-- Gemini CLI: [Google Gemini CLI installation guide](https://github.com/google-gemini/gemini-cli/blob/main/docs/get-started/index.md)
+Please follow the official installation instructions for your selected client. The installation steps may differ by operating system and may require additional dependencies such as Node.js.
 
-Note: The installation steps may differ by operating system and may require additional dependencies such as Node.js.
+- Codex CLI: [OpenAI Codex CLI installation guide; limited free quota](https://help.openai.com/en/articles/11096431)
+- Claude Code CLI: [Anthropic Claude Code installation guide; paid plan only](https://docs.anthropic.com/en/docs/claude-code/getting-started)
+- Antigravity CLI: [Google Antigravity CLI installation guide; limited free quota](https://antigravity.google/download#antigravity-cli)
+- Gemini CLI: [Google Gemini CLI installation guide; limited free quota; to be replaced by Antigravity](https://github.com/google-gemini/gemini-cli/blob/main/docs/get-started/index.md)
+- Cursor CLI: [Cursor CLI installation guide; limited free quota](https://cursor.com/cli)
 
 After the installation is finished, verify that your CLI is available in the terminal:
 
 - Codex CLI: `codex -V`
 - Claude Code CLI: `claude -V`
+- Antigravity CLI: `agy --version`
 - Gemini CLI: `gemini -v`
+- Cursor CLI: `agent -v`
 
 You should see the version of your LLM client in the terminal.
 
@@ -92,24 +96,7 @@ DO NOT close VS Code or the open terminal on the HPC. We will use them to instal
 
 ### Step 2. Install a LLM client on the HPC
 
-Using the terminal in VS Code via Remote SSH, we need to install an LLM client's command line interface (CLI) on the HPC. The MDO Agent Deck supports three LLM clients: Codex, Claude Code, and Gemini, but you only need to install **ONE** CLI client. The Codex CLI is recommended.
-
-Please follow the official installation instructions for your selected client:
-
-- Codex CLI: [OpenAI Codex CLI installation guide](https://help.openai.com/en/articles/11096431)
-- Claude Code CLI: [Anthropic Claude Code installation guide](https://docs.anthropic.com/en/docs/claude-code/getting-started)
-- Gemini CLI: [Google Gemini CLI installation guide](https://github.com/google-gemini/gemini-cli/blob/main/docs/get-started/index.md)
-
-On some HPC systems, packages such as Node.js may not be available by default. In that case, first load the required modules or ask your HPC administrator for the recommended installation method.
-
-After the installation is finished, verify that your CLI is available in the terminal:
-
-- Codex CLI: `codex -V`
-- Claude Code CLI: `claude -V`
-- Gemini CLI: `gemini -v`
-
-You should see the version of your LLM client in the terminal.
-
+Using the terminal in VS Code via Remote SSH, we need to install an LLM client's command line interface (CLI) **on the HPC**. Please follow the same instrucitons from  **Installation (local computers) -> Step 1. Install an LLM client**, shown above.
 
 ### Step 3. Install the agents and DAFoam on the HPC
 
@@ -123,7 +110,7 @@ The `mdo_agent_deck` package is hosted on PyPI.
 
 ### Step 4. Create the working directory
 
-Using the terminal in VS Code via Remote SSH, we will need to first download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/hpc.zip). 
+Using the terminal in VS Code via Remote SSH, we will need to first download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/hpc.zip). Note: this link is DIFFERENT from the one from local installation above.
 
 Unzip it and you will see a folder called `mdo_agent_work-hpc`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents. You can put `mdo_agent_work` any where on the HPC, e.g., `/home/your_user_name/mdo_agent_work`.
 
@@ -152,6 +139,10 @@ Claude Code: `claude --dangerously-skip-permissions`
 Codex: `codex --yolo`
 
 Gemini: `gemini --yolo`
+
+Antigravity: `agy --dangerously-skip-permissions`
+
+Cursor: `agent --yolo`
 
 You need to sign up for an account and log in to the LLM CLI. DO NOT use API keys; use subscription login instead.
 
