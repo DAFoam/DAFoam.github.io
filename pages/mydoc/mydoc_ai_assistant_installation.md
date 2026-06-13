@@ -19,7 +19,7 @@ The local installation works for Linux, Windows, and MacOS, and it is the easies
 
 First, install a command-line interface (CLI) for an LLM client. The MDO Agent Deck supports multiple LLM clients, but for this setup, you only need to install **ONE** CLI client.
 
-**NOTE**: You must sign up for an account for the selected CLI client and log in using your subscription. Do **NOT** use API keys. If you already have a paid subscription for one of the following LLM providers, install its corresponding CLI client. Otherwise, choose a client that offers a free but limited usage quota. If the quota for one free-tier client runs out, you may need to switch to another free-tier CLI client.
+**NOTE**: You must sign up for an account for the selected CLI client and log in using your subscription. Do **NOT** use API keys. If you already have a paid subscription for one of the following LLM providers, install its corresponding CLI client. Otherwise, choose a client that offers a free but limited usage quota (we recommend Antigravity CLI). If the quota for one free-tier client runs out, you may need to switch to another free-tier CLI client.
 
 Please follow the official installation instructions for your selected client. The installation steps may differ by operating system and may require additional dependencies such as Node.js.
 
@@ -55,6 +55,8 @@ After the Docker Desktop is installed, open it and keep it open.
 Then, open a terminal and run the following command to download the pre-compiled MDO Agent Deck image:
 
 `docker pull dafoam/agent:latest`
+
+If a newer version of the agent image is available, simply run the command above again to download the latest image.
 
 ### Step 4. Download the working directory
 
