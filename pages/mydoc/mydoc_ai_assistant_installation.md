@@ -7,8 +7,6 @@ permalink: ai-agent-installation.html
 folder: mydoc
 ---
 
-## Latest Release: v0.1.10
-
 The AI agent can be installed locally or on an HPC. If you are new to the MDO Agent Deck, we recommend starting with the local installation.
 
 ## Installation (local computers)
