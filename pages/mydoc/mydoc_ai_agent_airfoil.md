@@ -49,9 +49,11 @@ The airfoil agent supports these skills:
 <div class="panel-body">
 
 - `angle_of_attack` (float, default: 2.0): angle of attack in degrees.
+- `fixed_lift_coeff` (float, default: -1.0): automatically vary the angle of attack to compute drag at the prescribed lift coefficient. Set it to -1.0 to disable.
 - `airfoil_profile` (str, default: inherited from mesh step): airfoil profile name inherited from generate-cfd-mesh and used to fit CST coefficients when needed.
 - `mach_number` (float, default: inherited from mesh step): freestream Mach number.
 - `reynolds_number` (float, default: inherited from mesh step): freestream Reynolds number.
+- `y_plus` (float, default: inherited from mesh step): target near-wall y+ inherited from generate-cfd-mesh and used to auto-select wall functions.
 - `cst_coeffs` (list[float], default: None): optional CST vector [upper..., lower...]; if omitted, prepare fits the coefficients automatically.
 - `n_cpu_cores` (int, default: 1): MPI ranks/CPU cores.
 
@@ -72,9 +74,10 @@ The airfoil agent supports these skills:
 - `airfoil_profile` (str, default: inherited from mesh step): airfoil profile name inherited from generate-cfd-mesh and used to fit CST coefficients when needed.
 - `mach_number` (float, default: inherited from mesh step): freestream Mach number.
 - `reynolds_number` (float, default: inherited from mesh step): freestream Reynolds number.
-- `optimizer` (str, default: "IPOPT"): optimizer ("IPOPT", "SNOPT", "SLSQP").
+- `y_plus` (float, default: inherited from mesh step): target near-wall y+ inherited from generate-cfd-mesh and used to auto-select wall functions.
+- `optimizer` (str, default: "SLSQP"): optimizer ("SLSQP", "IPOPT", "SNOPT").
 - `lift_constraint` (float, default: 0.5): minimum lift coefficient target.
-- `max_opt_iters` (int, default: 20): max optimization iterations.
+- `max_opt_iters` (int, default: 50): max optimization iterations.
 - `thickness_constraint` (float, default: 0.5): minimum normalized thickness (negative disables).
 - `le_radius_constraint` (float, default: 0.7): minimum normalized leading-edge radius (negative disables).
 - `volume_constraint` (float, default: 1.0): minimum normalized airfoil volume (negative disables).
@@ -123,14 +126,21 @@ The airfoil agent supports these skills:
 
 - `transonic_mach_boundary` (float, default: 0.4): Mach-number boundary used by the default Mach-based solver selection when solver_name is not provided.
 - `solver_name` (str, default: null): explicit solver override; leave unset to use the default Mach-based solver selection.
+- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model ("SpalartAllmaras", "kOmegaSST").
+- `use_wall_functions` (str, default: "auto"): wall-function selection ("auto", "1", "0").
 - `max_flow_iters` (int, default: 10000): maximum flow iterations written to the case control settings.
 - `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
-- `primal_func_std_tol` (float, default: 5e-3): DAFoam primal function standard deviation tolerance.
+- `primal_func_std_tol` (float, default: 0.04): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance.
-- `coef_stddev_pct_pass` (float, default: 0.001): pass threshold for force-coefficient standard deviation in percent.
-- `coef_stddev_pct_warning` (float, default: 1.0): warning threshold for force-coefficient standard deviation in percent.
+- `force_std_pass` (float, default: 0.0001): pass threshold for raw force-coefficient standard deviation.
+- `force_std_warning` (float, default: 0.05): warning threshold for raw force-coefficient standard deviation.
 - `residual_drop_orders_pass` (float, default: 6.0): pass threshold for minimum residual drop in log10 orders.
 - `residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum residual drop in log10 orders.
+- `initialize_from` (str, default: null): warm-start source case name; leave unset for a cold start.
+- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar.
+- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar.
+- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar.
+- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
 
 </div>
 </div>
@@ -147,9 +157,13 @@ The airfoil agent supports these skills:
 
 - `transonic_mach_boundary` (float, default: 0.4): Mach-number boundary used by the default Mach-based solver selection when solver_name is not provided.
 - `solver_name` (str, default: null): explicit solver override; leave unset to use the default Mach-based solver selection.
+- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model ("SpalartAllmaras", "kOmegaSST").
+- `use_wall_functions` (str, default: "auto"): wall-function selection ("auto", "1", "0").
 - `max_flow_iters` (int, default: 10000): maximum flow iterations written to the case control settings.
+- `max_adj_iters` (int, default: 1000): maximum GMRES iterations for the DAFoam adjoint linear solve.
+- `pc_fill_level` (int, default: 1): ILU fill level for the DAFoam adjoint preconditioner.
 - `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
-- `primal_func_std_tol` (float, default: 5e-3): DAFoam primal function standard deviation tolerance.
+- `primal_func_std_tol` (float, default: 0.04): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance.
 - `objective_reduction_pct_pass` (float, default: 5.0): pass threshold for objective reduction in percent.
 - `objective_reduction_pct_warning` (float, default: 1.0): warning threshold for objective reduction in percent.
@@ -159,6 +173,10 @@ The airfoil agent supports these skills:
 - `flow_residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum flow residual drop in log10 orders.
 - `adjoint_residual_drop_orders_pass` (float, default: 5.0): pass threshold for minimum adjoint residual drop in log10 orders.
 - `adjoint_residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum adjoint residual drop in log10 orders.
+- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar.
+- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar.
+- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar.
+- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
 
 </div>
 </div>
@@ -179,7 +197,15 @@ Fig. 1. Top left: Overview of a coarse mesh. Prompt: `Generate a cfd mesh for th
 
 ### CFD Simulation 
 
-Users can prompt to run airfoil CFD simulations with desired airfoil profiles (prescribed in the mesh generation skill), angles of attack, Mach numbers, and Reynolds numbers. For example, `Generate a cfd mesh for the naca0012 airfoil and run a cfd simulation at Ma=0.3, Re=5e6, and aoa=3 degs. Use 2 CPU cores`. Or a supersonic flow case `Generate a cfd mesh for rae2822 airfoil with 100K cells, yPlus 5, Re 2e7 and Ma 1.5. Run a cfd with aoa=1 deg use 4 cores.`. The following are the agent-generated figures.
+Users can prompt to run airfoil CFD simulations with desired airfoil profiles (prescribed in the mesh generation skill), angles of attack, Mach numbers, and Reynolds numbers. For example, 
+
+`Generate a cfd mesh for the naca0012 airfoil and run a cfd simulation at Ma=0.3, Re=5e6, and aoa=3 degs. Use 2 CPU cores`. 
+
+Or a supersonic flow case 
+
+`Generate a cfd mesh for rae2822 airfoil with 100K cells, yPlus 5, Re 2e7 and Ma 1.5. Run a cfd with aoa=1 deg use 4 cores.`. 
+
+The following are the agent-generated figures.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-pressure-profile.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-trame-nut.png" style="width:400px !important;" />
@@ -198,7 +224,11 @@ Fig. 3. Pressure profile comparison between different mesh densities.
 
 ### CD/CL vs AoA
 
-Users can prompt to simulation CD/CL sweep for various angle of attacks. For example, `Generate a cfd mesh for the naca0012 airfoil with 50K cells and yPlus 3. Then, run a sweep of CFD at Ma=0.3 and Re=5e6, and aoa = 2 to 18 degs with 2 deg interval. Use 24 cores. After the simulation is finished, plot cl/cd vs aoa and drop diverged cases.`. The following is the agent-generated figure. This case ran on the HPC and you may need to follow up to ask the agent to analyze the result once the job is finished on compute nodes.
+Users can prompt to simulation CD/CL sweep for various angle of attacks. For example, 
+
+`Generate a cfd mesh for the naca0012 airfoil with 50K cells and yPlus 3. Then, run a sweep of CFD at Ma=0.3 and Re=5e6, and aoa = 2 to 18 degs with 2 deg interval. Use 24 cores. After the simulation is finished, plot cl/cd vs aoa and drop diverged cases.`. 
+
+The following is the agent-generated figure. This case ran on the HPC and you may need to follow up to ask the agent to analyze the result once the job is finished on compute nodes.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cd-aoa.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cl-aoa.png" style="width:400px !important;" />
@@ -207,7 +237,15 @@ Fig. 4. CD/CL vs AoA plots
 
 ### Aerodyanamic shape optimization
 
-Users can prompt to run aerodynamic shape optimization. The default objective is drag, the design variabels are airfoil shape and angle of attack, the constraints include lift, thickness, volume, and leading edge radius. For example, `Generate a cfd mesh for the naca0012 airfoil and run an aero optimization at ma 0.3, re 5e6, cl 0.5. Run the optimization for 20 iters. Use 2 cores`. The following is the agent-generated figure. The drag reduction and constraints can be found in the chat window after the optimization is finished. After the optimization is finished, the user can also ask agent to verify the drag reduction generated by the coarse-mesh optimization with a fine mesh. For example `The optimization uses a coarse mesh. Verify the optimization drag reduction at CL 0.5 using a fine mesh with 50K cells and yPlus 3. Run two fine mesh CFDs for the baseline and optimized designs and compare with the coarse mesh results.` The agent will compare the drag reduciton between coarse and fine mesh for the baseline and optimized designs.
+Users can prompt to run aerodynamic shape optimization. The default objective is drag, the design variabels are airfoil shape and angle of attack, the constraints include lift, thickness, volume, and leading edge radius. For example, 
+
+`Generate a cfd mesh for the naca0012 airfoil and run an aero optimization at ma 0.3, re 5e6, cl 0.5. Run the optimization for 20 iters. Use 2 cores`. 
+
+The following is the agent-generated figure. The drag reduction and constraints can be found in the chat window after the optimization is finished. After the optimization is finished, the user can also ask agent to verify the drag reduction generated by the coarse-mesh optimization with a fine mesh. For example 
+
+`The optimization uses a coarse mesh. Verify the optimization drag reduction at CL 0.5 using a fine mesh with 50K cells and yPlus 3. Run two fine mesh CFDs for the baseline and optimized designs and compare with the coarse mesh results.` 
+
+The agent will compare the drag reduciton between coarse and fine mesh for the baseline and optimized designs.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-opt-shape.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-opt-trame.png" style="width:400px !important;" />

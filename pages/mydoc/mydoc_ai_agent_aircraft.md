@@ -28,6 +28,7 @@ The aircraft agent supports these skills:
 <div id="aircraftGenerateCfdMeshInputs" class="panel-collapse collapse">
 <div class="panel-body">
 
+- `custom_vsp3` (int, default: 0): if set to 1, copy user-supplied aircraft.vsp3 and vsp_design_vars.json from the working directory into this mesh case before applying any requested design-variable geometry changes.
 - `airfoil_profiles` (list[str], default: ["rae2822", "rae2822", "rae2822"]): wing airfoil profile names ordered section 0 to section 2.
 - `sweeps` (list[float], default: [35.0, 30.0]): wing sweep angles in degrees formatted as [break_sweep_deg, tip_sweep_deg].
 - `twists` (list[float], default: [0.0, 0.0]): wing twist angles in degrees formatted as [section1_twist_deg, section2_twist_deg].
@@ -54,6 +55,7 @@ The aircraft agent supports these skills:
 <div class="panel-body">
 
 - `angle_of_attack` (float, default: 2.0): freestream angle of attack in degrees.
+- `fixed_lift_coeff` (float, default: -1.0): automatically vary the angle of attack to compute drag at the prescribed lift coefficient. Set it to -1.0 to disable.
 - `mach_number` (float, default: 0.3): freestream Mach number.
 - `reynolds_number` (float, default: 1000000.0): freestream Reynolds number.
 - `airfoil_profiles` (list[str], default: inherited from generate-cfd-mesh): wing airfoil profiles used for CST fitting when needed.
@@ -64,7 +66,6 @@ The aircraft agent supports these skills:
 - `twists` (list[float], default: inherited from generate-cfd-mesh): wing twist values.
 - `dihedrals` (list[float], default: inherited from generate-cfd-mesh): wing dihedral values.
 - `tail_twist` (float, default: inherited from generate-cfd-mesh): tail twist angle.
-- `pressure_profile_fractions` (list[float], default: [0.2, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `n_cpu_cores` (int, default: 1): MPI ranks/CPU cores.
 
 </div>
@@ -84,7 +85,7 @@ The aircraft agent supports these skills:
 - `airfoil_profiles` (list[str], default: inherited from generate-cfd-mesh): wing airfoil profiles used for CST fitting when needed.
 - `mach_number` (float, default: inherited from generate-cfd-mesh): freestream Mach number.
 - `reynolds_number` (float, default: 1000000.0): freestream Reynolds number.
-- `optimizer` (str, default: "IPOPT"): optimization algorithm.
+- `optimizer` (str, default: "SLSQP"): optimization algorithm.
 - `lift_constraint` (float, default: 0.5): target lift coefficient equality constraint.
 - `le_radius_constraint` (float, default: 0.7): lower bound on normalized leading-edge radius.
 - `thickness_constraint` (float, default: 0.5): lower bound on normalized aircraft wing thickness.
@@ -97,7 +98,6 @@ The aircraft agent supports these skills:
 - `spans` (list[float], default: inherited from generate-cfd-mesh): wing semi-span values.
 - `twists` (list[float], default: inherited from generate-cfd-mesh): wing twist values.
 - `tail_twist` (float, default: inherited from generate-cfd-mesh): tail twist angle.
-- `pressure_profile_fractions` (list[float], default: [0.2, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `n_cpu_cores` (int, default: 1): MPI ranks/CPU cores.
 
 </div>
@@ -139,18 +139,25 @@ The aircraft agent supports these skills:
 <div id="aircraftRunCfdSimulationAdvanced" class="panel-collapse collapse">
 <div class="panel-body">
 
+- `pressure_profile_fractions` (list[float], default: [0.2, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `transonic_mach_boundary` (float, default: 0.4): Mach boundary used by default solver selection.
 - `solver_name` (str, default: null): explicit solver override; leave unset to use the default aircraft solver.
+- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model ("SpalartAllmaras", "kOmegaSST").
 - `max_flow_iters` (int, default: 10000): maximum flow iterations written to the case control settings.
-- `primal_func_std_tol` (float, default: 5e-3): DAFoam primal function standard deviation tolerance.
+- `primal_func_std_tol` (float, default: 0.04): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance.
 - `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when `prepare` fits CST coefficients.
+- `initialize_from` (str, default: null): warm-start source case name; leave unset for a cold start.
 - `reference_area` (float, default: null): aerodynamic reference area override; if unset, the skill uses mean chord times span.
 - `reference_length` (float, default: null): aerodynamic reference length override; if unset, the skill uses the mean chord.
-- `coef_stddev_pct_pass` (float, default: 0.001): pass threshold for force-coefficient standard deviation in percent.
-- `coef_stddev_pct_warning` (float, default: 1.0): warning threshold for force-coefficient standard deviation in percent.
+- `force_std_pass` (float, default: 0.0001): pass threshold for raw force-coefficient standard deviation.
+- `force_std_warning` (float, default: 0.05): warning threshold for raw force-coefficient standard deviation.
 - `residual_drop_orders_pass` (float, default: 6.0): pass threshold for minimum residual drop in log10 orders.
 - `residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum residual drop in log10 orders.
+- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar.
+- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar.
+- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar.
+- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
 
 </div>
 </div>
@@ -165,10 +172,14 @@ The aircraft agent supports these skills:
 <div id="aircraftRunAeroOptimizationAdvanced" class="panel-collapse collapse">
 <div class="panel-body">
 
+- `pressure_profile_fractions` (list[float], default: [0.2, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `transonic_mach_boundary` (float, default: 0.4): Mach boundary used by default solver selection.
 - `solver_name` (str, default: null): explicit solver override; leave unset to use the default aircraft solver.
+- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model ("SpalartAllmaras", "kOmegaSST").
 - `max_flow_iters` (int, default: 10000): maximum flow iterations written to the case control settings.
-- `primal_func_std_tol` (float, default: 5e-3): DAFoam primal function standard deviation tolerance.
+- `max_adj_iters` (int, default: 1000): maximum GMRES iterations for the DAFoam adjoint linear solve.
+- `pc_fill_level` (int, default: 1): ILU fill level for the DAFoam adjoint preconditioner.
+- `primal_func_std_tol` (float, default: 0.04): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance.
 - `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when `prepare` fits CST coefficients.
 - `reference_area` (float, default: null): aerodynamic reference area override; if unset, the skill uses mean chord times span.
@@ -181,6 +192,10 @@ The aircraft agent supports these skills:
 - `flow_residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum flow residual drop in log10 orders.
 - `adjoint_residual_drop_orders_pass` (float, default: 5.0): pass threshold for minimum adjoint residual drop in log10 orders.
 - `adjoint_residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum adjoint residual drop in log10 orders.
+- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar.
+- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar.
+- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar.
+- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
 
 </div>
 </div>

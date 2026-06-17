@@ -85,6 +85,7 @@ The wing agent supports these skills:
 <div class="panel-body">
 
 - `angle_of_attack` (float, default: 2.0): freestream angle of attack in degrees.
+- `fixed_lift_coeff` (float, default: -1.0): automatically vary the angle of attack to compute drag at the prescribed lift coefficient. Set it to -1.0 to disable.
 - `airfoil_profiles` (list[str], default: inherited from generate-cfd-mesh): section airfoil profiles used for CST fitting when needed.
 - `mach_number` (float, default: inherited from generate-cfd-mesh): freestream Mach number.
 - `reynolds_number` (float, default: inherited from generate-cfd-mesh): freestream Reynolds number.
@@ -94,7 +95,6 @@ The wing agent supports these skills:
 - `dihedrals` (list[float], default: inherited from generate-cfd-mesh): section dihedral angles.
 - `spans` (list[float], default: inherited from generate-cfd-mesh): section spans.
 - `twists` (list[float], default: inherited from generate-cfd-mesh): section twists.
-- `pressure_profile_fractions` (list[float], default: [0.1, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `n_cpu_cores` (int, default: 1): MPI ranks/CPU cores.
 
 </div>
@@ -114,7 +114,7 @@ The wing agent supports these skills:
 - `airfoil_profiles` (list[str], default: inherited from generate-cfd-mesh): section airfoil profiles used for CST fitting when needed.
 - `mach_number` (float, default: inherited from generate-cfd-mesh): freestream Mach number.
 - `reynolds_number` (float, default: inherited from generate-cfd-mesh): freestream Reynolds number.
-- `optimizer` (str, default: "IPOPT"): optimization algorithm.
+- `optimizer` (str, default: "SLSQP"): optimization algorithm.
 - `lift_constraint` (float, default: 0.5): target lift coefficient constraint.
 - `le_radius_constraint` (float, default: 0.7): lower bound on normalized leading-edge radius.
 - `thickness_constraint` (float, default: 0.5): lower bound on normalized section thickness.
@@ -126,7 +126,6 @@ The wing agent supports these skills:
 - `dihedrals` (list[float], default: inherited from generate-cfd-mesh): section dihedral angles.
 - `spans` (list[float], default: inherited from generate-cfd-mesh): section spans.
 - `twists` (list[float], default: inherited from generate-cfd-mesh): section twists.
-- `pressure_profile_fractions` (list[float], default: [0.1, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `n_cpu_cores` (int, default: 1): MPI ranks/CPU cores.
 
 </div>
@@ -143,6 +142,7 @@ The wing agent supports these skills:
 <div class="panel-body">
 
 - `angle_of_attack` (float, default: 3.0): freestream angle of attack in degrees.
+- `fixed_lift_coeff` (float, default: -1.0): automatically vary the angle of attack to compute drag at the prescribed lift coefficient. Set it to -1.0 to disable.
 - `airfoil_profiles` (list[str], default: inherited from generate-fea-mesh): section airfoil profiles used for CST fitting when needed.
 - `mach_number` (float, default: inherited from generate-fea-mesh): freestream Mach number.
 - `reynolds_number` (float, default: inherited from generate-fea-mesh): freestream Reynolds number.
@@ -158,7 +158,6 @@ The wing agent supports these skills:
 - `dihedrals` (list[float], default: inherited from generate-fea-mesh): section dihedral angles.
 - `spans` (list[float], default: inherited from generate-fea-mesh): section spans.
 - `twists` (list[float], default: inherited from generate-fea-mesh): section twists.
-- `pressure_profile_fractions` (list[float], default: [0.1, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `n_cpu_cores` (int, default: 1): MPI ranks/CPU cores.
 
 </div>
@@ -174,7 +173,7 @@ The wing agent supports these skills:
 <div id="wingRunAeroStructOptimizationInputs" class="panel-collapse collapse">
 <div class="panel-body">
 
-- `optimizer` (str, default: "SNOPT"): optimization algorithm.
+- `optimizer` (str, default: "SLSQP"): optimization algorithm.
 - `lift_constraint` (float, default: 0.5): target lift coefficient equality constraint.
 - `angle_of_attack` (float, default: 3.0): initial freestream angle of attack in degrees.
 - `airfoil_profiles` (list[str], default: inherited from generate-fea-mesh): section airfoil profiles used for CST fitting when needed.
@@ -193,7 +192,6 @@ The wing agent supports these skills:
 - `dihedrals` (list[float], default: inherited from generate-fea-mesh): section dihedral angles.
 - `spans` (list[float], default: inherited from generate-fea-mesh): section spans.
 - `twists` (list[float], default: inherited from generate-fea-mesh): section twists.
-- `pressure_profile_fractions` (list[float], default: [0.1, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `n_cpu_cores` (int, default: 1): MPI ranks/CPU cores.
 
 </div>
@@ -260,18 +258,25 @@ The wing agent supports these skills:
 <div id="wingRunAeroSimulationAdvanced" class="panel-collapse collapse">
 <div class="panel-body">
 
+- `pressure_profile_fractions` (list[float], default: [0.1, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `transonic_mach_boundary` (float, default: 0.4): Mach boundary used by default solver selection.
 - `solver_name` (str, default: null): explicit solver override; leave unset to use the default wing solver.
+- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model ("SpalartAllmaras", "kOmegaSST").
 - `max_flow_iters` (int, default: 10000): maximum flow iterations written to the case control settings.
-- `primal_func_std_tol` (float, default: 5e-3): DAFoam primal function standard deviation tolerance.
+- `primal_func_std_tol` (float, default: 0.04): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance.
 - `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
+- `initialize_from` (str, default: null): warm-start source case name; leave unset for a cold start.
 - `reference_area` (float, default: null): aerodynamic reference area override; if unset, the skill uses mean chord times span.
 - `reference_length` (float, default: null): aerodynamic reference length override; if unset, the skill uses the mean chord.
-- `coef_stddev_pct_pass` (float, default: 0.001): pass threshold for force-coefficient standard deviation in percent.
-- `coef_stddev_pct_warning` (float, default: 1.0): warning threshold for force-coefficient standard deviation in percent.
+- `force_std_pass` (float, default: 0.0001): pass threshold for raw force-coefficient standard deviation.
+- `force_std_warning` (float, default: 0.05): warning threshold for raw force-coefficient standard deviation.
 - `residual_drop_orders_pass` (float, default: 6.0): pass threshold for minimum residual drop in log10 orders.
 - `residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum residual drop in log10 orders.
+- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar.
+- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar.
+- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar.
+- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
 
 </div>
 </div>
@@ -286,10 +291,14 @@ The wing agent supports these skills:
 <div id="wingRunAeroOptimizationAdvanced" class="panel-collapse collapse">
 <div class="panel-body">
 
+- `pressure_profile_fractions` (list[float], default: [0.1, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `transonic_mach_boundary` (float, default: 0.4): Mach boundary used by default solver selection.
 - `solver_name` (str, default: null): explicit solver override; leave unset to use the default wing solver.
+- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model ("SpalartAllmaras", "kOmegaSST").
 - `max_flow_iters` (int, default: 10000): maximum flow iterations written to the case control settings.
-- `primal_func_std_tol` (float, default: 5e-3): DAFoam primal function standard deviation tolerance.
+- `max_adj_iters` (int, default: 1000): maximum GMRES iterations for the DAFoam adjoint linear solve.
+- `pc_fill_level` (int, default: 1): ILU fill level for the DAFoam adjoint preconditioner.
+- `primal_func_std_tol` (float, default: 0.04): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance.
 - `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
 - `reference_area` (float, default: null): aerodynamic reference area override; if unset, the skill uses mean chord times span.
@@ -302,6 +311,10 @@ The wing agent supports these skills:
 - `flow_residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum flow residual drop in log10 orders.
 - `adjoint_residual_drop_orders_pass` (float, default: 5.0): pass threshold for minimum adjoint residual drop in log10 orders.
 - `adjoint_residual_drop_orders_warning` (float, default: 1.0): warning threshold for minimum adjoint residual drop in log10 orders.
+- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar.
+- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar.
+- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar.
+- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
 
 </div>
 </div>
@@ -316,12 +329,15 @@ The wing agent supports these skills:
 <div id="wingRunAeroStructSimulationAdvanced" class="panel-collapse collapse">
 <div class="panel-body">
 
+- `pressure_profile_fractions` (list[float], default: [0.1, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `transonic_mach_boundary` (float, default: 0.4): Mach boundary used by default solver selection.
 - `solver_name` (str, default: null): explicit solver override; leave unset to use the default wing solver.
+- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model ("SpalartAllmaras", "kOmegaSST").
 - `primal_min_iters` (int, default: 200): minimum number of primal iterations.
-- `primal_func_std_tol` (float, default: 1e-2): DAFoam primal function standard deviation tolerance.
+- `primal_func_std_tol` (float, default: 0.01): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-2): DAFoam primal function slope tolerance.
 - `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
+- `initialize_from` (str, default: null): warm-start source case name; leave unset for a cold start.
 - `reference_area` (float, default: null): aerodynamic reference area override; if unset, the skill uses mean chord times span.
 - `reference_length` (float, default: null): aerodynamic reference length override; if unset, the skill uses the mean chord.
 - `nlbgs_rel_tol` (float, default: 1e-7): relative tolerance for the aerostructural OpenMDAO NonlinearBlockGS solver.
@@ -334,8 +350,12 @@ The wing agent supports these skills:
 - `cd_delta_warning` (float, default: 1.0e-3): warning threshold for absolute CD delta between coupled iterations.
 - `cl_delta_pass` (float, default: 1.0e-4): pass threshold for absolute CL delta between coupled iterations.
 - `cl_delta_warning` (float, default: 1.0e-2): warning threshold for absolute CL delta between coupled iterations.
-- `coef_stddev_pct_pass` (float, default: 0.001): pass threshold for force-coefficient standard deviation in percent.
-- `coef_stddev_pct_warning` (float, default: 1.0): warning threshold for force-coefficient standard deviation in percent.
+- `force_std_pass` (float, default: 0.0001): pass threshold for raw force-coefficient standard deviation.
+- `force_std_warning` (float, default: 0.05): warning threshold for raw force-coefficient standard deviation.
+- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar.
+- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar.
+- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar.
+- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
 
 </div>
 </div>
@@ -350,10 +370,14 @@ The wing agent supports these skills:
 <div id="wingRunAeroStructOptimizationAdvanced" class="panel-collapse collapse">
 <div class="panel-body">
 
+- `pressure_profile_fractions` (list[float], default: [0.1, 0.5, 0.9]): spanwise fractions used for pressure-profile plots.
 - `transonic_mach_boundary` (float, default: 0.4): Mach boundary used by default solver selection.
 - `solver_name` (str, default: null): explicit solver override; leave unset to use the default wing solver.
+- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model ("SpalartAllmaras", "kOmegaSST").
+- `max_adj_iters` (int, default: 1000): maximum GMRES iterations for the DAFoam adjoint linear solve.
+- `pc_fill_level` (int, default: 1): ILU fill level for the DAFoam adjoint preconditioner.
 - `primal_min_iters` (int, default: 200): minimum number of primal iterations.
-- `primal_func_std_tol` (float, default: 1e-2): DAFoam primal function standard deviation tolerance.
+- `primal_func_std_tol` (float, default: 0.01): DAFoam primal function standard deviation tolerance.
 - `primal_func_slope_tol` (float, default: 1e-2): DAFoam primal function slope tolerance.
 - `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
 - `reference_area` (float, default: null): aerodynamic reference area override; if unset, the skill uses mean chord times span.
@@ -368,6 +392,10 @@ The wing agent supports these skills:
 - `flow_residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum flow residual drop in log10 orders.
 - `adjoint_residual_drop_orders_pass` (float, default: 5.0): pass threshold for minimum adjoint residual drop in log10 orders.
 - `adjoint_residual_drop_orders_warning` (float, default: 1.0): warning threshold for minimum adjoint residual drop in log10 orders.
+- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar.
+- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar.
+- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar.
+- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
 
 </div>
 </div>
@@ -377,7 +405,11 @@ The wing agent supports these skills:
 
 ### CFD Mesh Generation 
 
-Users can prompt to generate wing CFD mesh with desired airfoil profiles, chords, sweeps, twists, dihedral, and span. For example, `Generate a cfd mesh for a wing with naca4412 at the root and naca0012 at the tip. The root chord is 1 m and the tip chord is 0.5 m. The tip twist is 1 deg. The semi-span is 3 m. The sweep is 10 degs. Mesh size 200K, yPlus 50.` The following is the AI generated pictures. 
+Users can prompt to generate wing CFD mesh with desired airfoil profiles, chords, sweeps, twists, dihedral, and span. For example, 
+
+`Generate a cfd mesh for a wing with naca4412 at the root and naca0012 at the tip. The root chord is 1 m and the tip chord is 0.5 m. The tip twist is 1 deg. The semi-span is 3 m. The sweep is 10 degs. Mesh size 200K, yPlus 50.` 
+
+The following is the AI generated pictures. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-mesh.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-mesh-trame.png" style="width:400px !important;" />
@@ -386,7 +418,11 @@ Fig. 1. Left: Overview of the generated CFD mesh. Right: Trame interactive view 
 
 ### CFD-based Aerodynamic Simulation
 
-Users can prompt to run wing CFD simulations with desired Mach number, Reynolds number, and angle of attack. For example, `Generate a cfd mesh for a wing with RAE2822 airfoils. The root chord is 1 m and the tip chord is 0.5 m. The sweep is 15 degs, and the semi span is 4 m. The tip twist is 1 deg. After that, run a cfd with aoa=3degs, The ref mach is 0.8 and the ref re is 1e7.` The following is the AI generated pictures. 
+Users can prompt to run wing CFD simulations with desired Mach number, Reynolds number, and angle of attack. For example, 
+
+`Generate a cfd mesh for a wing with RAE2822 airfoils. The root chord is 1 m and the tip chord is 0.5 m. The sweep is 15 degs, and the semi span is 4 m. The tip twist is 1 deg. After that, run a cfd with aoa=3degs, The ref mach is 0.8 and the ref re is 1e7.` 
+
+The following is the AI generated pictures. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-p-profile.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-cfd-trame.png" style="width:400px !important;" />
@@ -395,7 +431,11 @@ Fig. 2. Left: Pressure profile from the CFD simulation. Right: Trame interactive
 
 ### FEA Mesh Generation 
 
-Users can prompt to generate wing FEA mesh with desired ribs, spars, and the coverage of the wingbox in chordwise and spanwise direction. For example, `Generate a cfd mesh for a wing with naca4412 at the root and naca0012 at the tip. The root chord is 1 m and the tip chord is 0.5 m. The tip twist is 1 deg. The semi-span is 3 m. The sweep is 10 degs. Mesh size 200K, yPlus 50. Also generate a FEA mesh for this wing with 2 spars and 10 ribs. The total element is about 3000. The wingbox starts and ends from 20% to 80% chord and extends to 90% span.` The following is the AI generated pictures. 
+Users can prompt to generate wing FEA mesh with desired ribs, spars, and the coverage of the wingbox in chordwise and spanwise direction. For example, 
+
+`Generate a cfd mesh for a wing with naca4412 at the root and naca0012 at the tip. The root chord is 1 m and the tip chord is 0.5 m. The tip twist is 1 deg. The semi-span is 3 m. The sweep is 10 degs. Mesh size 200K, yPlus 50. Also generate a FEA mesh for this wing with 2 spars and 10 ribs. The total element is about 3000. The wingbox starts and ends from 20% to 80% chord and extends to 90% span.` 
+
+The following is the AI generated pictures. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-fea-mesh.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-fea-mesh-trame.png" style="width:400px !important;" />
@@ -404,7 +444,11 @@ Fig. 3. Left: Overview of the generated FEA mesh. Right: Trame interactive view 
 
 ### CFD+FEA-based Aero-structural Simulation
 
-Users can prompt to run wing aero-structural simulations with desired Mach number, Reynolds number, and angle of attack. For example, you can follow the above FEA mesh generation chat session and ask `Run an aero-structural simulation for this wing with aoa=4 degs, ma 0.3, re 5e6. Use 4 cores` The following is the AI generated pictures. 
+Users can prompt to run wing aero-structural simulations with desired Mach number, Reynolds number, and angle of attack. For example, you can follow the above FEA mesh generation chat session and ask 
+
+`Run an aero-structural simulation for this wing with aoa=4 degs, ma 0.3, re 5e6. Use 4 cores` 
+
+The following is the AI generated pictures. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-aero-struct-flow-res.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-aero-struct-stress.png" style="width:400px !important;" />
