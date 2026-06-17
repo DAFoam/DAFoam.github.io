@@ -216,7 +216,11 @@ Fig. 2. Left: Pressure profile from the CFD simulation. Right: Trame interactive
 
 ### Compare various design options
 
-Users can prompt to run multiple CFD simulations by varying any of the design variables defined in vsp_design_vars.json. For example, ` Generate a cfd mesh for the default aircraft with about 0.5 million cells. Then, run a CFD simulation with aoa=2deg, Ma=0.85, Re=1e7. Then, run another CFD simulation with the same condition butt increasing the span by 20%. Compare the CD/CL between these two CFD simulations. For both mesh and CFD, use 4 cores.` The following is the AI generated pictures. We can compare the CD/CL for the original span and +20% span designs.
+Users can prompt to run multiple CFD simulations by varying any of the design variables defined in vsp_design_vars.json. For example, 
+
+`Generate a cfd mesh for the default aircraft with about 0.5 million cells. Then, run a CFD simulation with aoa=2deg, Ma=0.85, Re=1e7. Then, run another CFD simulation with the same condition butt increasing the span by 20%. Compare the CD/CL between these two CFD simulations. For both mesh and CFD, use 4 cores.`
+
+The following is the AI generated pictures. We can compare the CD/CL for the original span and +20% span designs.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-vary-span-orig.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-vary-span-20p.png" style="width:400px !important;" />
@@ -236,10 +240,10 @@ Then, you can ask the agent to simulate your customized configuration. For examp
 The following are the AI-generated pictures. We can compare the CD/CL values between the original sweep design and the design with 20 deg increased sweep.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-custom-sweep-orig.png" style="width:400px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-custom-sweep-orig.png" style="width:400px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-custom-sweep-20d-p.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-custom-sweep-20d.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-custom-sweep-orig-p.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-custom-sweep-20d-p.png" style="width:400px !important;" />
 
-Fig. 4. Example of using customized aircraft.vsp3. Top: original design. Bottom: +20 sweep design.
+Fig. 4. Example of using customized aircraft.vsp3. Left: original design. Right: +20 sweep design.
 
 {% include links.html %}
