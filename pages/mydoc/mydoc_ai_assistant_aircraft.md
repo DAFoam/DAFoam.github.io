@@ -190,7 +190,7 @@ The aircraft agent supports these skills:
 
 ### CFD Mesh Generation 
 
-Users can prompt to generate an aircraft CFD mesh with the pre-defined model (wing+fuselage+tails). The default model is similar to Boeing 737 and users can prescribe the desired wing sectional airfoil profiles, chords, sweeps, twists, dihedral, span, as well as the vertical tail rotation. For example, `Generate a cfd mesh for the default aircraft configuration. Use 8 cores` The following is the AI generated pictures. 
+Users can prompt to generate an aircraft CFD mesh with the pre-defined model (wing+fuselage+tails). The default model is similar to Boeing 737 and users can prescribe the desired wing sectional shapes (throgh CST coefficients), chords, sweeps, twists, dihedral, span, as well as the vertical tail rotation. For example, `Generate a cfd mesh for the default aircraft configuration. Use 8 cores` The following is the AI generated pictures. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-geometry.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-mesh.png" style="width:400px !important;" />
@@ -205,5 +205,14 @@ Users can prompt to run CFD simulations for the aircraft with desired Mach numbe
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-cfd-trame.png" style="width:400px !important;" />
 
 Fig. 2. Left: Pressure profile from the CFD simulation. Right: Trame interactive view of the pressure contour.
+
+### Compare various design options
+
+Users can prompt to run multiple CFD simulations by varying any of the design variables defined in vsp_design_vars.json. For example, ` Generate a cfd mesh for the default aircraft with about 0.5 million cells. Then, run a CFD simulation with aoa=2deg, Ma=0.85, Re=1e7. Then, run another CFD simulation with the same condition butt increasing the span by 20%. Compare the CD/CL between these two CFD simulations. For both mesh and CFD, use 4 cores.` The following is the AI generated pictures. We can compare the CD/CL for the original span and +20% span designs.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-vary-span-orig.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-aircraft-vary-span-20p.png" style="width:400px !important;" />
+
+Fig. 3. Left: Pressure contour of the original span design. Right: Pressure contour of the +20% span design.
 
 {% include links.html %}
