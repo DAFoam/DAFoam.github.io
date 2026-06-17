@@ -216,7 +216,13 @@ Fig. 2. Top left: Airfoil pressure profile. Top right: Visualization of airfoil 
 
 ### CFD Mesh Convergence Study
 
-Users can prompt to conduct a mesh convergence study for an airfoil. For example, `Conduct a cfd mesh convergence study for the RAE2822 airfoil at Ma=0.75, Re=1e7, and aoa=2 degs. The mesh sizes are 10K, 20K, 50K, and 100K. The yPlus is 3. Use 24 cores. CFD maxIter=5000`. The following is the agent-generated figure, one needs to add a follow up prompt to plot this pressure profile comparisoin figure, such as `Plot the pressure profile for all cases in one figure to show the difference.` 
+Users can prompt to conduct a mesh convergence study for an airfoil. For example, 
+
+`Conduct a cfd mesh convergence study for the RAE2822 airfoil at Ma=0.75, Re=1e7, and aoa=2 degs. The mesh sizes are 10K, 20K, 50K, and 100K. The yPlus is 3. Use 24 cores. CFD maxIter=5000`. 
+
+The following is the agent-generated figure, one needs to add a follow up prompt to plot this pressure profile comparisoin figure, such as 
+
+`Plot the pressure profile for all cases in one figure to show the difference.` 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-mesh-conv.png" style="width:400px !important;" />
 
