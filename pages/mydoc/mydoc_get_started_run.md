@@ -38,22 +38,11 @@ cd Downloads/tutorials-main/NACA0012_Airfoil/incompressible
 
 Once you are in a tutorial case folder, use the following command to start the pre-compiled DAFoam Docker container (a light-weight virtual machine).
 
-<div class="tab-container" data-tab-group="platform">
-<div class="tab-buttons">
-<button class="tab-button">Win10</button>
-<button class="tab-button">Win11</button>
-<button class="tab-button">MacOS/Linux</button>
-</div>
-<div class="tab-content">
-<pre><code>docker run -it --rm -u dafoamuser --mount "type=bind,src=%cd%,target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash</code></pre>
-</div>
-<div class="tab-content">
-<pre><code>docker run -it --rm -u dafoamuser --mount "type=bind,src=.,target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash</code></pre>
-</div>
-<div class="tab-content">
-<pre><code>docker run -it --rm -u dafoamuser --mount "type=bind,src=$(pwd),target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash</code></pre>
-</div>
-</div>
+<pre>
+docker run -it --rm -u dafoamuser --mount "type=bind,src=.,target=/home/dafoamuser/mount" -w /home/dafoamuser/mount dafoam/opt-packages:{{ site.latest_version }} bash
+</pre>
+
+**NOTE**: the above command works for Win11 (Command Prompt or PowerShell), Win10 (PowerShell), MacOS (Terminal), and Linux (Terminal). If you use Win10 (Command Prompt), replace `src=.` with `src=%cd%`.
 
 The above command will start a Docker container, mount the **current directory** on your local OS (tutorials-main/NACA0012_Airfoil/incompressible) to the container's **mount** directory, log in to the container's mount directory as dafoamuser, and set the relevant DAFoam environmental variables. You may see something like this on your terminal: `dafoamuser@00fb6ceac4da:~/mount$`. 
 

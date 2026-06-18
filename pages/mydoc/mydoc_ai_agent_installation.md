@@ -29,11 +29,30 @@ Please follow the official installation instructions for your selected client. T
 
 After the installation is finished, verify that your CLI is available in the terminal:
 
-- Codex CLI: `codex -V`
-- Claude Code CLI: `claude -V`
-- Antigravity CLI: `agy --version`
-- Gemini CLI: `gemini -v`
-- Cursor CLI: `agent -v`
+<div class="tab-container" data-tab-group="platform">
+<div class="tab-buttons">
+<button class="tab-button">Codex</button>
+<button class="tab-button">Claude Code</button>
+<button class="tab-button">Antigravity</button>
+<button class="tab-button">Gemini</button>
+<button class="tab-button">Cursor</button>
+</div>
+<div class="tab-content">
+<pre>codex -V</pre>
+</div>
+<div class="tab-content">
+<pre>claude -V</pre>
+</div>
+<div class="tab-content">
+<pre>agy --version</pre>
+</div>
+<div class="tab-content">
+<pre>gemini -v</pre>
+</div>
+<div class="tab-content">
+<pre>agent -v</pre>
+</div>
+</div>
 
 You should see the version of your LLM client in the terminal.
 
@@ -134,15 +153,30 @@ In the terminal, navigate to the `mdo_agent_work/results` folder. If you use HPC
 
 Then, launch your LLM client in full-permission mode to avoid interruptions. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
 
-Claude Code: `claude --dangerously-skip-permissions`
-
-Codex: `codex --yolo`
-
-Gemini: `gemini --yolo`
-
-Antigravity: `agy --dangerously-skip-permissions`
-
-Cursor: `agent --yolo`
+<div class="tab-container" data-tab-group="platform">
+<div class="tab-buttons">
+<button class="tab-button">Codex</button>
+<button class="tab-button">Claude Code</button>
+<button class="tab-button">Antigravity</button>
+<button class="tab-button">Gemini</button>
+<button class="tab-button">Cursor</button>
+</div>
+<div class="tab-content">
+<pre>codex --yolo</pre>
+</div>
+<div class="tab-content">
+<pre>claude --dangerously-skip-permissions</pre>
+</div>
+<div class="tab-content">
+<pre>agy --dangerously-skip-permissions</pre>
+</div>
+<div class="tab-content">
+<pre>gemini --yolo</pre>
+</div>
+<div class="tab-content">
+<pre>agent --yolo</pre>
+</div>
+</div>
 
 You need to sign up for an account and log in to the LLM CLI. DO NOT use API keys; use subscription login instead.
 
