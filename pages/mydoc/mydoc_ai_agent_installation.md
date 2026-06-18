@@ -38,19 +38,19 @@ After the installation is finished, verify that your CLI is available in the ter
 <button class="tab-button">Cursor</button>
 </div>
 <div class="tab-content">
-`codex -V`
+codex -V
 </div>
 <div class="tab-content">
-`claude -V`
+claude -V
 </div>
 <div class="tab-content">
-`agy --version`
+agy --version
 </div>
 <div class="tab-content">
-`gemini -v`
+gemini -v
 </div>
 <div class="tab-content">
-`agent -v`
+agent -v
 </div>
 </div>
 
@@ -162,19 +162,19 @@ Then, launch your LLM client in full-permission mode to avoid interruptions. Cho
 <button class="tab-button">Cursor</button>
 </div>
 <div class="tab-content">
-`codex --yolo`
+codex --yolo
 </div>
 <div class="tab-content">
-`claude --dangerously-skip-permissions`
+claude --dangerously-skip-permissions
 </div>
 <div class="tab-content">
-`agy --dangerously-skip-permissions`
+agy --dangerously-skip-permissions
 </div>
 <div class="tab-content">
-`gemini --yolo`
+gemini --yolo
 </div>
 <div class="tab-content">
-`agent --yolo`
+agent --yolo
 </div>
 </div>
 
