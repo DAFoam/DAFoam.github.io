@@ -455,4 +455,19 @@ The following is the AI generated pictures.
 
 Fig. 4. Left: Flow residual of the aero-structural coupled simulation. Right: Trame interactive view of the von-Mises stress of the wing box.
 
+### Aerodynamic Shape Optimization
+
+Users can prompt to run wing aerodynamic shape optimization with desired Mach number, Reynolds number, and target lift constraint. For example,
+
+`Generate a CFD mesh for the wing with 100K cells. Then, run an aerodynamic optimization with Ma=0.3, Re=5e6, and CL=0.3. Run for 50 iterations. Use 48 cores.` 
+
+The case ran on the HPC. After it is finished, you need to resume the chat and ask it to analyze the optimization. The following is the AI generated pictures. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-aero-opt-conv-cd.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-aero-opt-conv-cl.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-aero-opt-pressure.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-wing-aero-opt-trame.png" style="width:400px !important;" />
+
+Fig. 5. Top: Optimization convergence history for CD and CL. Bot left: pressure profiles. Bot right: trame server view.
+
 {% include links.html %}
