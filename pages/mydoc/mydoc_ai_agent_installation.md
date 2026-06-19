@@ -24,7 +24,6 @@ Please follow the official installation instructions for your selected client. T
 - Codex CLI: [OpenAI Codex CLI installation guide; limited free quota](https://help.openai.com/en/articles/11096431)
 - Claude Code CLI: [Anthropic Claude Code installation guide; paid plan only](https://docs.anthropic.com/en/docs/claude-code/getting-started)
 - Antigravity CLI: [Google Antigravity CLI installation guide; limited free quota](https://antigravity.google/download#antigravity-cli)
-- Gemini CLI: [Google Gemini CLI installation guide; limited free quota; to be replaced by Antigravity](https://github.com/google-gemini/gemini-cli/blob/main/docs/get-started/index.md)
 - Cursor CLI: [Cursor CLI installation guide; limited free quota](https://cursor.com/cli)
 
 After the installation is finished, verify that your CLI is available in the terminal:
@@ -34,7 +33,6 @@ After the installation is finished, verify that your CLI is available in the ter
 <button class="tab-button">Codex</button>
 <button class="tab-button">Claude Code</button>
 <button class="tab-button">Antigravity</button>
-<button class="tab-button">Gemini</button>
 <button class="tab-button">Cursor</button>
 </div>
 <div class="tab-content">
@@ -45,9 +43,6 @@ claude -V
 </div>
 <div class="tab-content">
 agy --version
-</div>
-<div class="tab-content">
-gemini -v
 </div>
 <div class="tab-content">
 agent -v
@@ -158,7 +153,6 @@ Then, launch your LLM client in full-permission mode to avoid interruptions. Cho
 <button class="tab-button">Codex</button>
 <button class="tab-button">Claude Code</button>
 <button class="tab-button">Antigravity</button>
-<button class="tab-button">Gemini</button>
 <button class="tab-button">Cursor</button>
 </div>
 <div class="tab-content">
@@ -169,9 +163,6 @@ claude --dangerously-skip-permissions
 </div>
 <div class="tab-content">
 agy --dangerously-skip-permissions
-</div>
-<div class="tab-content">
-gemini --yolo
 </div>
 <div class="tab-content">
 agent --yolo
