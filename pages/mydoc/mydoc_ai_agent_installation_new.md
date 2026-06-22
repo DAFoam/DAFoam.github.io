@@ -7,6 +7,8 @@ permalink: ai-agent-installation-new.html
 folder: mydoc
 ---
 
+## Overall
+
 There are four options to install and run the MDO Agent Deck framework: (A) Local Computers with LLM Apps, (B) Local Computers with VSCode, (C) HPC Clusters with LLM Apps, and (D) HPC Clusters with VSCode. Options A and B run on your local computer using pre-compiled Docker images, while Options C and D run on a high-performance computing (HPC) cluster with self-compiled codes. You need to choose **ONLY ONE** option to follow. If you are new to the MDO Agent Deck, we recommend you choose Option A, which is the easiest to set up and run.
 
 
@@ -49,7 +51,7 @@ The local installation is finished!
 
 ### Step 4. Test the agents
 
-Depending on your selected LLM, you can follow one of the instructions below to test your installation by running a small case. 
+Follow the instructions below for your selected LLM to test the installation by running a small case.
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
@@ -60,11 +62,12 @@ Depending on your selected LLM, you can follow one of the instructions below to 
 </div>
 <div class="tab-content">
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:600px !important;" />
+Open the Claude Desktop App and sign in. In the top left, click the sidebar icon to expand it, then change the mode from "Chat" to "Code". Next, click the "Local" icon right above the chat box and select "Add another folder". In the pop-up, select the `mdo_agent_work/results` folder. You can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Bypass permissions".
 
-Fig. 1. An example of the VS Code interface on local computers
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-claude-app.png" style="width:300px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-claude-result.png" style="width:300px !important;" />
 
-[Download](https://claude.com/download)
+Fig. An example of the Claude Code interface
 
 
 </div>
