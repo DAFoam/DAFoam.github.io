@@ -24,8 +24,6 @@ First, install an LLM Desktop App. The MDO Agent Deck supports multiple LLMs, bu
 
 - Claude (Anthropic; paid plan only): [Download](https://claude.com/download)
 - Codex (OpenAI; limited free quota): [Download](https://chatgpt.com/codex/)
-- Antigravity (Google; limited free quota): [Download](https://antigravity.google/)
-- Cursor (Anysphere; limited free quota): [Download](https://cursor.com/download)
 
 ### Step 2. Install Docker Desktop
 
@@ -57,12 +55,10 @@ Follow the instructions below for your selected LLM to test the installation by 
 <div class="tab-buttons">
 <button class="tab-button">Claude</button>
 <button class="tab-button">Codex</button>
-<button class="tab-button">Antigravity</button>
-<button class="tab-button">Cursor</button>
 </div>
 <div class="tab-content">
 
-Open the Claude Desktop App and sign in. In the top left, click the sidebar icon to expand it, then change the mode from "Chat" to "Code". Next, click the "Local" icon right above the chat box and select "Add another folder". In the pop-up, select the `mdo_agent_work/results` folder. You can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Bypass permissions". Once the task is finished, you can click the names of the generated mesh pictures to view them in the app, or the links from the Trame or HTML servers to visualize the results.
+Open the Claude Desktop App and sign in. In the top left, click the sidebar icon to expand it, then change the mode from "Chat" to "Code". Next, click the "Local" icon right above the chat box and select "Add another folder". In the pop-up, select the `mdo_agent_work/results` folder. You can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Bypass permissions". **IMPORTANT: The Bypass permissions mode may damage your system files, use with cautions!** Once the task is finished, you can click the names of the generated mesh pictures to view them in the app, or the links from the Trame or HTML servers to visualize the results.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-claude-app.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-claude-result.png" style="width:400px !important;" />
@@ -73,18 +69,12 @@ Fig. An example of the Claude Code interface
 </div>
 <div class="tab-content">
 
-Open the Codex Desktop App and sign in. Click the "folder" icon right below the chat box and select "Add new project"->"Use existing folder". In the pop-up, select the `mdo_agent_work/results` folder. You can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Approve for me". Once the task is finished, you can click the links from the Trame or HTML servers to visualize the mesh results.
+Open the Codex Desktop App and sign in. Click the "folder" icon right below the chat box and select "Add new project"->"Use existing folder". In the pop-up, select the `mdo_agent_work/results` folder. You can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Approve for me". **IMPORTANT: The Approve for me mode may damage your system files, use with cautions!**. Once the task is finished, you can click the links from the Trame or HTML servers to visualize the mesh results.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-codex-app.png" style="width:700px !important;" />
 
 Fig. An example of the Codex interface
 
-</div>
-<div class="tab-content">
-agy --version
-</div>
-<div class="tab-content">
-agent -v
 </div>
 </div>
 
