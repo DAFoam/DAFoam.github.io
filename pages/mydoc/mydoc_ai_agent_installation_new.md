@@ -75,7 +75,7 @@ Fig. An example of the Claude Code interface
 
 Open the Codex Desktop App and sign in. Click the "folder" icon right below the chat box and select "Add new project"->"Use existing folder". In the pop-up, select the `mdo_agent_work/results` folder. You can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Approve for me". Once the task is finished, you can click the links from the Trame or HTML servers to visualize the mesh results.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-codex-app.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-codex-app.png" style="width:700px !important;" />
 
 Fig. An example of the Codex interface
 
