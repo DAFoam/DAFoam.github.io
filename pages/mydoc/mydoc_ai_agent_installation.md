@@ -202,8 +202,11 @@ Unzip it and you will see a folder called `mdo_agent_work-hpc`. Rename it to `md
 
 **IMPORTANT**: Do not manually create a folder and use it as the LLM's working directory. You must use `mdo_agent_work`. This is because `mdo_agent_work/results` contains pre-defined LLM configuration files (hidden by default). You do not need to modify these configuration files.
 
+### Step 4. Customize the HPC job submission script
 
-### Step 4. Test the agents
+Open `mdo_agent_work/results/myHPCJob.sh` and adjust the `#SBATCH` directives (walltime, nodes, cores, job name) to match your HPC cluster. Keep the filename as `myHPCJob.sh`, keep it in the `mdo_agent_work/results/` folder, and always keep `./Allrun.sh` as the last line of the script. This script will be used by the agent to submit jobs on your HPC.
+
+### Step 5. Test the agents
 
 
 <div class="tab-container" data-tab-group="platform">
@@ -271,7 +274,11 @@ Same as the Step 2 in Option C. Except that you can use the terminal from VSCode
 
 Same as the Step 3 in Option C. Except that you can use the terminal from VSCode to download the working directory repo.
 
-### Step 5. Test the agents
+### Step 5. Customize the HPC job submission script
+
+Same as the Step 4 in Option C.
+
+### Step 6. Test the agents
 
 - Open VS Code and use Remote SSH to connect to the HPC.
 
