@@ -113,10 +113,10 @@ First, install a command-line interface (CLI) for an LLM client. The MDO Agent D
 
 Please follow the following installation instructions for your selected client. The installation steps may differ by operating system and may require additional dependencies such as Node.js.
 
-- Claude (Anthropic; paid plan only): [Download](https://docs.anthropic.com/en/docs/claude-code/getting-started)
-- Codex (OpenAI; limited free quota): [Download](https://help.openai.com/en/articles/11096431)
-- Antigravity (Google; limited free quota): [Download](https://antigravity.google/download#antigravity-cli)
-- Cursor (Anysphere; limited free quota): [Download](https://cursor.com/cli)
+- Claude (Anthropic; paid plan only): [Install](https://docs.anthropic.com/en/docs/claude-code/getting-started)
+- Codex (OpenAI; limited free quota): [Install](https://help.openai.com/en/articles/11096431)
+- Antigravity (Google; limited free quota): [Install](https://antigravity.google/download#antigravity-cli)
+- Cursor (Anysphere; limited free quota): [Install](https://cursor.com/cli)
 
 
 ### Step 2. Install Docker Desktop
@@ -131,11 +131,11 @@ The installation is finished!
 
 ### Step 4. Test the agents
 
-1. Open VS Code. Then, in VS Code, click the "Explorer" icon in the left sidebar (see Fig. below). From there, select "Open Folder" and open the `mdo_agent_work` folder as your working directory.
+- Open VS Code. Then, click the "Explorer" icon in the left sidebar (see the Fig. below). From there, select "Open Folder" and open the `mdo_agent_work` folder as your working directory.
 
-2. Click the "Toggle Panel" button in the top-right corner to open a terminal (see Fig. 1 below). Then, in the terminal, navigate to the `mdo_agent_work/results` folder. **IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional and helps avoid conflicts with VS Code LLM extensions. You must start the LLM in the `mdo_agent_work/results` folder. The name of the `results` folder can be arbitrary. If you need to run multiple cases, you can make copies of the `results` folder inside `mdo_agent_work`, e.g., `mdo_agent_work/results1` and `mdo_agent_work/results2`.
+- Click the "Toggle Panel" button in the top-right corner to open a terminal (see the Fig. below). Then, in the terminal, navigate to the `mdo_agent_work/results` folder. **IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional and helps avoid conflicts with VS Code LLM extensions. You must start the LLM in the `mdo_agent_work/results` folder. The name of the `results` folder can be arbitrary. If you need to run multiple cases, you can make copies of the `results` folder inside `mdo_agent_work`, e.g., `mdo_agent_work/results1` and `mdo_agent_work/results2`.
 
-3. Launch your LLM client in the VSCode termianl and sign in. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
+- Launch your LLM client in the VSCode termianl and sign in. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
@@ -160,13 +160,13 @@ agent --yolo
 
 **IMPORTANT: All the above commands bypass the permission, so they may modify or damage system files. Use with caution! If you prefer manual permissions, run these LLM CLI without the --yolo or --dangerously-skip-permissions argument**
 
-5. In the LLM CLI chat box, run `/mcp` and verify if the `mdo_agent_deck` is `connected` or `running`. If yes, the agent is ready to run.
+- In the LLM CLI chat box, run `/mcp` and verify if the `mdo_agent_deck` is `connected` or `running`. If yes, the agent is ready to run.
 
-6. You can ask something like: `Generate a CFD mesh for the NACA2412 airfoil with 20K cells with yPlus 5`. The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows and Linux) and click these paths to view the figures directly in VS Code (see Fig. 1 below). The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
+- You can ask something like: `Generate a CFD mesh for the NACA2412 airfoil with 20K cells with yPlus 5`. The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows and Linux) and click these paths to view the figures directly in VS Code (see the Fig. below). The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
 
 **NOTE**: For the best visual experience, we recommend using the "Light Modern" color theme in VS Code. To change the theme, open the Command Palette in VS Code, search for "Preferences: Color Theme", and select "Light Modern".
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:600px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:500px !important;" />
 
 Fig. An example of the VS Code interface for Codex. Other LLMs have similer interfaces 
 
