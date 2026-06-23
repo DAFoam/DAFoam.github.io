@@ -20,14 +20,18 @@ This option works for both Windows, and MacOS, and it is the easiest way to run 
 
 First, install an LLM Desktop App. The MDO Agent Deck supports multiple LLMs, but for this setup, you only need to install **ONLY ONE** LLLM app.
 
-**NOTE**: You must sign up for an account for the selected LLM and log in using your subscription. Do **NOT** use API keys. If you already have a paid subscription for one of the following LLM providers, install its app. Otherwise, choose a LLM that offers a free but limited usage quota (we recommend Codex). If the quota for one free-tier LLM runs out, you may need to switch to another free-tier LLM. Note that most free-tier LLMs limit you to roughly 10 prompts per cycle and are suitable for evaluation only. For production use, a paid plan is required.
+**NOTE**: You must sign up for an account for the selected LLM and log in using your subscription. Do **NOT** use API keys. If you already have a paid subscription for one of the following LLM providers, install its app. Otherwise, choose a LLM that offers a free but limited usage quota (we recommend Codex). Note that most free-tier LLMs limit you to roughly 10 prompts per cycle and are suitable for evaluation only. For production use, a paid plan is required.
 
 - Claude (Anthropic; paid plan only): [Download](https://claude.com/download)
 - Codex (OpenAI; limited free quota): [Download](https://chatgpt.com/codex/)
 
 ### Step 2. Install Docker Desktop
 
-Download and install the Docker Desktop app for [MacOS](https://docs.docker.com/desktop/setup/install/mac-install), [Windows](https://docs.docker.com/desktop/setup/install/windows-install), or [Linux](https://docs.docker.com/desktop/setup/install/linux).
+Download and install the Docker Desktop app for:
+
+- [MacOS](https://docs.docker.com/desktop/setup/install/mac-install) 
+- [Windows](https://docs.docker.com/desktop/setup/install/windows-install)
+- [Linux](https://docs.docker.com/desktop/setup/install/linux)
 
 After the Docker Desktop is installed, open it and keep it open.
 
@@ -45,7 +49,7 @@ Unzip it and you will see a folder called `mdo_agent_work-docker`. Rename it to 
 
 **IMPORTANT**: Do not manually create a folder and use it as the LLM's working directory. You must use `mdo_agent_work`. This is because `mdo_agent_work/results` contains pre-defined LLM configuration files (hidden by default). You do not need to modify these configuration files.
 
-The local installation is finished!
+The installation is finished!
 
 ### Step 4. Test the agents
 
@@ -105,39 +109,14 @@ Option B also supports both Windows and MacOS, and it relies on VSCode and LLM c
 
 First, install a command-line interface (CLI) for an LLM client. The MDO Agent Deck supports multiple LLM clients, but for this setup, you only need to install **ONE** CLI client.
 
-**NOTE**: You must sign up for an account for the selected LLM and log in using your subscription. Do **NOT** use API keys. If you already have a paid subscription for one of the following LLM providers, install its app. Otherwise, choose a LLM that offers a free but limited usage quota (we recommend Codex). If the quota for one free-tier LLM runs out, you may need to switch to another free-tier LLM.
+**NOTE**: You must sign up for an account for the selected LLM and log in using your subscription. Do **NOT** use API keys. If you already have a paid subscription for one of the following LLM providers, install its app. Otherwise, choose a LLM that offers a free but limited usage quota (we recommend Codex). Note that most free-tier LLMs limit you to roughly 10 prompts per cycle and are suitable for evaluation only. For production use, a paid plan is required.
 
-Please follow the official installation instructions for your selected client. The installation steps may differ by operating system and may require additional dependencies such as Node.js.
+Please follow the following installation instructions for your selected client. The installation steps may differ by operating system and may require additional dependencies such as Node.js.
 
 - Claude (Anthropic; paid plan only): [Download](https://docs.anthropic.com/en/docs/claude-code/getting-started)
 - Codex (OpenAI; limited free quota): [Download](https://help.openai.com/en/articles/11096431)
 - Antigravity (Google; limited free quota): [Download](https://antigravity.google/download#antigravity-cli)
 - Cursor (Anysphere; limited free quota): [Download](https://cursor.com/cli)
-
-After the installation is finished, verify that your CLI is available in the terminal:
-
-<div class="tab-container" data-tab-group="platform">
-<div class="tab-buttons">
-<button class="tab-button">Codex</button>
-<button class="tab-button">Claude Code</button>
-<button class="tab-button">Antigravity</button>
-<button class="tab-button">Cursor</button>
-</div>
-<div class="tab-content">
-codex -V
-</div>
-<div class="tab-content">
-claude -V
-</div>
-<div class="tab-content">
-agy --version
-</div>
-<div class="tab-content">
-agent -v
-</div>
-</div>
-
-You should see the version of your LLM client in the terminal.
 
 
 ### Step 2. Install Docker Desktop
@@ -148,17 +127,51 @@ Same as the Step 2 in Opion A.
 
 Same as the Step 3 in Opion A.
 
-### Step 2. Install VS Code
+The installation is finished!
 
-Download VS Code from [here](https://code.visualstudio.com/download) and install it.
+### Step 4. Test the agents
 
-Optional: For VS Code on Windows, you can configure your terminal to use a desired bash interface by opening the Command Palette from the top panel, searching for "Terminal: Select Default Profile", and then selecting CMD, PowerShell, or bash.
+1. Open VS Code. Then, in VS Code, click the "Explorer" icon in the left sidebar (see Fig. below). From there, select "Open Folder" and open the `mdo_agent_work` folder as your working directory.
 
-The local installation is finished!
+2. Click the "Toggle Panel" button in the top-right corner to open a terminal (see Fig. 1 below). Then, in the terminal, navigate to the `mdo_agent_work/results` folder. **IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional and helps avoid conflicts with VS Code LLM extensions. You must start the LLM in the `mdo_agent_work/results` folder. The name of the `results` folder can be arbitrary. If you need to run multiple cases, you can make copies of the `results` folder inside `mdo_agent_work`, e.g., `mdo_agent_work/results1` and `mdo_agent_work/results2`.
+
+3. Launch your LLM client in the VSCode termianl and sign in. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
+
+<div class="tab-container" data-tab-group="platform">
+<div class="tab-buttons">
+<button class="tab-button">Codex</button>
+<button class="tab-button">Claude Code</button>
+<button class="tab-button">Antigravity</button>
+<button class="tab-button">Cursor</button>
+</div>
+<div class="tab-content">
+codex --yolo
+</div>
+<div class="tab-content">
+claude --dangerously-skip-permissions
+</div>
+<div class="tab-content">
+agy --dangerously-skip-permissions
+</div>
+<div class="tab-content">
+agent --yolo
+</div>
+</div>
+
+**IMPORTANT: All the above commands bypass the permission, so they may modify or damage system files. Use with caution! If you prefer manual permissions, run these LLM CLI without the --yolo or --dangerously-skip-permissions argument**
+
+5. In the LLM CLI chat box, run `/mcp` and verify if the `mdo_agent_deck` is `connected` or `running`. If yes, the agent is ready to run.
+
+6. You can ask something like: `Generate a CFD mesh for the NACA2412 airfoil with 20K cells with yPlus 5`. The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows and Linux) and click these paths to view the figures directly in VS Code (see Fig. 1 below). The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
+
+**NOTE**: For the best visual experience, we recommend using the "Light Modern" color theme in VS Code. To change the theme, open the Command Palette in VS Code, search for "Preferences: Color Theme", and select "Light Modern".
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:600px !important;" />
+
+Fig. An example of the VS Code interface for Codex. Other LLMs have similer interfaces 
+
 
 ## Option C: HPC Clusters with LLM Apps
-
-
 
 
 
