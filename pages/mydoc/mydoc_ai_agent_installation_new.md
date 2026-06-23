@@ -166,16 +166,35 @@ agent --yolo
 
 **NOTE**: For the best visual experience, we recommend using the "Light Modern" color theme in VS Code. To change the theme, open the Command Palette in VS Code, search for "Preferences: Color Theme", and select "Light Modern".
 
+<div style="text-align: center;">
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:500px !important;" />
 
 Fig. An example of the VS Code interface for Codex. Other LLMs have similer interfaces 
-
+</div>
 
 ## Option C: HPC Clusters with LLM Apps
 
+This Option is for running large-scale cases on an HPC cluser. Currently only Claude Desktop App supports remote HPC connection.
 
+### Step 1. Install an LLM Desktop App
 
+Same as Step 1 in Option A.
 
+### Step 2. Compile the agents and DAFoam on the HPC
+
+We need to compile the DAFoam package from scratch on the HPC. Follow the instructions from [here](https://dafoam.github.io/installation-source.html). In this example, we assume DAFoam is installed in `/home/your_user_name/dafoam` and will use this path for the instructions below.
+
+After DAFoam is compiled, load its environment, e.g., `. /home/your_user_name/dafoam/loadDAFoam.sh`, and then run the following command to install the MDO Agent Deck:
+
+`pip install mdo_agent_deck`
+
+**NOTE** The `mdo_agent_deck` package is hosted on PyPI.
+
+Then, add the following line to your `~/.bashrc` on the HPC to automatically load DAFoam when logging in.
+
+`. /home/your_user_name/dafoam/loadDAFoam.sh`
+
+### Step 3. Compile the agents and DAFoam on the HPC
 
 ## Option D: HPC clusters with VSCode 
 
