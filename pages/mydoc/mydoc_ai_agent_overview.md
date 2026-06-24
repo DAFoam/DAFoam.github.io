@@ -7,6 +7,8 @@ permalink: ai-agent-overview.html
 folder: mydoc
 ---
 
+## Overview
+
 The MDO Agent Deck is an agentic AI framework for multidisciplinary design optimization (MDO). It exposes engineering workflows through an MCP server and orchestrates domain agents such as `airfoil`, `wing`, and `aircraft`. The MDO Agent Deck framework is not open source. Instead, it is distributed on PyPI as compiled shared library package for evaluation purpose. Check [LICENSE](https://pypi.org/project/mdo-agent-deck/) for more details.
 
 ## Trustworthy Agentic AI Framework for MDO
@@ -16,18 +18,19 @@ The framework is designed to be trustworthy for engineering using the following 
 - Narrowly scoped, domain-specific agents.
 - Strictly constrained input parameters per skill.
 - A robust review-and-correction loop at each phase.
-- Fully transparent and auditable execution workflows.
+- Fully transparent, auditable, and reproducible execution workflows.
 
-## How the Framework Works
+### How the Framework Works
 
-For each user request/prompt, the agent execution follows a strict sequence:
+For each user request/prompt, the agent execution follows a pre-defined run sequence:
 
-1. The MCP server identifies the best domain agent and skill for the request.
-2. It semetically parse the input information from user-prompt to the skill's input values.
-3. It creates a new isolated case folder for that run.
-4. It runs the **prepare** phase and checks the review result.
-5. It runs the **run** phase and checks the review result.
-6. It runs an **analyze** phase and checks the final review result.
+0. A user requests to run an engineering analysis or design case.
+1. The MCP server identifies the best domain agent and skill for the user request.
+2. It semantically parses the input information from the user prompt into the skill's input values.
+3. It creates a new isolated case folder and copies the pre-defined case configuration files from the selected agent.
+4. It runs the selected skill following the **prepare->review->run->review->analyze->review** workflow. All the skill's predefined run commands are executed here.
+5. The final result is passed to the agent playbook with additional evaluations and instructions to correct potential errors.
+6. If everything passes, the final results, including PNG plots, an interactive visualization server, and a case summary, are sent back to the user.
 
 This review gate after every phase is a key guardrail. If a review fails, the workflow stops and requests correction before moving forward.
 
@@ -39,12 +42,10 @@ The execution will look like this:
 
 1. The MCP server identifies the `airfoil` agent and the `generate-cfd-mesh` skill for this request.
 2. It semantically parses the user prompt into skill inputs (`airfoil_profile=naca0012`, `mach_number=0.05`, `reynolds_number=20000`, `y_plus_target=50`).
-3. It creates a new isolated case folder, e.g., `airfoil_mesh_naca0012_ma005_20k_y50_0000`
-4. In **prepare**, it copies geometry and mesh configuration files into that folder, then checks the review result.
-5. In **run**, it create a bash script that contains the predefined mesh generation commands, and run the bash script.
-6. In **analyze**, it computes mesh quality metrics, verify if the mesh quality passes thresholds, and also generate mesh plots.
-
-If any review fails (for example invalid input ranges or mesh quality below threshold), the workflow stops at that phase and reports what must be fixed.
+3. It creates a new isolated case folder, e.g., `airfoil_mesh_naca0012_ma005_20k_y50_0000`, and copies all DAFoam configuration files from the airfoil agent into this folder.
+4. The `generate-cfd-mesh` skill is executed. In **prepare**, it copies geometry and mesh configuration files into that folder, then checks the review result. In **run**, it run a bash script that contains the predefined mesh generation commands. In **analyze**, it computes mesh quality metrics, verifies whether the mesh quality passes thresholds, and generates mesh plots.
+5. All the results are passed to the agent playbook for the `generate-cfd-mesh` skill. If the mesh quality fails, it will follow the instructions to correct it.
+6. The mesh plots, interactive visualization servers, and a report regarding the mesh quality and number of mesh cells are passed back to the user.
 
 <div style="text-align: center;">
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-overview-diagram.png" style="width:800px !important;" />
@@ -52,21 +53,13 @@ If any review fails (for example invalid input ranges or mesh quality below thre
 Fig. 1. Schematic of the agentic AI workflow
 </div>
 
-## Transparency and Auditability
+### Transparency, Auditability, and Reproducibility
 
-The framework records workflow and runtime context in the working directory:
+The framework records workflow and runtime context in the working directory. This design supports traceability, debugging, and reproducibility for engineering studies.
 
 - `agent_workflow.json`: auditable case-by-case phase history (`set_skill_inputs`, `prepare`, `review_prepare`, `run`, `review_run`, `analyze`, `review_analyze`) with timestamps and status.
 - `agent_state.json`: persisted bindings (inputs and case directories) so sessions can resume after MCP server restarts.
+- `bash_*.sh`: the agent generates a `bash_*.sh` script for each `prepare`, `run`, and `analyze` phase, e.g., `bash_generate-cfd-mesh_run_001.sh`. A user can easily reproduce the exact workflow the agent executed by running these bash scripts in sequence.
 
-This design supports traceability, debugging, and reproducibility for engineering studies.
-
-## Deployment Modes
-
-The MCP server supports three run modes:
-
-- `Docker`: default containerized workflow.
-- `Native`: direct execution on local/HPC environment.
-- `HPC`: submit jobs to the cluster queue and run them when compute resources are available.
 
 {% include links.html %}
