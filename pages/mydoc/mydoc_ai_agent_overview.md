@@ -61,5 +61,8 @@ The framework records workflow and runtime context in the working directory. Thi
 - `agent_state.json`: persisted bindings (inputs and case directories) so sessions can resume after MCP server restarts.
 - `bash_*.sh`: the agent generates a `bash_*.sh` script for each `prepare`, `run`, and `analyze` phase, e.g., `bash_generate-cfd-mesh_run_001.sh`. A user can easily reproduce the exact workflow the agent executed by running these bash scripts in sequence.
 
+### Reference
+
+Ping He, Lean Fang, Jiawei Chen, Seth Zoppelt, and Christian Psenica. "Trustworthy Agentic AI for Aircraft Aerodynamic and Aerostructural Design Optimization.", paper in preparation. 2026.
 
 {% include links.html %}
