@@ -46,10 +46,11 @@ The execution will look like this:
 
 If any review fails (for example invalid input ranges or mesh quality below threshold), the workflow stops at that phase and reports what must be fixed.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-overview-diagram.png" style="width:700px !important;" />
+<div style="text-align: center;">
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-overview-diagram.png" style="width:800px !important;" />
 
 Fig. 1. Schematic of the agentic AI workflow
-
+</div>
 
 ## Transparency and Auditability
 
