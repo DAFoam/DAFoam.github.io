@@ -383,6 +383,21 @@ The following are the agent-generated figures.
 
 Fig. 2. Top left: Airfoil pressure profile. Top right: Visualization of airfoil turbulence variable field in the trame interactive server. Bottom left and right: pressure and velocity contours of the supersonic csaae.
 
+### CFD Unsteady Simulation 
+
+Users can prompt to run airfoil CFD simulations with desired airfoil profiles (prescribed in the mesh generation skill), angles of attack, Mach numbers, and Reynolds numbers. For example, 
+
+`Generate a cfd mesh for naca0012 airfoil with 20K cells, Re 5e6 and Ma 0.3. Run a unsteady cfd simulation with aoa=20 deg use 4 cores.`. 
+
+The following are the agent-generated figures.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-unsteady-pressure-profile.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-unsteady-velocity.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-unsteady-cl.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-unsteady-cd.png" style="width:400px !important;" />
+
+Fig. x. Top left: Airfoil pressure profile. Top right: Visualization of airfoil velocity field in the trame interactive server. Bottom left and right: lift coefficient convergence history and drag coefficient convergence history.
+
 ### CFD Mesh Convergence Study
 
 Users can prompt to conduct a mesh convergence study for an airfoil. For example, 
@@ -412,7 +427,7 @@ Fig. 4. CD/CL vs AoA plots
 
 ### Aerodyanamic shape optimization
 
-Users can prompt to run aerodynamic shape optimization. The default objective is drag, the design variabels are airfoil shape and angle of attack, the constraints include lift, thickness, volume, and leading edge radius. For example, 
+Users can prompt to run aerodynamic shape optimization. The default objective is drag, the design variables are airfoil shape and angle of attack, the constraints include lift, thickness, volume, and leading edge radius. For example, 
 
 `Generate a cfd mesh for the naca0012 airfoil and run an aero optimization at ma 0.3, re 5e6, cl 0.5. Run the optimization for 20 iters. Use 2 cores`. 
 
@@ -429,4 +444,41 @@ The agent will compare the drag reduciton between coarse and fine mesh for the b
 
 Fig. 5. Aerodynamic optimization. Top Left: comparison of the pressure and shape between the baseline and optimized designs. Top Right: Visualizing of the pressure for optimized design in trame. Bot left: Optimization convergence history for CD. Bot right: Summary of fine mesh verification.
 
+### Surrogate-based aerodyanamic shape optimization
+
+Users can additionally choose to use a surrogate-based optimization method rather than gradient-based. Similar to the gradient-based approach, the design variables include the shape of the airfoil and the angle of attack subject to the same lift, thickness, volume, and leading edge radius constraints. For example,
+
+`Run a surrogate based optimization on the NACA0012 airfoil. Set Re to 6.6e5, use 4000 mesh cells, with a velocity of 10m/s velocity. For the lift constraint use 0.49 and set the AOA to 5. Use 50 DOE points for the optimization and set the bounds on the CST coefficient design variables to 0.4. Use 5 optimization iterations. For the lift constraint weight use 1e6. Use 22 cores for the CFD. Use the MGP surrogate model. Set the seed value to 43.`
+
+The following is the agent generated figure. The drag reduction and constraint values are returned to the user by the agent in the chat window.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-shape.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-pressure-opt-trame.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-velocity-opt-trame.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-veloccity-baseline-trame.png" style="width:400px !important;" />
+
+Fig. 6. Surrogate-based aerodynamic shape optimization. Top Left: comparison of the pressure and shape between the baseline and optimized designs. Top Right: Visualizing of the pressure for optimized design in trame. Bot left: Visualizing of the velocity profile for optimized design in trame. Bot right: Visualizing of the pressure for baseline design in trame.
+
+### Aerodynamic multipoint optimization
+
+Users can prompt to run a multipoint optimization. The default objective is drag, the design variables are airfoil shape, angle of attack, and weights, the constraints include lift for each scenario, thickness, volume, and leading edge radius. For example,
+
+`Generate a multipoint optimization at ma 0.02941, Re 6.67e5, cl [0.5, 0.4], aoa [5 deg, 4 deg], and weights [0.6, 0.4]. Use 4 cores.`
+
+The following is the agent-generated figure. Similar to the aerodynamic shape optimization, the drag reduction and constraints can be found in the chat window after the optimization finishes. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-mesh.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-pressure-profile.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-flowfield-baseline.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-flowfield-optimized.png" style="width:400px !important;" />
+
+Fig. 6. Aerodynamic multipoint optimization. Top Left: mesh profile generation. Top Right: comparison of the pressure and shape between the baseline and optimzied designs. Bot Left: baseline flow field plot generated in Paraview. Bot Right: optimized flow field plot generated in Paraview. 
+
 {% include links.html %}
+
+
+
+
+
+
+
