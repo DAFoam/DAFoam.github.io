@@ -448,12 +448,12 @@ Fig. 6. Surrogate-based aerodynamic shape optimization. Top Left: comparison of 
 
 Users can prompt to run a multipoint optimization. The default objective is drag, the design variables are airfoil shape, angle of attack, and weights, the constraints include lift for each scenario, thickness, volume, and leading edge radius. For example,
 
-`Generate a multipoint optimization at ma 0.02941 (10 m/s), Re 6.67e5, cl [0.5, 0.4], aoa [5 deg, 4 deg], and weights [0.6, 0.4]. Use 4 cores.`
+`Generate a multipoint optimization at ma 0.02941, Re 6.67e5, cl [0.5, 0.4], aoa [5 deg, 4 deg], and weights [0.6, 0.4]. Use 4 cores.`
 
 The following is the agent-generated figure. Similar to the aerodynamic shape optimization, the drag reduction and constraints can be found in the chat window after the optimization finishes. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-mesh.png" style="width:400px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-presure-profile.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-pressure-profile.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-flowfield-baseline.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-flowfield-optimized.png" style="width:400px !important;" />
 
