@@ -429,4 +429,26 @@ The agent will compare the drag reduciton between coarse and fine mesh for the b
 
 Fig. 5. Aerodynamic optimization. Top Left: comparison of the pressure and shape between the baseline and optimized designs. Top Right: Visualizing of the pressure for optimized design in trame. Bot left: Optimization convergence history for CD. Bot right: Summary of fine mesh verification.
 
+### Surrogate-based aerodyanamic shape optimization
+
+Users can additionally choose to use a surrogate-based optimization method rather than gradient-based. Similar to the gradient-based approach, the design variables include the shape of the airfoil and the angle of attack subject to the same lift, thickness, volume, and leading edge radius constraints. For example,
+
+`Run a surrogate based optimization on the NACA0012 airfoil. Set Re to 6.6e5, use 4000 mesh cells, with a velocity of 10m/s velocity. For the lift constraint use 0.49 and set the AOA to 5. Use 50 DOE points for the optimization and set the bounds on the CST coefficient design variables to 0.4. Use 5 optimization iterations. For the lift constraint weight use 1e6. Use 22 cores for the CFD. Use the MGP surrogate model. Set the seed value to 43.`
+
+The following is the agent generated figure. The drag reduction and constraint values are returned to the user by the agent in the chat window.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-shape.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-pressure-opt-trame.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-velocity-opt-trame.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-veloccity-baseline-trame.png" style="width:400px !important;" />
+
+Fig. 6. Surrogate-based aerodynamic shape optimization. Top Left: comparison of the pressure and shape between the baseline and optimized designs. Top Right: Visualizing of the pressure for optimized design in trame. Bot left: Visualizing of the velocity profile for optimized design in trame. Bot right: Visualizing of the pressure for baseline design in trame.
+
 {% include links.html %}
+
+
+
+
+
+
+
