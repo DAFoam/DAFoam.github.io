@@ -383,6 +383,21 @@ The following are the agent-generated figures.
 
 Fig. 2. Top left: Airfoil pressure profile. Top right: Visualization of airfoil turbulence variable field in the trame interactive server. Bottom left and right: pressure and velocity contours of the supersonic csaae.
 
+### CFD Unsteady Simulation 
+
+Users can prompt to run airfoil CFD simulations with desired airfoil profiles (prescribed in the mesh generation skill), angles of attack, Mach numbers, and Reynolds numbers. For example, 
+
+`Generate a cfd mesh for naca0012 airfoil with 20K cells, Re 5e6 and Ma 0.3. Run a unsteady cfd simulation with aoa=20 deg use 4 cores.`. 
+
+The following are the agent-generated figures.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-unsteady-pressure-profile.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-unsteady-velocity.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-unsteady-cl.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-cfd-unsteady-cd.png" style="width:400px !important;" />
+
+Fig. x. Top left: Airfoil pressure profile. Top right: Visualization of airfoil velocity field in the trame interactive server. Bottom left and right: lift coefficient convergence history and drag coefficient convergence history.
+
 ### CFD Mesh Convergence Study
 
 Users can prompt to conduct a mesh convergence study for an airfoil. For example, 
