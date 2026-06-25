@@ -48,7 +48,7 @@ The execution will look like this:
 6. The mesh plots, interactive visualization servers, and a report regarding the mesh quality and number of mesh cells are passed back to the user.
 
 <div style="text-align: center;">
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-overview-diagram.png" style="width:800px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-overview-diagram.png" style="width:900px !important;" />
 
 Fig. 1. Schematic of the agentic AI workflow
 </div>
