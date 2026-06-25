@@ -412,7 +412,7 @@ Fig. 4. CD/CL vs AoA plots
 
 ### Aerodyanamic shape optimization
 
-Users can prompt to run aerodynamic shape optimization. The default objective is drag, the design variabels are airfoil shape and angle of attack, the constraints include lift, thickness, volume, and leading edge radius. For example, 
+Users can prompt to run aerodynamic shape optimization. The default objective is drag, the design variables are airfoil shape and angle of attack, the constraints include lift, thickness, volume, and leading edge radius. For example, 
 
 `Generate a cfd mesh for the naca0012 airfoil and run an aero optimization at ma 0.3, re 5e6, cl 0.5. Run the optimization for 20 iters. Use 2 cores`. 
 
@@ -428,5 +428,20 @@ The agent will compare the drag reduciton between coarse and fine mesh for the b
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-opt-fine-mesh.png" style="width:400px !important;" />
 
 Fig. 5. Aerodynamic optimization. Top Left: comparison of the pressure and shape between the baseline and optimized designs. Top Right: Visualizing of the pressure for optimized design in trame. Bot left: Optimization convergence history for CD. Bot right: Summary of fine mesh verification.
+
+### Aerodynamic multipoint optimization
+
+Users can prompt to run a multipoint optimization. The default objective is drag, the design variables are airfoil shape, angle of attack, and weights, the constraints include lift for each scenario, thickness, volume, and leading edge radius. For example,
+
+`Generate a multipoint optimization at ma 0.02941 (10 m/s), Re 6.67e5, cl [0.5, 0.4], aoa [5 deg, 4 deg], and weights [0.6, 0.4]. Use 4 cores.`
+
+The following is the agent-generated figure. Similar to the aerodynamic shape optimization, the drag reduction and constraints can be found in the chat window after the optimization finishes. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-mesh.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-presure-profile.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-flowfield-baseline.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-flowfield-optimized.png" style="width:400px !important;" />
+
+Fig. 6. Aerodynamic multipoint optimization. Top Left: mesh profile generation. Top Right: comparison of the pressure and shape between the baseline and optimzied designs. Bot Left: baseline flow field plot generated in Paraview. Bot Right: optimized flow field plot generated in Paraview. 
 
 {% include links.html %}
