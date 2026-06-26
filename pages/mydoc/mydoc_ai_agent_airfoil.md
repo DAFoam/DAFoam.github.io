@@ -455,7 +455,7 @@ The following is the agent generated figure. The drag reduction and constraint v
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-shape.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-pressure-opt-trame.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-velocity-opt-trame.png" style="width:400px !important;" />
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-veloccity-baseline-trame.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-SBO-pressure-baseline-trame.png" style="width:400px !important;" />
 
 Fig. 6. Surrogate-based aerodynamic shape optimization. Top Left: comparison of the pressure and shape between the baseline and optimized designs. Top Right: Visualizing of the pressure for optimized design in trame. Bot left: Visualizing of the velocity profile for optimized design in trame. Bot right: Visualizing of the pressure for baseline design in trame.
 
@@ -472,7 +472,7 @@ The following is the agent-generated figure. Similar to the aerodynamic shape op
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-flowfield-baseline.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-multipoint-flowfield-optimized.png" style="width:400px !important;" />
 
-Fig. 6. Aerodynamic multipoint optimization. Top Left: mesh profile generation. Top Right: comparison of the pressure and shape between the baseline and optimzied designs. Bot Left: baseline flow field plot generated in Paraview. Bot Right: optimized flow field plot generated in Paraview. 
+Fig. 7. Aerodynamic multipoint optimization. Top Left: mesh profile generation. Top Right: comparison of the pressure and shape between the baseline and optimzied designs. Bot Left: baseline flow field plot generated in Paraview. Bot Right: optimized flow field plot generated in Paraview. 
 
 {% include links.html %}
 
