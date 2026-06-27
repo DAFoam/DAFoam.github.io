@@ -9,6 +9,7 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
+<96> C. Bao, Y. Bin, Y. Shi, X. Yang. Canonical separated flows as transferable building blocks in data-driven turbulence modeling. Chinese Journal of Aeronautics, 2026.
 
 <95> J. Li, R. Kunz. G. Huan. X. Yang. The role of the law of the wall in cross-scenario generalisation of data-driven models. Journal of Fluid Mechanics, 2026.
 
