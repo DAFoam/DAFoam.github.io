@@ -61,7 +61,7 @@ Follow the instructions below for your selected LLM to test the installation by 
 </div>
 <div class="tab-content">
 
-1. Open the Claude Desktop App and sign in. 
+1. Close both Docker and Claude Desktop apps. Then, open the Docker app first, wait until it is ready, and then open the Claude Desktop App. 
 
 2. In the top left, click the sidebar icon to expand it, then change the mode from "Chat" to "Code". 
 
@@ -82,7 +82,7 @@ Fig. An example of the Claude Code interface
 </div>
 <div class="tab-content">
 
-1. Open the Codex Desktop App and sign in. 
+1. Close both Docker and Codex Desktop apps. Then, open the Docker app first, wait until it is ready, and then open the Codex Desktop App. 
 
 2. Click the "folder" icon right below the chat box and select "Add new project/Use an existing folder". In the pop-up, select the `mdo_agent_work/results` folder. 
 
