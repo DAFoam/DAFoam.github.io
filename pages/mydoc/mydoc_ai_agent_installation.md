@@ -71,7 +71,7 @@ Follow the instructions below for your selected LLM to test the installation by 
 
 5. Once the task is finished, you can click the names of the generated mesh pictures to view them in the app, or the links from the Trame or HTML servers to visualize the results.
 
-During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Bypass permissions". **IMPORTANT: The Bypass permissions mode may modify or damage system files. Use with caution!**
+During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Auto mode". **IMPORTANT: The auto mode may modify or damage system files. Use with caution!**
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-claude-app.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-claude-result.png" style="width:400px !important;" />
@@ -84,7 +84,7 @@ Fig. An example of the Claude Code interface
 
 1. Open the Codex Desktop App and sign in. 
 
-2. Click the "folder" icon right below the chat box and select "Add new project"->"Use existing folder". In the pop-up, select the `mdo_agent_work/results` folder. 
+2. Click the "folder" icon right below the chat box and select "Add new project/Use an existing folder". In the pop-up, select the `mdo_agent_work/results` folder. 
 
 3. You can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. 
 
