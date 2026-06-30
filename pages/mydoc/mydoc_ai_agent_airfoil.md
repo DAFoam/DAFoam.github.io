@@ -474,6 +474,19 @@ The following is the agent-generated figure. Similar to the aerodynamic shape op
 
 Fig. 7. Aerodynamic multipoint optimization. Top Left: mesh profile generation. Top Right: comparison of the pressure and shape between the baseline and optimzied designs. Bot Left: baseline flow field plot generated in Paraview. Bot Right: optimized flow field plot generated in Paraview. 
 
+### Generate training samples
+
+Users can prompt to run multiple CFD simulations to generate samples for training machine learning models. For example, 
+
+`Generate training sample points for NACA0012 airfoil for AOA=1 to 5 degs, and Ma from 0.15 to 0.4. Generate 10 samples.`. 
+
+The following is the agent-generated figure.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-lhs-summary.png" style="width:400px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-airfoil-lhs-folder.png" style="width:400px !important;" />
+
+Fig. 8. Left: summary of the CD/CL for all generated samples. Right: Screenshot of the folder structure that contains all the flow fields for each training sample
+
 {% include links.html %}
 
 
