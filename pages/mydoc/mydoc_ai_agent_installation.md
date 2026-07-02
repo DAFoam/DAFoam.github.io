@@ -67,11 +67,13 @@ Follow the instructions below for your selected LLM to test the installation by 
 
 3. Click the "Local" icon right above the chat box and select "Add another folder". In the pop-up, select the `mdo_agent_work/results` folder. 
 
-4. Then, ask `Is mdo_agent_deck MCP running?`. Once the agent confirms the MCP status (if not ask it to check again), you can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. The agent will run the case in the background.
+4. Then, ask `Is mdo_agent_deck's must_call_first tool available?`. Once the agent confirms the MCP status (if not ask it to check again or close Claude and re-open), you can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. The agent will run the case in the background.
 
 5. Once the task is finished, you can click the names of the generated mesh pictures to view them in the app, or the links from the Trame or HTML servers to visualize the results.
 
 During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Auto mode". **IMPORTANT: The auto mode may modify or damage system files. Use with caution!**
+
+**NOTE**: If you need to start a new chat, close Claude and re-open. This ensure the mdo_agent_deck is reset to run the next case. Try not to run multiple cases in one chat window, it will use a lot of token!
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-claude-app.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-claude-result.png" style="width:400px !important;" />
@@ -86,11 +88,13 @@ Fig. An example of the Claude Code interface
 
 2. Click "Choose project" and hover over "New project". Click "Use an existing folder". In the pop-up, select the `mdo_agent_work/results` folder. 
 
-3.  Then, ask `Is mdo_agent_deck MCP running?`. Once the agent confirms the MCP status (if not ask it to check again), you can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. The agent will run the case in the background.
+3.  Then, ask `Is mdo_agent_deck's must_call_first tool available?`. Once the agent confirms the MCP status (if not ask it to check again or close Codex and re-open), you can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. The agent will run the case in the background.
 
 4. Once the task is finished, you can click the links from the Trame or HTML servers to visualize the mesh results.
 
 During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Approve for me". **IMPORTANT: The Approve for me mode may modify or damage system files. Use with caution!** 
+
+**NOTE**: If you need to start a new chat, close Codex and re-open. This ensure the mdo_agent_deck is reset to run the next case. Try not to run multiple cases in one chat window, it will use a lot of token!
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-codex-app.png" style="width:700px !important;" />
 
