@@ -84,7 +84,7 @@ Fig. An example of the Claude Code interface
 
 1. Close both Docker and Codex Desktop apps. Then, open the Docker app first, wait until it is ready, and then open the Codex Desktop App. 
 
-2. Click the "folder" icon right below the chat box and select "Add new project/Use an existing folder". In the pop-up, select the `mdo_agent_work/results` folder. 
+2. Click "Choose project" and hover over "New project". Click "Use an existing folder". In the pop-up, select the `mdo_agent_work/results` folder. 
 
 3.  Then, ask `Is mdo_agent_deck MCP running?`. Once the agent confirms the MCP status (if not ask it to check again), you can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. The agent will run the case in the background.
 
