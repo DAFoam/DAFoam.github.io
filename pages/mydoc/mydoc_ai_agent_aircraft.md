@@ -244,13 +244,13 @@ Fig. 3. Left: Pressure contour of the original span design. Right: Pressure cont
 
 ### Use customized aircraft configurations
 
-Instead of using the default Boeing 737 configuration in `aircraft.vsp3`, you can use a customized OpenVSP aircraft configuration for the agent. First, download the Cessna 172 configuration files: [aircraft_c172.vsp3](https://github.com/DAFoam/mdo_agent_work/releases/download/v1.0/aircraft_c172.vsp3) and [vsp_design_vars_c172.json](https://github.com/DAFoam/mdo_agent_work/releases/download/v1.0/vsp_design_vars_c172.json). The Cessna 172 vsp3 file was downloaded and modified from the [OpenVSP Airshow](https://airshow.openvsp.org/). Rename these two files to to `aircraft.vsp3` and `vsp_design_vars.json`, respectively, and place them in your `mdo_agent_work/results` folder.
-
-The `vsp_design_vars.json` file defines which OpenVSP design variables can be modified by the aircraft agent. In this file, you need to define the component, group, and variable names for each design variable. These names can be found in the OpenVSP GUI by clicking the corresponding variables. You can also create your own vsp3 configuration and prepare vsp_design_vars_c172.json accordingly.
+Instead of using the default Boeing 737 configuration in `aircraft.vsp3`, you can use a customized OpenVSP aircraft configuration for the agent. First, download the Cessna 172 configuration file: [aircraft_c172.vsp3](https://github.com/DAFoam/mdo_agent_work/releases/download/v1.0/aircraft_c172.vsp3). The Cessna 172 vsp3 file was downloaded and modified from the [OpenVSP Airshow](https://airshow.openvsp.org/). Rename it to `aircraft.vsp3` and place it in your `mdo_agent_work/results` folder (working directory).
 
 Then, you can ask the agent to simulate your customized configuration. For example:
 
-`Generate a CFD mesh for my customized aircraft.vsp3 geometry and vsp_design_vars.json files. The mesh should have about 0.5 million cells. Then, run a CFD simulation with aoa=2 deg, Ma=0.3, and Re=5e6. Next, run another CFD simulation with the same condition but increase the wing sweep by 20 deg. Compare the CD/CL between these two CFD simulations. For both mesh generation and CFD simulations, use 4 cores.`
+`Generate a CFD mesh for my customized aircraft.vsp3 geometry. The mesh should have about 0.5 million cells. Then, run a CFD simulation with aoa=2 deg, Ma=0.3, and Re=5e6. Next, run another CFD simulation with the same condition but increase the wing sweep by 20 deg. Compare the CD/CL between these two CFD simulations. For both mesh generation and CFD simulations, use 4 cores.`
+
+Note: You can optionally provide a `vsp_design_vars.json` file to specify which OpenVSP design variables the aircraft agent is allowed to modify. This file should list the component, group, and variable name for each design variable. You can find these names in the OpenVSP GUI by clicking the corresponding variables. If you do not provide a `vsp_design_vars.json` file, the agent will generate one for you based on your prompt.
 
 The following are the AI-generated pictures. We can compare the CD/CL values between the original sweep design and the design with 20 deg increased sweep.
 
