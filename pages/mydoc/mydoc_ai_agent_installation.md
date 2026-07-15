@@ -341,12 +341,12 @@ Once the model is downloaded, you can run the model in your terminal using the f
 
 Download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/docker.zip). 
 
-Unzip it and you will see a folder called `mdo_agent_work-docker`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents. 
+Unzip it and you will see a folder called `mdo_agent_work-docker`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents.
 
 ### Step 3. Download OpenCode and configure MCP file
 Once the local LLM is up and running, it must be connected to the MCP server. To do this, it is recommended to use OpenCode. Download OpenCode by running the following command: `curl -fsSL https://opencode.ai/install | bash`. There is also a desktop version available to [download](https://opencode.ai/download).
 
-OpenCode requires the use of `opencode.json` in lieu of `.mcp.json`, though the two files are very similar with `opencode.json` having an additional entry for the LLM you wish to run. In `opencode.json`, you will need to only adjust the entries under `models`. The example `opencode.json` file below shows a configuration for the `qwen3.5:9b` model. Ensure that this file is in the same `results/` directory as `.mcp.json`.  
+OpenCode requires the use of `opencode.json` in lieu of `mdo_agent_work/results/.mcp.json`, though the two files are very similar with `opencode.json` having an additional entry for the LLM you wish to run. In `opencode.json`, you will need to only adjust the entries under `models`. The example `opencode.json` file below shows a configuration for the `qwen3.5:9b` model. Ensure that this file is in the same `results/` directory as `.mcp.json`.  
 
 ```
 {
