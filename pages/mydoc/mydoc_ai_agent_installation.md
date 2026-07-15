@@ -322,5 +322,88 @@ agent --yolo
 
 **NOTE**: For the best visual experience, we recommend using the "Light Modern" color theme in VS Code. To change the theme, open the Command Palette in VS Code, search for "Preferences: Color Theme", and select "Light Modern".
 
+## Option E: Local LLM
+
+This option works for Linux, MacOS, and Windows. This option is for running the agents with a local LLM.
+
+### Step 1. Download local LLM
+First, download Ollama which will allow you to download LLMs and manage your various models.
+
+- Ollama [download](https://ollama.com/download)
+
+After the download is complete, start ollama by running `ollama serve` in the terminal. Then download an LLM via `ollama pull <model name>`. You can find a searchable list of models [here](https://ollama.com/search). The recommended model to run is `qwen3.5:9b`.
+
+Once the model is downloaded, you can run the model in your terminal using the following command: `ollama run <model name>`.
+
+**IMPORTANT: After prompting the model, run `ollama ps` in another terminal window. You should see the GPU usage at 100%. If there is any CPU usage then the model you downloaded is too large for your hardware. Consider running a smaller model.**
+
+### Step 2. Download the working directory
+
+Download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/docker.zip). 
+
+Unzip it and you will see a folder called `mdo_agent_work-docker`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents. 
+
+The installation is finished!
+
+### Step 3. Download OpenCode and configure MCP file
+Once the local LLM is up and running, it must be connected to the MCP server. To do this, it is recommended to use OpenCode. Download OpenCode by running the following command: `curl -fsSL https://opencode.ai/install | bash`. There is also a desktop version available to [download](https://opencode.ai/download).
+
+OpenCode requires the use of `opencode.json` in lieu of `.mcp.json`, though the two files are very similar with `opencode.json` having an additional entry for the LLM you wish to run. In `opencode.json`, you will need to only adjust the entries under `models`. The example `opencode.json` file below shows a configuration for the `qwen3.5:9b` model. Ensure that this file is in the same `results/` directory as `.mcp.json`.  
+
+```
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (local)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "qwen3.5:9b": {
+          "name": "qwen"
+        }
+      }
+    }
+  },
+  "mcp": {
+    "mdo_agent_deck": {
+      "type": "local",
+      "command": [
+        "docker",
+        "run",
+        "-i",
+        "--rm",
+        "--name",
+        "mdo_agent_deck",
+        "-p",
+        "8001:8001",
+        "-p",
+        "8002:8002",
+        "--mount",
+        "type=bind,src=.,target=/home/dafoamuser/mount",
+        "-w",
+        "/home/dafoamuser/mount",
+        "mdo_agent_deck:latest",
+        "bash",
+        "-lc",
+        "source /home/dafoamuser/dafoam/loadDAFoam.sh && mdo-agent-deck-mcp"
+      ]
+    }
+  }
+}
+```
+
+Once this file is created, `cd` to `results/` and run `opencode` to launch the agent. You will see on the right hand side a verification that the LLM is connected to the MCP server. Additionally, you can run `/mcps` in OpenCode to view the available MCP servers. If you are connected, you should see `mdo_agent_deck connected` in the pop-up window. Hit `esc` to close this window.
+
+**IMPORTANT: OpenCode has two modes: Build and Plan. Build mode allows OpenCode to modify files. Plan mode does not. In order to run the agents properly, ensure you are in Build mode. This can be toggled via the tab key.**
+
+### Step 4. Test the agents
+Follow the instructions below to test the agents.
+
+- `cd` to the `results` directory and run `opencode`
+- Run `/mcps` to verify that opencode is connected to the MCP server
+- If connected, you can ask the agent to run a task such as: `Simulate the NACA0012 airfoil in a steady state simulation using 20k cells`. The agent will parse this input in order to generate the appropriate mesh and run the CFD simulation for you.
 
 {% include links.html %}
