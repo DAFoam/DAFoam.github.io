@@ -331,7 +331,7 @@ First, download Ollama which will allow you to download LLMs and manage your var
 
 - Ollama [download](https://ollama.com/download)
 
-After the download is complete, start ollama by running `ollama serve` in the terminal. Then download an LLM via `ollama pull <model name>`. You can find a searchable list of models [here](https://ollama.com/search). The recommended model to run is `qwen3.5:9b`.
+After the download is complete, start ollama by running `ollama serve` in the terminal. Then download an LLM via `ollama pull <model name>`. You can find a searchable list of models [here](https://ollama.com/search). The recommended model to run is `qwen3.5:9b`. To get the model name, select the model you want to download by clicking on it. Then copy and paste the name of the specific version of that model you wish to download.
 
 Once the model is downloaded, you can run the model in your terminal using the following command: `ollama run <model name>`.
 
@@ -342,8 +342,6 @@ Once the model is downloaded, you can run the model in your terminal using the f
 Download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/docker.zip). 
 
 Unzip it and you will see a folder called `mdo_agent_work-docker`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents. 
-
-The installation is finished!
 
 ### Step 3. Download OpenCode and configure MCP file
 Once the local LLM is up and running, it must be connected to the MCP server. To do this, it is recommended to use OpenCode. Download OpenCode by running the following command: `curl -fsSL https://opencode.ai/install | bash`. There is also a desktop version available to [download](https://opencode.ai/download).
