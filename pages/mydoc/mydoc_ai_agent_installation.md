@@ -326,166 +326,36 @@ agent --yolo
 
 This option works for Linux, MacOS, and Windows. This option is for running the agents with a local LLM.
 
-### Step 1. Download local LLM
-First, download Ollama which will allow you to download LLMs and manage your various models.
-
-- Ollama [download](https://ollama.com/download)
-
-After the download is complete, start ollama by running `ollama serve` in the terminal. Then download an LLM via `ollama pull <model name>`. You can find a searchable list of models [here](https://ollama.com/search). The recommended model to run is `qwen3.5:9b`. To get the model name, select the model you want to download by clicking on it. Then copy and paste the name of the specific version of that model you wish to download.
-
-Once the model is downloaded, you can run the model in your terminal using the following command: `ollama run <model name>`.
-
-**IMPORTANT: After prompting the model, run `ollama ps` in another terminal window. You should see the GPU usage at 100%. If there is any CPU usage then the model you downloaded is too large for your hardware. Consider running a smaller model.**
-
-### Step 2. Download the working directory
+### Step 1. Download the working directory
 
 Download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/docker.zip). 
 
 Unzip it and you will see a folder called `mdo_agent_work-docker`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents.
 
-### Step 3. Download OpenCode and configure MCP file
-Once the local LLM is up and running, it must be connected to the MCP server. To do this, it is recommended to use OpenCode. Download OpenCode by running the following command: `curl -fsSL https://opencode.ai/install | bash`. There is also a desktop version available to [download](https://opencode.ai/download).
+### Step 2. Download local LLM
+First, download Ollama which will allow you to download LLMs and manage your various models.
 
-OpenCode requires the use of `opencode.json` in lieu of `mdo_agent_work/results/.mcp.json`, though the two files are very similar with `opencode.json` having an additional entry for the LLM you wish to run. In `opencode.json`, you will need to only adjust the entries under `models`. The example `opencode.json` file below shows a configuration for the `qwen3.5:9b` model. Ensure that this file is in the same `results/` directory as `.mcp.json`.  
+- Ollama [download](https://ollama.com/download)
 
-```
-{
-  "$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "ollama": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Ollama (local)",
-      "options": {
-        "baseURL": "http://localhost:11434/v1"
-      },
-      "models": {
-        "qwen3.5:9b": {
-          "name": "qwen"
-        }
-      }
-    }
-  },
-  "mcp": {
-    "mdo_agent_deck": {
-      "type": "local",
-      "command": [
-        "docker",
-        "run",
-        "-i",
-        "--rm",
-        "--name",
-        "mdo_agent_deck",
-        "-p",
-        "8001:8001",
-        "-p",
-        "8002:8002",
-        "--mount",
-        "type=bind,src=.,target=/home/dafoamuser/mount",
-        "-w",
-        "/home/dafoamuser/mount",
-        "mdo_agent_deck:latest",
-        "bash",
-        "-lc",
-        "source /home/dafoamuser/dafoam/loadDAFoam.sh && mdo-agent-deck-mcp"
-      ]
-    }
-  }
-}
-```
+After the download is complete, start ollama by launching the desktop application. The recommended LLM to use with the mdo_agents is `qwen3.5:9b`. This LLM can be downloaded by simply running `ollama pull qwen3.5:9b`.
 
-Once this file is created, `cd` to `results/` and run `opencode` to launch the agent. You will see on the right hand side a verification that the LLM is connected to the MCP server. Additionally, you can run `/mcps` in OpenCode to view the available MCP servers. If you are connected, you should see `mdo_agent_deck connected` in the pop-up window. Hit `esc` to close this window.
+### Step 3. Configure the local LLM
+The default `qwen3.5:9b` from Ollama will need to be adjusted in order to properly run the agent. To do this via Ollama, you can use the preconfigured `Modelfile` which can be found in `mdo_agent_work/results/.opencode/Modelfile`. `cd` to this directory and run: `ollama create qwen3.5-agent:9b -f ./Modelfile`. This will create a new version of `qwen3.5:9b` which is better suited for the agents. If you wish to delete the original `qwen3.5:9b` model you can do so by running `ollama rm qwen3.5:9b`.
+
+Now, test the inference speed of the locally hosted LLM by `ollama run qwen3.5-agent:9b --verbose`. After the brief loading, you can start chatting and ask a question like "Can you give me an overview of your understanding of CFD?" After the LLM responds, take note of the `eval rate` in tokens/s at the end, and the performance is considered sufficient if the value is greater than 15. During the test chat session, you can check the VRAM and RAM usage by running `ollama ps`. Ollama will list the percent usage of GPU and CPU. Ideally, it should return 100% GPU usage. If not, the LLM is too large for your hardware and will off load inference to the CPU which will greatly slow down the LLM. Our agentic variant of qwen3.5:9b with a 64K context window should be less than 8 GB in size. Once done with the performance evaluation, you may end the chat session by typing `/bye`.
+
+### Step 4. Download OpenCode
+Once the local LLM is up and running, it must be connected to the MCP server. To do this, the recommended option is to use OpenCode. Download OpenCode [here](https://opencode.ai/download) (there is both a CLI version and desktop version, the CLI version is recommended).
+
+To run `opencode`, `cd` to `mdo_agent_work/results/` in your terminal and run the command `opencode`. You will see on the right hand side a verification that the LLM is connected to the MCP server. Additionally, you can run `/mcps` in OpenCode to view the available MCP servers. If you are connected, you should see `mdo_agent_deck connected` in the pop-up window. Hit `esc` to close this window.
 
 **IMPORTANT: OpenCode has two modes: Build and Plan. Build mode allows OpenCode to modify files. Plan mode does not. In order to run the agents properly, ensure you are in Build mode. This can be toggled via the tab key.**
 
-### Step 4. Test the agents
+### Step 5. Test the agents
 Follow the instructions below to test the agents.
 
 - `cd` to the `results` directory and run `opencode`
 - Run `/mcps` to verify that opencode is connected to the MCP server
 - If connected, you can ask the agent to run a task such as: `Simulate the NACA0012 airfoil in a steady state simulation using 20k cells`. The agent will parse this input in order to generate the appropriate mesh and run the CFD simulation for you.
-
-### Step 1. Install Ollama and prepare the model
-
-For local agentic CFD workflows, we recommend Ollama to host an LLM locally. In this tutorial, we use qwen3.5:9b because it is both capable enough to handle such an agentic workflow, and small enough to function on mainstream hardware. First, follow the steps below:
-
-- Download [Ollama](https://ollama.com/download) from here and install it.
-- Open a terminal, and verify the installation by `ollama --version`.
-- Pull the qwen3.5:9b base model by `ollama pull qwen3.5:9b`.
-- Use `ollama ls` to list all local models, and verify that qwen3.5:9b is listed.
-
-Next, we create a tuned variant from the qwen3.5:9b base model for the agentic tasks. In any directory, create a file named `Modelfile.qwen-agent` with the content below:
-
-```
-FROM qwen3.5:9b
-PARAMETER num_ctx 65536
-PARAMETER temperature 0.6
-PARAMETER top_p 0.8
-PARAMETER top_k 20
-PARAMETER min_p 0
-PARAMETER presence_penalty 0
-PARAMETER repeat_penalty 1.0
-```
-
-Then, in the same directory, build the agentic variant by `ollama create qwen3.5-agent:9b -f Modelfile.qwen-agent`. Use `ollama ls` again, and verify that the new agentic variant called `qwen3.5-agent:9b` is listed.
-
-Now, test the inference speed of the locally hosted LLM by `ollama run qwen3.5-agent:9b --verbose`. After the brief loading, you can start chatting and ask a question like "Can you give me an overview of your understanding of CFD?" After the LLM responds, take note of the `eval rate` in tokens/s at the end, and the performance is considered sufficient if the value is greater than 15. Once done with the performance evaluation, you may end the chat session by typing `/bye`. During or shortly after the test chat session, you can check the VRAM or RAM usage by `ollama ps`. Our agentic variant of qwen3.5:9b with a 64K context window should be less than 8 GB in size, and it should fit 100% inside a mainstream discrete GPU.
-
-<!-- By default, Ollama only loads the LLM at the first user message, and automatically unloads after some idle time. To make the LLM persistent in RAM/VRAM... -->
-
-### Step 2. Install and configure Cline
-
-Cline is an open-source agentic harness built as an IDE extension. Make sure VSCode is installed first, and install Cline by `code --install-extension saoudrizwan.claude-dev` in the terminal. After the installation, the Cline icon should show up on the activity bar (left) of VSCode. Click the Cline icon, and at the top of the Cline panel, we can see "New Task", "MCP Servers", "History", "Account", and "Settings"
-
-Next, we connect Cline to our locally hosted `qwen3.5-agent:9b`. Open "Settings" (gear icon) and set:
-
-- API Provider: `Ollama`
-- Base URL: leave default (`http://localhost:11434`)
-- Model: `qwen3.5-agent:9b`
-- Context window: `65536`
-
-Then, we connect Cline to the `mdo_agent_deck` MCP server. Click "MCP Servers" (server stack icon), "Configure", and then "Configure MCP Servers", and then put the following content into cline_mcp_settings.json, and change the placeholder `ABSOLUTE_PATH_TO_mdo_agents_results` to your actual absolute path. For Windows users, make sure to use "\\\\" instead of "\\".  
-
-```json
-{
-  "mcpServers": {
-    "mdo_agent_deck": {
-      "command": "docker",
-      "args": [
-        "run", "-i", "--rm",
-        "-p", "8001:8001",
-        "-p", "8002:8002",
-        "--mount", "type=bind,src=ABSOLUTE_PATH_TO_mdo_agents_results,target=/home/dafoamuser/mount",
-        "-w", "/home/dafoamuser/mount",
-        "mdo_agent_deck:latest",
-        "bash", "-lc",
-        "source /home/dafoamuser/dafoam/loadDAFoam.sh && mdo-agent-deck-mcp"
-      ],
-      "disabled": false,
-      "timeout": 600,
-      "autoApprove": [
-        "must_call_first", "get_skills", "get_pre_context",
-        "get_skill_input_info", "get_skill_advanced_parameters",
-        "set_skill_inputs", "set_skill_advanced_parameters",
-        "generate_lhs_samples", "prepare", "run", "submit_run_batch",
-        "review_run", "wait_for_run", "analyze", "review_analyze",
-        "get_post_context"
-      ]
-    }
-  }
-}
-```
-
-The `mdo_agent_deck` MCP server should then show up with a green light on, and a corresponding Docker container should also spawn. You can click "Restart Server" if it is shown as a red light instead. 
-
-Note that Cline has a known bug in which it may auto-append its own cline_mcp_settings.json with "}", hence corrupting it. If the MCP server randomly stopped working, this may likely be the case. You can solve this by checking cline_mcp_settings.json and removing those "}" manually, or locking cline_mcp_settings.json as read-only.
-
-### Step 3. Test the agents
-
-With both the LLM and the MCP server connected to Cline, we can now run some local agentic CFD workflows. Click "New Task", and you can start an agentic CFD run via a prompt. 
-
-You can try something like `You have MCP tools from the mdo_agent_deck server. First call must_call_first, then follow the returned workflow steps exactly, in order. Task: run a DAFoam RANS CFD analysis of the NACA0012 airfoil at 5 degrees angle of attack, Reynolds number 1e6; use 20000 cells, 2 CPU cores, and default values for the rest.` The agent will then parse the user intent, perform meshing, CFD, and post-processing in sequential order, and then report the results back to the human user. 
-
-Note that the hints about `mdo_agent_deck` and `must_call_first` are not strictly necessary, but they help enforce reliability for a small language model like qwen3.5:9b.
-
 
 {% include links.html %}
