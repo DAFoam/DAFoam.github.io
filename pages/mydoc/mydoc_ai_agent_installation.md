@@ -404,4 +404,88 @@ Follow the instructions below to test the agents.
 - Run `/mcps` to verify that opencode is connected to the MCP server
 - If connected, you can ask the agent to run a task such as: `Simulate the NACA0012 airfoil in a steady state simulation using 20k cells`. The agent will parse this input in order to generate the appropriate mesh and run the CFD simulation for you.
 
+### Step 1. Install Ollama and prepare the model
+
+For local agentic CFD workflows, we recommend Ollama to host an LLM locally. In this tutorial, we use qwen3.5:9b because it is both capable enough to handle such an agentic workflow, and small enough to function on mainstream hardware. First, follow the steps below:
+
+- Download [Ollama](https://ollama.com/download) from here and install it.
+- Open a terminal, and verify the installation by `ollama --version`.
+- Pull the qwen3.5:9b base model by `ollama pull qwen3.5:9b`.
+- Use `ollama ls` to list all local models, and verify that qwen3.5:9b is listed.
+
+Next, we create a tuned variant from the qwen3.5:9b base model for the agentic tasks. In any directory, create a file named `Modelfile.qwen-agent` with the content below:
+
+```
+FROM qwen3.5:9b
+PARAMETER num_ctx 65536
+PARAMETER temperature 0.6
+PARAMETER top_p 0.8
+PARAMETER top_k 20
+PARAMETER min_p 0
+PARAMETER presence_penalty 0
+PARAMETER repeat_penalty 1.0
+```
+
+Then, in the same directory, build the agentic variant by `ollama create qwen3.5-agent:9b -f Modelfile.qwen-agent`. Use `ollama ls` again, and verify that the new agentic variant called `qwen3.5-agent:9b` is listed.
+
+Now, test the inference speed of the locally hosted LLM by `ollama run qwen3.5-agent:9b --verbose`. After the brief loading, you can start chatting and ask a question like "Can you give me an overview of your understanding of CFD?" After the LLM responds, take note of the `eval rate` in tokens/s at the end, and the performance is considered sufficient if the value is greater than 15. Once done with the performance evaluation, you may end the chat session by typing `/bye`. During or shortly after the test chat session, you can check the VRAM or RAM usage by `ollama ps`. Our agentic variant of qwen3.5:9b with a 64K context window should be less than 8 GB in size, and it should fit 100% inside a mainstream discrete GPU.
+
+<!-- By default, Ollama only loads the LLM at the first user message, and automatically unloads after some idle time. To make the LLM persistent in RAM/VRAM... -->
+
+### Step 2. Install and configure Cline
+
+Cline is an opensource agentic harness built as an IDE extension. Make sure VSCode is installed first, and install Cline by `code --install-extension saoudrizwan.claude-dev` in the terminal. After the installation, the Cline icon should show up on the activity bar (left) of VSCode. Click the Cline icon, and at the top of Cline panel, we can see "New Task", "MCP Servers", "History", "Account", and "Settings"
+
+Next, we connect Cline to our locally hosted `qwen3.5-agent:9b`. Open "Settings" (gear icon) and set:
+
+- API Provider: `Ollama`
+- Base URL: leave default (`http://localhost:11434`)
+- Model: `qwen3.5-agent:9b`
+- Context window: `65536`
+
+Then, we connect Cline to the `mdo_agent_deck` MCP server. Click "MCP Servers" (server stack icon), "Configure", and then "Configure MCP Servers", and then put the following content into cline_mcp_settings.json, and change the placeholder `ABSOLUTE_PATH_TO_mdo_agents_results` to your actual absolute path. For Windows users, make sure to use "\\" instead of "\".  
+
+```json
+{
+  "mcpServers": {
+    "mdo_agent_deck": {
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm",
+        "-p", "8001:8001",
+        "-p", "8002:8002",
+        "--mount", "type=bind,src=ABSOLUTE_PATH_TO_mdo_agents_results,target=/home/dafoamuser/mount",
+        "-w", "/home/dafoamuser/mount",
+        "mdo_agent_deck:latest",
+        "bash", "-lc",
+        "source /home/dafoamuser/dafoam/loadDAFoam.sh && mdo-agent-deck-mcp"
+      ],
+      "disabled": false,
+      "timeout": 600,
+      "autoApprove": [
+        "must_call_first", "get_skills", "get_pre_context",
+        "get_skill_input_info", "get_skill_advanced_parameters",
+        "set_skill_inputs", "set_skill_advanced_parameters",
+        "generate_lhs_samples", "prepare", "run", "submit_run_batch",
+        "review_run", "wait_for_run", "analyze", "review_analyze",
+        "get_post_context"
+      ]
+    }
+  }
+}
+```
+
+The `mdo_agent_deck` MCP server should then show up with a green light on, and a corresponding Docker container should also spawn. You can click "Restart Server" if it is shown as red light instead. 
+
+Note that Cline has a known bug in which it may auto-append its own cline_mcp_settings.json with "}" hencing corrucpting it. If the MCP server randomly stopped working, this may likely be the case. You can solve this by checking cline_mcp_settings.json and remove those "}" manually, or lock cline_mcp_settings.json as read-only.
+
+### Step 3. Test the agents
+
+With both the LLM and the MCP server connected to Cline, we can now run some local agentic CFD workflows. Click "New Task", and you can start an agentic CFD run via a prompt. 
+
+You can try something like `You have MCP tools from the mdo_agent_deck server. First call must_call_first, then follow the returned workflow steps exactly, in order. Task: run a DAFoam RANS CFD analysis of the NACA0012 airfoil at 5 degrees angle of attack, Reynolds number 1e6; use 20000 cells, 2 CPU cores, and default values for the rest.` The agent will then parse the user intent, perform meshing, CFD, post-processing in sequetial order, and then report the results back to the human user. 
+
+Note that the hints about `mdo_agent_deck` and `must_call_first` are not strictly necessary, but they help enforce reliability for a small language model like qwen3.5:9b.
+
+
 {% include links.html %}
