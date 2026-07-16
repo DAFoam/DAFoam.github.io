@@ -347,7 +347,9 @@ Now, test the inference speed of the locally hosted LLM by `ollama run qwen3.5-a
 ### Step 4. Download OpenCode
 Once the local LLM is up and running, it must be connected to the MCP server. To do this, the recommended option is to use OpenCode. Download OpenCode [here](https://opencode.ai/download) (there is both a CLI version and desktop version, the CLI version is recommended).
 
-To run `opencode`, `cd` to `mdo_agent_work/results/` in your terminal and run the command `opencode`. You will see on the right hand side a verification that the LLM is connected to the MCP server. Additionally, you can run `/mcps` in OpenCode to view the available MCP servers. If you are connected, you should see `mdo_agent_deck connected` in the pop-up window. Hit `esc` to close this window.
+To run OpenCode, `cd` to `mdo_agent_work/results/` in your terminal, copy the `.opencode/opencode.json` file to `results/`, and run the command `opencode`. You will see on the right hand side a verification that the LLM is connected to the MCP server. Additionally, you can run `/mcps` in OpenCode to view the available MCP servers. If you are connected, you should see `mdo_agent_deck connected` in the pop-up window. Hit `esc` to close this window.
+
+The LLM you are using is listed at the bottom of the text entry box. It should say `mdo-agent`. If this is not the case, run `/models` in the text entry box and hit enter. Select `mdo-agent` from the menu.
 
 **IMPORTANT: OpenCode has two modes: Build and Plan. Build mode allows OpenCode to modify files. Plan mode does not. In order to run the agents properly, ensure you are in Build mode. This can be toggled via the tab key.**
 
