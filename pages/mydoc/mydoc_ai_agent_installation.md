@@ -73,7 +73,7 @@ Follow the instructions below for your selected LLM to test the installation by 
 
 During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Auto mode". **IMPORTANT: The auto mode may modify or damage system files. Use with caution!**
 
-**NOTE**: If you need to start a new chat, close Claude and re-open. This ensure the mdo_agent_deck is reset to run the next case. Try not to run multiple cases in one chat window, it will use a lot of token!
+**NOTE**: If you need to start a new chat, close Claude and re-open. This ensures the mdo_agent_deck is reset to run the next case. Try not to run multiple cases in one chat window, as it will use a lot of tokens!
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-claude-app.png" style="width:400px !important;" />
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-claude-result.png" style="width:400px !important;" />
@@ -434,7 +434,7 @@ Now, test the inference speed of the locally hosted LLM by `ollama run qwen3.5-a
 
 ### Step 2. Install and configure Cline
 
-Cline is an opensource agentic harness built as an IDE extension. Make sure VSCode is installed first, and install Cline by `code --install-extension saoudrizwan.claude-dev` in the terminal. After the installation, the Cline icon should show up on the activity bar (left) of VSCode. Click the Cline icon, and at the top of Cline panel, we can see "New Task", "MCP Servers", "History", "Account", and "Settings"
+Cline is an open-source agentic harness built as an IDE extension. Make sure VSCode is installed first, and install Cline by `code --install-extension saoudrizwan.claude-dev` in the terminal. After the installation, the Cline icon should show up on the activity bar (left) of VSCode. Click the Cline icon, and at the top of the Cline panel, we can see "New Task", "MCP Servers", "History", "Account", and "Settings"
 
 Next, we connect Cline to our locally hosted `qwen3.5-agent:9b`. Open "Settings" (gear icon) and set:
 
@@ -443,7 +443,7 @@ Next, we connect Cline to our locally hosted `qwen3.5-agent:9b`. Open "Settings"
 - Model: `qwen3.5-agent:9b`
 - Context window: `65536`
 
-Then, we connect Cline to the `mdo_agent_deck` MCP server. Click "MCP Servers" (server stack icon), "Configure", and then "Configure MCP Servers", and then put the following content into cline_mcp_settings.json, and change the placeholder `ABSOLUTE_PATH_TO_mdo_agents_results` to your actual absolute path. For Windows users, make sure to use "\\" instead of "\".  
+Then, we connect Cline to the `mdo_agent_deck` MCP server. Click "MCP Servers" (server stack icon), "Configure", and then "Configure MCP Servers", and then put the following content into cline_mcp_settings.json, and change the placeholder `ABSOLUTE_PATH_TO_mdo_agents_results` to your actual absolute path. For Windows users, make sure to use "\\\\" instead of "\\".  
 
 ```json
 {
@@ -475,15 +475,15 @@ Then, we connect Cline to the `mdo_agent_deck` MCP server. Click "MCP Servers" (
 }
 ```
 
-The `mdo_agent_deck` MCP server should then show up with a green light on, and a corresponding Docker container should also spawn. You can click "Restart Server" if it is shown as red light instead. 
+The `mdo_agent_deck` MCP server should then show up with a green light on, and a corresponding Docker container should also spawn. You can click "Restart Server" if it is shown as a red light instead. 
 
-Note that Cline has a known bug in which it may auto-append its own cline_mcp_settings.json with "}" hencing corrucpting it. If the MCP server randomly stopped working, this may likely be the case. You can solve this by checking cline_mcp_settings.json and remove those "}" manually, or lock cline_mcp_settings.json as read-only.
+Note that Cline has a known bug in which it may auto-append its own cline_mcp_settings.json with "}", hence corrupting it. If the MCP server randomly stopped working, this may likely be the case. You can solve this by checking cline_mcp_settings.json and removing those "}" manually, or locking cline_mcp_settings.json as read-only.
 
 ### Step 3. Test the agents
 
 With both the LLM and the MCP server connected to Cline, we can now run some local agentic CFD workflows. Click "New Task", and you can start an agentic CFD run via a prompt. 
 
-You can try something like `You have MCP tools from the mdo_agent_deck server. First call must_call_first, then follow the returned workflow steps exactly, in order. Task: run a DAFoam RANS CFD analysis of the NACA0012 airfoil at 5 degrees angle of attack, Reynolds number 1e6; use 20000 cells, 2 CPU cores, and default values for the rest.` The agent will then parse the user intent, perform meshing, CFD, post-processing in sequetial order, and then report the results back to the human user. 
+You can try something like `You have MCP tools from the mdo_agent_deck server. First call must_call_first, then follow the returned workflow steps exactly, in order. Task: run a DAFoam RANS CFD analysis of the NACA0012 airfoil at 5 degrees angle of attack, Reynolds number 1e6; use 20000 cells, 2 CPU cores, and default values for the rest.` The agent will then parse the user intent, perform meshing, CFD, and post-processing in sequential order, and then report the results back to the human user. 
 
 Note that the hints about `mdo_agent_deck` and `must_call_first` are not strictly necessary, but they help enforce reliability for a small language model like qwen3.5:9b.
 
