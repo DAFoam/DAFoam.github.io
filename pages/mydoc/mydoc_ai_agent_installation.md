@@ -353,20 +353,20 @@ Then go to the `mdo_agent_work/results/` folder in your terminal, copy `mdo_agen
 **Check these things before running the agents:**
 
 - On the right-hand side, you should see confirmation that the LLM is connected to the MCP server. You can also run `/mcps` in OpenCode to view the available MCP servers. If the connection is working, you should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
-- The active LLM is shown at the bottom of the text entry box. It should display `mdo-agent`. If it does not, run `/models`, press Enter, and select `mdo-agent` from the menu.
+- The active LLM is shown at the bottom of the text entry box. It should display `mdo-agent`. If it does not, run `/models`, press Enter, and select `mdo-agent` from the menu (see the following figure).
 - OpenCode has two modes: Build and Plan. Build mode allows OpenCode to modify files, while Plan mode does not. To run the agents properly, make sure OpenCode is in Build mode. You can toggle modes with the `Tab` key.
 
 ### Step 4. Test the agents
 Follow the instructions below to test the agents.
 
-- `cd` to the `results` directory and run `opencode`.
+- Open a terminal and go into the `mdo_agent_work/results` directory. Then, run `opencode`.
 - Run `/mcps` to verify that OpenCode is connected to the MCP server.
 - If connected, ask the agent to run a task such as `Simulate the NACA0012 airfoil in a steady state simulation using 20k cells`. The agent will parse your request, generate the appropriate mesh, and run the CFD simulation for you.
 
 **IMPORTANT**. OpenCode may take a little longer to respond to your first prompt because it needs to preload the LLM into memory. Once the agent starts working, response speed should return to normal.
 
 <div style="text-align: center;">
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-local-llm.png" style="width:500px !important;" />
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-local-llm.png" style="width:600px !important;" />
 
 Fig. An example of OpenCode interface for locally hosted LLM
 </div>
