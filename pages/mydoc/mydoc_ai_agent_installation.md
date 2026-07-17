@@ -363,7 +363,7 @@ Open a terminal and go to the `mdo_agent_work/results/` folder in your terminal 
 
 If all the above checks pass, you can ask the agent to run a task such as `Call mdo_agent_deck MCP's must_call_first() too. Then run a steady CFD simulation for the NACA2412 airfoil with 10K cells, Ma=0.3, Re=5e6, and AoA=2 degs`. The agent will parse your request, generate the appropriate mesh, and run the CFD simulation for you.
 
-**IMPORTANT**. OpenCode may take a little longer (up to a few minutes) to respond to your first prompt because it needs to preload the MCP ifno into context. Once the agent starts working, response speed should return to normal.
+**IMPORTANT**. OpenCode may take a little longer (up to a few minutes) to respond to your first prompt because it needs to preload the MCP ifno into context. Once the agent starts working, response speed should return to normal. Sometimes, the agent will stop before showing you the final results. You need to ask them to "Continue".
 
 <div style="text-align: center;">
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-local-llm.png" style="width:600px !important;" />
