@@ -361,7 +361,7 @@ Open a terminal and go to the `mdo_agent_work/results/` folder in your terminal 
 - **Check if the active LLM**. The active LLM is shown at the bottom of the text entry box. It should display `qwen3.5-agent:9b`. If it does not, run `/models`, press Enter, and select `qwen3.5-agent:9b` from the menu (see the following figure).
 - **Check the run mode**. OpenCode has two modes: `Build` and Plan. `Build` mode allows OpenCode to modify files, while Plan mode does not. To run the agents properly, make sure OpenCode is in `Build` mode. You can toggle modes with the `Tab` key.
 
-If all the above checks pass, you can ask the agent to run a task such as `Simulate the NACA0012 airfoil in a steady state simulation using 20k cells`. The agent will parse your request, generate the appropriate mesh, and run the CFD simulation for you.
+If all the above checks pass, you can ask the agent to run a task such as `Call mdo_agent_deck MCP's must_call_first() too. Then run a steady CFD simulation for the NACA2412 airfoil with 10K cells, Ma=0.3, Re=5e6, and AoA=2 degs`. The agent will parse your request, generate the appropriate mesh, and run the CFD simulation for you.
 
 **IMPORTANT**. OpenCode may take a little longer (up to a few minutes) to respond to your first prompt because it needs to preload the MCP ifno into context. Once the agent starts working, response speed should return to normal.
 
