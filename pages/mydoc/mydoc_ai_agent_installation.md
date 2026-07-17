@@ -363,4 +363,6 @@ Follow the instructions below to test the agents.
 - Run `/mcps` to verify that OpenCode is connected to the MCP server.
 - If connected, ask the agent to run a task such as `Simulate the NACA0012 airfoil in a steady state simulation using 20k cells`. The agent will parse your request, generate the appropriate mesh, and run the CFD simulation for you.
 
+**IMPORTANT**. OpenCode may take a little longer to respond to your first prompt because it needs to preload the LLM into memory. Once the agent starts working, response speed should return to normal.
+
 {% include links.html %}
