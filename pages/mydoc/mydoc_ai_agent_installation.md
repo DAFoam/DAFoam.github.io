@@ -365,4 +365,12 @@ Follow the instructions below to test the agents.
 
 **IMPORTANT**. OpenCode may take a little longer to respond to your first prompt because it needs to preload the LLM into memory. Once the agent starts working, response speed should return to normal.
 
+<div style="text-align: center;">
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-local-llm.png" style="width:500px !important;" />
+
+Fig. An example of OpenCode interface for locally hosted LLM
+</div>
+
+
+
 {% include links.html %}
