@@ -322,43 +322,39 @@ agent --yolo
 
 **NOTE**: For the best visual experience, we recommend using the "Light Modern" color theme in VS Code. To change the theme, open the Command Palette in VS Code, search for "Preferences: Color Theme", and select "Light Modern".
 
-## Option E: Local LLM (No Internet and No Paid Plan)
+## Option E: Locally Hosted LLM (No Internet and No Paid Plan)
 
 This option works for Linux, MacOS, and Windows. This option is for running the agents with a locally hosted LLM that does not need internet access or any paid plan. The downside is that this option requires a high-end GPU.
 
 ### Step 1. Download the working directory
 
-Download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/local_llm.zip). 
+Download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/docker.zip). 
 
-Unzip it and you will see a folder called `mdo_agent_work-local_llm`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents.
+Unzip it and you will see a folder called `mdo_agent_work-docker`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents.
 
-### Step 2. Download local LLM
+### Step 2. Download Ollama and Local LLMs
 
-First, download [Ollama](https://ollama.com/download).
+First, download [Ollama](https://ollama.com/download), which host and run local LLMs.
 
 After the download is complete, start ollama by launching the desktop app application and keep it open. 
 
-Then, open a terminal and run `ollama pull qwen3.5:9b` to download the qwen LLM model with 9 billion parameters. 
+Then, open a terminal and run `ollama pull qwen3.5:9b` to download the qwen LLM model with 9 billion parameters. Note: the current setup works ONLY for `qwen3.5:9b`
 
-[Optional], you can choose a more advanced LLM than `qwen3.5:9b`, but that requires a more powerful GPU.
-
-### Step 3. Configure the local LLM
-
-The default `qwen3.5:9b` from Ollama will need to be adjusted in order to properly run the agent. To do that, go into the `mdo_agent_work/results` folder and run `ollama create qwen3.5-agent:9b -f .opencode/Modelfile`. This will create a new LLM model called `qwen3.5-agent:9b`, which has a larger context window.
+Next, we need to modify `qwen3.5:9b` to allow larger context window. To do that, go into the `mdo_agent_work/results` folder and run `ollama create qwen3.5-agent:9b -f .opencode/Modelfile`. This will create a new LLM model called `qwen3.5-agent:9b`, which has a 64K context window.
 
 [Optioinal]: Before running the agent, you can test if your hardware is sufficient to run the locally hosted LLM. First, run `ollama run qwen3.5-agent:9b --verbose`. After the brief loading, you can start chatting and ask a question like "Can you give me an overview of your understanding of CFD?" After the LLM responds, take note of the `eval rate` in tokens/s at the end, and the performance is considered sufficient if the value is greater than 15. During the test chat session, you can also check the VRAM and RAM usage by running `ollama ps`. Ollama will list the percent usage of GPU and CPU. Ideally, it should return 100% GPU usage. If not, the LLM is too large for your hardware and will off load inference to the CPU which will greatly slow down the LLM. The modified LLM model `qwen3.5-agent:9b` with a 64K context window should be less than 8 GB in size. Once done with the performance evaluation, you may end the chat session by typing `/bye` or use `ctr+c` to exit the ollama chat session.
 
-### Step 4. Download OpenCode
+### Step 3. Download OpenCode
 
-Once the local LLM is up and running, it must be connected to the MCP server. To do this, we need to use OpenCode. First, download [OpenCode](https://opencode.ai/download) (there is both a CLI version and desktop version, the CLI version is recommended).
+Once the local LLM is up and running, it must be connected to the MCP server. We will use OpenCode to connect Ollama to MCP. To do this, first download [OpenCode](https://opencode.ai/download) (there is both a CLI version and desktop version, the CLI version is recommended).
 
-To run OpenCode, go into the `mdo_agent_work/results/` folder in your terminal, copy the `mdo_agent_work/results/.opencode/opencode.json` file to `mdo_agent_work/results/opencode.json`, and run the command `opencode`. You will see on the right hand side a verification that the LLM is connected to the MCP server. Additionally, you can run `/mcps` in OpenCode to view the available MCP servers. If you are connected, you should see `mdo_agent_deck connected` in the pop-up window. Hit `esc` to close this window.
+Then, go into the `mdo_agent_work/results/` folder in your terminal, copy the `mdo_agent_work/results/.opencode/opencode.json` file to `mdo_agent_work/results/opencode.json`, and run the command `opencode` inside the `mdo_agent_work/results/` folder. 
 
-The LLM you are using is listed at the bottom of the text entry box. It should say `mdo-agent`. If this is not the case, run `/models` in the text entry box and hit enter. Select `mdo-agent` from the menu.
+[Checks]: You will see on the right hand side a verification that the LLM is connected to the MCP server. Additionally, you can run `/mcps` in OpenCode to view the available MCP servers. If you are connected, you should see `mdo_agent_deck connected` in the pop-up window. Hit `esc` to close this window. The LLM you are using is listed at the bottom of the text entry box. It should say `mdo-agent`. If this is not the case, run `/models` in the text entry box and hit enter. Select `mdo-agent` from the menu.
 
 **IMPORTANT: OpenCode has two modes: Build and Plan. Build mode allows OpenCode to modify files. Plan mode does not. In order to run the agents properly, ensure you are in Build mode. This can be toggled via the tab key.**
 
-### Step 5. Test the agents
+### Step 4. Test the agents
 Follow the instructions below to test the agents.
 
 - `cd` to the `results` directory and run `opencode`
