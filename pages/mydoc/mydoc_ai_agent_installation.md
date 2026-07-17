@@ -342,28 +342,26 @@ Then open a terminal and run `ollama pull qwen3.5:9b` to download the Qwen model
 
 Next, increase the context window for `qwen3.5:9b`. Go to the `mdo_agent_work/results` folder and run `ollama create qwen3.5-agent:9b -f .opencode/Modelfile`. This creates a new model called `qwen3.5-agent:9b` with a 64K context window.
 
-[Optional]: Before running the agent, you can check whether your hardware is powerful enough for the local LLM. Run `ollama run qwen3.5-agent:9b --verbose`. After the model finishes loading, ask a simple question such as "Can you give me an overview of your understanding of CFD?" When the response finishes, look at the `eval rate` reported at the end in tokens/s. Performance is generally acceptable if this value is above 15. During this test session, you can also check VRAM and RAM usage with `ollama ps`. Ollama will report GPU and CPU usage percentages. Ideally, GPU usage should be 100%. If it is not, the model is likely too large for your hardware and Ollama will offload inference to the CPU, which can significantly slow performance. The modified model `qwen3.5-agent:9b` with a 64K context window should be smaller than 8 GB. When you are done, exit the chat session by typing `/bye` or pressing `ctrl+c`.
+**Optional Checks**: Before running the agent, you can check whether your hardware is powerful enough for the local LLM. Run `ollama run qwen3.5-agent:9b --verbose`. After the model finishes loading, ask a simple question such as "Can you give me an overview of your understanding of CFD?" When the response finishes, look at the `eval rate` reported at the end in tokens/s. Performance is generally acceptable if this value is above 15. During this test session, you can also check VRAM and RAM usage with `ollama ps`. Ollama will report GPU and CPU usage percentages. Ideally, GPU usage should be 100%. If it is not, the model is likely too large for your hardware and Ollama will offload inference to the CPU, which can significantly slow performance. The modified model `qwen3.5-agent:9b` with a 64K context window should be smaller than 8 GB. When you are done, exit the chat session by typing `/bye` or pressing `ctrl+c`.
 
 ### Step 3. Download OpenCode
 
 Once the local LLM is running, it must be connected to the MCP server. We will use OpenCode to connect Ollama to MCP. First, download [OpenCode](https://opencode.ai/download). Both CLI and desktop versions are available, but the CLI version is recommended.
 
-Then go to the `mdo_agent_work/results/` folder in your terminal, copy `mdo_agent_work/results/.opencode/opencode.json` to `mdo_agent_work/results/opencode.json`, and run `opencode` from inside the `mdo_agent_work/results/` folder.
-
-**Check these things before running the agents:**
-
-- On the right-hand side, you should see confirmation that the LLM is connected to the MCP server. You can also run `/mcps` in OpenCode to view the available MCP servers. If the connection is working, you should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
-- The active LLM is shown at the bottom of the text entry box. It should display `mdo-agent`. If it does not, run `/models`, press Enter, and select `mdo-agent` from the menu (see the following figure).
-- OpenCode has two modes: Build and Plan. Build mode allows OpenCode to modify files, while Plan mode does not. To run the agents properly, make sure OpenCode is in Build mode. You can toggle modes with the `Tab` key.
 
 ### Step 4. Test the agents
-Follow the instructions below to test the agents.
 
-- Open a terminal and go into the `mdo_agent_work/results` directory. Then, run `opencode`.
-- Run `/mcps` to verify that OpenCode is connected to the MCP server.
-- If connected, ask the agent to run a task such as `Simulate the NACA0012 airfoil in a steady state simulation using 20k cells`. The agent will parse your request, generate the appropriate mesh, and run the CFD simulation for you.
+Open a terminal and go to the `mdo_agent_work/results/` folder in your terminal and run `ollama launch opencode --config` from inside the `mdo_agent_work/results/` folder. Then, the terminal will ask you to "Select models for OpenCode", select `qwen3.5-agent:9b`. And then, choose `Yes` to open OpenCode.
 
-**IMPORTANT**. OpenCode may take a little longer to respond to your first prompt because it needs to preload the MCP environment into memory. Once the agent starts working, response speed should return to normal.
+**You must check the following before running a case:**
+
+- **Check if the MCP is running**. If the MCP server is running, you should see a green circle at the bottom say "1 MCP /status" (see the figure below). Alternatively, you can run `/mcps` in OpenCode to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
+- **Check if the active LLM**. The active LLM is shown at the bottom of the text entry box. It should display `qwen3.5-agent:9b`. If it does not, run `/models`, press Enter, and select `qwen3.5-agent:9b` from the menu (see the following figure).
+- **Check the run mode**. OpenCode has two modes: `Build` and Plan. `Build` mode allows OpenCode to modify files, while Plan mode does not. To run the agents properly, make sure OpenCode is in `Build` mode. You can toggle modes with the `Tab` key.
+
+If all the above checks pass, you can ask the agent to run a task such as `Simulate the NACA0012 airfoil in a steady state simulation using 20k cells`. The agent will parse your request, generate the appropriate mesh, and run the CFD simulation for you.
+
+**IMPORTANT**. OpenCode may take a little longer (up to a few minutes) to respond to your first prompt because it needs to preload the MCP ifno into context. Once the agent starts working, response speed should return to normal.
 
 <div style="text-align: center;">
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-local-llm.png" style="width:600px !important;" />
