@@ -324,6 +324,8 @@ agent --yolo
 
 ## Option E: Locally Hosted LLM (No Internet and No Paid Plan)
 
+**Note:** Option E is still in an experimental state.
+
 This option works on Linux, macOS, and Windows. It lets you run the agents with a locally hosted LLM, so you do not need internet access or a paid plan. The main drawback is that it requires a high-end GPU.
 
 ### Step 1. Download the working directory
