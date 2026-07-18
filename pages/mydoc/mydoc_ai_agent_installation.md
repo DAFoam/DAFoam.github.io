@@ -326,7 +326,7 @@ agent --yolo
 
 **Note:** Option E is still in an experimental state.
 
-This option works on Linux, macOS, and Windows. It lets you run the agents with a locally hosted LLM, so no internet access or paid plan is needed. The main drawback is that it requires a high-end GPU.
+This option works on Linux, macOS, and Windows. It lets you run the agents with a locally hosted LLM, so no internet access or paid plan is needed. The main drawback is that it requires a high-end GPU. The following setup has been tested on a Macbook with M5 Pro chip and 24 GB memory.
 
 ### Step 1. Download the working directory
 
