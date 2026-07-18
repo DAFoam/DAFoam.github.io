@@ -382,6 +382,8 @@ Open a terminal, go to the `mdo_agent_work/results/` folder, and run `ollama lau
 
 If all the above checks pass, you can ask the agent to run a task, such as `Call mdo_agent_deck MCP's must_call_first() tool. Then run a steady CFD simulation for the NACA2412 airfoil with 10K cells, Ma=0.3, Re=5e6, and AoA=2 degs`. The agent will parse your request, generate the appropriate mesh, and run the CFD simulation for you.
 
+IMPORTANT. Claude may take a little longer (up to a few minutes) to spin up the agentic workflow because it needs to preload the MCP ifno into context. Once the agent starts working, response speed should return to normal. You can use "ctrl+o" to expand the Claude reasoning details.
+
 <div style="text-align: center;">
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-local-llm.png" style="width:800px !important;" />
 
