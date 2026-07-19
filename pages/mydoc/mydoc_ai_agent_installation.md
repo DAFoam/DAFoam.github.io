@@ -366,7 +366,7 @@ Open a terminal and run `ollama pull gemma4:12b` to download the Gemma4 model wi
 
 ### Step 3. Download an MCP Orchestrator
 
-Once the local LLM is running, it must be connected to the MCP server. We have two options: Claude Code CLI or OpenCode CLI, and you need to install ONLY one of the following:
+Once the local LLM is running, it must be connected to the MCP server. We have two options: Claude Code CLI or OpenCode CLI, and you need to install ONLY one of the following. We suggest Claude Code as it is more robust than OpenCode, but Claude would need to think longer and take more time to finish a task than OpenCode.
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
@@ -409,7 +409,7 @@ Open a terminal, go to the `mdo_agent_work/results/` folder, and run one the fol
 
 The terminal will then ask you to "Select models"; select your local LLM, for example, `qwen3.5-agent:9b` or `gemma4:12b`. Finally, choose `Yes` to open the MCP Orchestrator.
 
-**You must check the following before running a case, depending on which MCP Orchestrator you use:**
+**You must check one of the following before running a case, depending on which MCP Orchestrator you use:**
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
