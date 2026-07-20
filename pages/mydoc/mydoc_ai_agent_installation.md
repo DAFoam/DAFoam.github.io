@@ -32,7 +32,7 @@ Download and install the Docker Desktop app for:
 - [MacOS](https://docs.docker.com/desktop/setup/install/mac-install) 
 - [Windows](https://docs.docker.com/desktop/setup/install/windows-install)
 
-After the Docker Desktop is installed, open it and keep it open.
+After the Docker Desktop is installed, open it and keep it open. In the Docker app, go to `Settings->Resources->Network` and check `Enable host networking`. This setup will allow Docker to return html servers for interactive visualization.
 
 Then, open a terminal and run the following command to download the pre-compiled MDO Agent Deck image:
 
@@ -334,7 +334,11 @@ Download the `mdo_agent_work` repository from [here](https://github.com/DAFoam/m
 
 Unzip the archive, and you will see a folder named `mdo_agent_work-docker`. Rename it to `mdo_agent_work`. This folder will serve as the main working directory for your agents.
 
-### Step 2. Download Ollama and Local LLMs
+### Step 2. Install Docker Desktop
+
+Same as the Step 2 in Option A.
+
+### Step 3. Download Ollama and Local LLMs
 
 First, download [Ollama](https://ollama.com/download), which hosts and runs local LLMs.
 
@@ -366,7 +370,7 @@ Next, we need to customize the default `gemma4:12b` model for our agentic workfl
 **Optional Checks**: Before running the agents, you can verify that your hardware is powerful enough for the local LLM. Run `ollama run qwen3.5-agent:9b --verbose` if you use Qwen, or `ollama run gemma4-agent:12b --verbose` if you use Gemma4. After the model finishes loading, ask a simple question such as "Can you give me an overview of your understanding of CFD?" When the response is complete, check the `eval rate` reported at the end in tokens/s. Performance is generally acceptable if this value is above 15. During this test session, you can also check VRAM and RAM usage with `ollama ps`, which reports GPU and CPU usage percentages. Ideally, GPU usage should be 100%. If it is not, the model is likely too large for your hardware, and Ollama will offload inference to the CPU, which can significantly slow performance. The model should be smaller than 10 GB. When you are done, exit the chat session by typing `/bye` or pressing `ctrl+c`.
 
 
-### Step 3. Download an MCP Orchestrator
+### Step 4. Download an MCP Orchestrator
 
 Once the local LLM is running, it must be connected to the MCP server. We have two options: Claude Code CLI or OpenCode CLI, and you need to install ONLY one of the following. We suggest OpenCode as it is faster. Claude Code is more robust but it thinks longer and take more time to finish a task than OpenCode.
 
@@ -388,7 +392,7 @@ Download and install the Claude Code CLI [here](https://docs.anthropic.com/en/do
 </div>
 
 
-### Step 4. Test the agents
+### Step 5. Test the agents
 
 Open a terminal, go to the `mdo_agent_work/results/` folder, and run one the following command from inside that folder, depending on which MCP Orchestrator you use
 
