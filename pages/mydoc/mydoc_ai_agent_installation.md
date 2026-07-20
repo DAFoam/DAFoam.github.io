@@ -358,29 +358,31 @@ Next, we need to customize the default `qwen3.5:9b` model for our agentic workfl
 
 Open a terminal and run `ollama pull gemma4:12b` to download the Gemma4 model with 12 billion parameters. This is the smallest Gemma4 model we have tested that works.
 
+Next, we need to customize the default `gemma4:12b` model for our agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create gemma4-agent:12b -f .ModelFileGemma`. This creates a customized model called `gemma4-agent:12b`, which we will use to run the agents.
+
 </div>
 </div>
 
-**Optional Checks**: Before running the agents, you can verify that your hardware is powerful enough for the local LLM. Run `ollama run qwen3.5-agent:9b --verbose` if you use Qwen, or `ollama run gemma4:12b --verbose` if you use Gemma4. After the model finishes loading, ask a simple question such as "Can you give me an overview of your understanding of CFD?" When the response is complete, check the `eval rate` reported at the end in tokens/s. Performance is generally acceptable if this value is above 15. During this test session, you can also check VRAM and RAM usage with `ollama ps`, which reports GPU and CPU usage percentages. Ideally, GPU usage should be 100%. If it is not, the model is likely too large for your hardware, and Ollama will offload inference to the CPU, which can significantly slow performance. The model should be smaller than 10 GB. When you are done, exit the chat session by typing `/bye` or pressing `ctrl+c`.
+**Optional Checks**: Before running the agents, you can verify that your hardware is powerful enough for the local LLM. Run `ollama run qwen3.5-agent:9b --verbose` if you use Qwen, or `ollama run gemma4-agent:12b --verbose` if you use Gemma4. After the model finishes loading, ask a simple question such as "Can you give me an overview of your understanding of CFD?" When the response is complete, check the `eval rate` reported at the end in tokens/s. Performance is generally acceptable if this value is above 15. During this test session, you can also check VRAM and RAM usage with `ollama ps`, which reports GPU and CPU usage percentages. Ideally, GPU usage should be 100%. If it is not, the model is likely too large for your hardware, and Ollama will offload inference to the CPU, which can significantly slow performance. The model should be smaller than 10 GB. When you are done, exit the chat session by typing `/bye` or pressing `ctrl+c`.
 
 
 ### Step 3. Download an MCP Orchestrator
 
-Once the local LLM is running, it must be connected to the MCP server. We have two options: Claude Code CLI or OpenCode CLI, and you need to install ONLY one of the following. We suggest Claude Code as it is more robust than OpenCode, but Claude would need to think longer and take more time to finish a task than OpenCode.
+Once the local LLM is running, it must be connected to the MCP server. We have two options: Claude Code CLI or OpenCode CLI, and you need to install ONLY one of the following. We suggest OpenCode as it is faster. Claude Code is more robust but it thinks longer and take more time to finish a task than OpenCode.
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
-<button class="tab-button">Claude Code CLI</button>
 <button class="tab-button">OpenCode CLI</button>
-</div>
-<div class="tab-content">
-
-Download and install the Claude Code CLI [here](https://docs.anthropic.com/en/docs/claude-code/getting-started).
-
+<button class="tab-button">Claude Code CLI</button>
 </div>
 <div class="tab-content">
 
 Download and install the OpenCode CLI [here](https://opencode.ai/download).
+
+</div>
+<div class="tab-content">
+
+Download and install the Claude Code CLI [here](https://docs.anthropic.com/en/docs/claude-code/getting-started).
 
 </div>
 </div>
@@ -407,31 +409,32 @@ Open a terminal, go to the `mdo_agent_work/results/` folder, and run one the fol
 </div>
 </div>
 
-The terminal will then ask you to "Select models"; select your local LLM, for example, `qwen3.5-agent:9b` or `gemma4:12b`. Finally, choose `Yes` to open the MCP Orchestrator.
+The terminal will then ask you to "Select models"; select your local LLM, for example, `qwen3.5-agent:9b` or `gemma4-agent:12b`. Finally, choose `Yes` to open the MCP Orchestrator.
 
 **You must check one of the following before running a case, depending on which MCP Orchestrator you use:**
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
-<button class="tab-button">Claude Code CLI</button>
 <button class="tab-button">OpenCode CLI</button>
-</div>
-<div class="tab-content">
-
-If you use Claude Code CLI
-
-- **Check that the MCP server is running**. Run `/mcp` in Claude to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
-- **Check the active LLM**. The active LLM is shown at the top. It should display `qwen3.5-agent:9b` or `gemma4:12b` (see the following figure).
-- **Check the run mode**. By default, Claude Code uses "manual mode on". To streamline the agentic workflow, press the "Shift + Tab" keys to switch to "auto mode on" (see the following figure).
-
+<button class="tab-button">Claude Code CLI</button>
 </div>
 <div class="tab-content">
 
 If you use OpenCode CLI
 
 - **Check that the MCP is running**. If the MCP server is running, you should see a green circle at the bottom say "1 MCP /status" (see the figure below). Alternatively, you can run `/mcps` in OpenCode to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
-- **Check the active LLM**. The active LLM is shown at the bottom of the text entry box. It should display `qwen3.5-agent:9b` or `gemma4:12b` (see the following figure). If it does not, run `/models`, press Enter, and select the correct local LLM from the menu.
+- **Check the active LLM**. The active LLM is shown at the bottom of the text entry box. It should display `qwen3.5-agent:9b` or `gemma4-agent:12b` (see the following figure). If it does not, run `/models`, press Enter, and select the correct local LLM from the menu.
 - **Check the run mode**. OpenCode has two modes: `Build` and Plan. `Build` mode allows OpenCode to modify files, while Plan mode does not. To run the agents properly, make sure OpenCode is in `Build` mode. You can toggle modes with the `Tab` key.
+
+</div>
+<div class="tab-content">
+
+If you use Claude Code CLI
+
+- **Check that the MCP server is running**. Run `/mcp` in Claude to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
+- **Check the active LLM**. The active LLM is shown at the top. It should display `qwen3.5-agent:9b` or `gemma4-agent:12b` (see the following figure).
+- **Check the run mode**. By default, Claude Code uses "manual mode on". To streamline the agentic workflow, press the "Shift + Tab" keys to switch to "auto mode on" (see the following figure).
+
 
 </div>
 </div>
@@ -441,16 +444,15 @@ If all the above checks pass, you can ask the agent to run a task, such as `Call
 IMPORTANT. Both Claude and OpenCode may take a little longer (up to a few minutes) to spin up the agentic workflow because it needs to preload the MCP info into context. Once the agent starts working, response speed should return to normal. Sometimes, OpenCode stops in the middle of the workflow, and you need to manually ask it to "Continue" to move on to the next step. 
 
 <div style="text-align: center;">
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-local-llm.png" style="width:700px !important;" />
-
-Fig. An example of the Claude interface for a locally hosted LLM
-</div>
-
-
-<div style="text-align: center;">
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-local-llm-opencode.png" style="width:700px !important;" />
 
 Fig. An example of the OpenCode interface for a locally hosted LLM
+</div>
+
+<div style="text-align: center;">
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-local-llm.png" style="width:700px !important;" />
+
+Fig. An example of the Claude interface for a locally hosted LLM
 </div>
 
 
