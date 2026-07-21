@@ -11,7 +11,7 @@ folder: mydoc
 
 There are four options to install and run the MDO Agent Deck framework: (A) Local Computers with LLM Apps, (B) Local Computers with VSCode, (C) HPC Clusters with LLM Apps, and (D) HPC Clusters with VSCode. Options A and B run on your local computer using pre-compiled Docker images, while Options C and D run on a high-performance computing (HPC) cluster with self-compiled codes. You need to choose **ONLY ONE** option to follow. If you are new to the MDO Agent Deck, we recommend you choose Option A, which is the easiest to set up and run.
 
-**Latest Version:** `v0.2.3`
+### Latest Version: v0.2.3
 
 Always use matching versions for the Docker image `dafoam/agent:<versioin>`, `mdo_agent_deck`, and `mdo_agent_work`. The commands and links below point to `v0.2.3`. If you want to use a different version, replace the tag `v0.2.3` accordingly.
 
