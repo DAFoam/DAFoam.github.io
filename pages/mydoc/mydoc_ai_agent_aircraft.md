@@ -244,7 +244,7 @@ Fig. 3. Left: Pressure contour of the original span design. Right: Pressure cont
 
 ### Use customized aircraft configurations
 
-Instead of using the default Boeing 737 configuration in `aircraft.vsp3`, you can use a customized OpenVSP aircraft configuration for the agent. First, download the Cessna 172 configuration file: [aircraft_c172.vsp3](https://github.com/DAFoam/mdo_agent_work/releases/download/v1.0/aircraft_c172.vsp3). The Cessna 172 vsp3 file was downloaded and modified from the [OpenVSP Airshow](https://airshow.openvsp.org/). Rename it to `aircraft.vsp3` and place it in your `mdo_agent_work/results` folder (working directory).
+Instead of using the default Boeing 737 configuration in `aircraft.vsp3`, you can use a customized OpenVSP aircraft configuration for the agent. First, download the Cessna 172 configuration file: [aircraft_c172.vsp3](https://github.com/DAFoam/mdo_agent_work/releases/download/files/aircraft_c172.vsp3). The Cessna 172 vsp3 file was downloaded and modified from the [OpenVSP Airshow](https://airshow.openvsp.org/). Rename it to `aircraft.vsp3` and place it in your `mdo_agent_work/results` folder (working directory).
 
 Then, you can ask the agent to simulate your customized configuration. For example:
 
