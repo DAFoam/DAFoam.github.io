@@ -13,8 +13,7 @@ There are four options to install and run the MDO Agent Deck framework: (A) Loca
 
 ### Latest Version: v0.2.3
 
-Always use matching versions for the Docker image `dafoam/agent:<versioin>`, `mdo_agent_deck`, and `mdo_agent_work`. The commands and links below point to `v0.2.3`. If you want to use a different version, replace the tag `v0.2.3` accordingly.
-
+You need to use matching versions for the Docker image `dafoam/agent:<versioin>`, `mdo_agent_deck`, and `mdo_agent_work`. The commands and links below point to `v0.2.3`. If you want to use a different version, change the tag `v0.2.3` accordingly.
 
 ## Option A: Local Computers with LLM Apps
 
