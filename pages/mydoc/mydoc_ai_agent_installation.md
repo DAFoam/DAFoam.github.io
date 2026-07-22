@@ -399,17 +399,17 @@ Open a terminal, go to the `mdo_agent_work/results/` folder, and run one the fol
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
-<button class="tab-button">Claude Code CLI</button>
 <button class="tab-button">OpenCode CLI</button>
-</div>
-<div class="tab-content">
-
-`ollama launch claude --config`
-
+<button class="tab-button">Claude Code CLI</button>
 </div>
 <div class="tab-content">
 
 `ollama launch opencode --config`
+
+</div>
+<div class="tab-content">
+
+`ollama launch claude --config`
 
 </div>
 </div>
