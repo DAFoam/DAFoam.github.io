@@ -179,30 +179,30 @@ The following publications explicitly state that DAFoam was used in their studie
 
 <14> N.N. Kozyulin, M.S. Bobrov, M.Y. Hrebtov. Adjoint shape optimization of a duct for a wall jet film cooling setup. J. Phys.: Conf. Ser. 2119, 2021.
 
-<13> Kiet T. Tran, Ping He. Unsteady aerodynamic optimization of airfoils considering shape and propeller parameters. In: AIAA Aviation Forum, 2021.
+<13> K. T. Tran, P. He. Unsteady aerodynamic optimization of airfoils considering shape and propeller parameters. In: AIAA Aviation Forum, 2021.
 
 <12> J. Ho, A. West. Field Inversion and Machine Learning for Turbulence Modelling Applied to Three-Dimensional Separated Flows. In: AIAA Aviation Forum, 2021.
 
-<11> Ping He, Joaquim R. R. A. Martins. A hybrid time-spectral approach for aerodynamic optimization with unsteady flow. In: AIAA Scitech Forum, 2021. 
+<11> P. He, J. R. R. A. Martins. A hybrid time-spectral approach for aerodynamic optimization with unsteady flow. In: AIAA Scitech Forum, 2021. 
 
 <10> O. Bidar. Towards statistical inference to improve turbulence RANS closures for multi-element aerofoils. MS Thesis, The University of Sheffield, 2020.
 
-<09> Ping He, Charles A. Mader, Joaquim R.R.A. Martins, Kevin J. Maki. DAFoam: An open-source adjoint framework for multidisciplinary design optimization with OpenFOAM. AIAA Journal, 2020. 
+<09> P. He, C. A. Mader, J. R. R. A. Martins, K. J. Maki. DAFoam: An open-source adjoint framework for multidisciplinary design optimization with OpenFOAM. AIAA Journal, 2020. 
 
-<08> Ping He, Alton J. Luder, Charles A. Mader, Joaquim R.R.A. Martins, Kevin J. Maki. A time-spectral adjoint approach for aerodynamic shape optimization under periodic wakes. In: AIAA Scitech Forum, 2020. AIAA-2020-2114.
+<08> P. He, A. J. Luder, C. A. Mader, J. R. R. A. Martins, K. J. Maki. A time-spectral adjoint approach for aerodynamic shape optimization under periodic wakes. In: AIAA Scitech Forum, 2020. AIAA-2020-2114.
 
-<07> Ping He, Grzegorz Filip, Kevin J. Maki, Joaquim R. R. A. Martins. Design optimization for self-propulsion of a bulk carrier hull using a discrete adjoint method. Computers & Fluids, 192, pp. 104259, 2019. 
+<07> P. He, G. Filip, K. J. Maki, J. R. R. A. Martins. Design optimization for self-propulsion of a bulk carrier hull using a discrete adjoint method. Computers & Fluids, 192, pp. 104259, 2019. 
 
-<06> Gaetan K. W. Kenway, Charles A. Mader, Ping He, Joaquim R. R. A. Martins. Effective adjoint approaches for computational fluid dynamics. Progress in Aerospace Sciences, 110, pp. 100542, 2019.
+<06> G. K. W. Kenway, C. A. Mader, P. He, J. R. R. A. Martins. Effective adjoint approaches for computational fluid dynamics. Progress in Aerospace Sciences, 110, pp. 100542, 2019.
 
-<05> Ping He, Charles A. Mader, Joaquim R. R. A. Martins, Kevin J. Maki. Aerothermal optimization of a ribbed U-bend cooling channel using the adjoint method. International Journal of Heat and Mass Transfer, 140, 152-172, 2019. 
+<05> P. He, C. A. Mader, J. R. R. A. Martins, K. J. Maki. Aerothermal optimization of a ribbed U-bend cooling channel using the adjoint method. International Journal of Heat and Mass Transfer, 140, 152-172, 2019. 
 
-<04> Ping He, Charles A. Mader, Joaquim R. R. A. Martins, Kevin J. Maki. An object-oriented framework for rapid discrete adjoint development using OpenFOAM. In: AIAA Scitech Forum, 2019. AIAA-2019-1210. 
+<04> P. He, C. A. Mader, J. R. R. A. Martins, K. J. Maki. An object-oriented framework for rapid discrete adjoint development using OpenFOAM. In: AIAA Scitech Forum, 2019. AIAA-2019-1210. 
 
-<03> Ping He, Charles A. Mader, Joaquim R. R. A. Martins, Kevin J. Maki. Aerothermal optimization of internal cooling passages using the adjoint method, In: 2018 Joint Thermophysics and Heat Transfer Conference, 2018. AIAA Aviation Forum, AIAA-2018-4080. 
+<03> P. He, C. A. Mader, J. R. R. A. Martins, K. J. Maki. Aerothermal optimization of internal cooling passages using the adjoint method, In: 2018 Joint Thermophysics and Heat Transfer Conference, 2018. AIAA Aviation Forum, AIAA-2018-4080. 
 
-<02> Ping He, Grzegorz Filip, Joaquim R. R. A. Martins, Kevin J. Maki. Hull form hydrodynamic design using a discrete adjoint optimization method, In: 13th International Marine Design Conference, 2018
+<02> P. He, G. Filip, J. R. R. A. Martins, K. J. Maki. Hull form hydrodynamic design using a discrete adjoint optimization method, In: 13th International Marine Design Conference, 2018
 
-<01> Ping He, Charles A. Mader, Joaquim R. R. A. Martins, Kevin J. Maki. An aerodynamic design optimization framework using a discrete adjoint approach with OpenFOAM. Computers & Fluids, 168, pp. 285-303, 2018.
+<01> P. He, C. A. Mader, J. R. R. A. Martins, K. J. Maki. An aerodynamic design optimization framework using a discrete adjoint approach with OpenFOAM. Computers & Fluids, 168, pp. 285-303, 2018.
 
 {% include links.html %}
