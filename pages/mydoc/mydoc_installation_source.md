@@ -92,7 +92,7 @@ Next, we need to upgrade the pip utility and install Python packages:
 
 <pre>
 pip install --upgrade pip && \
-pip install numpy==2.3.5 scipy==1.17.1 mpi4py==4.1.1 cython==3.0.5 unopy==0.4.13 numpy-stl==2.16.0 imageio==2.37.4 nptyping==1.4.4 tensorflow-cpu==2.21 coverage==7.11.0 fastmcp==2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0
+pip install numpy==2.3.5 scipy==1.17.1 mpi4py==4.1.1 cython==3.0.5 numpy-stl==2.16.0 imageio==2.37.4 nptyping==1.4.4 tensorflow-cpu==2.21 coverage==7.11.0 fastmcp==2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0
 </pre>
 
 ## **Petsc**
@@ -215,6 +215,19 @@ wget https://github.com/SMTorg/smt/archive/refs/tags/v2.10.1.tar.gz && \
 tar -xvf v2.10.1.tar.gz && \
 cd smt-2.10.1 && \
 pip install .
+</pre>
+
+## Uno and Egor optimizers
+
+Uno and Egor are open-source optimizers for gradient-based and gradient-free optimization. To install them, run:
+
+<pre>
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+pip install unopy==0.4.13 egobox==0.37.6 && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/LSDOlab/modopt/archive/refs/tags/v0.3.0.tar.gz -O modopt.tar.gz && \
+tar -xvf modopt.tar.gz && mv modopt-* modopt && rm -rf modopt.tar.gz && \
+cd modopt && pip install .
 </pre>
 
 ## **OpenVSP**
@@ -534,7 +547,7 @@ export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH
 export PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedBins:$PATH
 </pre>
 
-## **Compile SNOPT for pyOptSparse (optional)**
+## **Compile other optimizers for pyOptSparse (optional)**
 
 This step is needed if you want to use the SNOPT optimizer. Detailed instructions are available from [pyOptSparse Documentation](https://mdolab-pyoptsparse.readthedocs-hosted.com).
 
@@ -545,5 +558,8 @@ cd $DAFOAM_ROOT_PATH/repos/pyoptsparse-2.16.1 && \
 pip install .
 </pre>
 
+If you are provided a precompiled library for SNOPT instead of the source codes, refer to this [post](https://github.com/mdolab/dafoam/discussions/998#discussioncomment-17390364).
+
+If you want to compile ParOpt for pyOptSparse, refer to this [post](https://github.com/mdolab/dafoam/discussions/138#discussioncomment-17646208)
 
 {% include links.html %}
