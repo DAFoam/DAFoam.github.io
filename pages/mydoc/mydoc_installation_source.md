@@ -37,7 +37,7 @@ If you use Ubuntu, run this on the terminal to install prerequisites. If you ins
 
 <pre>
 sudo apt-get update && \
-sudo apt-get install -y --no-install-recommends build-essential ca-certificates cmake flex bison libfl-dev libcgal-dev libopenmpi-dev openmpi-bin libscotch-dev libreadline-dev libncurses-dev sudo wget vim git lcov patchelf pkg-config swig gfortran libxrender1 libxml2-dev libegl1
+sudo apt-get install -y --no-install-recommends build-essential ca-certificates cmake flex bison libfl-dev libcgal-dev libopenmpi-dev openmpi-bin libscotch-dev libreadline-dev libncurses-dev sudo wget vim git lcov patchelf pkg-config swig gfortran libxrender1 libxml2-dev libegl1 curl
 </pre>
 
 The following installation steps should work for both Ubuntu 24.04 and the HPC clusters.
@@ -217,18 +217,28 @@ cd smt-2.10.1 && \
 pip install .
 </pre>
 
-## Uno and Egor optimizers
+## **Uno and Egor optimizers**
 
 Uno and Egor are open-source optimizers for gradient-based and gradient-free optimization. To install them, run:
 
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-pip install unopy==0.4.13 egobox==0.37.6 && \
+pip install egobox==0.37.6 && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/LSDOlab/modopt/archive/refs/tags/v0.3.0.tar.gz -O modopt.tar.gz && \
 tar -xvf modopt.tar.gz && mv modopt-* modopt && rm -rf modopt.tar.gz && \
-cd modopt && pip install .
+cd modopt && pip install . && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/cvanaret/Uno/archive/7481abe47cec45e0e91ac73ccc2461c17e68f84c.tar.gz -O Uno.tar.gz && \
+tar -xvf Uno.tar.gz && mv Uno-* Uno && rm -rf Uno.tar.gz && cd Uno && \
+sed -i '175i\      Logger::flush();' uno/tools/Statistics.cpp && \
+sed -i '159i\      Logger::flush();' uno/tools/Statistics.cpp && \
+sed -i '143i\      Logger::flush();' uno/tools/Statistics.cpp && \
+./dependencies/scripts/download_dependencies.sh && \
+pip install --force-reinstall --no-deps -v .
 </pre>
+
+The current Uno version writes the optimization log file only after the optimization finishes. The `sed` commands above insert `Logger::flush()` calls so Uno writes the optimization log to disk immediately.
 
 ## **OpenVSP**
 
