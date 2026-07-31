@@ -377,3 +377,15 @@ entries:
     - title: Acknowledgement
       url: /acknowledgement.html
       output: web, pdf
+
+  - title: Older Versions
+    output: web, pdf
+    folderitems:
+
+    - title: v4
+      url: https://dafoam.github.io/v4-pages
+      output: web, pdf
+
+    - title: v3
+      url: https://dafoam.github.io/v3-pages
+      output: web, pdf

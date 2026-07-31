@@ -7,7 +7,7 @@ permalink: installation-source.html
 folder: mydoc
 ---
 
-{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v4](https://dafoam.github.io/v4-pages/mydoc_installation_source.html), [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](installation-source-2210.html), [v2.2.0-](installation-source-220.html), and [v1.0.0](installation-source-100.html)." %}
+{% include note.html content="This section assumes you want to compile the latest DAFoam optimization package from the source on a Linux system. If you use the Docker image, there is no need to compile anything and you can skip this section. For DAFoam older versions, refer to [v4](https://dafoam.github.io/v4-pages/installation-source.html), [v3](https://dafoam.github.io/v3-pages/mydoc_installation_source.html), [v2.2.10-](installation-source-2210.html), [v2.2.0-](installation-source-220.html), and [v1.0.0](installation-source-100.html)." %}
 
 The DAFoam package can be compiled with various versions of its dependencies. Here we elaborate on how to compile it on a workstation with Ubuntu 24.04 and two different HPC clusters.
 
@@ -217,17 +217,64 @@ cd smt-2.10.1 && \
 pip install .
 </pre>
 
-## **Uno and Egor optimizers**
+## **IPOPT, Uno, and Egor optimizers**
 
-Uno and Egor are open-source optimizers for gradient-based and gradient-free optimization. To install them, run:
+IPOPT, Uno, and Egor are open-source optimizers for gradient-based and gradient-free optimization. 
+
+**IPOPT**
+
+First, run the following to add environmental variables to loadDAFoam.sh
+
+<pre>
+echo '# Ipopt' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo 'export IPOPT_DIR=$DAFOAM_ROOT_PATH/packages/Ipopt' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$IPOPT_DIR/lib' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+echo 'export PKG_CONFIG_PATH=$IPOPT_DIR/lib/pkgconfig:$PKG_CONFIG_PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh
+</pre>
+
+Then, run the following to compile IPOPT and its cython binding cyipopt.
+
+<pre>
+cd $DAFOAM_ROOT_PATH/packages && \
+git clone --depth 1 -b stable/3.13 https://github.com/coin-or/Ipopt.git && \
+cd $IPOPT_DIR && \
+git clone --depth 1 -b stable/1.3 https://github.com/coin-or-tools/ThirdParty-Blas.git && \
+cd ThirdParty-Blas && ./get.Blas && \
+./configure --prefix=$IPOPT_DIR && \
+make && make install && cd .. && \
+git clone --depth 1 -b stable/1.5 https://github.com/coin-or-tools/ThirdParty-Lapack.git && \
+cd ThirdParty-Lapack && ./get.Lapack && \
+./configure --prefix=$IPOPT_DIR --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" && \
+make && make install && cd .. && \
+git clone --depth 1 -b stable/1.3 https://github.com/coin-or-tools/ThirdParty-Metis.git && \
+cd ThirdParty-Metis && ./get.Metis && \
+./configure --prefix=$IPOPT_DIR && make && make install && cd .. && \
+git clone --depth 1 -b stable/2.1 https://github.com/coin-or-tools/ThirdParty-Mumps.git && \
+cd ThirdParty-Mumps && ./get.Mumps && \
+./configure --prefix=$IPOPT_DIR --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" \
+             --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
+             --with-metis-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" \
+             --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+make && make install && \
+cd $IPOPT_DIR && mkdir -p build && cd build && \
+../configure --prefix=${IPOPT_DIR} --disable-java --with-mumps \
+             --with-mumps-lflags="-L${IPOPT_DIR}/lib -lcoinmumps" \
+             --with-mumps-cflags="-I${IPOPT_DIR}/include/coin-or/mumps" \
+             --with-blas-lflags="-L${IPOPT_DIR}/lib -lcoinblas" \
+             --with-metis-lflags="-L${IPOPT_DIR}/lib -lcoinmetis" \
+             --with-metis-cflags="-I${IPOPT_DIR}/include/coin/ThirdParty" \
+             --with-lapack-lflags="-L${IPOPT_DIR}/lib -lcoinlapack" && \
+make && make install && \
+wget https://github.com/mechmotum/cyipopt/archive/refs/tags/v1.7.0.tar.gz -O cyipopt.tar.gz && \
+tar -xvf cyipopt.tar.gz && mv cyipopt-* cyipopt && \
+cd cyipopt && pip install . 
+</pre>
+
+**Uno**
 
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-pip install egobox==0.37.6 && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/LSDOlab/modopt/archive/refs/tags/v0.3.0.tar.gz -O modopt.tar.gz && \
-tar -xvf modopt.tar.gz && mv modopt-* modopt && rm -rf modopt.tar.gz && \
-cd modopt && pip install . && \
 cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/cvanaret/Uno/archive/7481abe47cec45e0e91ac73ccc2461c17e68f84c.tar.gz -O Uno.tar.gz && \
 tar -xvf Uno.tar.gz && mv Uno-* Uno && rm -rf Uno.tar.gz && cd Uno && \
@@ -239,6 +286,18 @@ pip install --force-reinstall --no-deps -v .
 </pre>
 
 The current Uno version writes the optimization log file only after the optimization finishes. The `sed` commands above insert `Logger::flush()` calls so Uno writes the optimization log to disk immediately.
+
+**Egor**
+
+<pre>
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+pip install egobox==0.37.6 && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/LSDOlab/modopt/archive/refs/tags/v0.3.0.tar.gz -O modopt.tar.gz && \
+tar -xvf modopt.tar.gz && mv modopt-* modopt && rm -rf modopt.tar.gz && \
+cd modopt && pip install . && \
+</pre>
+
 
 ## **OpenVSP**
 
