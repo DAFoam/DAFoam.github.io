@@ -276,16 +276,13 @@ cd cyipopt && pip install .
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/cvanaret/Uno/archive/7481abe47cec45e0e91ac73ccc2461c17e68f84c.tar.gz -O Uno.tar.gz && \
+wget https://github.com/friedenhe/Uno/archive/refs/heads/main.tar.gz -O Uno.tar.gz && \
 tar -xvf Uno.tar.gz && mv Uno-* Uno && rm -rf Uno.tar.gz && cd Uno && \
-sed -i '175i\      Logger::flush();' uno/tools/Statistics.cpp && \
-sed -i '159i\      Logger::flush();' uno/tools/Statistics.cpp && \
-sed -i '143i\      Logger::flush();' uno/tools/Statistics.cpp && \
 ./dependencies/scripts/download_dependencies.sh && \
 pip install --force-reinstall --no-deps -v .
 </pre>
 
-The current Uno version writes the optimization log file only after the optimization finishes. The `sed` commands above insert `Logger::flush()` calls so Uno writes the optimization log to disk immediately.
+Note that the above command uses our customized the Uno optimizer with these changes: (1) It write the optimization log to the disk on the fly. (2) It avoid gradient calls during line search trials.
 
 **Egor**
 
