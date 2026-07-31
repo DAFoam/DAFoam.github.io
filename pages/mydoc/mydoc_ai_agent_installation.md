@@ -11,10 +11,6 @@ folder: mydoc
 
 There are four options to install and run the MDO Agent Deck framework: (A) Local Computers with LLM Apps, (B) Local Computers with VSCode, (C) HPC Clusters with LLM Apps, and (D) HPC Clusters with VSCode. Options A and B run on your local computer using pre-compiled Docker images, while Options C and D run on a high-performance computing (HPC) cluster with self-compiled codes. You need to choose **ONLY ONE** option to follow. If you are new to the MDO Agent Deck, we recommend you choose Option A, which is the easiest to set up and run.
 
-### Latest Version: v0.2.3
-
-You need to use matching versions for the Docker image `dafoam/agent:<versioin>`, `mdo_agent_deck`, and `mdo_agent_work`. The commands and links below point to `v0.2.3`. If you want to use a different version, change the tag `v0.2.3` accordingly.
-
 ## Option A: Local Computers with LLM Apps
 
 This option works for both Windows and MacOS, and it is the easiest way to run the agents with small cases. If you plan to run larger cases, e.g., wing aero-structural optimization, you need to install the agents on an HPC (see Options C and D).
@@ -39,15 +35,17 @@ After the Docker Desktop is installed, open it and keep it open. In the Docker a
 
 Then, open a terminal and run the following command to download the pre-compiled MDO Agent Deck image:
 
-`docker pull dafoam/agent:v0.2.3`
+`docker pull dafoam/agent:latest`
 
-If you want to install a different version, change the tag `v0.2.3` accordingly.
+If you want to install an older version, replace `latest` with a specific version tag such as `v0.2.3`.
 
 ### Step 3. Download the working directory
 
-Download `mdo_agent_work` version [v0.2.3](https://github.com/DAFoam/mdo_agent_work/archive/refs/tags/v0.2.3.zip). If you want to install a different version, change the tag `v0.2.3` accordingly, but make sure its version is consistent with the Docker image version above.
+Download the latest version of `mdo_agent_work` from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/main.zip). 
 
-Unzip it and you will see a folder called `mdo_agent_work-v0.2.3`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents. 
+If you want to install an older version, download it from [here](https://github.com/DAFoam/mdo_agent_work/tags), making sure it is consistent with the Docker image version above.
+
+Unzip it and you will see a folder called `mdo_agent_work-*`. Rename that folder to `mdo_agent_work`. This will be the main working directory for your agents. 
 
 **IMPORTANT**: Do not manually create a folder and use it as the LLM's working directory. You must use `mdo_agent_work`. This is because `mdo_agent_work/results` contains pre-defined LLM configuration files (hidden by default). You do not need to modify these configuration files.
 
@@ -192,9 +190,9 @@ Use SSH to login to the HPC. Then, compile the DAFoam package from scratch there
 
 After DAFoam is compiled, load its environment, e.g., `. /home/your_user_name/dafoam/loadDAFoam.sh`, and then run the following command to install the MDO Agent Deck:
 
-`pip install mdo_agent_deck==v0.2.3`
+`pip install mdo_agent_deck`
 
-**NOTE**: The `mdo_agent_deck` package is hosted on PyPI. You can also install a different version by changing the tag `v0.2.3`.
+**NOTE**: The `mdo_agent_deck` package is hosted on PyPI. The command above installs the latest version. If you want to install an older version, pin it explicitly, for example `pip install mdo_agent_deck==0.2.3`, and make sure it matches the `mdo_agent_work` and Docker image versions you chose.
 
 Then, add the following line to your `~/.bashrc` on the HPC to automatically load DAFoam when logging in.
 
