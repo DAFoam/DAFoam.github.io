@@ -378,14 +378,14 @@ entries:
       url: /acknowledgement.html
       output: web, pdf
 
-  - title: Older Versions
+  - title: Older Docs
     output: web, pdf
     folderitems:
 
-    - title: v4
-      url: https://dafoam.github.io/v4-pages
+    - title: v4 docs
+      external_url: https://dafoam.github.io/v4-pages
       output: web, pdf
 
-    - title: v3
-      url: https://dafoam.github.io/v3-pages
+    - title: v3 docs
+      external_url: https://dafoam.github.io/v3-pages
       output: web, pdf
