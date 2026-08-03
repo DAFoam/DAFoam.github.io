@@ -4,10 +4,13 @@
 {% for entry in site.data.sidebars[sidebar].entries %}
 {% for folder in entry.folders %}
 {% for folderitem in folder.folderitems %}
+{% comment %}External sidebar links do not have a local URL reference to generate.{% endcomment %}
+{% if folderitem.external_url == null %}
 {% if folderitem.url contains "html#" %}
 [{{folderitem.url | remove: "/" }}]: {{folderitem.url | remove: "/"}}
 {% else %}
 [{{folderitem.url | remove: "/"  | remove: ".html"}}]: {{folderitem.url | remove: "/"}}
+{% endif %}
 {% endif %}
 {% for subfolders in folderitem.subfolders %}
 {% for subfolderitem in subfolders.subfolderitems %}
