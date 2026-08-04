@@ -217,9 +217,9 @@ cd smt-2.10.1 && \
 pip install .
 </pre>
 
-## **IPOPT, Uno, and Egor optimizers**
+## **IPOPT and Uno optimizers**
 
-IPOPT, Uno, and Egor are open-source optimizers for gradient-based and gradient-free optimization. 
+IPOPT and Uno are open-source optimizers for gradient-based optimization. 
 
 **IPOPT**
 
@@ -283,18 +283,6 @@ pip install --force-reinstall --no-deps -v .
 </pre>
 
 Note that the above command uses our customized the Uno optimizer with these changes: (1) It write the optimization log to the disk on the fly. (2) It avoid gradient calls during line search trials.
-
-**Egor**
-
-<pre>
-. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-pip install egobox==0.37.6 && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/LSDOlab/modopt/archive/refs/tags/v0.3.0.tar.gz -O modopt.tar.gz && \
-tar -xvf modopt.tar.gz && mv modopt-* modopt && rm -rf modopt.tar.gz && \
-cd modopt && pip install . && \
-</pre>
-
 
 ## **OpenVSP**
 
