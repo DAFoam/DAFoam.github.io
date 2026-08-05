@@ -151,71 +151,6 @@ cmake .. -DCGNS_ENABLE_FORTRAN=1 -DCMAKE_INSTALL_PREFIX=$CGNS_HOME -DCGNS_BUILD_
 make all install
 </pre>
 
-## **MACH-Aero framework**
-
-The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest_version }} is as follows
-
-baseclasses | pySpline |  pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
-| :----------------------------------------------------------------------------------------------------------- | 
-v1.9.0      | v1.5.4   | v1.17.0 | v1.4.2     | v2.6.3 | v2.9.0        | v2.6.4  | v2.16.0      | v1.2.3 | {{ site.latest_version }}
-
-Now run this command to install all the repos for MACH-Aero:
-
-<pre>
-. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/baseclasses/archive/v1.9.0.tar.gz -O baseclasses.tar.gz && \
-tar -xvf baseclasses.tar.gz && cd baseclasses-1.9.0 && pip install . && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/pyspline/archive/v1.5.4.tar.gz -O pyspline.tar.gz && \
-tar -xvf pyspline.tar.gz && cd pyspline-1.5.4 && \
-cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
-make && pip install . && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/pygeo/archive/v1.17.0.tar.gz -O pygeo.tar.gz && \
-tar -xvf pygeo.tar.gz && cd pygeo-1.17.0 && pip install . && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/multipoint/archive/v1.4.2.tar.gz -O multipoint.tar.gz && \
-tar -xvf multipoint.tar.gz && cd multipoint-1.4.2 && pip install . && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/cgnsutilities/archive/v2.9.0.tar.gz -O cgnsutilities.tar.gz && \
-tar -xvf cgnsutilities.tar.gz && cd cgnsutilities-2.9.0 && \
-cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
-make && pip install . && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/pyhyp/archive/v2.6.3.tar.gz -O pyhyp.tar.gz && \
-tar -xvf pyhyp.tar.gz && cd pyhyp-2.6.3 && \
-cp -r config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
-sed -i "s/mpifort/mpif90/g" config/config.mk && \
-make && pip install . && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/idwarp/archive/v2.6.4.tar.gz -O idwarp.tar.gz && \
-tar -xvf idwarp.tar.gz && cd idwarp-2.6.4 && \
-cp -r config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
-sed -i "s/mpifort/mpif90/g" config/config.mk && \
-make && pip install . && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/prefoil/archive/v2.0.1.tar.gz -O prefoil.tar.gz && \
-tar -xvf prefoil.tar.gz && cd prefoil-2.0.1 && \
-pip install . && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/mdolab/pyoptsparse/archive/v2.16.0.tar.gz -O pyoptsparse.tar.gz && \
-tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.16.0 && \
-pip install .
-</pre>
-
-## **Surrogate Modeling Toolbox (SMT)**
-
-Install SMT for surrogate-based optimization:
-
-<pre>
-. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
-cd $DAFOAM_ROOT_PATH/repos && \
-wget https://github.com/SMTorg/smt/archive/refs/tags/v2.10.1.tar.gz && \
-tar -xvf v2.10.1.tar.gz && \
-cd smt-2.10.1 && \
-pip install .
-</pre>
 
 ## **IPOPT and Uno optimizers**
 
@@ -283,6 +218,73 @@ pip install --force-reinstall --no-deps -v .
 </pre>
 
 Note that the above command uses our customized the Uno optimizer with these changes: (1) It write the optimization log to the disk on the fly. (2) It avoid gradient calls during line search trials.
+
+
+## **MACH-Aero framework**
+
+The supported repo versions in the MACH-Aero framework for DAFoam-{{ site.latest_version }} is as follows
+
+baseclasses | pySpline |  pyGeo  | multipoint | pyHyp  | cgnsUtilities | IDWarp  | pyOptSparse | pyOFM  | DAFoam
+| :----------------------------------------------------------------------------------------------------------- | 
+v1.9.0      | v1.5.4   | v1.17.0 | v1.4.2     | v2.6.3 | v2.9.0        | v2.6.4  | v2.16.0      | v1.2.3 | {{ site.latest_version }}
+
+Now run this command to install all the repos for MACH-Aero:
+
+<pre>
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/mdolab/baseclasses/archive/v1.9.0.tar.gz -O baseclasses.tar.gz && \
+tar -xvf baseclasses.tar.gz && cd baseclasses-1.9.0 && pip install . && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/mdolab/pyspline/archive/v1.5.4.tar.gz -O pyspline.tar.gz && \
+tar -xvf pyspline.tar.gz && cd pyspline-1.5.4 && \
+cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
+make && pip install . && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/mdolab/pygeo/archive/v1.17.0.tar.gz -O pygeo.tar.gz && \
+tar -xvf pygeo.tar.gz && cd pygeo-1.17.0 && pip install . && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/mdolab/multipoint/archive/v1.4.2.tar.gz -O multipoint.tar.gz && \
+tar -xvf multipoint.tar.gz && cd multipoint-1.4.2 && pip install . && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/mdolab/cgnsutilities/archive/v2.9.0.tar.gz -O cgnsutilities.tar.gz && \
+tar -xvf cgnsutilities.tar.gz && cd cgnsutilities-2.9.0 && \
+cp config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
+make && pip install . && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/mdolab/pyhyp/archive/v2.6.3.tar.gz -O pyhyp.tar.gz && \
+tar -xvf pyhyp.tar.gz && cd pyhyp-2.6.3 && \
+cp -r config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
+sed -i "s/mpifort/mpif90/g" config/config.mk && \
+make && pip install . && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/mdolab/idwarp/archive/v2.6.4.tar.gz -O idwarp.tar.gz && \
+tar -xvf idwarp.tar.gz && cd idwarp-2.6.4 && \
+cp -r config/defaults/config.LINUX_GFORTRAN.mk config/config.mk && \
+sed -i "s/mpifort/mpif90/g" config/config.mk && \
+make && pip install . && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/mdolab/prefoil/archive/v2.0.1.tar.gz -O prefoil.tar.gz && \
+tar -xvf prefoil.tar.gz && cd prefoil-2.0.1 && \
+pip install . && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/mdolab/pyoptsparse/archive/v2.16.0.tar.gz -O pyoptsparse.tar.gz && \
+tar -xvf pyoptsparse.tar.gz && cd pyoptsparse-2.16.0 && \
+pip install .
+</pre>
+
+## **Surrogate Modeling Toolbox (SMT)**
+
+Install SMT for surrogate-based optimization:
+
+<pre>
+. $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
+cd $DAFOAM_ROOT_PATH/repos && \
+wget https://github.com/SMTorg/smt/archive/refs/tags/v2.10.1.tar.gz && \
+tar -xvf v2.10.1.tar.gz && \
+cd smt-2.10.1 && \
+pip install .
+</pre>
 
 ## **OpenVSP**
 
