@@ -115,7 +115,7 @@ cd $DAFOAM_ROOT_PATH/packages && \
 wget https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-3.21.6.tar.gz  && \
 tar -xvf petsc-3.21.6.tar.gz && \
 cd petsc-3.21.6 && \
-./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --download-f2cblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 --with-make-np=1 && \
+./configure --PETSC_ARCH=real-opt --with-scalar-type=real --with-debugging=0 --download-metis=yes --download-parmetis=yes --download-superlu_dist=yes --download-fblaslapack=yes --download-f2cblaslapack=yes --with-shared-libraries=yes --with-fortran-bindings=1 --with-cxx-dialect=C++11 --with-make-np=4 && \
 make PETSC_DIR=$DAFOAM_ROOT_PATH/packages/petsc-3.21.6 PETSC_ARCH=real-opt all
 </pre>
 
