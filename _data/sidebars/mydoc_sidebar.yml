@@ -354,10 +354,6 @@ entries:
     output: web, pdf
     folderitems:
 
-    - title: GUI
-      url: /gui-overview.html
-      output: web, pdf
-
     - title: DAFoam publications
       url: /publications.html
       output: web, pdf
