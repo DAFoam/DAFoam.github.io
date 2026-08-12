@@ -11,6 +11,8 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
+<98> U. Padmanaban, S. Midya, P. He, S. Symon, B. Ganapathisubramani. Efficient three-dimensional variational data assimilation of multi-plane PIV data. arXiv.2608.07469, 2026.
+
 <97> G. Zhu, J. Zhou, S. Lyu, Q. Liu. A discrete adjoint-based multi-component coupled optimization framework for incompressible flows in turbomachinery. Engineering Applications of Computational Fluid Mechanics, 2026.
 
 <96> C. Bao, Y. Bin, Y. Shi, X. Yang. Canonical separated flows as transferable building blocks in data-driven turbulence modeling. Chinese Journal of Aeronautics, 2026.
