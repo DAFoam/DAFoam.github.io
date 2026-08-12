@@ -65,6 +65,6 @@ The framework records workflow and runtime context in the working directory. Thi
 
 ### Reference
 
-Ping He, Lean Fang, Jiawei Chen, Seth Zoppelt, and Christian Psenica. "Trustworthy Agentic AI for Aircraft Aerodynamic and Aerostructural Design Optimization.", paper in preparation. 2026.
+Ping He, Lean Fang, Jiawei Chen, Seth Zoppelt, and Christian Psenica. "Trustworthy Agentic AI for High-fidelity Aircraft Design Optimization.", paper in preparation. 2026.
 
 {% include links.html %}
