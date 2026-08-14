@@ -325,8 +325,6 @@ agent --yolo
 
 ## Option E: Locally Hosted LLM (No Internet and No Paid Plan)
 
-**Note:** Option E is still in an experimental state.
-
 This option works on Linux, macOS, and Windows. It lets you run the agents with a locally hosted LLM, so no internet access or paid plan is needed. The main drawback is that it requires a high-end GPU. The following setup has been tested on a Macbook with M5 Pro chip and 24 GB memory.
 
 ### Step 1. Install Docker Desktop
@@ -352,16 +350,20 @@ We currently support two local LLMs: Qwen3.5 and Gemma4. Follow ONLY one of the 
 </div>
 <div class="tab-content">
 
-Open a terminal and run `ollama pull qwen3.5:9b` to download the Qwen model with 9 billion parameters. This is the smallest Qwen model we have tested that works.
+Open a terminal and run `ollama pull qwen3.5:9b` to download the Qwen model with 9 billion parameters. This is the recommended Qwen model we have tested that works.
 
-Next, we need to customize the default `qwen3.5:9b` model for our agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create qwen3.5-agent:9b -f .ModelFileQwen`. This creates a customized model called `qwen3.5-agent:9b`, which we will use to run the agents.
+Next, we need to customize the default `qwen3.5:9b` model for our agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create qwen3.5-agent:9b -f .ModelFileQwen3.5-9b`. This creates a customized model called `qwen3.5-agent:9b`, which we will use to run the agents.
+
+[Optional]. If you prefer a smaller qwen3.5 model, you can run `ollama pull qwen3.5:4b` and then run `ollama create qwen3.5-agent:4b -f .ModelFileQwen3.5-4b`
 
 </div>
 <div class="tab-content">
 
-Open a terminal and run `ollama pull gemma4:12b` to download the Gemma4 model with 12 billion parameters. This is the smallest Gemma4 model we have tested that works.
+Open a terminal and run `ollama pull gemma4:12b` to download the Gemma4 model with 12 billion parameters. This is the recommended Gemma4 model we have tested that works.
 
-Next, we need to customize the default `gemma4:12b` model for our agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create gemma4-agent:12b -f .ModelFileGemma`. This creates a customized model called `gemma4-agent:12b`, which we will use to run the agents.
+Next, we need to customize the default `gemma4:12b` model for our agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create gemma4-agent:12b -f .ModelFileGemma4-12b`. This creates a customized model called `gemma4-agent:12b`, which we will use to run the agents.
+
+[Optional]. If you prefer a smaller Gemma4 model, you can run `ollama pull gemma4:e4b` and then run `ollama create gemma4-agent:e4b -f .ModelFileGemma-e4b`
 
 </div>
 </div>
@@ -371,21 +373,21 @@ Next, we need to customize the default `gemma4:12b` model for our agentic workfl
 
 ### Step 4. Download an MCP Orchestrator
 
-Once the local LLM is running, it must be connected to the MCP server. We have two options: Claude Code CLI or OpenCode CLI, and you need to install ONLY one of the following. We suggest OpenCode as it is faster. Claude Code is more robust but it thinks longer and take more time to finish a task than OpenCode.
+Once the local LLM is running, it must be connected to the MCP server. We have two options: Claude Code CLI or OpenCode CLI, and you need to install ONLY one of the following. We suggest Claude as it is more robust.
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
-<button class="tab-button">OpenCode CLI</button>
 <button class="tab-button">Claude Code CLI</button>
-</div>
-<div class="tab-content">
-
-Download and install the OpenCode CLI [here](https://opencode.ai/download).
-
+<button class="tab-button">OpenCode CLI</button>
 </div>
 <div class="tab-content">
 
 Download and install the Claude Code CLI [here](https://docs.anthropic.com/en/docs/claude-code/getting-started).
+
+</div>
+<div class="tab-content">
+
+Download and install the OpenCode CLI [here](https://opencode.ai/download).
 
 </div>
 </div>
@@ -397,47 +399,41 @@ Open a terminal, go to the `mdo_agent_work/results/` folder, and run one the fol
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
-<button class="tab-button">OpenCode CLI</button>
 <button class="tab-button">Claude Code CLI</button>
+<button class="tab-button">OpenCode CLI</button>
+</div>
+<div class="tab-content">
+
+`ollama  launch claude -- --bare --mcp-config .mcp.json --strict-mcp-config --dangerously-skip-permissions --effort low --verbose`
+
 </div>
 <div class="tab-content">
 
 `ollama launch opencode --config`
 
 </div>
-<div class="tab-content">
-
-`ollama launch claude --config`
-
-</div>
 </div>
 
-The terminal will then ask you to "Select models"; select your local LLM, for example, `qwen3.5-agent:9b` or `gemma4-agent:12b`. Finally, choose `Yes` to open the MCP Orchestrator.
+The terminal will then ask you to "Select models"; select your local LLM, for example, `qwen3.5-agent:9b` or `gemma4-agent:12b`.
 
 **You must check one of the following before running a case, depending on which MCP Orchestrator you use:**
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
-<button class="tab-button">OpenCode CLI</button>
 <button class="tab-button">Claude Code CLI</button>
+<button class="tab-button">OpenCode CLI</button>
 </div>
 <div class="tab-content">
 
-If you use OpenCode CLI
+- **Check that the MCP server is running**. Run `/mcp` in Claude to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
+- **Check the active LLM**. The active LLM is shown at the top. It should display `qwen3.5-agent:9b` or `gemma4-agent:12b` (see the following figure).
+
+</div>
+<div class="tab-content">
 
 - **Check that the MCP is running**. If the MCP server is running, you should see a green circle at the bottom say "1 MCP /status" (see the figure below). Alternatively, you can run `/mcps` in OpenCode to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
 - **Check the active LLM**. The active LLM is shown at the bottom of the text entry box. It should display `qwen3.5-agent:9b` or `gemma4-agent:12b` (see the following figure). If it does not, run `/models`, press Enter, and select the correct local LLM from the menu.
 - **Check the run mode**. OpenCode has two modes: `Build` and Plan. `Build` mode allows OpenCode to modify files, while Plan mode does not. To run the agents properly, make sure OpenCode is in `Build` mode. You can toggle modes with the `Tab` key.
-
-</div>
-<div class="tab-content">
-
-If you use Claude Code CLI
-
-- **Check that the MCP server is running**. Run `/mcp` in Claude to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
-- **Check the active LLM**. The active LLM is shown at the top. It should display `qwen3.5-agent:9b` or `gemma4-agent:12b` (see the following figure).
-- **Check the run mode**. By default, Claude Code uses "manual mode on". To streamline the agentic workflow, press the "Shift + Tab" keys to switch to "auto mode on" (see the following figure).
-
 
 </div>
 </div>
