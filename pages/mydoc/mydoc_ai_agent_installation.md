@@ -404,7 +404,7 @@ Open a terminal, go to the `mdo_agent_work/results/` folder, and run one the fol
 </div>
 <div class="tab-content">
 
-`ollama  launch claude -- --bare --mcp-config .mcp.json --strict-mcp-config --dangerously-skip-permissions --effort low --verbose`
+`ollama  launch claude -- --bare --mcp-config .mcp.json --strict-mcp-config --dangerously-skip-permissions --verbose`
 
 </div>
 <div class="tab-content">
