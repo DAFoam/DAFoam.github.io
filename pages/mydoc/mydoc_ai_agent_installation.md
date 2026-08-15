@@ -350,20 +350,16 @@ We currently support two local LLMs: Qwen3.5 and Gemma4. Follow ONLY one of the 
 </div>
 <div class="tab-content">
 
-Open a terminal and run `ollama pull qwen3.5:9b` to download the Qwen model with 9 billion parameters. This is the recommended Qwen model we have tested that works.
+Open a terminal and run `ollama pull qwen3.5:9b` to download the Qwen model with 9 billion parameters. This is the smallest Qwen model we have tested that works reliably.
 
-Next, we need to customize the default `qwen3.5:9b` model for our agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create qwen3.5-agent:9b -f .ModelFileQwen3.5-9b`. This creates a customized model called `qwen3.5-agent:9b`, which we will use to run the agents.
-
-[Optional]. If you prefer a smaller qwen3.5 model, you can run `ollama pull qwen3.5:4b` and then run `ollama create qwen3.5-agent:4b -f .ModelFileQwen3.5-4b`
+Next, we need to customize the default `qwen3.5:9b` model for our agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create qwen3.5-agent:9b -f .ModelFileQwen3.5`. This creates a customized model called `qwen3.5-agent:9b`, which we will use to run the agents.
 
 </div>
 <div class="tab-content">
 
-Open a terminal and run `ollama pull gemma4:12b` to download the Gemma4 model with 12 billion parameters. This is the recommended Gemma4 model we have tested that works.
+Open a terminal and run `ollama pull gemma4:12b` to download the Gemma4 model with 12 billion parameters. This is the smallest Gemma4 model we have tested that works reliably.
 
-Next, we need to customize the default `gemma4:12b` model for our agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create gemma4-agent:12b -f .ModelFileGemma4-12b`. This creates a customized model called `gemma4-agent:12b`, which we will use to run the agents.
-
-[Optional]. If you prefer a smaller Gemma4 model, you can run `ollama pull gemma4:e4b` and then run `ollama create gemma4-agent:e4b -f .ModelFileGemma-e4b`
+Next, we need to customize the default `gemma4:12b` model for our agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create gemma4-agent:12b -f .ModelFileGemma4`. This creates a customized model called `gemma4-agent:12b`, which we will use to run the agents.
 
 </div>
 </div>
