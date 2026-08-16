@@ -350,21 +350,21 @@ We currently support two local LLMs: Qwen3.5 and Gemma4. Follow ONLY one of the 
 </div>
 <div class="tab-content">
 
-Open a terminal and run `ollama pull qwen3.5:9b` to download the Qwen model with 9 billion parameters. This is the smallest Qwen model we have tested that works reliably.
+Open a terminal and run `ollama pull qwen3.5:9b` to download the Qwen model with 9 billion parameters. This is the recommended Qwen model we have tested that works.
 
-Next, we need to customize the default `qwen3.5:9b` model for our agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create qwen3.5-agent:9b -f .ModelFileQwen3.5`. This creates a customized model called `qwen3.5-agent:9b`, which we will use to run the agents.
+Next, we need to customize the default `qwen3.5:9b` model to better fit for agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create qwen3.5-custom:9b -f .ModelFileQwen3.5`. This creates a customized model called `qwen3.5-custom:9b`, which we will use to run the agents.
 
 </div>
 <div class="tab-content">
 
-Open a terminal and run `ollama pull gemma4:12b` to download the Gemma4 model with 12 billion parameters. This is the smallest Gemma4 model we have tested that works reliably.
+Open a terminal and run `ollama pull gemma4:12b` to download the Gemma4 model with 12 billion parameters. This is the recommended Gemma4 model we have tested that works.
 
-Next, we need to customize the default `gemma4:12b` model for our agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create gemma4-agent:12b -f .ModelFileGemma4`. This creates a customized model called `gemma4-agent:12b`, which we will use to run the agents.
+The model is ready to use, no need to customized.
 
 </div>
 </div>
 
-**Optional Checks**: Before running the agents, you can verify that your hardware is powerful enough for the local LLM. Run `ollama run qwen3.5-agent:9b --verbose` if you use Qwen, or `ollama run gemma4-agent:12b --verbose` if you use Gemma4. After the model finishes loading, ask a simple question such as "Can you give me an overview of your understanding of CFD?" When the response is complete, check the `eval rate` reported at the end in tokens/s. Performance is generally acceptable if this value is above 15. During this test session, you can also check VRAM and RAM usage with `ollama ps`, which reports GPU and CPU usage percentages. Ideally, GPU usage should be 100%. If it is not, the model is likely too large for your hardware, and Ollama will offload inference to the CPU, which can significantly slow performance. The model should be smaller than 10 GB. When you are done, exit the chat session by typing `/bye` or pressing `ctrl+c`.
+**Optional Checks**: Before running the agents, you can verify that your hardware is powerful enough for the local LLM. Run `ollama run qwen3.5-custom:9b --verbose` if you use Qwen, or `ollama run gemma4:12b --verbose` if you use Gemma4. After the model finishes loading, ask a simple question such as "Can you give me an overview of your understanding of CFD?" When the response is complete, check the `eval rate` reported at the end in tokens/s. Performance is generally acceptable if this value is above 15. During this test session, you can also check VRAM and RAM usage with `ollama ps`, which reports GPU and CPU usage percentages. Ideally, GPU usage should be 100%. If it is not, the model is likely too large for your hardware, and Ollama will offload inference to the CPU, which can significantly slow performance. The model should be smaller than 10 GB. When you are done, exit the chat session by typing `/bye` or pressing `ctrl+c`.
 
 
 ### Step 4. Download an MCP Orchestrator
@@ -410,7 +410,7 @@ Open a terminal, go to the `mdo_agent_work/results/` folder, and run one the fol
 </div>
 </div>
 
-The terminal will then ask you to "Select models"; select your local LLM, for example, `qwen3.5-agent:9b` or `gemma4-agent:12b`.
+The terminal will then ask you to "Select models"; select your local LLM, for example, `qwen3.5-custom:9b` or `gemma4:12b`.
 
 **You must check one of the following before running a case, depending on which MCP Orchestrator you use:**
 
@@ -422,13 +422,13 @@ The terminal will then ask you to "Select models"; select your local LLM, for ex
 <div class="tab-content">
 
 - **Check that the MCP server is running**. Run `/mcp` in Claude to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
-- **Check the active LLM**. The active LLM is shown at the top. It should display `qwen3.5-agent:9b` or `gemma4-agent:12b` (see the following figure).
+- **Check the active LLM**. The active LLM is shown at the top. It should display `qwen3.5-custom:9b` or `gemma4:12b` (see the following figure).
 
 </div>
 <div class="tab-content">
 
 - **Check that the MCP is running**. If the MCP server is running, you should see a green circle at the bottom say "1 MCP /status" (see the figure below). Alternatively, you can run `/mcps` in OpenCode to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
-- **Check the active LLM**. The active LLM is shown at the bottom of the text entry box. It should display `qwen3.5-agent:9b` or `gemma4-agent:12b` (see the following figure). If it does not, run `/models`, press Enter, and select the correct local LLM from the menu.
+- **Check the active LLM**. The active LLM is shown at the bottom of the text entry box. It should display `qwen3.5-custom:9b` or `gemma4:12b` (see the following figure). If it does not, run `/models`, press Enter, and select the correct local LLM from the menu.
 - **Check the run mode**. OpenCode has two modes: `Build` and Plan. `Build` mode allows OpenCode to modify files, while Plan mode does not. To run the agents properly, make sure OpenCode is in `Build` mode. You can toggle modes with the `Tab` key.
 
 </div>
