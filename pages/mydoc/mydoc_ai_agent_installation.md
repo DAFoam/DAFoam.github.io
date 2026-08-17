@@ -341,25 +341,51 @@ First, download [Ollama](https://ollama.com/download), which hosts and runs loca
 
 Once the download is complete, launch the Ollama desktop app and keep it open. Then, click the Ollama app icon, select "Settings", and set the "Context length" to 64K in the settings window.
 
-We currently support two local LLMs: Qwen3.5 and Gemma4. Follow ONLY one of the following sets of instructions to install a model. We recommend Qwen3.5.
+We currently support three local LLMs: Qwen3.5, Gemma4, GPT-OSS. Follow ONLY one of the following sets of instructions to install a model. These models are available with different parameter counts and memory requirements. The choice of model depends on the available GPU memory on your system. We recommend starting with the 9-billion-parameter Qwen model.
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
 <button class="tab-button">Qwen3.5</button>
 <button class="tab-button">Gemma4</button>
+<button class="tab-button">GPT-OSS</button>
 </div>
 <div class="tab-content">
 
-Open a terminal and run `ollama pull qwen3.5:9b` to download the Qwen model with 9 billion parameters. This is the recommended Qwen model we have tested that works.
+Open a terminal and run `ollama pull qwen3.5:9b` to download the Qwen model with 9 billion parameters.
 
-Next, we need to customize the default `qwen3.5:9b` model to better fit for agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create qwen3.5-custom:9b -f .ModelFileQwen3.5`. This creates a customized model called `qwen3.5-custom:9b`, which we will use to run the agents.
+Next, we customize the default `qwen3.5:9b` model. Go to the `mdo_agent_work/results` folder and run:
+
+`python .create_custom_model.py qwen3.5:9b qwen3.5-custom:9b --num_ctx 65536 --temperature 0 --presence_penalty 0 --repeat_penalty 1.0`
+
+This creates a custom model named `qwen3.5-custom:9b`, which is used to run the agents. First, we cap the max context length to 64K to save memory. The temperature is set to 0 to eliminate sampling randomness, while the presence and repetition penalties are disabled to avoid introducing additional biases against repeated outputs. These settings improve the determinism and reproducibility of the agentic workflow.
+
+If you want to use a Qwen model with a different parameter size, change the model name accordingly and always create a corresponding customized model before running the agents.
 
 </div>
 <div class="tab-content">
 
-Open a terminal and run `ollama pull gemma4:12b` to download the Gemma4 model with 12 billion parameters. This is the recommended Gemma4 model we have tested that works.
+Open a terminal and run `ollama pull gemma4:12b` to download the Gemma model with 12 billion parameters.
 
-Next, we need to customize the default `gemma4:12b` model to better fit for agentic workflow. Go to the `mdo_agent_work/results` folder and run `ollama create gemma4-custom:12b -f .ModelFileGemma4`. This creates a customized model called `gemma4-custom:12b`, which we will use to run the agents.
+Next, we customize the default `gemma4:12b` model. Go to the `mdo_agent_work/results` folder and run:
+
+`python .create_custom_model.py gemma4:12b gemma4-custom:12b --num_ctx 65536 --temperature 0 --presence_penalty 0 --repeat_penalty 1.0`
+
+This creates a custom model named `gemma4-custom:12b`, which is used to run the agents. First, we cap the max context length to 64K to save memory. The temperature is set to 0 to eliminate sampling randomness, while the presence and repetition penalties are disabled to avoid introducing additional biases against repeated outputs. These settings improve the determinism and reproducibility of the agentic workflow.
+
+If you want to use a Gemma model with a different parameter size, change the model name accordingly and always create a corresponding customized model before running the agents.
+
+</div>
+<div class="tab-content">
+
+Open a terminal and run `ollama pull gpt-oss:20b` to download the OpenAI's GPT-OSS model with 20 billion parameters.
+
+Next, we customize the default `gpt-oss:20b` model. Go to the `mdo_agent_work/results` folder and run:
+
+`python .create_custom_model.py gpt-oss:20b gpt-oss-custom:20b --num_ctx 65536 --temperature 0 --presence_penalty 0 --repeat_penalty 1.0`
+
+This creates a custom model named `gpt-oss-custom:20b`, which is used to run the agents. First, we cap the max context length to 64K to save memory. The temperature is set to 0 to eliminate sampling randomness, while the presence and repetition penalties are disabled to avoid introducing additional biases against repeated outputs. These settings improve the determinism and reproducibility of the agentic workflow.
+
+If you want to use a GPT-OSS model with a different parameter size, change the model name accordingly and always create a corresponding customized model before running the agents.
 
 </div>
 </div>
@@ -410,7 +436,7 @@ Open a terminal, go to the `mdo_agent_work/results/` folder, and run one the fol
 </div>
 </div>
 
-The terminal will then ask you to "Select models"; select your local LLM, for example, `qwen3.5-custom:9b` or `gemma4-custom:12b`.
+The terminal will then ask you to "Select models"; select your local LLM, for example, `qwen3.5-custom:9b`, `gemma4-custom:12b`, or `gpt-oss-custom:20b`.
 
 **You must check one of the following before running a case, depending on which MCP Orchestrator you use:**
 
@@ -422,13 +448,13 @@ The terminal will then ask you to "Select models"; select your local LLM, for ex
 <div class="tab-content">
 
 - **Check that the MCP server is running**. Run `/mcp` in Claude to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
-- **Check the active LLM**. The active LLM is shown at the top. It should display `qwen3.5-custom:9b` or `gemma4-custom:12b` (see the following figure).
+- **Check the active LLM**. The active LLM is shown at the top. It should display `qwen3.5-custom:9b`, `gemma4-custom:12b`, or `gpt-oss-custom:20b` (see the following figure).
 
 </div>
 <div class="tab-content">
 
 - **Check that the MCP is running**. If the MCP server is running, you should see a green circle at the bottom say "1 MCP /status" (see the figure below). Alternatively, you can run `/mcps` in OpenCode to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
-- **Check the active LLM**. The active LLM is shown at the bottom of the text entry box. It should display `qwen3.5-custom:9b` or `gemma4-custom:12b` (see the following figure). If it does not, run `/models`, press Enter, and select the correct local LLM from the menu.
+- **Check the active LLM**. The active LLM is shown at the bottom of the text entry box. It should display `qwen3.5-custom:9b`, `gemma4-custom:12b`, or `gpt-oss-custom:20b` (see the following figure). If it does not, run `/models`, press Enter, and select the correct local LLM from the menu.
 - **Check the run mode**. OpenCode has two modes: `Build` and Plan. `Build` mode allows OpenCode to modify files, while Plan mode does not. To run the agents properly, make sure OpenCode is in `Build` mode. You can toggle modes with the `Tab` key.
 
 </div>
