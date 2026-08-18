@@ -355,9 +355,9 @@ Open a terminal and run `ollama pull qwen3.5:9b` to download the Qwen model with
 
 Next, we customize the default `qwen3.5:9b` model. Go to the `mdo_agent_work/results` folder and run:
 
-`python .create_custom_model.py qwen3.5:9b qwen3.5-custom:9b --num_ctx 65536 --temperature 0 --presence_penalty 0 --repeat_penalty 1.0`
+`python .create_custom_model.py qwen3.5:9b qwen3.5-custom:9b --num_ctx 65536 --temperature 0.8 --top_p 0.8 --top_k 20 --min_p 0 --presence_penalty 0 --repeat_penalty 1.0`
 
-This creates a custom model named `qwen3.5-custom:9b`, which is used to run the agents. First, we cap the max context length to 64K to save memory. The temperature is set to 0 to eliminate sampling randomness, while the presence and repetition penalties are disabled to avoid introducing additional biases against repeated outputs. These settings improve the determinism and reproducibility of the agentic workflow.
+This creates a custom model named `qwen3.5-custom:9b`, which is used to run the agents. These settings cap the max memory usage and improve the determinism and reproducibility of the agentic workflow.
 
 If you want to use a Qwen model with a different parameter size, change the model name accordingly and always create a corresponding customized model before running the agents.
 
@@ -368,9 +368,9 @@ Open a terminal and run `ollama pull gemma4:12b` to download the Gemma model wit
 
 Next, we customize the default `gemma4:12b` model. Go to the `mdo_agent_work/results` folder and run:
 
-`python .create_custom_model.py gemma4:12b gemma4-custom:12b --num_ctx 65536 --temperature 0 --presence_penalty 0 --repeat_penalty 1.0`
+`python .create_custom_model.py gemma4:12b gemma4-custom:12b --num_ctx 65536 --temperature 0.8 --top_p 0.8 --top_k 20 --min_p 0 --presence_penalty 0 --repeat_penalty 1.0`
 
-This creates a custom model named `gemma4-custom:12b`, which is used to run the agents. First, we cap the max context length to 64K to save memory. The temperature is set to 0 to eliminate sampling randomness, while the presence and repetition penalties are disabled to avoid introducing additional biases against repeated outputs. These settings improve the determinism and reproducibility of the agentic workflow.
+This creates a custom model named `gemma4-custom:12b`, which is used to run the agents. These settings cap the max memory usage and improve the determinism and reproducibility of the agentic workflow.
 
 If you want to use a Gemma model with a different parameter size, change the model name accordingly and always create a corresponding customized model before running the agents.
 
@@ -381,9 +381,9 @@ Open a terminal and run `ollama pull gpt-oss:20b` to download the OpenAI's GPT-O
 
 Next, we customize the default `gpt-oss:20b` model. Go to the `mdo_agent_work/results` folder and run:
 
-`python .create_custom_model.py gpt-oss:20b gpt-oss-custom:20b --num_ctx 65536 --temperature 0 --presence_penalty 0 --repeat_penalty 1.0`
+`python .create_custom_model.py gpt-oss:20b gpt-oss-custom:20b --num_ctx 65536 --temperature 0.8 --top_p 0.8 --top_k 20 --min_p 0 --presence_penalty 0 --repeat_penalty 1.0`
 
-This creates a custom model named `gpt-oss-custom:20b`, which is used to run the agents. First, we cap the max context length to 64K to save memory. The temperature is set to 0 to eliminate sampling randomness, while the presence and repetition penalties are disabled to avoid introducing additional biases against repeated outputs. These settings improve the determinism and reproducibility of the agentic workflow.
+This creates a custom model named `gpt-oss-custom:20b`, which is used to run the agents. These settings cap the max memory usage and improve the determinism and reproducibility of the agentic workflow.
 
 If you want to use a GPT-OSS model with a different parameter size, change the model name accordingly and always create a corresponding customized model before running the agents.
 
