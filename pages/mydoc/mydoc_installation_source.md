@@ -92,7 +92,7 @@ Next, we need to upgrade the pip utility and install Python packages:
 
 <pre>
 pip install --upgrade pip && \
-pip install numpy==2.3.5 scipy==1.17.1 mpi4py==4.1.1 cython==3.0.5 numpy-stl==2.16.0 imageio==2.37.4 nptyping==1.4.4 tensorflow-cpu==2.21 coverage==7.11.0 fastmcp==2.13.2 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0
+pip install numpy==2.3.5 scipy==1.17.1 mpi4py==4.1.1 cython==3.0.5 numpy-stl==2.16.0 imageio==2.37.4 nptyping==1.4.4 tensorflow-cpu==2.21 coverage==7.11.0 fastmcp==3.4.7 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0
 </pre>
 
 ## **Petsc**
