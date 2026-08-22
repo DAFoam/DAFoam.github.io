@@ -380,7 +380,7 @@ It should see some basic information about simpleFoamADR.
 After the ADR is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v2506 folder. Note that we need to link the relative path so that this is portable.
 
 <pre>
-cd $DAFOAM_ROOT_PATH/OpenFOAM-AD && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-AD && \
 ./renameAD.sh platforms/linux*ADR --ADR --commit && \
 cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506/platforms/*/lib && \
 ln -s ../../../../OpenFOAM-AD/platforms/linux*ADR/lib/*.so . && \
@@ -407,7 +407,7 @@ export WM_NCOMPPROCS=4 && \
 After DF is compiled and verified, we need to link all the compiled AD libraries to the original OpenFOAM-v2506 folder. Note that we need to link the relative path so that this is portable.
 
 <pre>
-cd $DAFOAM_ROOT_PATH/OpenFOAM-AD && \
+cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-AD && \
 ./renameAD.sh platforms/linux*ADF --ADF --commit && \
 cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506/platforms/*/lib && \
 ln -s ../../../../OpenFOAM-AD/platforms/linux*ADF/lib/*.so . && \
