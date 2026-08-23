@@ -328,7 +328,7 @@ tar -xvf OpenFOAM-v2506.tgz && \
 tar -xvf ThirdParty-v2506.tgz && \
 cd $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506 && \
 wget https://github.com/DAFoam/files/releases/download/v1.0.0/UPstream_OF2506_Patch.C && \
-mv UPstream_OF2506_Patch.C src/Pstream/mpi && \
+mv UPstream_OF2506_Patch.C src/Pstream/mpi/UPstream.C && \
 echo '# OpenFOAM-v2506' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'source $DAFOAM_ROOT_PATH/OpenFOAM/OpenFOAM-v2506/etc/bashrc' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 echo 'export LD_LIBRARY_PATH=$DAFOAM_ROOT_PATH/OpenFOAM/sharedLibs:$LD_LIBRARY_PATH' >> $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
