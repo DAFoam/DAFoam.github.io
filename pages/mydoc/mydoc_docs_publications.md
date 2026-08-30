@@ -11,6 +11,8 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
+<100> J. Li, R. Kunz, G. Huang, X. Yang. A Formally Log(Re) Solution to the Engineering Turbulence Problem. 14th International Symposium on Turbulence and Shear Flow Phenomena, 2026.
+
 <99> F. Qu, Z. Wang, J. Zhong. Data-augmented k-ω shear stress transport turbulence model for massive separated flow via field inversion. International Journal of Heat and Fluid Flow, 2026.
 
 <98> U. Padmanaban, S. Midya, P. He, S. Symon, B. Ganapathisubramani. Efficient three-dimensional variational data assimilation of multi-plane PIV data. arXiv.2608.07469, 2026.
