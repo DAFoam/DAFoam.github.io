@@ -27,7 +27,7 @@ The following publications explicitly state that DAFoam was used in their studie
 
 <93> H. Blumhoefer and A. Sharma. Field Inversion–Enhanced Simulation of Tornado-Like Vortices. AIAA Aviation Forum, 2026.
 
-<92> U. Padmanaban, C. Thompson, B. Ganapathisubramani, S. Symon. To stall-cell or not to stall-cell: Variational data assimilation of 3D mean flow past a stalled airfoil. arXiv:2604.27680, 2026
+<92> U. Padmanaban, C. Thompson, B. Ganapathisubramani, S. Symon. To stall-cell or not to stall-cell: Variational data assimilation of 3D mean flow past a stalled airfoil. International Journal of Heat and Fluid Flow, 2026
 
 <91> Z. Zhang, K. Shukla, Z. Wang, A. Morales, T. Kaufer, S. Salauddin, N. Walters, aD. Barrett, K. Ahmed, M. Triantafyllou, G. Karniadakis. Turbulence closure in Reynolds-averaged Navier–Stokes and flow inference around a cylinder using physics-informed neural networks and sparse experimental data. Journal of Fluid Mechanics, 2026.
 
