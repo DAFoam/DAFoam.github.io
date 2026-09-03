@@ -11,6 +11,8 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
+<101>. Z. Wei, E. Dufour, C. Pelletier, M. Bauerheim, P. Fua. Aerodynamic Shape Design Space Exploration with Deep Latent Diffusion Model. AIAA Journal, 2026
+
 <100> J. Li, R. Kunz, G. Huang, X. Yang. A Formally Log(Re) Solution to the Engineering Turbulence Problem. 14th International Symposium on Turbulence and Shear Flow Phenomena, 2026.
 
 <99> F. Qu, Z. Wang, J. Zhong. Data-augmented k-ω shear stress transport turbulence model for massive separated flow via field inversion. International Journal of Heat and Fluid Flow, 2026.
