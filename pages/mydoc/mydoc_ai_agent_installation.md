@@ -9,9 +9,9 @@ folder: mydoc
 
 ## Overview
 
-There are four options to install and run the MDO Agent Deck framework: (A) Local Computers with LLM Apps, (B) Local Computers with VSCode, (C) HPC Clusters with LLM Apps, and (D) HPC Clusters with VSCode. Options A and B run on your local computer using pre-compiled Docker images, while Options C and D run on a high-performance computing (HPC) cluster with self-compiled codes. You need to choose **ONLY ONE** option to follow. If you are new to the MDO Agent Deck, we recommend you choose Option A, which is the easiest to set up and run.
+There are five options to install and run the MDO Agent Deck framework: (A) Local Computation with LLM Apps, (B) Local Computation with VSCode, (C) Remote Computation with LLM Apps, (D) Remote Computation with VSCode, and (E) Locally Hosted LLM. Options A and B run on your local computer using pre-compiled Docker images, while Options C and D submit jobs and run simulations on a high-performance computing (HPC) cluster with self-compiled codes. The option E does not need internet access or LLM subscription plans. You need to choose **ONLY ONE** option to follow. If you are new to the MDO Agent Deck, we recommend you choose Option A, which is the easiest to set up and run.
 
-## Option A: Local Computers with LLM Apps
+## Option A: Local Computation with LLM Apps
 
 This option works for both Windows and MacOS, and it is the easiest way to run the agents with small cases. If you plan to run larger cases, e.g., wing aero-structural optimization, you need to install the agents on an HPC (see Options C and D).
 
@@ -105,7 +105,7 @@ Fig. An example of the Codex interface
 </div>
 
 
-## Option B: Local Computers with VSCode
+## Option B: Local Computation with VSCode
 
 Option B also supports both Windows and MacOS, and it relies on VSCode and LLM command-line interface (CLI) instead of LLM Desktop Apps. Compared with Option A, Option B has a built-in interface for case file management, which allows you to quickly visualize case log files, figures, etc, and it also has a unified interface across different LLM models; however, it requires a few additional steps for installation.
 
@@ -176,7 +176,7 @@ agent --yolo
 Fig. An example of the VS Code interface for Codex. Other LLMs have similar interfaces 
 </div>
 
-## Option C: HPC Clusters with LLM Apps
+## Option C: Remote Computation with LLM Apps
 
 This Option is for running large-scale cases on an HPC cluster. Currently only Claude Desktop App supports remote HPC connection.
 
@@ -238,7 +238,7 @@ During agent execution, you may be asked for permission multiple times. To skip 
 </div>
 </div>
 
-## Option D: HPC clusters with VSCode 
+## Option D: Remote Computation with VSCode 
 
 This option is for running large-scale cases on an HPC cluster. Option D is similar to Option C, except that it uses VSCode as the interface to the HPC. Compared with the Claude Desktop App, VSCode allows you to run agents and view files in the case folder simultaneously.
 
