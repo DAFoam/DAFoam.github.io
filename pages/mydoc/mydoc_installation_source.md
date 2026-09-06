@@ -290,16 +290,15 @@ pip install .
 
 This step is needed if you want to use OpenVSP for geometry parameterization. Here we build the OpenVSP without GUI, only the vspscript and its Python API. Use the following commands.
 
-**IMPORTANT**: (1) The Python API depends on swig. So, if you build it on the HPC, you may need to load the swig module. (2) there is a bug in the recent version of OpenVSP that will cause seg fault when perturbing a small step (e.g., 1e-6) for parameter such as camber for the surface geometry. Version 3.42.3 is the latest working version. (3) there is a bug in the fitCST API for 3.42.3, which has been fixed in the later version of OpenVSP. Here, we have applied the bug fix through the `sed` line. (4) OpenVSP does not compile with Gcc 11 or 12.
+**IMPORTANT**: (1) The Python API depends on swig. So, if you build it on the HPC, you may need to load the swig module. (2) there is a potential bug in OpenVSP-3.43.0+ that will cause seg fault when perturbing a small step (e.g., 1e-6) for parameter. Check [this issue](https://github.com/mdolab/dafoam/issues/1021). (3) OpenVSP does not compile with Gcc 11 or 12.
 
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
 cd $DAFOAM_ROOT_PATH/packages && \
 mkdir OpenVSP && cd OpenVSP && \
 mkdir build buildlibs && \
-wget https://github.com/OpenVSP/OpenVSP/archive/refs/tags/OpenVSP_3.42.3.tar.gz && \
-tar -xvf OpenVSP_3.42.3.tar.gz && mv OpenVSP-* repo && rm -rf OpenVSP_3.42.3.tar.gz && \
-sed -i '5352,5357s/ ||$/ \&\&/;6452,6457s/ ||$/ \&\&/' repo/src/geom_api/VSP_Geom_API.cpp && \
+wget https://github.com/OpenVSP/OpenVSP/archive/refs/tags/OpenVSP_3.51.0.tar.gz && \
+tar -xvf OpenVSP_3.51.0.tar.gz && mv OpenVSP-* repo && rm -rf OpenVSP_3.51.0.tar.gz && \
 cd buildlibs && \
 cmake -DVSP_NO_GRAPHICS=ON -DVSP_USE_SYSTEM_ADEPT2=false -DVSP_USE_SYSTEM_CLIPPER2=false -DVSP_USE_SYSTEM_CMINPACK=false -DVSP_USE_SYSTEM_CODEELI=false -DVSP_USE_SYSTEM_CPPTEST=false -DVSP_USE_SYSTEM_DELABELLA=false -DVSP_USE_SYSTEM_EIGEN=false -DVSP_USE_SYSTEM_EXPRPARSE=false -DVSP_USE_SYSTEM_FLTK=false -DVSP_USE_SYSTEM_GLEW=false -DVSP_USE_SYSTEM_GLM=false -DVSP_USE_SYSTEM_LIBIGES=false -DVSP_USE_SYSTEM_LIBXML2=true -DVSP_USE_SYSTEM_OPENABF=false -DVSP_USE_SYSTEM_PINOCCHIO=false -DVSP_USE_SYSTEM_STEPCODE=false -DVSP_USE_SYSTEM_TRIANGLE=false ../repo/Libraries -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx && \
 make -j4 && \
@@ -504,7 +503,7 @@ sed -i "s/LAPACK_LIBS\ =.*/LAPACK_LIBS=-L\$\{PETSC_LIB\}\ -lf2clapack -lf2cblas/
 make && pip install -e . --no-build-isolation
 </pre>
 
-[TACS](https://github.com/smdogroup/tacs) is a finite-element library for analysis and adjoint-based gradient evaluation
+[TACS](https://github.com/smdogroup/tacs) is a finite-element library for analysis and adjoint-based gradient evaluation. Here we use our custom TACS version to fix an aero-struct adjoint stall bug in recent TACS version. For more info about this bug, check [this issue](https://github.com/mdolab/dafoam/issues/1022).
 
 <pre>
 . $DAFOAM_ROOT_PATH/loadDAFoam.sh && \
@@ -512,7 +511,7 @@ cd $DAFOAM_ROOT_PATH/repos && \
 wget https://github.com/smdogroup/pyNastran/archive/c9b8c2ee7e6fa452622ef10b5bb218ee02595583.tar.gz -O pyNastran.tar.gz && \
 tar -xvf pyNastran.tar.gz && mv pyNastran-* pyNastran && \
 cd pyNastran && pip install . && cd .. && \
-wget https://github.com/smdogroup/tacs/archive/refs/tags/v3.9.2.tar.gz -O tacs.tar.gz && \
+wget https://github.com/friedenhe/tacs/archive/refs/heads/fix_as_adj.tar.gz -O tacs.tar.gz && \
 tar -xvf tacs.tar.gz && mv tacs-* tacs && \
 cd tacs/extern && \
 wget https://github.com/DAFoam/files/releases/download/TACS_Extern/TACS_extern.tar.gz && tar -xzf TACS_extern.tar.gz && \
