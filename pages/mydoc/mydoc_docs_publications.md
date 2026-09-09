@@ -11,6 +11,8 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
+<102> D. Brito, F. Afonso, F. Lau, A. Suleman. Assessment of an efficient computational framework for aeroelastic scaling through aerodynamic shape tailoring. MATEC Web of Conference. 2026
+
 <101>. Z. Wei, E. Dufour, C. Pelletier, M. Bauerheim, P. Fua. Aerodynamic Shape Design Space Exploration with Deep Latent Diffusion Model. AIAA Journal, 2026
 
 <100> J. Li, R. Kunz, G. Huang, X. Yang. A Formally Log(Re) Solution to the Engineering Turbulence Problem. 14th International Symposium on Turbulence and Shear Flow Phenomena, 2026.
