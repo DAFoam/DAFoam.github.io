@@ -28,7 +28,7 @@ You must sign up for an account for the selected LLM and log in using your subsc
 <div class="tab-buttons">
 <button class="tab-button">Desktop App</button>
 <button class="tab-button">VSCode Extension</button>
-<button class="tab-button">CLI</button>
+<button class="tab-button">Command Line Interface (CLI)</button>
 </div>
 <div class="tab-content">
 
@@ -49,8 +49,8 @@ On the left panel, click "Extensions" and search for one of your selected client
 
 Follow the instructions below to install one of the LLM CLIs. The installation steps may differ by operating system and may require additional dependencies such as Node.js.
 
-- Claude (Anthropic; paid plan only): [Install](https://docs.anthropic.com/en/docs/claude-code/getting-started)
 - Codex (OpenAI; limited free quota): [Install](https://help.openai.com/en/articles/11096431)
+- Claude (Anthropic; paid plan only): [Install](https://docs.anthropic.com/en/docs/claude-code/getting-started)
 - Antigravity (Google; limited free quota): [Install](https://antigravity.google/download#antigravity-cli)
 - Cursor (Anysphere; limited free quota): [Install](https://cursor.com/cli)
 
@@ -91,10 +91,34 @@ Follow the instructions below for your selected LLM to test the installation by 
 
 <div class="tab-container" data-tab-group="platform">
 <div class="tab-buttons">
-<button class="tab-button">Claude</button>
-<button class="tab-button">Codex</button>
+<button class="tab-button">Desktop App</button>
+<button class="tab-button">VSCode Extension</button>
+<button class="tab-button">Command Line Interface (CLI)</button>
 </div>
 <div class="tab-content">
+
+
+**Codex Desktop App**
+
+1. Close both Docker and Codex Desktop apps. Then, open the Docker app first, wait until it is ready, and then open the Codex Desktop App. 
+
+2. Click "Choose project" and hover over "New project". Click "Use an existing folder". In the pop-up, select the `mdo_agent_work/results` folder. 
+
+3.  Then, ask `Is mdo_agent_deck's must_call_first tool available?`. Once the agent confirms the MCP status (if not ask it to check again or close Codex and re-open), you can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. The agent will run the case in the background.
+
+4. Once the task is finished, you can click the links from the Trame or HTML servers to visualize the mesh results.
+
+During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Approve for me". **IMPORTANT: The Approve for me mode may modify or damage system files. Use with caution!** 
+
+**NOTE**: If you need to start a new chat, close Codex and re-open. This ensure the mdo_agent_deck is reset to run the next case. Try not to run multiple cases in one chat window, it will use a lot of token!
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-codex-app.png" style="width:700px !important;" />
+
+Fig. An example of the Codex interface
+
+
+
+**Claude Desktop App**
 
 1. Close both Docker and Claude Desktop apps. Then, open the Docker app first, wait until it is ready, and then open the Claude Desktop App. 
 
@@ -119,21 +143,47 @@ Fig. An example of the Claude Code interface
 </div>
 <div class="tab-content">
 
-1. Close both Docker and Codex Desktop apps. Then, open the Docker app first, wait until it is ready, and then open the Codex Desktop App. 
+1. Open the VSCode App.
+2. Click the "Explorer" icon in the left sidebar (see the Fig. below). From there, select "Open Folder" and open the `mdo_agent_work` folder as your working directory.
+3. On the top right, click the LLM Extension icon to open their extension window. Sign in if needed.
+4. In the LLM Extension chat window, ask `Is mdo_agent_deck's must_call_first tool available?`. Once the agent confirms the MCP status (if not ask it to check again or close the VSCode and re-open), you can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. The agent will run the case in the background.
 
-2. Click "Choose project" and hover over "New project". Click "Use an existing folder". In the pop-up, select the `mdo_agent_work/results` folder. 
+<div style="text-align: center;">
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:500px !important;" />
 
-3.  Then, ask `Is mdo_agent_deck's must_call_first tool available?`. Once the agent confirms the MCP status (if not ask it to check again or close Codex and re-open), you can now ask questions such as `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 3`. The agent will run the case in the background.
+Fig. An example of the VS Code interface for Codex. Other LLMs have similar interfaces 
 
-4. Once the task is finished, you can click the links from the Trame or HTML servers to visualize the mesh results.
+</div>
+<div class="tab-content">
 
-During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Approve for me". **IMPORTANT: The Approve for me mode may modify or damage system files. Use with caution!** 
+- Open VS Code. Then, click the "Explorer" icon in the left sidebar (see the Fig. below). From there, select "Open Folder" and open the `mdo_agent_work` folder as your working directory.
 
-**NOTE**: If you need to start a new chat, close Codex and re-open. This ensure the mdo_agent_deck is reset to run the next case. Try not to run multiple cases in one chat window, it will use a lot of token!
+- Click the "Toggle Panel" button in the top-right corner to open a terminal (see the Fig. below). Then, in the terminal, navigate to the `mdo_agent_work/results` folder. **IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional and helps avoid conflicts with VS Code LLM extensions. You must start the LLM in the `mdo_agent_work/results` folder. The name of the `results` folder can be arbitrary. If you need to run multiple cases, you can make copies of the `results` folder inside `mdo_agent_work`, e.g., `mdo_agent_work/results1` and `mdo_agent_work/results2`.
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-codex-app.png" style="width:700px !important;" />
+- Launch your LLM client in the VSCode terminal and sign in. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
 
-Fig. An example of the Codex interface
+
+  Codex: `codex --yolo`
+  
+  Claude: `claude --dangerously-skip-permissions`
+  
+  Google Antigravity: `agy --dangerously-skip-permissions`
+  
+  Cursor: `agent --yolo`
+  
+  
+  **IMPORTANT: All the above commands bypass the permission, so they may modify or damage system files. Use with caution! If you prefer manual permissions, run the LLM CLI without the --yolo or --dangerously-skip-permissions argument**
+
+- In the LLM CLI chat box, run `/mcp` and verify if the `mdo_agent_deck` is `connected` or `running`. If yes, the agent is ready to run.
+
+- You can ask something like: `Generate a CFD mesh for the NACA2412 airfoil with 20K cells with yPlus 5`. The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows) and click these paths to view the figures directly in VS Code (see the Fig. below). The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
+
+**NOTE**: For the best visual experience, we recommend using the "Light Modern" color theme in VS Code. To change the theme, open the Command Palette in VS Code, search for "Preferences: Color Theme", and select "Light Modern".
+
+<div style="text-align: center;">
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:500px !important;" />
+
+Fig. An example of the VS Code interface for Codex. Other LLMs have similar interfaces 
 
 </div>
 </div>
