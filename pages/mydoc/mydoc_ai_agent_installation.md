@@ -3,7 +3,7 @@ title: Installation
 keywords: ai assistant
 summary: 
 sidebar: mydoc_sidebar
-permalink: ai-agent-installation_bk.html
+permalink: ai-agent-installation.html
 folder: mydoc
 ---
 
