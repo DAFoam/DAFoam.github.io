@@ -9,9 +9,9 @@ folder: mydoc
 
 ## Overview
 
-There are three options for installing and running the MDO Agent Deck framework: **(A) Docker, (B) HPC, and (C) Native**. You should choose **ONLY ONE** option to follow. If you are new to the MDO Agent Deck, we recommend using the Docker mode, as it is the easiest option to set up and run on a local computer and does not require any compilation. In the HPC mode, you need to compile the DAFoam packages on the HPC system and launch the LLM client on the head node. The LLM client will then submit jobs to the compute nodes to run simulations and optimizations. In the Native mode, you also need to compile the DAFoam packages, but the LLM client is launched either on your local computer or directly on an HPC compute node. In this mode, the LLM client runs simulations and optimizations directly without submitting batch jobs.
+There are three modes for installing and running the MDO Agent Deck framework: **(A) Docker, (B) HPC, and (C) Native**. You should choose **ONLY ONE** mode to follow. If you are new to the MDO Agent Deck, we recommend using the Docker mode, as it is the easiest option to set up and run on a local computer and does not require any compilation. In the HPC mode, you need to compile the DAFoam packages on the HPC system and launch the LLM client on the head node. The LLM client will then submit jobs to the compute nodes to run simulations and optimizations. In the Native mode, you also need to compile the DAFoam packages, but the LLM client is launched either on your local computer or directly on an HPC compute node. In this mode, the LLM client runs simulations and optimizations directly without submitting batch jobs.
 
-## Option A: Docker
+## Mode A: Docker
 
 This option works for Windows and MacOS, and it is the easiest way to run the agents with small cases. If you plan to run larger cases, e.g., wing aero-structural optimization, you need to use either the HPC or Native modes.
 
@@ -154,6 +154,7 @@ Fig. An example of the Claude Code interface
 Fig. An example of the VS Code interface for Codex. Other LLMs have similar interfaces 
 
 </div>
+</div>
 <div class="tab-content">
 
 - Open VS Code. Then, click the "Explorer" icon in the left sidebar (see the Fig. below). From there, select "Open Folder" and open the `mdo_agent_work` folder as your working directory.
@@ -184,89 +185,25 @@ Fig. An example of the VS Code interface for Codex. Other LLMs have similar inte
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:500px !important;" />
 
 Fig. An example of the VS Code interface for Codex. Other LLMs have similar interfaces 
+</div>
 
 </div>
 </div>
 
 
-## Option B: Local Computation with VSCode
 
-Option B also supports both Windows and MacOS, and it relies on VSCode and LLM command-line interface (CLI) instead of LLM Desktop Apps. Compared with Option A, Option B has a built-in interface for case file management, which allows you to quickly visualize case log files, figures, etc, and it also has a unified interface across different LLM models; however, it requires a few additional steps for installation.
+## Mode B: HPC
 
-### Step 1. Install an LLM client CLI
-
-First, install a command-line interface (CLI) for an LLM client. The MDO Agent Deck supports multiple LLM clients, but for this setup, you only need to install **ONE** CLI client.
-
-**NOTE**: You must sign up for an account for the selected LLM and log in using your subscription. Do **NOT** use API keys. If you already have a paid subscription for one of the following LLM providers, install its app. Otherwise, choose an LLM that offers a free but limited usage quota (we recommend Codex). Note that most free-tier LLMs limit you to roughly 10 prompts per cycle and are suitable for evaluation only. For production use, a paid plan is required.
-
-Please follow the following installation instructions for your selected client. The installation steps may differ by operating system and may require additional dependencies such as Node.js.
-
-- Claude (Anthropic; paid plan only): [Install](https://docs.anthropic.com/en/docs/claude-code/getting-started)
-- Codex (OpenAI; limited free quota): [Install](https://help.openai.com/en/articles/11096431)
-- Antigravity (Google; limited free quota): [Install](https://antigravity.google/download#antigravity-cli)
-- Cursor (Anysphere; limited free quota): [Install](https://cursor.com/cli)
+This mode is for running large-scale cases on an HPC cluster. In the HPC mode, you need to compile the DAFoam packages on the HPC system and launch the LLM client on the head node. The LLM client will then submit jobs to the compute nodes to run simulations and optimizations.
 
 
-### Step 2. Install Docker Desktop
+### Step 1. Install an LLM Client
 
-Same as the Step 2 in Option A.
+First, install an LLM client. Currently only Claude Desktop App supports remote HPC connection. The CLI option may also be possible; however, many HPC systems do not support running LLM CLI on their head nodes.
 
-### Step 3. Download the working directory
+The installation instruciotn is the aame as `Step 1. Install an LLM Client->Desktop App->Claude` in **Mode A: Docker**. 
 
-Same as the Step 3 in Option A.
-
-The installation is finished!
-
-### Step 4. Test the agents
-
-- Open VS Code. Then, click the "Explorer" icon in the left sidebar (see the Fig. below). From there, select "Open Folder" and open the `mdo_agent_work` folder as your working directory.
-
-- Click the "Toggle Panel" button in the top-right corner to open a terminal (see the Fig. below). Then, in the terminal, navigate to the `mdo_agent_work/results` folder. **IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional and helps avoid conflicts with VS Code LLM extensions. You must start the LLM in the `mdo_agent_work/results` folder. The name of the `results` folder can be arbitrary. If you need to run multiple cases, you can make copies of the `results` folder inside `mdo_agent_work`, e.g., `mdo_agent_work/results1` and `mdo_agent_work/results2`.
-
-- Launch your LLM client in the VSCode terminal and sign in. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
-
-<div class="tab-container" data-tab-group="platform">
-<div class="tab-buttons">
-<button class="tab-button">Codex</button>
-<button class="tab-button">Claude Code</button>
-<button class="tab-button">Antigravity</button>
-<button class="tab-button">Cursor</button>
-</div>
-<div class="tab-content">
-codex --yolo
-</div>
-<div class="tab-content">
-claude --dangerously-skip-permissions
-</div>
-<div class="tab-content">
-agy --dangerously-skip-permissions
-</div>
-<div class="tab-content">
-agent --yolo
-</div>
-</div>
-
-**IMPORTANT: All the above commands bypass the permission, so they may modify or damage system files. Use with caution! If you prefer manual permissions, run the LLM CLI without the --yolo or --dangerously-skip-permissions argument**
-
-- In the LLM CLI chat box, run `/mcp` and verify if the `mdo_agent_deck` is `connected` or `running`. If yes, the agent is ready to run.
-
-- You can ask something like: `Generate a CFD mesh for the NACA2412 airfoil with 20K cells with yPlus 5`. The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows) and click these paths to view the figures directly in VS Code (see the Fig. below). The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
-
-**NOTE**: For the best visual experience, we recommend using the "Light Modern" color theme in VS Code. To change the theme, open the Command Palette in VS Code, search for "Preferences: Color Theme", and select "Light Modern".
-
-<div style="text-align: center;">
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:500px !important;" />
-
-Fig. An example of the VS Code interface for Codex. Other LLMs have similar interfaces 
-</div>
-
-## Option C: Remote Computation with LLM Apps
-
-This Option is for running large-scale cases on an HPC cluster. Currently only Claude Desktop App supports remote HPC connection.
-
-### Step 1. Install an LLM Desktop App on your computer
-
-Same as Step 1 in Option A. **NOTE:** you need to install the LLM desktop app on your computer, instead of the HPC.
+**NOTE:** you need to install the Claude desktop app on your computer, instead of the HPC.
 
 ### Step 2. Compile the agents and DAFoam on the HPC
 
@@ -284,7 +221,7 @@ Then, add the following line to your `~/.bashrc` on the HPC to automatically loa
 
 ### Step 3. Create the working directory on the HPC
 
-Use SSH to login to the HPC, then, download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/hpc.zip). Note: this link is DIFFERENT from the one from Options A and B above.
+Use SSH to login to the HPC, then, download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/hpc.zip). Note: this link is DIFFERENT from other modes.
 
 Unzip it and you will see a folder called `mdo_agent_work-hpc`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents. You can put `mdo_agent_work` anywhere on the HPC, e.g., `/home/your_user_name/mdo_agent_work`.
 
@@ -296,12 +233,6 @@ Open `mdo_agent_work/results/myHPCJob.sh` and adjust the `#SBATCH` directives (w
 
 ### Step 5. Test the agents
 
-
-<div class="tab-container" data-tab-group="platform">
-<div class="tab-buttons">
-<button class="tab-button">Claude</button>
-</div>
-<div class="tab-content">
 
 1. Open the Claude Desktop App and sign in. 
 
@@ -317,107 +248,74 @@ Open `mdo_agent_work/results/myHPCJob.sh` and adjust the `#SBATCH` directives (w
 
 7. Once the task is finished, you can click the names of the generated mesh pictures to view them in the app, or the links from the Trame or HTML servers to visualize the results. You cannot directly access the case folder on the Claude Desktop App. To view the files in the case folder, you need to use a separate SSH to connect to the HPC and navigate to `mdo_agent_work/results`.
 
-During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Bypass permissions". **IMPORTANT: The Bypass permissions mode may modify or damage HPC system files. Use with caution!**
+During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Auto mode". **IMPORTANT: The auto mode may modify or damage HPC system files. Use with caution!**
 
-</div>
-</div>
 
-## Option D: Remote Computation with VSCode 
+## Mode C: Native
 
-This option is for running large-scale cases on an HPC cluster. Option D is similar to Option C, except that it uses VSCode as the interface to the HPC. Compared with the Claude Desktop App, VSCode allows you to run agents and view files in the case folder simultaneously.
+The Native mode is similar to the HPC mode with a major difference: the agent will run simulations/optimization directly, instead of submitting a job. Therefore, you need to open the LLM client either on your local computer or on the compute node of an HPC.
 
-### Step 1. Install VS Code and Remote SSH
+### Step 1. Install an LLM Client
 
-Download VS Code from [here](https://code.visualstudio.com/download) and install it.
+The Native mode supports ONLY the LLM CLI option.
 
-Optional: Some newer versions of VS Code may experience issues when connecting to HPC systems. If you run into this issue, try an older version of VS Code: [1.100.3](https://code.visualstudio.com/updates/v1_100). 
+The installation instruciotn is the aame as `Step 1. Install an LLM Client->Command Line Interface (CLI)` in **Mode A: Docker**. 
 
-Open VS Code. From the left panel, click `Extensions` (see Fig. 1 below), then search for `Remote SSH` by Microsoft and click `Install`.
+**NOTE:** you need to install the LLM CLI on your local computer, if you want to run the agent locally. If you want to run the agent on an HPC, you need to install the CLI on the head node of an HPC.
 
-After installing Remote SSH, set up the SSH connection: 
+### Step 2. Compile the agents and DAFoam
 
-- Click the `Open a Remote Window` button in the lower-left corner of VS Code (see Fig. 1 below).
+Follow the same instructions from `Step 2. Compile the agents and DAFoam on the HPC` in **Mode B: HPC**. The instrucitons to install DAFoam and agents on your local computers are similar.
 
-- In the pop-up window on the top, select `Connect to Host`, then choose `+ Add New SSH Host`. 
 
-- In the pop-up window, enter your SSH command, for example: `ssh my_user_name@nova.its.iastate.edu`.
+### Step 3. Create the working directory
 
-- When prompted, select the SSH configuration file to update (choose `~/.ssh/config` or similar).
+Use SSH to login to the HPC, then, download `mdo_agent_work` repo from [here](https://github.com/DAFoam/mdo_agent_work/archive/refs/heads/native.zip). Note: this link is DIFFERENT from other modes.
 
-- Once the SSH configuration is complete, click `Connect to Host` again and select your newly added host (e.g., `nova.its.iastate.edu`). You will be prompted to enter your password and, if applicable, a verification code to log in to the HPC.
+Unzip it and you will see a folder called `mdo_agent_work-native`. Rename it to `mdo_agent_work`. This will be the main working directory for your agents. You can put `mdo_agent_work` anywhere on the HPC, e.g., `/home/your_user_name/mdo_agent_work`.
 
-- If the terminal is not visible after opening the folder, click `Toggle Panel` in the top-right corner of VS Code (see Fig. 1 below).
+**IMPORTANT**: Do not manually create a folder and use it as the LLM's working directory. You must use `mdo_agent_work`. This is because `mdo_agent_work/results` contains pre-defined LLM configuration files (hidden by default). You do not need to modify these configuration files.
 
-DO NOT close VS Code or the open terminal on the HPC. We will use them to install other packages in the following steps.
+The instrucitons to create the working dir on your local computers are similar.
 
-### Step 2. Install an LLM client on the HPC
 
-Using the terminal in VS Code via Remote SSH, install an LLM client's command-line interface (CLI) **on the HPC**. The installation commands are the same as those for local computers; refer to **Option B -> Step 1. Install an LLM client CLI** above.
+### Step 5. Test the agents
 
-### Step 3. Install the agents and DAFoam on the HPC
+1. On the HPC, you need to first login into an interactive session. 
 
-Same as the Step 2 in Option C. Except that you can use the terminal from VSCode to compile DAFoam and the agent.
+  `srun --nodes=1  --time=01:00:00 --pty bash -i`
+  
+  **NOTE**: check your HPC instrucitons on how to ask for an interactive session.
 
-### Step 4. Create the working directory
+2. Once your requested interactive session is allocated, you will be loggiin in to a **computer node** of your HPC. Then, launch your LLM client in the terminal and sign in. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
 
-Same as the Step 3 in Option C. Except that you can use the terminal from VSCode to download the working directory repo.
 
-### Step 5. Customize the HPC job submission script
+  Codex: `codex --yolo`
+  
+  Claude: `claude --dangerously-skip-permissions`
+  
+  Google Antigravity: `agy --dangerously-skip-permissions`
+  
+  Cursor: `agent --yolo`
 
-Same as the Step 4 in Option C.
+  **IMPORTANT: All the above commands bypass the permission, so they may modify or damage system files. Use with caution! If you prefer manual permissions, run the LLM CLI without the --yolo or --dangerously-skip-permissions argument**
 
-### Step 6. Test the agents
+3. In the LLM CLI chat box, run `/mcp` and verify if the `mdo_agent_deck` is `connected` or `running`. If yes, the agent is ready to run.
 
-- Open VS Code and use Remote SSH to connect to the HPC.
+4. You can ask something like: `Generate a CFD mesh for the NACA2412 airfoil with 20K cells with yPlus 5`. The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh.
 
-- In VS Code, click the "Explorer" icon in the left sidebar (see the Fig. in Option B above). From there, select "Open Folder" and open the `mdo_agent_work` folder on the HPC as your working directory.
 
-- Click the "Toggle Panel" button in the top-right corner to open a terminal (see the Fig. in Option B above).
+## Special Session: Locally Hosted LLM (No Internet and No Paid Plan)
 
-- In the terminal, navigate to the `mdo_agent_work/results` folder on the HPC. **IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional and helps avoid conflicts with VS Code LLM extensions. You must start the LLM in the `mdo_agent_work/results` folder. The name of the `results` folder can be arbitrary. If you need to run multiple cases, you can make copies of the `results` folder inside `mdo_agent_work`, e.g., `mdo_agent_work/results1` and `mdo_agent_work/results2`.
-
-- Launch your LLM client in the VSCode terminal on the HPC and sign in. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
-
-<div class="tab-container" data-tab-group="platform">
-<div class="tab-buttons">
-<button class="tab-button">Codex</button>
-<button class="tab-button">Claude Code</button>
-<button class="tab-button">Antigravity</button>
-<button class="tab-button">Cursor</button>
-</div>
-<div class="tab-content">
-codex --yolo
-</div>
-<div class="tab-content">
-claude --dangerously-skip-permissions
-</div>
-<div class="tab-content">
-agy --dangerously-skip-permissions
-</div>
-<div class="tab-content">
-agent --yolo
-</div>
-</div>
-
-**IMPORTANT: All the above commands bypass the permission, so they may modify or damage system files. Use with caution! If you prefer manual permissions, run the LLM CLI without the --yolo or --dangerously-skip-permissions argument**
-
-- In the LLM CLI chat box, run `/mcp` and verify if the `mdo_agent_deck` is `connected` or `running`. If yes, the agent is ready to run.
-
-- You can ask something like: `Generate a CFD mesh for the NACA2412 airfoil with 20K cells with yPlus 5`. The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows) and click these paths to view the figures directly in VS Code (see the Fig. in Option B above). The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
-
-**NOTE**: For the best visual experience, we recommend using the "Light Modern" color theme in VS Code. To change the theme, open the Command Palette in VS Code, search for "Preferences: Color Theme", and select "Light Modern".
-
-## Option E: Locally Hosted LLM (No Internet and No Paid Plan)
-
-This option works on Linux, macOS, and Windows. It lets you run the agents with a locally hosted LLM, so no internet access or paid plan is needed. The main drawback is that it requires a high-end GPU. The following setup has been tested on a Macbook with M5 Pro chip and 24 GB memory.
+This option works on MacOS and Windows. It lets you run the agents with a locally hosted LLM, so no internet access or paid plan is needed. The main drawback is that it requires a high-end GPU. The following setup has been tested on a Macbook with M5 Pro chip and 24 GB memory. The following instruciton assumes you use the Docker mode, while the instrucitons for other modes are similar.
 
 ### Step 1. Install Docker Desktop
 
-Same as the Step 2 in Option A.
+Same as the Step 2 in Mode A.
 
 ### Step 2. Download the working directory
 
-Same as the Step 3 in Option A.
+Same as the Step 3 in Mode A.
 
 ### Step 3. Download Ollama and Local LLMs
 
@@ -479,80 +377,29 @@ If you want to use a GPT-OSS model with a different parameter size, change the m
 
 ### Step 4. Download an MCP Orchestrator
 
-Once the local LLM is running, it must be connected to the MCP server. We have two options: Claude Code CLI or OpenCode CLI, and you need to install ONLY one of the following. We suggest Claude as it is more robust.
-
-<div class="tab-container" data-tab-group="platform">
-<div class="tab-buttons">
-<button class="tab-button">Claude Code CLI</button>
-<button class="tab-button">OpenCode CLI</button>
-</div>
-<div class="tab-content">
+Once the local LLM is running, it must be connected to the MCP server. We use Claude Code CLI.
 
 Download and install the Claude Code CLI [here](https://docs.anthropic.com/en/docs/claude-code/getting-started).
-
-</div>
-<div class="tab-content">
-
-Download and install the OpenCode CLI [here](https://opencode.ai/download).
-
-</div>
-</div>
 
 
 ### Step 5. Test the agents
 
-Open a terminal, go to the `mdo_agent_work/results/` folder, and run one the following command from inside that folder, depending on which MCP Orchestrator you use
-
-<div class="tab-container" data-tab-group="platform">
-<div class="tab-buttons">
-<button class="tab-button">Claude Code CLI</button>
-<button class="tab-button">OpenCode CLI</button>
-</div>
-<div class="tab-content">
+Open a terminal, go to the `mdo_agent_work/results/` folder, and run the following command from inside that folder. Note that the `bare` arg is to minimize the Claude Code's overhead while loading local LLMs.
 
 `ollama  launch claude -- --bare --mcp-config .mcp.json --strict-mcp-config --dangerously-skip-permissions --verbose`
 
-</div>
-<div class="tab-content">
-
-`ollama launch opencode --config`
-
-</div>
-</div>
-
 The terminal will then ask you to "Select models"; select your local LLM, for example, `qwen3.5-custom:9b`, `gemma4-custom:12b`, or `gpt-oss-custom:20b`.
 
-**You must check one of the following before running a case, depending on which MCP Orchestrator you use:**
+**You must check the following before running a case**
 
-<div class="tab-container" data-tab-group="platform">
-<div class="tab-buttons">
-<button class="tab-button">Claude Code CLI</button>
-<button class="tab-button">OpenCode CLI</button>
-</div>
-<div class="tab-content">
+- Check that the MCP server is running. Run `/mcp` in Claude to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
+- Check the active LLM. The active LLM is shown at the top. It should display `qwen3.5-custom:9b`, `gemma4-custom:12b`, or `gpt-oss-custom:20b` (see the following figure).
 
-- **Check that the MCP server is running**. Run `/mcp` in Claude to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
-- **Check the active LLM**. The active LLM is shown at the top. It should display `qwen3.5-custom:9b`, `gemma4-custom:12b`, or `gpt-oss-custom:20b` (see the following figure).
-
-</div>
-<div class="tab-content">
-
-- **Check that the MCP is running**. If the MCP server is running, you should see a green circle at the bottom say "1 MCP /status" (see the figure below). Alternatively, you can run `/mcps` in OpenCode to view the available MCP servers. You should see `mdo_agent_deck connected` in the pop-up window. Press `esc` to close it.
-- **Check the active LLM**. The active LLM is shown at the bottom of the text entry box. It should display `qwen3.5-custom:9b`, `gemma4-custom:12b`, or `gpt-oss-custom:20b` (see the following figure). If it does not, run `/models`, press Enter, and select the correct local LLM from the menu.
-- **Check the run mode**. OpenCode has two modes: `Build` and Plan. `Build` mode allows OpenCode to modify files, while Plan mode does not. To run the agents properly, make sure OpenCode is in `Build` mode. You can toggle modes with the `Tab` key.
-
-</div>
-</div>
 
 If all the above checks pass, you can ask the agent to run a task, such as `Call mdo_agent_deck MCP's must_call_first() tool. Then run a steady CFD simulation for the NACA2412 airfoil with 10K cells, Ma=0.3, Re=5e6, and AoA=2 degs`. The agent will parse your request, generate the appropriate mesh, and run the CFD simulation for you.
 
-IMPORTANT. Both Claude and OpenCode may take a little longer (up to a few minutes) to spin up the agentic workflow because it needs to preload the MCP info into context. Once the agent starts working, response speed should return to normal. Sometimes, OpenCode stops in the middle of the workflow, and you need to manually ask it to "Continue" to move on to the next step. 
+IMPORTANT. Claude may take a little longer (up to a few minutes) to spin up the agentic workflow because it needs to preload the MCP info into context. Once the agent starts working, response speed should return to normal. Sometimes, Claude stops in the middle of the workflow, and you need to manually ask it to "Continue" to move on to the next step. 
 
-<div style="text-align: center;">
-<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-local-llm-opencode.png" style="width:700px !important;" />
-
-Fig. An example of the OpenCode interface for a locally hosted LLM
-</div>
 
 <div style="text-align: center;">
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-installation-local-llm.png" style="width:700px !important;" />
