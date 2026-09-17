@@ -95,9 +95,10 @@ pip install --upgrade pip && \
 pip install numpy==2.3.5 scipy==1.17.1 cython==3.0.5 numpy-stl==2.16.0 imageio==2.37.4 nptyping==1.4.4 tensorflow-cpu==2.21 coverage==7.11.0 fastmcp==3.4.7 vtk==9.5.2 trame==3.12.0 trame-vuetify==3.2.0 trame-vtk==2.10.0
 </pre>
 
-Then, compile mpi4py from source. This is more robust than simplyg `pip install mpi4py`, especially on HPC systems:
+Then, compile mpi4py from source. This is more robust than simply running `pip install mpi4py`, especially on HPC systems:
 
 <pre>
+cd $DAFOAM_ROOT_PATH/packages && \
 wget https://github.com/mpi4py/mpi4py/releases/download/4.1.1/mpi4py-4.1.1.tar.gz && \
 tar -xvf mpi4py-4.1.1.tar.gz && cd mpi4py-4.1.1 && pip install .
 </pre>
