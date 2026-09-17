@@ -201,11 +201,39 @@ This mode is intended for large-scale cases on an HPC cluster. In HPC mode, you 
 
 ### Step 1. Install an LLM Client
 
-First, install an LLM client. Currently, only the Claude Desktop App supports remote HPC connections. The CLI option may also be possible; however, many HPC systems do not support running an LLM CLI on their head nodes.
 
-The installation instructions are the same as those in `Step 1. Install an LLM Client->Desktop App->Claude` under **Mode A: Docker**.
+First, install an LLM client. Choose **ONLY ONE** of the following options: Desktop App or command-line interface (CLI). 
 
-**NOTE:** Install the Claude desktop app on your computer, not on the HPC system.
+Currently, only the Claude Desktop App supports remote HPC connections. In theory, all the CLI clients may also be used; however, many HPC systems do not support running an LLM CLI on their head nodes.
+
+**IMPORTANT!!** You need to install Claude Desktop App on your local computer. If you use the CLI option, you must install the CLI on the HPC.
+
+
+<div class="tab-container" data-tab-group="platform">
+<div class="tab-buttons">
+<button class="tab-button">Desktop App</button>
+<button class="tab-button">Command Line Interface (CLI)</button>
+</div>
+<div class="tab-content">
+
+Follow the instructions below to install the Claude desktop app **on our local computer**. Currently, only the Claude Desktop App supports remote HPC connections.
+
+- Claude (Anthropic; paid plan only): [Download](https://claude.com/download)
+
+</div>
+<div class="tab-content">
+
+Follow the instructions below to install one of the following LLM CLIs **on the HPC**. Installation steps may differ by operating system and may require additional dependencies, such as Node.js.
+
+- Codex (OpenAI; limited free quota): [Install](https://help.openai.com/en/articles/11096431)
+- Claude (Anthropic; paid plan only): [Install](https://docs.anthropic.com/en/docs/claude-code/getting-started)
+- Antigravity (Google; limited free quota): [Install](https://antigravity.google/download#antigravity-cli)
+- Cursor (Anysphere; limited free quota): [Install](https://cursor.com/cli)
+
+</div>
+</div>
+
+
 
 ### Step 2. Compile the agents and DAFoam on the HPC
 
@@ -235,6 +263,13 @@ Open `mdo_agent_work/results/myHPCJob.sh` and adjust the `#SBATCH` directives (w
 
 ### Step 5. Test the agents
 
+<div class="tab-container" data-tab-group="platform">
+<div class="tab-buttons">
+<button class="tab-button">Desktop App</button>
+<button class="tab-button">Command Line Interface (CLI)</button>
+</div>
+<div class="tab-content">
+
 
 1. Open the Claude Desktop App and sign in.
 
@@ -251,6 +286,47 @@ Open `mdo_agent_work/results/myHPCJob.sh` and adjust the `#SBATCH` directives (w
 7. Once the task is complete, click the names of generated mesh images to view them in the app, or use the Trame or HTML server links to visualize the results. You cannot directly access the case folder in the Claude Desktop App. To view the files in the case folder, use a separate SSH connection to the HPC and navigate to `mdo_agent_work/results`.
 
 During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Auto mode". **IMPORTANT: The auto mode may modify or damage HPC system files. Use with caution!**
+
+</div>
+<div class="tab-content">
+
+In the following, we assume you use VSCode to connect to the HPC. If you prefer to use a termianl instead, the steps would be similar.
+
+- Open VS Code and use Remote SSH to connect to the HPC.
+
+- In VS Code, click the "Explorer" icon in the left sidebar (see the Fig. below). From there, select "Open Folder" and open the `mdo_agent_work` folder on the HPC as your working directory.
+
+- Click the "Toggle Panel" button in the top-right corner to open a terminal (see the Fig. below).
+
+- In the terminal, navigate to the `mdo_agent_work/results` folder on the HPC. **IMPORTANT**: Open the `mdo_agent_work` folder in Explorer, then use the terminal to navigate to `mdo_agent_work/results` before starting the LLM CLI. This is intentional and helps avoid conflicts with VS Code LLM extensions. You must start the LLM in the `mdo_agent_work/results` folder. The name of the `results` folder can be arbitrary. If you need to run multiple cases, you can make copies of the `results` folder inside `mdo_agent_work`, e.g., `mdo_agent_work/results1` and `mdo_agent_work/results2`.
+
+- Launch your LLM client in the VSCode terminal on the HPC and sign in. Choose **ONLY ONE** of the following, depending on which LLM client you are using.
+
+
+  Codex: `codex --yolo`
+
+  Claude: `claude --dangerously-skip-permissions`
+
+  Antigravity: `agy --dangerously-skip-permissions`
+
+  Cursor: `agent --yolo`
+
+  **IMPORTANT: All the above commands bypass the permission, so they may modify or damage system files. Use with caution! If you prefer manual permissions, run the LLM CLI without the --yolo or --dangerously-skip-permissions argument**
+
+- In the LLM CLI chat box, run `/mcp` and verify if the `mdo_agent_deck` is `connected` or `running`. If yes, the agent is ready to run.
+
+- You can ask something like: `Generate a CFD mesh for the NACA2412 airfoil with 20K cells with yPlus 5`. The agent will parse your prompt into solver input arguments and run predefined commands to generate the mesh, then return clickable paths to the mesh figures along with a summary of the mesh. You can hold the Command key (MacOS) or Control key (Windows) and click these paths to view the figures directly in VS Code (see the Fig. below). The agent will also return a clickable link for a Trame server to view the mesh interactively. You can open this server from your default browser by clicking the link.
+
+<div style="text-align: center;">
+<img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-local-vscode.png" style="width:500px !important;" />
+
+Fig. An example of the VS Code interface for Codex. Other LLMs have similar interfaces 
+</div>
+
+</div>
+</div>
+
+
 
 
 ## Mode C: Native
