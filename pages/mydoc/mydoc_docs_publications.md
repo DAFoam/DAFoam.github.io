@@ -11,6 +11,8 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
 
+<103> S. Joo, Y. Kim, K. Yee. Mechanism-Separated Closed-Form Transition Modeling via Field Inversion and Symbolic Regression. arXiv:2609.24162, 2026.
+
 <102> D. Brito, F. Afonso, F. Lau, A. Suleman. Assessment of an efficient computational framework for aeroelastic scaling through aerodynamic shape tailoring. MATEC Web of Conference. 2026
 
 <101>. Z. Wei, E. Dufour, C. Pelletier, M. Bauerheim, P. Fua. Aerodynamic Shape Design Space Exploration with Deep Latent Diffusion Model. AIAA Journal, 2026
