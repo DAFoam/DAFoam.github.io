@@ -9,7 +9,9 @@ folder: mydoc
 
 <!-- T.G. Iriolya, E. Mammadli, S. Eyi. Axisymmetric Flow Analysis and Geometry Optimization of Launch Pads via Discrete Adjoint Method. AIAA SciTech. -->
 
-The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request.
+The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request. 
+
+<104> M. Sinzinger, H. Schartner, Z. A. Balzar, M. Balzar. A gradient-based multi-objective aerodynamic and solar performance shape optimisation workflow for tall building design. Structural Form & Optimization, 2026.
 
 <103> S. Joo, Y. Kim, K. Yee. Mechanism-Separated Closed-Form Transition Modeling via Field Inversion and Symbolic Regression. arXiv:2609.24162, 2026.
 
