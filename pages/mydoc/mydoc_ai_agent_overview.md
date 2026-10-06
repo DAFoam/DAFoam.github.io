@@ -22,32 +22,26 @@ The framework is designed to be trustworthy for engineering using the following 
 
 ### How the Framework Works
 
-For each user request/prompt, the agent execution follows a pre-defined run sequence:
+The following figure illustrates the overall architecture of the agentic AI framework for aircraft aerodynamic and aerostructural design. The framework follows a fixed workflow from a user prompt to the final engineering result. Based on the user's prompt, the agent deck first selects the most relevant agent, skill, and scenario from the MDO Agent Deck database. Here we define domain-specific agents for narrowly scoped design problems involving airfoils, wings, and aircraft. Each agent is equipped with skills such as generating CFD meshes, running CFD simulations, and performing aerodynamic optimization. The scenario includes predefined workflows for common tasks, such as running one simulation with one skill, running multiple simulations with one skill, or running multiple simulations with prerequisite and downstream skills.
 
-- A user requests to run an engineering analysis or design case.
-- The MCP server identifies the best domain agent and skill for the user request.
-- It reads skill pre-context to better prepare the case, e.g., how to dynamically prepare input parameters
-- It semantically parses the input information from the user prompt into the skill's input values.
-- It creates a new isolated case folder and copies the pre-defined case configuration files from the selected agent.
-- It runs the selected skill following the **run->review->analyze->review** workflow. All the skill's predefined run commands are executed here.
-- It reads the skill post-context with additional evaluations and instructions to correct potential errors.
-- If everything passes, the final results, including PNG plots, an interactive visualization server, and a case summary, are sent back to the user.
+The agentic framework maximizes the use of predefined, deterministic steps while minimizing the agent's reasoning effort to maximize reliability. In an end-to-end workflow, the agent is responsible only for deciding (blue text in the figure below): (1) which agent–skill pair to use, (2) which scenario to use, (3) what input parameters to provide for that scenario, and (4) how to follow the provided instructions to correct the scenario inputs if a skill encounters an error. All remaining steps in the workflow are fully deterministic.
 
-This review gate after every phase is a key guardrail. If a review fails, the workflow stops and requests correction before moving forward.
+To be more specific, the agent first interprets the user's prompt and selects the skill and scenario that best match the requested task. It then reads the input descriptions associated with the selected skill and semantically maps the parameters specified by the user into the input format required by the scenario workflow. Before executing the workflow, the agent sends the selected skill, scenario, and parsed inputs to the workflow verification tool. This tool verifies that the selected skill and scenario are valid and, critically, that the parsed inputs are fully consistent with the user's request. This verification step ensures that the agent does not omit, add, or modify any user-specified input in a way that could misrepresent the user's intent.
+If the verification passes, the agent executes the predefined steps in the selected scenario workflow fully deterministically. Once the workflow is completed, the agent returns the final results to the user, including simulation figures, access to an interactive visualization server, and a summary of the completed case.
 
-For example, if a user asks:
+For example, if a user asks, `Run a CFD simulation for the NACA2412 airfoil with 50K cells, Ma=0.3, Re=5e6, and AoA=2 degs`, the framework will
 
-`Generate a CFD mesh for NACA0012 at Mach 0.05, Reynolds 20,000, y+ target 50.`
+- Identify the \texttt{airfoil} agent, the \texttt{run-cfd-simulation} skill together with its prerequisite \texttt{generate-cfd-mesh} skill, and the \texttt{single-skill-with-prereq-single-run} scenario that best matches the request.
 
-The execution will look like this:
+- Semantically parses the user-specified parameters into the scenario inputs as \texttt{airfoil\_profile=naca2412}, \texttt{mach\_number=0.3}, \texttt{reynolds\_number=5e6}, \texttt{mesh\_cells=50000}, and \texttt{angle\_of\_attacks=2}. 
 
-- The MCP server identifies the `airfoil` agent and the `generate-cfd-mesh` skill for this request.
-- It reads the pre-context and no special treatment is needed.
-- It semantically parses the user prompt into skill inputs (`airfoil_profile=naca0012`, `mach_number=0.05`, `reynolds_number=20000`, `y_plus_target=50`).
-- It creates a new isolated case folder, e.g., `airfoil_mesh_naca0012_ma005_20k_y50_0000`, and copies all DAFoam configuration files from the airfoil agent into this folder.
-- The `generate-cfd-mesh` skill is executed. In **run**, it copies geometry and mesh configuration files into that folder and run a bash script that contains the predefined mesh generation commands. In **analyze**, it computes mesh quality metrics, verifies whether the mesh quality passes thresholds, and generates mesh plots.
-- It reads the post-context for the `generate-cfd-mesh` skill. If the mesh quality fails, it will follow the instructions to correct it.
-- The mesh plots, interactive visualization servers, and a report regarding the mesh quality and number of mesh cells are passed back to the user.
+- The workflow verification tool confirms that the selected agent, skills, scenario, and parsed inputs are valid and fully consistent with the user's request. 
+
+- Upon successful verification, the job is passed to the run-workflow tool, which first copies a case template from the agent's assets folder and then executes the predefined commands for mesh generation and CFD simulation using the verified inputs.
+
+- If mesh generation or CFD simulation encounters an error, the issue is detected by the review components embedded in the predefined workflow. The agent then follows predefined post-context instructions to adjust only the necessary inputs, for example, by increasing mesh smoothing to address poor mesh quality or preparing a better initial condition to improve CFD convergence. The workflow is then re-executed according to the predefined procedure.
+
+- Once the run passes all required checks, the framework uses pre-defined scripts to generate the final results for the user, including a case summary containing $C_D$, $C_L$, and $C_M$, function and residual convergence histories, flow-field contours, pressure profiles, and an interactive visualization server for exploring the computed flow fields.
 
 <div style="text-align: center;">
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-overview-diagram.png" style="width:900px !important;" />
