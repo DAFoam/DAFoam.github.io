@@ -31,9 +31,9 @@ If the verification passes, the agent executes the predefined steps in the selec
 
 For example, if a user asks, `Run a CFD simulation for the NACA2412 airfoil with 50K cells, Ma=0.3, Re=5e6, and AoA=2 degs`, the framework will
 
-- Identify the \texttt{airfoil} agent, the \texttt{run-cfd-simulation} skill together with its prerequisite \texttt{generate-cfd-mesh} skill, and the \texttt{single-skill-with-prereq-single-run} scenario that best matches the request.
+- Identify the`airfoil` agent, the`run-cfd-simulation` skill together with its prerequisite`generate-cfd-mesh` skill, and the`single-skill-with-prereq-single-run` scenario that best matches the request.
 
-- Semantically parses the user-specified parameters into the scenario inputs as \texttt{airfoil\_profile=naca2412}, \texttt{mach\_number=0.3}, \texttt{reynolds\_number=5e6}, \texttt{mesh\_cells=50000}, and \texttt{angle\_of\_attacks=2}. 
+- Semantically parses the user-specified parameters into the scenario inputs as`airfoil_profile=naca2412`,`mach_number=0.3`,`reynolds_number=5e6`,`mesh_cells=50000`, and`angle_of_attacks=2`. 
 
 - The workflow verification tool confirms that the selected agent, skills, scenario, and parsed inputs are valid and fully consistent with the user's request. 
 
