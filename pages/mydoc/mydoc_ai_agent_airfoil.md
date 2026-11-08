@@ -13,30 +13,29 @@ folder: mydoc
 
 The airfoil agent supports these skills:
 
-- `generate-cfd-mesh`: build CFD mesh and mesh-quality outputs.
-- `run-cfd-simulation`: run steady CFD from an existing mesh.
-- `run-cfd-simulation-unsteady`: run unsteady CFD from an existing mesh.
-- `run-aero-optimization`: run single-point aerodynamic optimization.
-- `run-multipoint-optimization`: run multipoint aerodynamic optimization.
-- `run-surrogate-optimization`: run surrogate-based aerodynamic shape optimization.
+- `generate-cfd-mesh`: build the airfoil CFD mesh and mesh-quality outputs.
+- `run-cfd-simulation`: run steady CFD from an existing mesh, at a fixed angle of attack or a prescribed lift coefficient.
+- `run-cfd-simulation-unsteady`: run unsteady (time-dependent) CFD from an existing mesh.
+- `run-aero-optimization`: run single-point or multipoint aerodynamic shape optimization, using gradient-based (Uno, SLSQP, SNOPT) or surrogate-based (EGO) optimizers.
 
 ## Standard Inputs
 
 <div class="panel panel-default">
 <div class="panel-heading">
 <div class="panel-title">
-<a data-toggle="collapse" href="#airfoilMeshStandardInputs">`generate-cfd-mesh` (click to expand)</a>
+<a data-toggle="collapse" href="#airfoilGenerateCfdMeshInputs">`generate-cfd-mesh` (click to expand)</a>
 </div>
 </div>
-<div id="airfoilMeshStandardInputs" class="panel-collapse collapse">
+<div id="airfoilGenerateCfdMeshInputs" class="panel-collapse collapse">
 <div class="panel-body">
 
-- `airfoil_profile` (str, default: "naca0012"): airfoil name (for example "naca0012", "rae2822").
-- `mesh_cells` (int, default: 6000): target total mesh-cell count for the airfoil mesh workflow.
-- `y_plus` (float, default: 50.0): target near-wall spacing in wall units (y+) used to estimate the first-layer cell size d0 when it is not provided.
-- `mach_number` (float, default: 0.2): freestream Mach number used together with y_plus and reynolds_number to estimate the near-wall first-layer cell size d0 when it is not provided.
-- `reynolds_number` (float, default: 5e6): freestream Reynolds number used together with y_plus and mach_number to estimate the near-wall first-layer cell size d0 when it is not provided.
-- `local_refine_box` (list[list[float]], default: None): optional two-corner local refinement box `[[x0, y0, z0], [x1, y1, z1]]`; leave unset for no local refinement.
+- `airfoil_profile` (str, default: "naca0012"): airfoil profile name, such as naca0012 or rae2822.
+- `mesh_cells` (int, default: 6000): target total mesh-cell count for the mesh.
+- `y_plus` (float, default: 50.0): target near-wall mesh spacing (`y+` or `yPlus`).
+- `mach_number` (float, default: 0.2): reference Mach number (Ma) for mesh generation.
+- `reynolds_number` (float, default: 5e6): reference Reynolds number (Re) for mesh generation. Used when altitude is null; otherwise calculated from altitude and Mach.
+- `altitude` (float, default: None): optional standard-atmosphere altitude in meters (0 to 20000). When set, Reynolds number is calculated automatically and overrides a supplied value.
+- `local_refine_box` (list[list[float]], default: None): optional two-corner local refinement box `[[x0, y0, z0], [x1, y1, z1]]`. Leave unset for no local refinement.
 
 </div>
 </div>
@@ -45,20 +44,20 @@ The airfoil agent supports these skills:
 <div class="panel panel-default">
 <div class="panel-heading">
 <div class="panel-title">
-<a data-toggle="collapse" href="#airfoilSteadyCfdStandardInputs">`run-cfd-simulation`  (click to expand)</a>
+<a data-toggle="collapse" href="#airfoilRunCfdSimulationInputs">`run-cfd-simulation` (click to expand)</a>
 </div>
 </div>
-<div id="airfoilSteadyCfdStandardInputs" class="panel-collapse collapse">
+<div id="airfoilRunCfdSimulationInputs" class="panel-collapse collapse">
 <div class="panel-body">
 
-- `angle_of_attack` (float, default: 2.0): freestream angle of attack in degrees.
-- `fixed_lift_coeff` (float, default: -1.0): automatically vary the angle of attack to compute drag at the prescribed lift coefficient. Set it to -1.0 to disable.
-- `airfoil_profile` (str, default: inherited from mesh step): airfoil profile name inherited from generate-cfd-mesh and used to fit CST coefficients when needed.
-- `mach_number` (float, default: inherited from mesh step): freestream Mach number.
-- `reynolds_number` (float, default: inherited from mesh step): freestream Reynolds number.
-- `y_plus` (float, default: inherited from mesh step): target near-wall y+ inherited from generate-cfd-mesh and used to auto-select wall functions.
-- `cst_coeffs` (list[float], default: None): initial CST coefficients for the VSP geometry path ordered as `[upper..., lower...]`; if omitted, prepare fits `n_cst_coeffs` upper and `n_cst_coeffs` lower coefficients from the selected airfoil profile.
-- `n_cpu_cores` (int, default: 1): number of MPI ranks to use for the CFD run.
+- `angle_of_attack` (float, default: 2.0): freestream angle of attack (AoA) in degrees.
+- `fixed_lift_coeff` (float, default: -1.0): automatically vary the angle of attack to compute drag at the prescribed lift coefficient (fixed_lift_coeff). Set it to -1.0 to disable.
+- `airfoil_profile` (str, default: inherited from generate-cfd-mesh): airfoil profile name inherited from generate-cfd-mesh.
+- `mach_number` (float, default: inherited from generate-cfd-mesh): reference Mach number. Inherited from generate-cfd-mesh if not provided.
+- `reynolds_number` (float, default: inherited from generate-cfd-mesh): reference Reynolds number inherited from the mesh unless altitude is set; altitude overrides it.
+- `altitude` (float, default: inherited from generate-cfd-mesh): standard-atmosphere altitude in meters inherited from the mesh; when set, Reynolds is calculated from altitude and Mach.
+- `y_plus` (float, default: inherited from generate-cfd-mesh): target near-wall y+ inherited from generate-cfd-mesh.
+- `n_cpu_cores` (int, default: 1): number of CPU cores (MPI ranks) to use.
 
 </div>
 </div>
@@ -67,23 +66,21 @@ The airfoil agent supports these skills:
 <div class="panel panel-default">
 <div class="panel-heading">
 <div class="panel-title">
-<a data-toggle="collapse" href="#airfoilUnsteadyCfdStandardInputs">`run-cfd-simulation-unsteady`  (click to expand)</a>
+<a data-toggle="collapse" href="#airfoilRunCfdSimulationUnsteadyInputs">`run-cfd-simulation-unsteady` (click to expand)</a>
 </div>
 </div>
-<div id="airfoilUnsteadyCfdStandardInputs" class="panel-collapse collapse">
+<div id="airfoilRunCfdSimulationUnsteadyInputs" class="panel-collapse collapse">
 <div class="panel-body">
 
-- `angle_of_attack` (float, default: 2.0): freestream angle of attack in degrees.
-- `airfoil_profile` (str, default: inherited from mesh step): airfoil profile name inherited from generate-cfd-mesh and used to fit CST coefficients when needed.
-- `mach_number` (float, default: inherited from mesh step): freestream Mach number.
-- `end_time` (float, default: 0.1): physical end time in seconds written to controlDict endTime.
-- `delta_t` (float, default: 1e-5): initial physical time-step size in seconds written to controlDict deltaT; used as a fixed step when `adjust_time_step` is false, or as the starting guess when true.
-- `max_courant_number` (float, default: 2.0): maximum Courant number allowed when `adjust_time_step` is true; maps to controlDict maxCo.
-- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
-- `reynolds_number` (float, default: inherited from mesh step): freestream Reynolds number.
-- `y_plus` (float, default: inherited from mesh step): target near-wall y+ inherited from generate-cfd-mesh and used to auto-select wall functions.
-- `cst_coeffs` (list[float], default: None): initial CST coefficients for the VSP geometry path ordered as `[upper..., lower...]`; if omitted, prepare fits `n_cst_coeffs` upper and `n_cst_coeffs` lower coefficients from the selected airfoil profile.
-- `n_cpu_cores` (int, default: 1): number of MPI ranks to use for the CFD run.
+- `angle_of_attack` (float, default: 2.0): freestream angle of attack (AoA) in degrees.
+- `airfoil_profile` (str, default: inherited from generate-cfd-mesh): airfoil profile name inherited from generate-cfd-mesh.
+- `mach_number` (float, default: inherited from generate-cfd-mesh): freestream Mach number. Inherited from generate-cfd-mesh if not provided.
+- `n_flow_through` (float, default: 10.0): CFD endTime represented as the number of flow-through times for the airfoil.
+- `reynolds_number` (float, default: inherited from generate-cfd-mesh): freestream Reynolds number inherited from the mesh unless altitude is set; altitude overrides it.
+- `altitude` (float, default: inherited from generate-cfd-mesh): standard-atmosphere altitude in meters inherited from the mesh; when set, Reynolds is calculated from altitude and Mach.
+- `y_plus` (float, default: inherited from generate-cfd-mesh): target near-wall y+ inherited from generate-cfd-mesh.
+- `initialize_from` (str, default: None): warm-start-CFD source case name. When set, the initial field is copied from `initialize_from` folder into this case's `0` folder.
+- `n_cpu_cores` (int, default: 1): number of CPU cores (MPI ranks) to use.
 
 </div>
 </div>
@@ -92,89 +89,28 @@ The airfoil agent supports these skills:
 <div class="panel panel-default">
 <div class="panel-heading">
 <div class="panel-title">
-<a data-toggle="collapse" href="#airfoilAeroOptStandardInputs">`run-aero-optimization`  (click to expand)</a>
+<a data-toggle="collapse" href="#airfoilRunAeroOptimizationInputs">`run-aero-optimization` (click to expand)</a>
 </div>
 </div>
-<div id="airfoilAeroOptStandardInputs" class="panel-collapse collapse">
+<div id="airfoilRunAeroOptimizationInputs" class="panel-collapse collapse">
 <div class="panel-body">
 
-- `angle_of_attack` (float, default: 2.0): initial freestream angle of attack in degrees.
-- `airfoil_profile` (str, default: inherited from mesh step): airfoil profile name inherited from generate-cfd-mesh and used to fit CST coefficients when needed.
-- `mach_number` (float, default: inherited from mesh step): freestream Mach number.
-- `reynolds_number` (float, default: inherited from mesh step): freestream Reynolds number.
-- `y_plus` (float, default: inherited from mesh step): target near-wall y+ inherited from generate-cfd-mesh and used to auto-select wall functions.
-- `optimizer` (str, default: "SLSQP"): optimization algorithm; supported values are SLSQP, IPOPT, and SNOPT.
-- `lift_constraint` (float, default: 0.5): target lower-bound lift coefficient constraint.
-- `max_opt_iters` (int, default: 50): maximum number of optimization iterations.
-- `thickness_constraint` (float, default: 0.5): lower bound on normalized airfoil thickness; 1.0 means the optimized airfoil thickness is the same as the baseline, and a negative value disables it.
-- `le_radius_constraint` (float, default: 0.7): lower bound on normalized leading-edge radius; 1.0 means the optimized leading-edge radius is the same as the baseline, and a negative value disables it.
-- `volume_constraint` (float, default: 1.0): lower bound on normalized airfoil volume; 1.0 means the optimized airfoil volume is the same as the baseline, and a negative value disables it.
-- `cst_coeffs` (list[float], default: None): initial CST coefficients for the VSP geometry path ordered as `[upper..., lower...]`; if omitted, prepare fits `n_cst_coeffs` upper and `n_cst_coeffs` lower coefficients from the selected airfoil profile.
-- `n_cpu_cores` (int, default: 1): number of MPI ranks to use for the optimization run.
-
-</div>
-</div>
-</div>
-
-<div class="panel panel-default">
-<div class="panel-heading">
-<div class="panel-title">
-<a data-toggle="collapse" href="#airfoilMultipointOptStandardInputs">`run-multipoint-optimization`  (click to expand)</a>
-</div>
-</div>
-<div id="airfoilMultipointOptStandardInputs" class="panel-collapse collapse">
-<div class="panel-body">
-
-- `weights` (list[float], default: [0.5, 0.5]): weight for each flight condition in the multipoint objective function; must have one entry per scenario and sum to 1.0.
-- `angle_of_attack` (list[float], default: [5.0, 4.0]): initial angle of attack in degrees for each flight condition.
-- `lift_constraint` (list[float], default: [0.5, 0.4]): target lift coefficient for each flight condition.
-- `airfoil_profile` (str, default: inherited from mesh step): airfoil profile name inherited from generate-cfd-mesh and used to fit CST coefficients when needed.
-- `mach_number` (float, default: inherited from mesh step): freestream Mach number.
-- `y_plus` (float, default: inherited from mesh step): target near-wall y+ inherited from generate-cfd-mesh and used to auto-select wall functions.
-- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
-- `reynolds_number` (float, default: inherited from mesh step): freestream Reynolds number.
-- `optimizer` (str, default: "SLSQP"): optimization algorithm; supported values are SLSQP, IPOPT, and SNOPT.
-- `max_opt_iters` (int, default: 100): maximum number of optimization iterations.
-- `thickness_constraint` (float, default: 0.5): lower bound on normalized airfoil thickness; 1.0 means the optimized airfoil thickness is the same as the baseline, and a negative value disables it.
-- `le_radius_constraint` (float, default: -1.0): lower bound on normalized leading-edge radius; 1.0 means the optimized leading-edge radius is the same as the baseline, and a negative value disables it.
-- `cst_coeffs` (list[float], default: None): initial CST coefficients ordered as `[upper..., lower...]`; if omitted, prepare fits `n_cst_coeffs` upper and lower coefficients from the selected airfoil profile.
-- `n_cpu_cores` (int, default: 1): number of MPI ranks to use for the optimization run.
-
-</div>
-</div>
-</div>
-
-<div class="panel panel-default">
-<div class="panel-heading">
-<div class="panel-title">
-<a data-toggle="collapse" href="#airfoilSurrogateOptStandardInputs">`run-surrogate-optimization`  (click to expand)</a>
-</div>
-</div>
-<div id="airfoilSurrogateOptStandardInputs" class="panel-collapse collapse">
-<div class="panel-body">
-
-- `criterion` (str, default: "EI"): criterion for next evaluation point determination.
-- `iters` (int, default: 5): number of iterations to optimize the objective function.
-- `numDOE` (int, default: 24): number of DOE points used in the surrogate model.
-- `seed` (int, default: 45): seed value to replicate results.
-- `objPenalty` (float, default: 100): penalty factor on the objective function for failed CFD runs.
-- `cst_bounds` (float, default: [0.3, 0.3, 0.3, 0.3, 0.3, 0.3]): array of CST design-variable bound scaling factors; bounds are computed as baselineValue * (1 +/- cst_bound).
-- `conWeight` (float, default: 1e5): scalar constraint-violation weight; when multiple weights are provided, they must follow the constraint order.
-- `maxIter` (int, default: 50): maximum number of surrogate-model optimization iterations.
-- `nStart` (int, default: 50): number of optimization start points.
-- `qEI` (str, default: "KBLB"): method for maximizing q-EI.
-- `surrogate` (str, default: "KRG"): surrogate model type.
-- `mach_number` (float, default: inherited from mesh step): freestream Mach number.
-- `reynolds_number` (float, default: inherited from mesh step): freestream Reynolds number.
-- `y_plus` (float, default: inherited from mesh step): target near-wall y+ inherited from generate-cfd-mesh and used to auto-select wall functions.
-- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients.
-- `cst_coeffs` (list[float], default: None): initial CST coefficients for the VSP geometry path ordered as `[upper..., lower...]`; if omitted, prepare fits `n_cst_coeffs` upper and `n_cst_coeffs` lower coefficients from the selected airfoil profile.
-- `angle_of_attack` (float, default: 2.0): initial freestream angle of attack in degrees.
-- `lift_constraint` (float, default: 0.5): target lower-bound lift coefficient constraint.
-- `thickness_constraint` (float, default: 0.5): lower bound on normalized airfoil thickness; 1.0 means the optimized airfoil thickness is the same as the baseline, and a negative value disables it.
-- `le_radius_constraint` (float, default: 0.7): lower bound on normalized leading-edge radius; 1.0 means the optimized leading-edge radius is the same as the baseline, and a negative value disables it.
-- `volume_constraint` (float, default: 1.0): lower bound on normalized airfoil volume; 1.0 means the optimized airfoil volume is the same as the baseline, and a negative value disables it.
-- `airfoil_profile` (str, default: inherited from mesh step): airfoil profile name inherited from generate-cfd-mesh and used to fit CST coefficients when needed.
+- `angle_of_attack` (float, default: 2.0): initial freestream angle of attack (AoA) in degrees.
+- `airfoil_profile` (str, default: inherited from generate-cfd-mesh): airfoil profile name inherited from generate-cfd-mesh.
+- `mach_number` (float, default: inherited from generate-cfd-mesh): freestream Mach number. Inherited from generate-cfd-mesh if not provided.
+- `reynolds_number` (float, default: inherited from generate-cfd-mesh): freestream Reynolds number inherited from the mesh unless altitude is set; altitude overrides it.
+- `altitude` (float, default: inherited from generate-cfd-mesh): standard-atmosphere altitude in meters inherited from the mesh; when set, Reynolds is calculated from altitude and Mach.
+- `y_plus` (float, default: inherited from generate-cfd-mesh): target near-wall y+ inherited from generate-cfd-mesh.
+- `optimizer` (str, default: "Uno"): optimization algorithm to use. Options are Uno (default), SLSQP, SNOPT, and EGO. The number of CST coefficients per airfoil surface is set by the advanced parameter `profile_fit_coeff_count` (default 6).
+- `lift_constraint` (list[float], default: [0.5]): target lower-bound lift coefficient constraint. Supply more than one entry for multipoint optimization. len(lift_constraint) must equal len(multipoint_weight).
+- `multipoint_weight` (list[float], default: [1.0]): weight array for multipoint optimization; weights must sum to 1.0. len(lift_constraint) must equal len(multipoint_weight). For example, lift targets [0.5, 0.4] use weights [0.6, 0.4].
+- `max_opt_iters` (int, default: 20): maximum number of optimization iterations.
+- `n_ego_doe_pts` (int, default: 20): number of initial design of experiment (DOE) sample points used by the EGO optimizer.
+- `thickness_constraint` (float, default: 0.5): lower bound on airfoil thickness constraint; normalized wrt the baseline thickness (1.0). Set to a negative value to disable it.
+- `le_radius_constraint` (float, default: 0.7): lower bound on leading-edge radius constraint; normalized wrt the baseline radius (1.0). Set to a negative value to disable it.
+- `volume_constraint` (float, default: 1.0): lower bound on airfoil volume constraint; normalized wrt the baseline volume (1.0). Set to a negative value to disable it.
+- `camber_curvature_constraint` (int, default: 0): camber-line smoothness constraint that prevents wavy optimized airfoil shapes. 1 to enable, 0 to disable (default).
+- `n_cpu_cores` (int, default: 1): number of CPU cores (MPI ranks) to use.
 
 </div>
 </div>
@@ -185,23 +121,20 @@ The airfoil agent supports these skills:
 <div class="panel panel-default">
 <div class="panel-heading">
 <div class="panel-title">
-<a data-toggle="collapse" href="#airfoilMeshAdvancedParams">`generate-cfd-mesh`  (click to expand)</a>
+<a data-toggle="collapse" href="#airfoilGenerateCfdMeshAdvanced">`generate-cfd-mesh` (click to expand)</a>
 </div>
 </div>
-<div id="airfoilMeshAdvancedParams" class="panel-collapse collapse">
+<div id="airfoilGenerateCfdMeshAdvanced" class="panel-collapse collapse">
 <div class="panel-body">
 
-- `blunt_te` (float, default: 0.01): trailing-edge round percentage expressed as an x/chord trim location; 0.01 means the trim starts at x = 0.01 from the trailing edge.
-- `d0` (float, default: -1.0): first-layer height in meters; use a negative value to let the wrapper estimate it from `y_plus`, `mach_number`, and `reynolds_number`.
-- `hyperbolic_sweeps` (int, default: 20): number of smoothing sweeps per layer for hyperbolic extrusion.
-- `neighbor_rings` (int, default: 5): neighbor-ring depth used by the hyperbolic extrusion smoother.
-- `diffuse_start` (float, default: 0.002): smoothing onset distance in meters; hyperbolic diffusion stays off until this marched distance, then starts ramping up.
-- `max_nonorthogonality_pass` (float, default: 70.0): pass threshold for maximum non-orthogonality.
-- `max_nonorthogonality_warning` (float, default: 80.0): warning threshold for maximum non-orthogonality.
-- `max_aspect_ratio_pass` (float, default: 1000.0): pass threshold for maximum aspect ratio.
-- `max_aspect_ratio_warning` (float, default: 5000.0): warning threshold for maximum aspect ratio.
-- `max_skewness_pass` (float, default: 4.0): pass threshold for maximum skewness.
-- `max_skewness_warning` (float, default: 6.0): warning threshold for maximum skewness.
+- `blunt_te` (float, default: 0.01): trailing-edge round percentage expressed as an x/chord trim location. The default 0.01 means the trim starts at x = 0.01 from the trailing edge.
+- `d0` (float, default: -1.0): first-layer height in meters. Use a negative value to let the wrapper estimate it from `y_plus`, `mach_number`, and `reynolds_number`.
+- `diffusion_sweeps` (int, default: 20): number of smoothing sweeps per layer for diffusion extrusion.
+- `neighbor_rings` (int, default: 5): neighbor-ring depth used by the diffusion extrusion smoother.
+- `diffuse_start` (float, default: 0.002): smoothing onset distance in meters. Diffusion stays off until this marched distance, then starts ramping up.
+- `max_nonorthogonality_thresholds` (list[float], default: [70.0, 80.0]): [Pass, Warning] thresholds for maximum non-orthogonality.
+- `max_aspect_ratio_thresholds` (list[float], default: [1000.0, 10000.0]): [Pass, Warning] thresholds for maximum aspect ratio.
+- `max_skewness_thresholds` (list[float], default: [4.0, 6.0]): [Pass, Warning] thresholds for maximum skewness.
 
 </div>
 </div>
@@ -210,29 +143,27 @@ The airfoil agent supports these skills:
 <div class="panel panel-default">
 <div class="panel-heading">
 <div class="panel-title">
-<a data-toggle="collapse" href="#airfoilSteadyCfdAdvancedParams">`run-cfd-simulation`   (click to expand)</a>
+<a data-toggle="collapse" href="#airfoilRunCfdSimulationAdvanced">`run-cfd-simulation` (click to expand)</a>
 </div>
 </div>
-<div id="airfoilSteadyCfdAdvancedParams" class="panel-collapse collapse">
+<div id="airfoilRunCfdSimulationAdvanced" class="panel-collapse collapse">
 <div class="panel-body">
 
-- `transonic_mach_boundary` (float, default: 0.4): transonic Mach split used by the default solver selection when `solver_name` is not set.
-- `solver_name` (str, default: null): explicit solver override; supported values are `DASimpleFoam`, `DARhoSimpleFoam`, `DARhoSimpleCFoam`, and `DAHisaFoam`; leave unset, `null`, or `none` to use the default Mach-based selection.
-- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model; supported values are `SpalartAllmaras` and `kOmegaSST`.
-- `use_wall_functions` (str, default: "auto"): wall-function selection; use `auto` to choose from mesh settings, `1` to force enable, or `0` to force disable.
+- `cp_plot_bounds` (list[float], default: [-2.0, 2.0]): [Lower, upper] bounds of the Cp axis and colorbar shared by the pressure-profile and Cp flow-field plots.
+- `plot_tail_fraction` (float, default: 1.0): fraction of the CD/CL/CM history to plot from the end. 1.0 plots the full history; 0.2 plots the final 20 percent.
+- `cst_coeffs` (list[float], default: null): user-supplied CST coefficients, ordered as `[upper..., lower...]`. len(cst_coeffs) must be 2*profile_fit_coeff_count. Set this only to parameterize the airfoil with explicit numeric values (e.g., to reproduce an optimized shape from its CST coefficients); leave it null (default) to use the named profile in `airfoil_profile`.
 - `max_flow_iters` (int, default: 10000): maximum number of flow iterations written to the case controlDict endTime/writeInterval settings.
-- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients; for example, `6` means 6 upper and 6 lower coefficients.
-- `primal_func_std_tol` (float, default: 0.04): DAFoam primal function standard deviation tolerance passed to script_run_dafoam.py.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance passed to script_run_dafoam.py.
-- `force_std_pass` (float, default: 0.0001): pass threshold for raw force-coefficient standard deviation.
-- `force_std_warning` (float, default: 0.05): warning threshold for raw force-coefficient standard deviation.
-- `residual_drop_orders_pass` (float, default: 6.0): pass threshold for minimum residual drop in log10 orders.
-- `residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum residual drop in log10 orders.
-- `initialize_from` (str, default: null): warm-start source case name of a previously converged CFD run; leave unset for a cold start.
-- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar shared by the pressure-profile and Cp flow-field plots.
-- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar shared by the pressure-profile and Cp flow-field plots.
-- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar for the U flow-field plot.
-- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
+- `primal_func_std_tol` (float, default: 0.04): DAFoam primal function standard deviation tolerance passed to script_run_dafoam.py.
+- `profile_fit_coeff_count` (int, default: 6): number of coefficients used to fit each airfoil surface. For example, `4` fits 4 coefficients for the upper surface and 4 for the lower surface.
+- `solver_name` (str, default: null): explicit solver override. Supported values are `DASimpleFoam` (incompressible), `DARhoSimpleFoam` (compressible), `DARhoSimpleCFoam` (compressible/transonic), and `DAHisaFoam` (compressible/transonic/supersonic). Leave unset, `null`, or `none` to use the default Mach-based selection.
+- `transonic_mach_boundary` (float, default: 0.4): transonic Mach split used by the default solver selection when `solver_name` is not set.
+- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model. Supported values are `SpalartAllmaras` (SA) and `kOmegaSST` (SST).
+- `u_plot_bounds` (list[float], default: [-1.0, 1.0]): [Lower, upper] bounds of the normalized velocity colorbar for the U flow-field plot.
+- `use_wall_functions` (str, default: "auto"): wall-function selection. Use `auto` to choose from mesh settings, `1` to force enable, or `0` to force disable. In auto mode, explicit positive `d0` disables wall functions; otherwise y_plus >= 5 enables them.
+- `force_std_thresholds` (list[float], default: [0.0001, 0.05]): [Pass, Warning] thresholds for raw force-coefficient standard deviation.
+- `residual_drop_orders_thresholds` (list[float], default: [6.0, 3.0]): [Pass, Warning] thresholds for minimum residual drop in log10 orders.
+- `initialize_from` (str, default: null): warm-start lever (off by default). Case name of a previously converged CFD run whose flow field initializes this run instead of a uniform freestream; leave unset (null) for a cold start. Use it to help a hard case converge (high AoA, or a fine low-y+ mesh). The referenced case must have finished before this run.
 
 </div>
 </div>
@@ -241,22 +172,24 @@ The airfoil agent supports these skills:
 <div class="panel panel-default">
 <div class="panel-heading">
 <div class="panel-title">
-<a data-toggle="collapse" href="#airfoilUnsteadyCfdAdvancedParams">`run-cfd-simulation-unsteady`   (click to expand)</a>
+<a data-toggle="collapse" href="#airfoilRunCfdSimulationUnsteadyAdvanced">`run-cfd-simulation-unsteady` (click to expand)</a>
 </div>
 </div>
-<div id="airfoilUnsteadyCfdAdvancedParams" class="panel-collapse collapse">
+<div id="airfoilRunCfdSimulationUnsteadyAdvanced" class="panel-collapse collapse">
 <div class="panel-body">
 
+- `cp_plot_bounds` (list[float], default: [-2.0, 2.0]): [Lower, upper] bounds of the Cp axis and colorbar shared by the pressure-profile and Cp flow-field plots.
+- `plot_tail_fraction` (float, default: 1.0): fraction of the CD/CL/CM history to plot from the end. 1.0 plots the full history; 0.2 plots the final 20 percent.
+- `cst_coeffs` (list[float], default: null): user-supplied CST coefficients, ordered as `[upper..., lower...]`. len(cst_coeffs) must be 2*profile_fit_coeff_count. Set this only to parameterize the airfoil with explicit numeric values (e.g., to reproduce an optimized shape from its CST coefficients); leave it null (default) to use the named profile in `airfoil_profile`.
+- `profile_fit_coeff_count` (int, default: 6): number of coefficients used to fit each airfoil surface. For example, `4` fits 4 coefficients for the upper surface and 4 for the lower surface.
+- `solver_name` (str, default: null): explicit solver override. Supported values are `DASimpleFoam` (incompressible), `DARhoSimpleFoam` (compressible), `DARhoSimpleCFoam` (compressible/transonic), and `DAHisaFoam` (compressible/transonic/supersonic). Leave unset, `null`, or `none` to use the default Mach-based selection.
 - `transonic_mach_boundary` (float, default: 0.4): transonic Mach split used by the default solver selection when `solver_name` is not set.
-- `solver_name` (str, default: null): explicit solver override; supported values are `DASimpleFoam`, `DARhoSimpleFoam`, `DARhoSimpleCFoam`, and `DAHisaFoam`; leave unset, `null`, or `none` to use the default Mach-based selection.
-- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model; supported values are `SpalartAllmaras` and `kOmegaSST`.
-- `use_wall_functions` (str, default: "auto"): wall-function selection; use `auto` to choose from mesh settings, `1` to force enable, or `0` to force disable.
-- `force_std_pass` (float, default: 0.0001): pass threshold for raw force-coefficient standard deviation.
-- `force_std_warning` (float, default: 0.05): warning threshold for raw force-coefficient standard deviation.
-- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar shared by the pressure-profile and Cp flow-field plots.
-- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar shared by the pressure-profile and Cp flow-field plots.
-- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar for the U flow-field plot.
-- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
+- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model. Supported values are `SpalartAllmaras` (SA) and `kOmegaSST` (SST).
+- `u_plot_bounds` (list[float], default: [-1.0, 1.0]): [Lower, upper] bounds of the normalized velocity colorbar for the U flow-field plot.
+- `use_wall_functions` (str, default: "auto"): wall-function selection. Use `auto` to choose from mesh settings, `1` to force enable, or `0` to force disable. In auto mode, explicit positive `d0` disables wall functions; otherwise y_plus >= 5 enables them.
+- `max_cfl` (float, default: 1.0): maximum CFL number for auto time stepping in URANS runs; written to controlDict maxCo.
+- `n_saves` (int, default: 5): number of saved fields per flow-through time for URANS runs; writeInterval is set to rounded endTime divided by this value.
+- `force_slope_thresholds` (list[float], default: [1e-5, 0.001]): [Pass, Warning] thresholds for the absolute raw force-coefficient tail slope used by unsteady convergence review.
 
 </div>
 </div>
@@ -265,91 +198,40 @@ The airfoil agent supports these skills:
 <div class="panel panel-default">
 <div class="panel-heading">
 <div class="panel-title">
-<a data-toggle="collapse" href="#airfoilAeroOptAdvancedParams">`run-aero-optimization`   (click to expand)</a>
+<a data-toggle="collapse" href="#airfoilRunAeroOptimizationAdvanced">`run-aero-optimization` (click to expand)</a>
 </div>
 </div>
-<div id="airfoilAeroOptAdvancedParams" class="panel-collapse collapse">
+<div id="airfoilRunAeroOptimizationAdvanced" class="panel-collapse collapse">
 <div class="panel-body">
 
-- `transonic_mach_boundary` (float, default: 0.4): transonic Mach split used by the default solver selection when `solver_name` is not set.
-- `solver_name` (str, default: null): explicit solver override; supported values are `DASimpleFoam`, `DARhoSimpleFoam`, `DARhoSimpleCFoam`, and `DAHisaFoam`; leave unset, `null`, or `none` to use the default Mach-based selection.
-- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model; supported values are `SpalartAllmaras` and `kOmegaSST`.
-- `use_wall_functions` (str, default: "auto"): wall-function selection; use `auto` to choose from mesh settings, `1` to force enable, or `0` to force disable.
+- `adjoint_residual_drop_orders_thresholds` (list[float], default: [5.0, 3.0]): [Pass, Warning] thresholds for minimum adjoint residual drop in log10 orders.
+- `cp_plot_bounds` (list[float], default: [-2.0, 2.0]): [Lower, upper] bounds of the Cp axis and colorbar shared by the pressure-profile and Cp flow-field plots.
+- `cst_coeffs` (list[float], default: null): user-supplied CST coefficients, ordered as `[upper..., lower...]`. len(cst_coeffs) must be 2*profile_fit_coeff_count. Set this only to parameterize the airfoil with explicit numeric values (e.g., to reproduce an optimized shape from its CST coefficients); leave it null (default) to use the named profile in `airfoil_profile`.
+- `final_feasibility_thresholds` (list[float], default: [0.0001, 0.01]): [Pass, Warning] thresholds for final feasibility.
+- `flow_residual_drop_orders_thresholds` (list[float], default: [6.0, 3.0]): [Pass, Warning] thresholds for minimum flow residual drop in log10 orders.
+- `max_adj_iters` (int, default: 1000): maximum GMRES iterations used by the DAFoam adjoint linear solve.
 - `max_flow_iters` (int, default: 10000): maximum number of flow iterations written to the case controlDict endTime/writeInterval settings.
-- `max_adj_iters` (int, default: 1000): maximum GMRES iterations for the DAFoam adjoint linear solve.
-- `pc_fill_level` (int, default: 1): ILU fill level for the DAFoam adjoint preconditioner.
-- `n_cst_coeffs` (int, default: 6): number of CST coefficients per surface used when prepare fits CST coefficients; for example, `6` means 6 upper and 6 lower coefficients.
-- `primal_func_std_tol` (float, default: 0.04): DAFoam primal function standard deviation tolerance passed to script_run_dafoam.py.
+- `objective_reduction_pct_thresholds` (list[float], default: [5.0, 1.0]): [Pass, Warning] thresholds for objective reduction in percent.
+- `pc_fill_level` (int, default: 1): ILU fill level used by the DAFoam adjoint preconditioner.
 - `primal_func_slope_tol` (float, default: 1e-6): DAFoam primal function slope tolerance passed to script_run_dafoam.py.
-- `objective_reduction_pct_pass` (float, default: 5.0): pass threshold for objective reduction in percent.
-- `objective_reduction_pct_warning` (float, default: 1.0): warning threshold for objective reduction in percent.
-- `final_feasibility_pass` (float, default: 0.0001): pass threshold for final feasibility.
-- `final_feasibility_warning` (float, default: 0.01): warning threshold for final feasibility.
-- `flow_residual_drop_orders_pass` (float, default: 6.0): pass threshold for minimum flow residual drop in log10 orders.
-- `flow_residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum flow residual drop in log10 orders.
-- `adjoint_residual_drop_orders_pass` (float, default: 5.0): pass threshold for minimum adjoint residual drop in log10 orders.
-- `adjoint_residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum adjoint residual drop in log10 orders.
-- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar shared by the pressure-profile and Cp flow-field plots.
-- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar shared by the pressure-profile and Cp flow-field plots.
-- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar for the U flow-field plot.
-- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
-
-</div>
-</div>
-</div>
-
-<div class="panel panel-default">
-<div class="panel-heading">
-<div class="panel-title">
-<a data-toggle="collapse" href="#airfoilMultipointOptAdvancedParams">`run-multipoint-optimization`   (click to expand)</a>
-</div>
-</div>
-<div id="airfoilMultipointOptAdvancedParams" class="panel-collapse collapse">
-<div class="panel-body">
-
+- `primal_func_std_tol` (float, default: 0.04): DAFoam primal function standard deviation tolerance passed to script_run_dafoam.py.
+- `profile_fit_coeff_count` (int, default: 6): number of coefficients used to fit each airfoil surface. For example, `4` fits 4 coefficients for the upper surface and 4 for the lower surface.
+- `solver_name` (str, default: null): explicit solver override. Supported values are `DASimpleFoam` (incompressible), `DARhoSimpleFoam` (compressible), `DARhoSimpleCFoam` (compressible/transonic), and `DAHisaFoam` (compressible/transonic/supersonic). Leave unset, `null`, or `none` to use the default Mach-based selection.
 - `transonic_mach_boundary` (float, default: 0.4): transonic Mach split used by the default solver selection when `solver_name` is not set.
-- `solver_name` (str, default: null): explicit solver override; supported values are `DASimpleFoam`, `DARhoSimpleFoam`, `DARhoSimpleCFoam`, and `DAHisaFoam`; leave unset, `null`, or `none` to use the default Mach-based selection.
-- `use_wall_functions` (str, default: "auto"): wall-function selection; use `auto` to choose from mesh settings, `1` to force enable, or `0` to force disable.
-- `max_adj_iters` (int, default: 1000): maximum GMRES iterations for the DAFoam adjoint linear solve.
-- `pc_fill_level` (int, default: 1): ILU fill level for the DAFoam adjoint preconditioner.
-- `cp_plot_lower_bound` (float, default: -2.0): lower bound of the Cp axis and colorbar shared by the pressure-profile and Cp flow-field plots.
-- `cp_plot_upper_bound` (float, default: 2.0): upper bound of the Cp axis and colorbar shared by the pressure-profile and Cp flow-field plots.
-- `u_plot_lower_bound` (float, default: -1.0): lower bound of the normalized velocity colorbar for the U flow-field plot.
-- `u_plot_upper_bound` (float, default: 1.0): upper bound of the normalized velocity colorbar.
-- `objective_reduction_pct_pass` (float, default: 5.0): pass threshold for objective reduction in percent.
-- `objective_reduction_pct_warning` (float, default: 1.0): warning threshold for objective reduction in percent.
-- `final_feasibility_pass` (float, default: 0.0001): pass threshold for final feasibility.
-- `final_feasibility_warning` (float, default: 0.01): warning threshold for final feasibility.
-- `flow_residual_drop_orders_pass` (float, default: 6.0): pass threshold for minimum flow residual drop in log10 orders.
-- `flow_residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum flow residual drop in log10 orders.
-- `adjoint_residual_drop_orders_pass` (float, default: 5.0): pass threshold for minimum adjoint residual drop in log10 orders.
-- `adjoint_residual_drop_orders_warning` (float, default: 3.0): warning threshold for minimum adjoint residual drop in log10 orders.
+- `turbulence_model` (str, default: "SpalartAllmaras"): OpenFOAM RANS turbulence model. Supported values are `SpalartAllmaras` (SA) and `kOmegaSST` (SST).
+- `u_plot_bounds` (list[float], default: [-1.0, 1.0]): [Lower, upper] bounds of the normalized velocity colorbar for the U flow-field plot.
+- `use_wall_functions` (str, default: "auto"): wall-function selection. Use `auto` to choose from mesh settings, `1` to force enable, or `0` to force disable. In auto mode, explicit positive `d0` disables wall functions; otherwise y_plus >= 5 enables them.
+- `n_multi_start` (int, default: 20): number of multi-start points for the EGO internal EI optimization.
+- `ei_tol` (float, default: 0.0001): EGO internal expected improvement (EI) optimization tolerance.
+- `ego_seed` (int, default: 0): random seed used by the EGO optimizer DOE and infill sampling.
+- `ego_tol` (float, default: 0.001): objective variation tolerance for the EGO optimization.
+- `ego_cstr_tol` (float, default: 0.001): constraint tolerance used by EGO and its lift-trim searches.
+- `dv_bounds` (dict[str, list[float]], default: {"CSTCoeffs": [-0.5, 0.5], "AoA": [0.0, 10.0]}): design-variable lower/upper bounds shared by EGO and regular optimization. All keys are required.
 
 </div>
 </div>
 </div>
 
-<div class="panel panel-default">
-<div class="panel-heading">
-<div class="panel-title">
-<a data-toggle="collapse" href="#airfoilSurrogateOptAdvancedParams">`run-surrogate-optimization`   (click to expand)</a>
-</div>
-</div>
-<div id="airfoilSurrogateOptAdvancedParams" class="panel-collapse collapse">
-<div class="panel-body">
-
-- `transonic_mach_boundary` (float, default: 0.4): transonic Mach split used by the default solver selection when `solver_name` is not set.
-- `solver_name` (str, default: null): explicit solver override; supported values are `DASimpleFoam`, `DARhoSimpleFoam`, `DARhoSimpleCFoam`, and `DAHisaFoam`; leave unset, `null`, or `none` to use the default Mach-based selection.
-- `use_wall_functions` (str, default: "auto"): wall-function selection; use `auto` to choose from mesh settings, `1` to force enable, or `0` to force disable.
-- `max_flow_iters` (int, default: 3000): max flow iterations.
-- `initialize_from` (str, default: null): warm-start source case name; when set, the field staged into 0/ is kept instead of resetting to the uniform freestream.
-- `primal_func_std_tol` (float, default: 0.04): primal function standard deviation tolerance.
-- `primal_func_slope_tol` (float, default: 1e-6): primal function slope tolerance.
-- `n_cpu_cores` (int, default: 2): number of MPI ranks to use for the optimization run.
-
-</div>
-</div>
-</div>
 
 ## Agent Capability demos
 
@@ -446,9 +328,9 @@ Fig. 5. Aerodynamic optimization. Top Left: comparison of the pressure and shape
 
 ### Surrogate-based aerodyanamic shape optimization
 
-Users can additionally choose to use a surrogate-based optimization method rather than gradient-based. Similar to the gradient-based approach, the design variables include the shape of the airfoil and the angle of attack subject to the same lift, thickness, volume, and leading edge radius constraints. For example,
+Users can additionally choose the surrogate-based EGO optimizer rather than a gradient-based one (set through the `optimizer` input of `run-aero-optimization`). Similar to the gradient-based approach, the design variables include the shape of the airfoil and the angle of attack subject to the same lift, thickness, volume, and leading edge radius constraints. For example,
 
-`Run a surrogate based optimization on the NACA0012 airfoil. Set Re to 6.6e5, use 4000 mesh cells, with a velocity of 10m/s velocity. For the lift constraint use 0.5 and set the AOA to 5. Use 80 DOE points for the optimization and set the bounds on the CST coefficient design variables to 0.5. Use 10 optimization iterations. For the lift constraint weight use 1e16 and a weight of 10 for all other constraints. Use 22 cores for the CFD. Use the KPLS surrogate model.`
+`Run a surrogate based optimization on the NACA0012 airfoil. Set Re to 6.6e5, use 4000 mesh cells, with a velocity of 10m/s velocity. For the lift constraint use 0.5 and set the AOA to 5. Use 80 DOE points for the optimization and set the bounds on the CST coefficient design variables to [-0.5, 0.5]. Use 10 optimization iterations. Use 22 cores for the CFD.`
 
 The following is the agent generated figure. The drag reduction and constraint values are returned to the user by the agent in the chat window.
 
@@ -461,7 +343,7 @@ Fig. 6. Surrogate-based aerodynamic shape optimization. Top Left: comparison of 
 
 ### Aerodynamic multipoint optimization
 
-Users can prompt to run a multipoint optimization. The default objective is drag, the design variables are airfoil shape, angle of attack, and weights, the constraints include lift for each scenario, thickness, volume, and leading edge radius. For example,
+Users can prompt to run a multipoint optimization by giving one lift constraint and one weight per flight condition (`lift_constraint` and `multipoint_weight` in `run-aero-optimization`). The default objective is the weighted drag, the design variables are airfoil shape and the angle of attack of each flight condition, the constraints include lift for each scenario, thickness, volume, and leading edge radius. For example,
 
 `Generate a multipoint optimization at ma 0.02941, Re 6.67e5, cl [0.5, 0.4], aoa [5 deg, 4 deg], and weights [0.6, 0.4]. Use 4 cores.`
 
