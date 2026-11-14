@@ -22,18 +22,18 @@ The framework is designed to be trustworthy for engineering using the following 
 
 ### How the Framework Works
 
-The following figure illustrates the overall architecture of the agentic AI framework for aircraft aerodynamic and aerostructural design. The framework follows a fixed workflow from a user prompt to the final engineering result. Based on the user's prompt, the agent deck first selects the most relevant agent, skill, and scenario from the MDO Agent Deck database. Here we define domain-specific agents for narrowly scoped design problems involving airfoils, wings, and aircraft. Each agent is equipped with skills such as generating CFD meshes, running CFD simulations, and performing aerodynamic optimization. The scenario includes predefined workflows for common tasks, such as running one simulation with one skill, running multiple simulations with one skill, or running multiple simulations with prerequisite and downstream skills.
+Fig. 1 illustrates the overall architecture of the proposed trustworthy agentic AI framework for aircraft aerodynamic and aerostructural design. The framework follows a fixed workflow from a user prompt to the final engineering result. Based on the user's prompt, the agent deck first selects the most relevant agent, skill, and scenario from the MDO Agent Deck database. Here we define domain-specific agents for narrowly scoped design problems involving airfoils, wings, and aircraft. Each agent is equipped with skills such as generating CFD meshes, running CFD simulations, and performing aerodynamic optimization. The scenario includes predefined workflows for common tasks, such as running one simulation with one skill, running multiple simulations with one skill, or running multiple simulations with prerequisite and downstream skills.
 
-The agentic framework maximizes the use of predefined, deterministic steps while minimizing the agent's reasoning effort to maximize reliability. In an end-to-end workflow, the agent is responsible only for deciding (blue text in the figure below): (1) which agent–skill pair to use, (2) which scenario to use, (3) what input parameters to provide for that scenario, and (4) how to follow the provided instructions to correct the scenario inputs if a skill encounters an error. All remaining steps in the workflow are fully deterministic.
+As elaborated later in this section, the agentic framework maximizes the use of predefined, deterministic steps while minimizing the agent's reasoning effort to maximize reliability. In an end-to-end workflow, the agent is responsible only for deciding: (1) which agent–skill pair to use, (2) which scenario to use, (3) what input parameters to provide for that scenario, and (4) how to follow the provided instructions to correct the scenario inputs if a skill encounters an error. All remaining steps in the workflow are fully deterministic.
 
-To be more specific, the agent first interprets the user's prompt and selects the skill and scenario that best match the requested task. It then reads the input descriptions associated with the selected skill and semantically maps the parameters specified by the user into the input format required by the scenario workflow. Before executing the workflow, the agent sends the selected skill, scenario, and parsed inputs to the workflow verification tool. This tool verifies that the selected skill and scenario are valid and, critically, that the parsed inputs are fully consistent with the user's request. This verification step ensures that the agent does not omit, add, or modify any user-specified input in a way that could misrepresent the user's intent.
-If the verification passes, the agent executes the predefined steps in the selected scenario workflow fully deterministically. Once the workflow is completed, the agent returns the final results to the user, including simulation figures, access to an interactive visualization server, and a summary of the completed case.
+To be more specific, the agent first reads the description of available agents, skills, and scenarios (Step 1 in Fig. 1). Then, it interprets the user's prompt and selects the skill and scenario that best match the requested task. It also reads the input descriptions associated with the selected skill and semantically maps the parameters specified by the user into the input format required by the scenario workflow (Step 2). The inputs of each skill are divided into standard and advanced. Standard inputs are commonly used design-related parameters, such as the Mach number, whereas advanced parameters are less frequently modified settings, such as the number of mesh smoothing iterations. To save context length, the agent always reads the standard input descriptions, whereas the advanced parameter descriptions are loaded only when the user explicitly requests one. Before executing the workflow, the agent sends the selected skill, scenario, and parsed inputs to the workflow verification tool (Step 3). This tool verifies that the selected skill and scenario are valid and, critically, that the parsed inputs are fully consistent with the user's request. This verification step ensures that the agent does not omit, add, or modify any user-specified input in a way that could misrepresent the user's intent.
+If the verification passes, the agent executes the predefined steps in the selected scenario workflow fully deterministically (Step 4). Once the workflow is completed, the agent returns the final results to the user, including simulation figures, access to an interactive visualization server, and a summary of the completed case (Step 5).
 
 For example, if a user asks, `Run a CFD simulation for the NACA2412 airfoil with 50K cells, Ma=0.3, Re=5e6, and AoA=2 degs`, the framework will
 
-- Identify the`airfoil` agent, the`run-cfd-simulation` skill together with its prerequisite`generate-cfd-mesh` skill, and the`single-skill-with-prereq-single-run` scenario that best matches the request.
+- Identify the `airfoil` agent, the `run-cfd-simulation` skill together with its prerequisite `generate-cfd-mesh` skill, and the `single-skill-with-prereq-single-run` scenario that best matches the request.
 
-- Semantically parses the user-specified parameters into the scenario inputs as`airfoil_profile=naca2412`,`mach_number=0.3`,`reynolds_number=5e6`,`mesh_cells=50000`, and`angle_of_attacks=2`. 
+- Semantically parses the user-specified parameters into the scenario inputs as `airfoil_profile=naca2412`, `mach_number=0.3`, `reynolds_number=5e6`, `mesh_cells=50000`, and `angle_of_attacks=2`. 
 
 - The workflow verification tool confirms that the selected agent, skills, scenario, and parsed inputs are valid and fully consistent with the user's request. 
 
@@ -46,7 +46,7 @@ For example, if a user asks, `Run a CFD simulation for the NACA2412 airfoil with
 <div style="text-align: center;">
 <img src="{{ site.url }}{{ site.baseurl }}/images/tutorials/AI-overview-diagram.png" style="width:900px !important;" />
 
-Fig. 1. Schematic of the agentic AI workflow
+Fig. 1. Overall architecture of the proposed trustworthy and scalable agentic AI framework for aircraft aerodynamic and aerostructural design. Cyan text indicates steps requiring agent reasoning, while black text indicates deterministic workflow steps.
 </div>
 
 ### Transparency, Auditability, and Reproducibility
@@ -59,6 +59,6 @@ The framework records workflow and runtime context in the working directory. Thi
 
 ### Reference
 
-Ping He, Lean Fang, Jiawei Chen, Seth Zoppelt, and Christian Psenica. "Trustworthy Agentic AI for High-fidelity Aircraft Design Optimization.", paper in preparation. 2026.
+Ping He, Lean Fang, Jiawei Chen, Seth Zoppelt, and Christian Psenica. "Trustworthy Agentic AI for High-fidelity Multidisciplinary Design Optimization of Aircraft.", paper in preparation. 2026.
 
 {% include links.html %}
