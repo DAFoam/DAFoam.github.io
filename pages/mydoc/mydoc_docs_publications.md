@@ -11,6 +11,8 @@ folder: mydoc
 
 The following publications explicitly state that DAFoam was used in their studies. If we have missed your work, please feel free to edit this page and submit a pull request. 
 
+<105> Y. Luo, H. Li, G. Xie, L. Meng, Y. Luo, Z. Zhou. Adjoint-Based Hierarchical Inverse Design of a Short Film-Cooling Hole: Cooling Performance–Flow–Geometry. Energy, 2026
+
 <104> M. Sinzinger, H. Schartner, Z. A. Balzar, M. Balzar. A gradient-based multi-objective aerodynamic and solar performance shape optimisation workflow for tall building design. Structural Form & Optimization, 2026.
 
 <103> S. Joo, Y. Kim, K. Yee. Mechanism-Separated Closed-Form Transition Modeling via Field Inversion and Symbolic Regression. arXiv:2609.24162, 2026.
