@@ -277,13 +277,15 @@ Open `mdo_agent_work/results/myHPCJob.sh` and adjust the `#SBATCH` directives (w
 
 3. Click the "Local" icon directly above the chat box and select "Add SSH Host." In the pop-up, enter a "Name" (for example, `my_hpc`) and the "SSH Host" (for example, `my_user_name@myhpc.com`). Leave the "SSH Port" and "Identity File" unchanged. Then click "Add SSH Connection."
 
-4. Click the "Local" icon again and select the newly added SSH server, e.g., `my_hpc`. You will be prompted to enter your HPC account password and the verification code (if applicable). **NOTE:** The Claude app does not distinguish between the password and verification code prompts from your HPC, so the pop-up window will always say it needs a password. If it asks for the password twice, the second prompt is likely requesting your verification code.
+4. Click the "Local" icon again and select the newly added SSH server, e.g., `my_hpc`. You will be prompted to enter your HPC account password and the verification code (if applicable).
 
 5. Once connected, click the button next to "Local" to "Browse Remote Folder," then navigate to the `mdo_agent_work/results` folder.
 
-6. The agent is ready to use. You can ask something like, `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 5`. **NOTE**: On the HPC, the agent submits jobs to run cases on compute nodes rather than head nodes.
+6. The Claude Desktop App does not forward ports over its SSH connection, so you need to forward ports 8001 and 8002 manually to view the Trame and HTML results. On the HPC, run `hostname` to find which login node it is on. Then open a separate terminal on your local computer and run `ssh -N -L 8001:localhost:8001 -L 8002:localhost:8002 my_user_name@login_node_hostname`. Replace `login_node_hostname` with the full name of that login node (e.g., `login4.myhpc.com`). Keep this terminal open while you use the agent.
 
-7. Once the task is complete, click the names of generated mesh images to view them in the app, or use the Trame or HTML server links to visualize the results. You cannot directly access the case folder in the Claude Desktop App. To view the files in the case folder, use a separate SSH connection to the HPC and navigate to `mdo_agent_work/results`.
+7. The agent is ready to use. You can ask something like, `Generate a CFD mesh for the NACA2412 airfoil with 20K cells and yPlus 5`. **NOTE**: On the HPC, the agent submits jobs to run cases on compute nodes rather than head nodes.
+
+8. Once the task is complete, click the names of generated mesh images to view them in the app, or use the Trame or HTML server links to visualize the results. You cannot directly access the case folder in the Claude Desktop App. To view the files in the case folder, use a separate SSH connection to the HPC and navigate to `mdo_agent_work/results`.
 
 During agent execution, you may be asked for permission multiple times. To skip this, change the "Mode" below the chat box to "Auto mode". **IMPORTANT: The auto mode may modify or damage HPC system files. Use with caution!**
 
