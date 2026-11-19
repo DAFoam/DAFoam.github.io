@@ -325,6 +325,10 @@ entries:
     - title: Validation - RAE2822 airfoil
       url: /validations-rae2822.html
       output: web, pdf
+    
+    - title: Validation - NACA0012 wing
+      url: /validations-naca0012-wing.html
+      output: web, pdf
 
   - title: AI Agents
     output: web, pdf
