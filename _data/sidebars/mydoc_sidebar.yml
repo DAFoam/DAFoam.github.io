@@ -326,8 +326,8 @@ entries:
       url: /validations-rae2822.html
       output: web, pdf
     
-    - title: Validation - NACA0012 wing
-      url: /validations-naca0012-wing.html
+    - title: Validation - CRM65 wing
+      url: /validations-crm65-wing.html
       output: web, pdf
 
   - title: AI Agents
